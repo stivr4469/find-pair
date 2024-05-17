@@ -1,0 +1,24 @@
+                           часто используемые команды Docker Compose:
+
+1. `docker-compose up` — создайте и запустите контейнеры, определенные в файле `docker-compose.yml`.
+2. `docker-compose down` — остановить и удалить контейнеры, созданные `docker-compose up`.
+3. `docker-compose build` — сборка или перестройка сервисов, определенных в файле `docker-compose.yml`.
+4. `docker-compose ps` — список контейнеров, управляемых Docker Compose.
+5. `docker-compose logs` — просмотр журналов контейнеров, управляемых Docker Compose.
+6. `docker-compose pull` — извлекает образы службы, определенные в файле `docker-compose.yml`.
+7. `docker-compose restart` — перезапустить службы, определенные в файле `docker-compose.yml`.
+8. `docker-compose stop` — остановить службы, определенные в файле `docker-compose.yml`.
+9. docker-compose start — запуск служб, определенных в файле docker-compose.yml.
+10. `docker-compose Pause` — приостановить службы, определенные в файле `docker-compose.yml`.
+11. `docker-compose unpause` — возобновить работу служб, определенных в файле `docker-compose.yml`.
+12. `docker-compose exec <имя_службы> <команда>` — выполнить команду внутри работающего контейнера.
+13. `docker-compose run <имя_службы> <команда>` — запустить одноразовую команду для службы.
+14. `docker-compose config` — проверьте и просмотрите объединенный файл Docker Compose.
+15. `docker-compose kill` — принудительно остановить службы, определенные в файле `docker-compose.yml`.
+16. `docker-compose logs -f` — отслеживание журналов контейнеров, управляемых Docker Compose.
+17. `docker-compose down --volumes` — остановить и удалить контейнеры и тома, созданные `docker-compose up`.
+18. `docker-compose images` — список изображений, используемых службами, определенными в файле `docker-compose.yml`.
+19. `docker-compose top` — отображает запущенные процессы служб, определенных в файле `docker-compose.yml`.
+20. `docker-compose Scale <service_name>=<num_of_instances>` — масштабируйте сервисы, определенные в файле `docker-compose.yml`.
+
+

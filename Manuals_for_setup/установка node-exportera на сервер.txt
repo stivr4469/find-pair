@@ -1,0 +1,81 @@
+ sudo su
+ 
+  Скачать архив-
+  
+https://github.com/prometheus/node_exporter/releases/download/v1.8.0/node_exporter-1.8.0.linux-amd64.tar.gz
+Распаковать-
+ tar xvfz node_exporter-1.8.0.linux-amd64.tar.gz
+# ll
+cd node_exporter-1.8.0.linux-amd64/
+Переместить папку
+
+mv node_exporter usr/bin
+
+Создать пользователя без пароля-
+
+useradd -rs /bin/false node_exporter
+
+Задаем владельца для исполняемого файла: 
+
+chown node_exporter:node_exporter /usr/bin/node_exporter
+
+Создать файл для сервиса-
+
+sudo nano /etc/systemd/system/node_exporter.service
+
+cat <<EOF> /etc/systemd/system/node_exporter.service
+
+Unit]
+Description=Prometheus Node Exporter
+After=network.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+Restart=on-failure
+ExecStart=/usr/bin/node_exporter --web.listen-address=:9200
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+systemctl daemon-reload
+systemctl start node_exporter
+systemctl enable node_exporter
+systemctl status node_exporter
+node_exporter --version
+мая 10 20:27:42 drag systemd[1]: /etc/systemd/system/node_exporter.service:11: Unknown key name '--web.listen-address' in sec>
+
+
+node_exporter.service: Failed with result 'exit-code'.
+ node_exporter.service: Scheduled restart job, restart counter is at 5.
+ Stopped Prometheus Node Exporter.
+ node_exporter.service: Start request repeated too quickly.
+: node_exporter.service: Failed with result 'exit-code'.
+ Failed to start Prometheus Node Exporter.
+ 
+ Из сообщений об ошибках видно, что служба `node_exporter` не запускается успешно. Причина, вероятно, в том, что параметры командной строки не могут быть переданы напрямую в файл службы systemd.
+
+Вам нужно внести изменения в файл конфигурации `node_exporter` для указания порта прослушивания. Вот как это можно сделать:
+
+```bash
+sudo nano /etc/default/node_exporter
+```
+
+Добавьте строку с параметром `ARGS`, указав в ней порт прослушивания:
+
+```plaintext
+ARGS="--web.listen-address=:9200"
+```
+
+Сохраните изменения и закройте файл. Затем перезапустите службу `node_exporter`:
+
+```bash
+sudo systemctl restart node_exporter
+```
+
+Теперь `node_exporter` будет слушать метрики на порту 9200.
+
+

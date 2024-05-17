@@ -1,0 +1,7 @@
+Если проблема в том, что «main и master — это совершенно разные истории коммитов», будет работать следующее:
+
+	git checkout master   
+	git branch main master -f    
+	git checkout main  
+	git push origin main -f 
+

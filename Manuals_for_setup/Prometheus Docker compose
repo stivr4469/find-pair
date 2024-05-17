@@ -1,0 +1,72 @@
+Certainly! Below is a basic example of a Docker Compose file for running Prometheus along with a Node Exporter:
+
+```yaml
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - monitoring
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+    networks:
+      - monitoring
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+
+networks:
+  monitoring:
+    driver: bridge
+```
+
+Explanation:
+
+- `prometheus` service:
+  - `image`: Specifies the Prometheus Docker image to use (`prom/prometheus:latest`).
+  - `ports`: Maps port 9090 on the host to port 9090 on the container (Prometheus server).
+  - `volumes`: Mounts the `./prometheus` directory from the host to `/etc/prometheus` in the container, allowing you to provide a custom `prometheus.yml` configuration file.
+  - `command`: Specifies the command to run the Prometheus server with the custom configuration file.
+  - `networks`: Connects the Prometheus container to the `monitoring` network.
+
+- `node-exporter` service:
+  - `image`: Specifies the Node Exporter Docker image to use (`prom/node-exporter:latest`).
+  - `ports`: Maps port 9100 on the host to port 9100 on the container (Node Exporter metrics endpoint).
+  - `volumes`: Mounts necessary host directories to provide access to system metrics.
+  - `networks`: Connects the Node Exporter container to the `monitoring` network.
+
+- `networks` section:
+  - Defines a custom network named `monitoring` that both Prometheus and Node Exporter containers connect to. This enables communication between the containers while keeping them isolated from other containers on the host.
+
+This Compose file sets up Prometheus and Node Exporter containers, allowing Prometheus to scrape metrics from Node Exporter. You can further customize the configuration as per your requirements, including additional Prometheus configuration options and service discovery mechanisms. Make sure to place your Prometheus configuration file (`prometheus.yml`) in the `./prometheus` directory relative to the location of this Compose file.
+
+Объяснение:
+
+- сервис `прометей`:
+   - `image`: указывает используемый образ Prometheus Docker (`prom/prometheus:latest`).
+   - `ports`: сопоставляет порт 9090 на хосте с портом 9090 в контейнере (сервере Prometheus).
+   - `volumes`: монтирует каталог `./prometheus` с хоста в `/etc/prometheus` в контейнере, позволяя вам предоставить собственный файл конфигурации `prometheus.yml`.
+   - `команда`: указывает команду для запуска сервера Prometheus с пользовательским файлом конфигурации.
+   - «сети»: подключает контейнер Prometheus к сети «мониторинга».
+
+- сервис `node-exporter`:
+   - `image`: указывает используемый образ Docker Node Exporter (`prom/node-exporter:latest`).
+   - `ports`: сопоставляет порт 9100 на хосте с портом 9100 в контейнере (конечная точка метрик Node Exporter).
+   - `volumes`: монтирует необходимые каталоги хоста для обеспечения доступа к системным метрикам.
+   - `networks`: подключает контейнер Node Exporter к сети `monitoring`.
+
+- раздел `сети`:
+   - Определяет пользовательскую сеть под названием «мониторинг», к которой подключаются контейнеры Prometheus и Node Exporter. Это обеспечивает связь между контейнерами, сохраняя их изолированными от других контейнеров на хосте.
+
+Этот файл Compose настраивает контейнеры Prometheus и Node Exporter, позволяя Prometheus собирать метрики из Node Exporter. Вы можете дополнительно настроить конфигурацию в соответствии с вашими требованиями, включая дополнительные параметры конфигурации Prometheus и механизмы обнаружения сервисов. Обязательно поместите файл конфигурации Prometheus (prometheus.yml) в каталог ./prometheus относительно местоположения этого файла Compose.

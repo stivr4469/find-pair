@@ -1,0 +1,141 @@
+*#-------------------------------------------------
+# Introduction to Docker by Denis Astahov
+
+
+Install Docker on Ubuntu 18.04
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+sudo apt update
+sudo apt install apt-transport-https
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt update
+sudo apt install docker-ce
+sudo systemctl status docker
+sudo usermod -aG docker $USER
+>>>logout/login<<<
+```
+
+docker run hello-world
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+docker ps
+docker ps -a
+docker images
+
+
+docker search tomcat
+docker pull tomcat
+docker run -it -p 1234:8080 tomcat
+docker run -it -p 8888:80 nginx
+docker run -d -p 8888:80 nginx
+
+
+
+docker build -t denis .
+docker images
+
+docker run -it  -p 1234:80  denis:latest
+docker run -d -p  1234:80  denis:latest
+
+docker  ps     # list containers
+docker  ps -a  # list all containers
+
+docker tag denis_ubuntu denis_ubuntu-PROD
+docker tag denis_ubuntu denis_ubuntu-PROD:v2
+
+docker rm   # delete container
+docker rmi  # delete image
+
+UPDATE IMAGE
+~~~~~~~~~~~~~
+docker run -d -p 7777:80 denis_ubuntu4
+docker exec -it 5267e21d140 /bin/bash
+echo "V2" >> /var/www/html/index.html
+exit
+docker commit 5267e21d140 denis_v2:latest
+
+Export/Import Docker Image to file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+docker save image:tag > arch_name.tar
+docker load -i arch_name.tar
+
+
+Import/Export Docker Image to AWS ECR
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+docker build -t denis:v1 .
+aws ecr get-login --no-include-email --region=ca-central-1 
+docker tag  denis:v1  12345678.dkr.ecr.ca-central-1.amazonaws.com/myrepo:latest
+docker push 12345678.dkr.ecr.ca-central-1.amazonaws.com/myrepo:lastest
+
+docker pull 12345678.dkr.ecr.ca-central-1.amazonaws.com/myrepo:latest
+
+
+
+Kill and Delete Containers and Images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+docker rm -f $(docker ps -aq)        # Delete all Containers
+docker rmi -f $(docker images -q)    # Delete all Images
+Я мог успешно удалить, когда использовал командуdocker rmi REPOSITORY:TAG
+Вот как это можно сделать в одной строке:
+ docker inspect --format='{{.Id}} {{.Parent}}' $(docker images --filter since=65f9b4839725 -q) | cut -d' ' -f1 | cut -d: -f2 | xargs docker rmi
+ 
+                                        
+                                        
+                                        
+                                        
+                                        
+                  Вот 50 команд Docker:
+
+1. `docker version` — отображение информации о версии Docker.
+2. `docker info` — отображение общесистемной информации Docker.
+3. `docker run <image>` — Запустите контейнер Docker из образа.
+4. `docker ps` — список запущенных контейнеров.
+5. `docker ps -a` — Список всех контейнеров (включая остановленные).
+6. `docker images` — список доступных изображений Docker.
+7. `docker pull <image>` — извлеките образ из реестра Docker.
+8. `docker build <path_to_Dockerfile>` — создайте образ Docker из файла Dockerfile.
+9. `docker stop <container_id>` — остановить работающий контейнер.
+10. `docker start <container_id>` — запустить остановленный контейнер.
+11. `docker restart <container_id>` — перезапустить работающий контейнер.
+12. `docker kill <container_id>` — принудительно остановить контейнер.
+13. `docker rm <container_id>` — удалить остановленный контейнер.
+14. `docker rmi <image_id>` — удалить образ Docker.
+15. `docker exec -it <container_id> <command>` — выполнить команду внутри работающего контейнера.
+16. `docker logs <container_id>` — просмотр журналов контейнера.
+17. `docker cp <container_id>:<src_path> <dest_path>` — копирование файлов/папок между контейнером и хостом.
+18. `docker cp <src_path> <container_id>:<dest_path>` — копирование файлов/папок между хостом и контейнером.
+19. `docker проверить <container_id>` — Отображение подробной информации о контейнере.
+20. `docker Inspect <image_id>` — Отображение подробной информации об изображении.
+21. `docker network ls` — список сетей Docker.
+22. `docker network create <network_name>` — создать сеть Docker.
+23. `Docker Network Inspect <network_id>` — Отображение подробной информации о сети.
+24. `docker network Connect <network_id> <container_id>` — подключить контейнер к сети.
+25. `Docker Network Disconnect <network_id> <container_id>` — Отключить контейнер от сети.
+26. `docker Volume ls` — список томов Docker.
+27. `docker Volume create <имя_тома>` — создайте том Docker.
+28. `docker Volume Inspect <имя_тома>` — отображение подробной информации о томе.
+29. `docker том rm <имя_тома>` — удалить том Docker.
+30. `docker-compose up` — создайте и запустите контейнеры Docker, определенные в файле `docker-compose.yml`.
+31. `docker-compose down` — остановите и удалите контейнеры Docker, созданные `docker-compose up`.
+32. `docker-compose build` — сборка образов Docker, определенных в файле `docker-compose.yml`.
+33. `docker-compose ps` — список контейнеров Docker, управляемых Docker Compose.
+34. `docker-compose logs` — просмотр журналов контейнеров Docker, управляемых Docker Compose.
+35. `docker-compose exec <имя_службы> <команда>` — выполнить команду внутри контейнера Docker, управляемого Docker Compose.
+36. `docker swarm init` — Инициализировать Docker Swarm.
+37. `docker swarm join --token <токен> <ip_адрес>` — присоединитесь к кластеру Docker Swarm.
+38. `docker service ls` — список сервисов Docker в Swarm.
+39. `docker service create <image>` — создайте Docker-сервис в Swarm.
+40. `docker Service Inspect <service_id>` — отображает подробную информацию о службе Docker.
+41. `docker service update <service_id>` — обновить службу Docker в Swarm.
+42. `docker servicescale <service_id>=<number_of_replicas>` — Масштабируйте службу Docker в Swarm.
+43. `docker node ls` — список узлов Docker Swarm.
+44. `docker node проверить <node_id>` — показать подробную информацию об узле Docker Swarm.
+45. `docker node update <node_id>` — обновить узел Docker Swarm.
+46. `docker system prune` — удалить из системы все неиспользуемые объекты Docker (контейнеры, сети, тома, изображения).
+47. `docker-compose config` — проверьте и просмотрите объединенный файл Docker Compose.
+48. `docker-compose up -d` — Создание и запуск контейнеров Docker в автономном режиме.
+49. `docker-compose down --volumes` — остановить и удалить контейнеры и тома Docker, управляемые Docker Compose.
+50. `docker-compose exec <service_name> bash` — откройте оболочку Bash внутри контейнера Docker, управляемого Docker Compose.                          			
+
+

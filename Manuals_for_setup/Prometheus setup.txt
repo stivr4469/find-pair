@@ -1,0 +1,54 @@
+Запустите этот образ локально:
+
+docker run -d --name prometheus-container -e TZ=UTC -p 9090:9090 ubuntu/prometheus:2.49.1-22.04_stable
+
+Получите доступ к своему экземпляру Prometheus по адресу http://localhost:9090.
+
+Параметры
+
+Параметр	                                               Описание
+-e TZ=UTC	                                               Часовой пояс.
+-p 9090:9090	                                               Разоблачить Прометея на localhost:9090.
+-v /path/to/prometheus.yml:/etc/prometheus/prometheus.yml      Локальный файл конфигурации prometheus.yml.
+-v /path/to/alerts.yml:/etc/prometheus/alerts.yml	       Файл конфигурации локальных оповещений alerts.yml.
+Тестирование/Отладка
+Чтобы отладить контейнер:
+
+docker logs -f prometheus-container           
+
+root@git-virtual:
+sudo nano /var/lib/docker/volumes/prometheus_grafana_prom-configs/_data/prometheus.yml
+
+rometheus_Grafana$ 
+
+sudo nano /var/lib/docker/volumes/prometheus_grafana_prom-configs/_data/alert.rules
+
+  
+  docker kill -s SIGHUP fc0a3020de5
+/var/lib/docker/volumes/prometheus_grafana_prom-configs/_data/
+172.17.0.1
+
+https://habr.com/ru/articles/652185/
+
+
+
+Чтобы получить интерактивную оболочку:
+
+docker exec -it php-nginx-1 sh
+
+
+Отладка
+Чтобы отладить контейнер:
+
+docker logs -f prometheus-container
+
+Чтобы получить интерактивную оболочку:
+
+docker exec -it prometheus-container /bin/bash
+
+
+
+https://freehost.com.ua/faq/articles/ustanovka-steka-grafanaprometheus-na-debian-10/
+
+https://antonputra-com.translate.goog/monitoring/monitor-nginx-with-prometheus/?_x_tr_sl=en&_x_tr_tl=ru&_x_tr_hl=ru&_x_tr_pto=sc
+https://hub.docker.com/r/nginx/nginx-prometheus-exporter

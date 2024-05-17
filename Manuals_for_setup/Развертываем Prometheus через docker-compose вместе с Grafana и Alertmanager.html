@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)https://www.dmosk.ru/miniinstruktions.php?mini=prometheus-stack-docker -->
+<html itemscope="" itemtype="http://schema.org/Article" lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/analytics.js"></script><script type="text/javascript" async="" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/js"></script><script async="" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/tag.js"></script><script src="chrome-extension://bjbenndabachhhddadcekdalkhfkikmk/content/captcha/turnstile/interceptor.js"></script><script src="chrome-extension://bjbenndabachhhddadcekdalkhfkikmk/content/captcha/turnstile/hunter.js"></script><script src="chrome-extension://bjbenndabachhhddadcekdalkhfkikmk/content/captcha/upside/hunter.js"></script><script src="chrome-extension://bjbenndabachhhddadcekdalkhfkikmk/content/captcha/faucetpay/hunter.js"></script><script src="chrome-extension://bjbenndabachhhddadcekdalkhfkikmk/content/captcha/solvemedia/hunter.js"></script><script src="chrome-extension://bjbenndabachhhddadcekdalkhfkikmk/content/captcha/solvemedia/interceptor.js"></script><script src="chrome-extension://bjbenndabachhhddadcekdalkhfkikmk/content/captcha/recaptcha/hunter.js"></script><script src="chrome-extension://bjbenndabachhhddadcekdalkhfkikmk/content/captcha/recaptcha/interceptor.js"></script><script src="chrome-extension://bjbenndabachhhddadcekdalkhfkikmk/content/captcha/hcaptcha/hunter.js"></script><script src="chrome-extension://bjbenndabachhhddadcekdalkhfkikmk/content/captcha/hcaptcha/interceptor.js"></script><script src="chrome-extension://bjbenndabachhhddadcekdalkhfkikmk/content/communication_helpers.js"></script><script src="chrome-extension://bjbenndabachhhddadcekdalkhfkikmk/content/core_helpers.js"></script>
+	<title>Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager</title>
+	
+	<meta name="verify-admitad" content="5c4577cf73">
+	<meta name="verify-v1" content="2UWIXew60ZXDE7r/7ijqzDr5nnZ4gej3KogFQtJC5hA=">
+    <meta name="yandex-verification" content="6b00094cd229c1ad">
+	<meta name="viewport" content="initial-scale=1, width=device-width">
+	
+	<meta property="og:type" content="article">
+	<meta property="og:image" content="https://www.dmosk.ru/img/obo_mne1.jpg">
+    <meta property="og:image:url" content="https://www.dmosk.ru/img/obo_mne1.jpg">
+    <meta property="og:image:secure_url" content="https://www.dmosk.ru/img/obo_mne1.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="660">
+	<meta property="og:image:height" content="945">
+	<meta property="og:url" content="https://www.dmosk.ru/miniinstruktions.php?mini=prometheus-stack-docker">
+	<meta property="og:locale" content="ru_RU">
+	<meta property="og:title" content="Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager">
+	<meta property="og:description" content="">
+	<meta property="fb:app_id" content="322213771610681">
+	
+    	
+    <meta name="keywords" content="Prometheus Alertmanager Docker Grafana Node Exporter Blackbox Telegram">
+    <meta name="description" content="Настройка системы мониторинга Prometheus и запуск ее в Docker. Настройка сбора метрик через Node exporter и Blackbox, визуализации с помощью Grafana и отправки уведомлений в telegram с помощью alertmanager. Пошаговая подготовка файла docker-compose.yml.">            
+    
+    <link rel="canonical" href="https://www.dmosk.ru/miniinstruktions.php?mini=prometheus-stack-docker">	
+    <link rel="shortcut icon" href="https://www.dmosk.ru/favicon.ico" type="image/x-icon">
+	<link rel="icon" type="image/gif" href="https://www.dmosk.ru/favicon.gif">
+    <link rel="stylesheet" type="text/css" href="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/style.css">
+	<link itemprop="mainEntityOfPage" href="https://www.dmosk.ru/miniinstruktions.php?mini=prometheus-stack-docker"><captcha-widgets></captcha-widgets><link rel="preconnect" href="https://yastatic.net/"><link rel="preconnect" href="https://avatars.mds.yandex.net/"><link rel="preconnect" href="https://mc.yandex.ru/"><link rel="preconnect" href="https://ads.adfox.ru/"><link rel="preload" href="https://yastatic.net/s3/home/fonts/ys/3/text-variable-full.woff2" type="font/woff2" as="font" crossorigin="anonymous"><style id="ysTextCssRule">@font-face {
+        font-family: "YS Text Variable";
+        src: url("https://yastatic.net/s3/home/fonts/ys/3/text-variable-full.woff2") format("woff2");
+        font-weight: 400 700;
+        font-display: optional;
+    }</style><script async="" crossorigin="anonymous" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/host.js"></script><style nonce="">#916d41c052{width:1px;height:1px;position:relative;}</style><style nonce="">#id100{width:1px;height:1px;top:0px;left:0px;position:absolute;}</style><script type="text/javascript" async="" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/loader.bundle.js" charset="utf-8" crossorigin="anonymous"></script><style type="text/css">
+                        #::-webkit-media-controls{
+                            display: none !important;
+                        }
+                    </style></head>
+<body class="nav-fixed-body">
+	<nav class="nav-fixed nav-fixed-top">
+		<div class="main-menu">
+		<a href="https://www.dmosk.ru/" class="menu">Обо&nbsp;мне</a><a href="https://www.dmosk.ru/uslugi.php" class="menu">Услуги</a><a href="https://www.dmosk.ru/server.php" class="menu">Настройка&nbsp;серверов</a><a href="https://www.dmosk.ru/kontakti.php" class="menu">Контакты</a><a rel="nofollow" href="https://www.dmosk.ru/donate.php" class="menu">Донаты</a><a href="https://www.dmosk.ru/polezno.php" class="menu">Помощь&nbsp;online</a>		</div>
+		<div class="menu-mini"><div></div><div></div><div></div></div>
+		<div class="menu-search-box">
+			<a href="https://www.dmosk.ru/miniinstruktions.php?mini=prometheus-stack-docker#search" class="menu menu-search" title="Поиск по сайту" rel="nofollow">
+				<img src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/search.png" alt="Поиск по сайту" title="Поиск по сайту">
+				<span class="hidden">×</span>
+			</a>
+		</div>
+		<div class="menu-cecutient">
+			<a href="https://www.dmosk.ru/miniinstruktions.php?mini=prometheus-stack-docker#" class="menu menu-cecutient" title="Версия для слабовидящих" rel="nofollow">
+				<img src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/eye.png" alt="Версия для слабовидящих" title="Версия для слабовидящих">
+			</a>
+		</div>
+		<div class="menu-contact" itemscope="" itemtype="https://schema.org/Organization" itemprop="publisher">
+			<div itemprop="logo image" itemscope="" itemtype="https://schema.org/ImageObject">
+				<link itemprop="url contentUrl" href="https://www.dmosk.ru/img/logo_full.png">
+			</div>
+			<link itemprop="url" href="https://www.dmosk.ru/">
+			<span>© <span itemprop="name" content="Дмитрий Моск">Дмитрий Моск</span><a href="tel:+79062504869" rel="nofollow" itemprop="telephone" content="+7(906)250-48-69"> &nbsp;+7(906)250-48-69</a></span>
+		</div>
+		<div class="menu-up"><a href="https://www.dmosk.ru/miniinstruktions.php?mini=prometheus-stack-docker#up" onclick="moveUp(); return false;" rel="nofollow">Наверх</a></div>
+	</nav>
+	
+		<div class="main-body">
+<div class="article-text">
+
+<div id="articleBody" itemprop="articleBody">
+		<div itemscope="" itemtype="http://schema.org/ImageObject" itemprop="image">
+			<link itemprop="url contentUrl" href="https://www.dmosk.ru/img/schema.org/miniinstruktions/tmico_prometheus-stack-docker.png">
+			<meta itemprop="width" content="300">
+			<meta itemprop="height" content="225">
+		</div>
+		<h1 itemprop="headline name">Prometheus + Grafana + Alertmanager&nbsp;в Docker</h1><div class="date-pub-upd">
+			<span><img src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/time.jpg" alt="Обновлено" title="Дата обновления"> Обновлено: <time datetime="2023-09-23T20:45:46+03:00" itemprop="dateModified">23.09.2023</time></span>
+			<span><img src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/time.jpg" alt="Опубликовано" title="Дата публикации"> Опубликовано: <time datetime="2022-06-05T09:57:44+03:00" itemprop="datePublished">05.06.2022</time></span>
+		</div>
+
+<p>Используемые термины:&nbsp;<a href="https://www.dmosk.ru/terminus.php?object=prometheus">Prometheus</a>,&nbsp;<a href="https://www.dmosk.ru/terminus.php?object=grafana">Grafana</a>,&nbsp;<a href="https://www.dmosk.ru/terminus.php?object=docker">Docker</a>.</p>
+
+<p>В данной инструкции мы рассмотрим пример docker-compose файла для организации системы мониторинга на базе Prometheus. Мы получим:</p>
+
+<ul>
+	<li>Базу данных Prometheus и интерфейс для выполнения PromQL.</li>
+	<li>Визуализацию с помощью&nbsp;Grafana.</li>
+	<li>Сбор метрик через Node Exporter.</li>
+	<li>Мониторинг HTTP с использованием&nbsp;Blackbox.</li>
+	<li>Отправку уведомлений в Telegram с помощью&nbsp;Alertmanager.</li>
+</ul>
+
+<p>Мы будем работать в среде Linux, хотя полученный файл docker-compose можно применять где угодно. Останавливаться подробно на описании&nbsp;docker-compose мы не будем.</p>
+
+<div class="content-list">
+<p><a href="https://www.dmosk.ru/miniinstruktions.php?mini=prometheus-stack-docker#prepare">Готовим систему</a><br>
+<a href="https://www.dmosk.ru/miniinstruktions.php?mini=prometheus-stack-docker#prometheus">Запуск сервисов для&nbsp;Prometheus + Node Exporter</a><br>
+<a href="https://www.dmosk.ru/miniinstruktions.php?mini=prometheus-stack-docker#grafana">Добавляем&nbsp;Grafana</a><br>
+<a href="https://www.dmosk.ru/miniinstruktions.php?mini=prometheus-stack-docker#alertmanager">Настраиваем отправку оповещений в телеграм</a><br>
+<a href="https://www.dmosk.ru/miniinstruktions.php?mini=prometheus-stack-docker#blackbox">Мониторинг сайта с помощью&nbsp;blackbox</a></p>
+</div>
+
+<h2 id="prepare">Подготовка системы</h2>
+
+<p>Выполним предварительные действия.</p>
+
+<h3>Настройка брандмауэра</h3>
+
+<p>Если на нашем сервере работает брандмауэр, необходимо открыть некторые порты:</p>
+
+<ul>
+	<li>9090/tcp — веб-интерфейс для работы с Prometheus.</li>
+	<li>3000/tcp — графана.</li>
+</ul>
+
+<p>В зависимости от утилиты управления брандмауэром, наши действия будут отличаться.</p>
+
+<p><strong>а) Для iptables (как правило, на системах Deb):</strong></p>
+
+<div class="console">
+<p>iptables -I&nbsp;INPUT -p tcp --dport 3000&nbsp;-j ACCEPT</p>
+</div>
+
+<div class="console">
+<p>iptables -I&nbsp;INPUT -p tcp --dport 9090&nbsp;-j ACCEPT</p>
+</div>
+
+<div class="console">
+<p>apt&nbsp;install iptables-persistent</p>
+</div>
+
+<div class="console">
+<p>netfilter-persistent save</p>
+</div>
+
+<p><strong>б) Для firewalld (как правило, на системах RPM):</strong></p>
+
+<div class="console">
+<p>firewall-cmd --permanent --add-port={3000,9090}/tcp</p>
+</div>
+
+<div class="console">
+<p>firewall-cmd --reload</p>
+</div>
+
+<h3>Настройка среды для docker</h3>
+
+<p>Подразумевается, что у нас установлен Docker и docker-compose, в противном случае, можно воспользоваться инструкцией&nbsp;<a href="https://www.dmosk.ru/miniinstruktions.php?mini=docker-install-linux">Установка Docker на Linux</a>.</p>
+
+<p>Создаем каталоги, где будем создавать наши файлы:</p>
+
+<div class="console">
+<p>mkdir -p /opt/prometheus_stack/{prometheus,grafana,alertmanager,blackbox}</p>
+</div>
+
+<p>Создаем файл:</p>
+
+<div class="console">
+<p>touch&nbsp;/opt/prometheus_stack/docker-compose.yml</p>
+</div>
+
+<p>Переходим в каталог&nbsp;prometheus_stack:</p>
+
+<div class="console">
+<p>cd&nbsp;/opt/prometheus_stack</p>
+</div>
+
+<p>Дальше будем работать относительно него.</p>
+
+<h2 id="prometheus">Prometheus + Node Exporter</h2>
+
+<p>Открываем файл:</p>
+
+<div class="console">
+<p>vi&nbsp;docker-compose.yml</p>
+</div>
+
+<div class="editor">
+<p>version: '3.9'<br>
+<br>
+services:<br>
+<br>
+&nbsp; prometheus:<br>
+&nbsp;&nbsp; &nbsp;image: prom/prometheus:latest<br>
+&nbsp;&nbsp;&nbsp;&nbsp;volumes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ./prometheus:/etc/prometheus/<br>
+&nbsp; &nbsp; container_name:&nbsp;prometheus<br>
+&nbsp; &nbsp; hostname: prometheus<br>
+&nbsp; &nbsp; command:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- --config.file=/etc/prometheus/prometheus.yml<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ports:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 9090:9090<br>
+&nbsp;&nbsp;&nbsp;&nbsp;restart: unless-stopped<br>
+&nbsp; &nbsp; environment:<br>
+&nbsp; &nbsp; &nbsp; TZ: "Europe/Moscow"<br>
+&nbsp; &nbsp; networks:<br>
+&nbsp; &nbsp; &nbsp; - default<br>
+<br>
+&nbsp;&nbsp;node-exporter:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;image: prom/node-exporter<br>
+&nbsp;&nbsp;&nbsp;&nbsp;volumes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- /proc:/host/proc:ro<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- /sys:/host/sys:ro<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- /:/rootfs:ro<br>
+&nbsp; &nbsp; container_name:&nbsp;exporter<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hostname: exporter<br>
+&nbsp;&nbsp;&nbsp;&nbsp;command:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- --path.procfs=/host/proc<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- --path.sysfs=/host/sys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- --collector.filesystem.ignored-mount-points<br>
+&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;- ^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ports:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 9100:9100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;restart: unless-stopped<br>
+&nbsp; &nbsp; environment:<br>
+&nbsp; &nbsp; &nbsp; TZ: "Europe/Moscow"<br>
+&nbsp; &nbsp; networks:<br>
+&nbsp; &nbsp; &nbsp; - default<br>
+<br>
+networks:<br>
+&nbsp; default:<br>
+&nbsp; &nbsp; ipam:<br>
+&nbsp; &nbsp; &nbsp; driver: default<br>
+&nbsp; &nbsp; &nbsp; config:<br>
+&nbsp; &nbsp; &nbsp; &nbsp; - subnet: 172.28.0.0/16</p>
+</div>
+
+<p><em>* в данном примере мы создаем 2 сервиса — prometheus и&nbsp;node-exporter. Также мы отдельно определили подсеть&nbsp;<strong>172.28.0.0/16</strong>, в которой будут находиться наши контейнеры docker.</em></p>
+
+<p>Создаем конфигурационный файл для prometheus:</p>
+
+<div class="console">
+<p>vi prometheus/prometheus.yml</p>
+</div>
+
+<div class="editor">
+<p>scrape_configs:<br>
+&nbsp; - job_name: node<br>
+&nbsp; &nbsp; scrape_interval: 5s<br>
+&nbsp; &nbsp; static_configs:<br>
+&nbsp; &nbsp; - targets: ['node-exporter:9100']</p>
+</div>
+
+<p><em>* в данном примере мы прописываем наш&nbsp;<strong>node-exporter</strong> в качестве таргета.</em></p>
+
+<p>Запускаем контейнеры:</p>
+
+<div class="console">
+<p>docker-compose up -d</p>
+</div>
+
+<p>Ждем несколько секунд и можно пробовать подключиться. Открываем браузер и переходим по адресу <u>http://&lt;IP-адрес сервера&gt;:9090</u> — мы должны увидеть страницу Prometheus:</p>
+
+<p><img alt="Стартовая страница Prometheus" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/01.jpg" style="width: 549px; height: 373px;" title="Стартовая страница Prometheus"></p>
+
+<p>Переходим по адресу <u>http://&lt;IP-адрес сервера&gt;:9100</u> — мы должны увидеть страницу Node Exporter:</p>
+
+<p><img alt="Веб-сбраница Node Exporter" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/02.jpg" style="width: 227px; height: 89px;" title="Веб-сбраница Node Exporter"></p>
+
+<p>Мы движемся в правильном направлении. Идем дальше.</p>
+
+<h2 id="grafana">Grafana</h2>
+
+<p>Добавим&nbsp;к нашему стеку графану.</p>
+
+<p>Открываем файл:</p>
+
+<div class="console">
+<p>vi&nbsp;docker-compose.yml</p>
+</div>
+
+<p>Добавляем:</p>
+
+<div class="editor">
+<p>version: '3.9'<br>
+<br>
+services:<br>
+&nbsp; ...<br>
+<span style="background-color:#FFFF00;">&nbsp; grafana:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; image: grafana/grafana</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; user: root</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; depends_on:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - prometheus</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; ports:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - 3000:3000</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; volumes:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - ./grafana:/var/lib/grafana</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - ./grafana/provisioning/:/etc/grafana/provisioning/</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; container_name:&nbsp;grafana</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; hostname: grafana</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; restart: unless-stopped</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; environment:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; TZ: "Europe/Moscow"</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; networks:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - default</span><br>
+<br>
+...</p>
+</div>
+
+<p><em>* по аналогии с другими сервисами, мы добавили сервис для графаны.</em></p>
+
+<p>Перезапустим контейнеры:</p>
+
+<div class="console">
+<p>docker-compose up -d</p>
+</div>
+
+<p>Открываем браузер и переходим по адресу <u>http://&lt;IP-адрес сервера&gt;:3000</u> — мы должны увидеть стартовую страницу Grafana.</p>
+
+<p>Для авторизации вводим <strong>admin</strong> / <strong>admin</strong>. После система потребует ввести новый пароль.</p>
+
+<p>Настроим связку с Prometheus.&nbsp;Кликаем по иконке&nbsp;<strong>Configuration</strong>&nbsp;-&nbsp;<strong>Data Sources</strong>:</p>
+
+<p><img alt="Переходим к добавлению источника данных в Grafana" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/01(1).jpg" title="Переходим к добавлению источника данных в Grafana"></p>
+
+<p>Переходим к добавлению источника, нажав по&nbsp;<strong>Add data source</strong>:</p>
+
+<p><img alt="Добавляем источник данных в Grafana" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/02(1).jpg" title="Добавляем источник данных в Grafana"></p>
+
+<p>Среди списка источников данных находим и выбираем Prometheus, кликнув по&nbsp;<strong>Select</strong>:</p>
+
+<p><img alt="Выбираем Prometheus как источник данных" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/03.jpg" title="Выбираем Prometheus как источник данных"></p>
+
+<p>Задаем параметры для подключения к&nbsp;Prometheus:</p>
+
+<p><img alt="Прописываем параметры для подключения к Prometheus" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/03(1).jpg" style="width: 628px; height: 206px;" title="Прописываем параметры для подключения к Prometheus"></p>
+
+<p>Сохраняем настройки, кликнув по&nbsp;<strong>Save &amp; Test</strong>:</p>
+
+<p><img alt="Сохраняем настройки в Grafana" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/04.jpg" style="width: 397px; height: 63px;" title="Сохраняем настройки в Grafana"></p>
+
+<p>Добавим дашборд для мониторинга с node exporter. Для этого уже есть готовый вариант.</p>
+
+<p>Кликаем по изображению плюса и выбираем <strong>Import</strong>:</p>
+
+<p><img alt="Переходим к импорту дашборда в графане" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/05.jpg" style="width: 374px; height: 249px;" title="Переходим к импорту дашборда в графане"></p>
+
+<p>Вводим идентификатор дашборда. Для Node Exporter это <strong>1860</strong>:</p>
+
+<p><img alt="Вводим идентификатор для установки дашборда под node exporter" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/06.jpg" style="width: 641px; height: 90px;" title="Вводим идентификатор для установки дашборда под node exporter"></p>
+
+<p>Кликаем <strong>Load</strong> — Grafana подгрузит дашборд из своего репозитория — выбираем в разделе <strong>Prometheus</strong> наш источник данных и кликаем по <strong>Import</strong>:</p>
+
+<p><img alt="Выбираем источник данных для импортируемого дашборда" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/07.jpg" style="width: 509px; height: 430px;" title="Выбираем источник данных для импортируемого дашборда"></p>
+
+<p>Мы увидим страницу с настроенными показателями метрик. Можно пользоваться.</p>
+
+<h2 id="alertmanager">Настройка оповещений с AlertManager</h2>
+
+<p>В нашем примере мы настроим отправку уведомлений на телеграм бот. Само оповещение будет выполнять&nbsp;AlertManager, который интегрируется с Prometheus.</p>
+
+<p>Для начала подготовим наш бот телеграм. Создадим нового — для этого открываем телеграм и ищем <strong>@my_id_bot</strong>:</p>
+
+<p><img alt="Ищем @my_id_bot в телеграме" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/08.jpg" style="width: 500px; height: 103px;" title="Ищем @my_id_bot в телеграме"></p>
+
+<p>Приложение покажет наш идентификатор. Записываем — он нам потребуется позже.</p>
+
+<p>Теперь создаем бота. Ищем <strong>@BotFather</strong>:</p>
+
+<p><img alt="Ищем @BotFather в телеграме" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/09.jpg" style="width: 379px; height: 150px;" title="Ищем @BotFather в телеграме"></p>
+
+<p>Переходим в чат с найденным&nbsp;BotFather и запускаем бота:</p>
+
+<p><img alt="Запускаем BotFather" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/10.jpg" style="width: 162px; height: 58px;" title="Запускаем BotFather"></p>
+
+<p>Создаем бота, последовательно введя команду <strong>/newbot</strong> и отвечая на запросы мастера:</p>
+
+<p><img alt="Создание нового бота в BotFather" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/11.jpg" style="width: 321px; height: 428px;" title="Создание нового бота в BotFather"></p>
+
+<p><em>* в нашем примере мы создаем бота <strong>prometheus_alert</strong> с именем учетной записи <strong>DmoskPrometheusBot</strong>.</em></p>
+
+<p>Переходим в чат с созданным ботом, кликнув по его названию:</p>
+
+<p><img alt="Отображаем список своих телеграм ботов" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/13.jpg" style="width: 394px; height: 84px;" title="Отображаем список своих телеграм ботов"></p>
+
+<p>Запускаем бота:</p>
+
+<p><img alt="Стартуем созданного бота" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/14.jpg" style="width: 320px; height: 108px;" title="Стартуем созданного бота"></p>
+
+<p>С ботом мы закончили. Переходим к docker.</p>
+
+<p>Открываем наш файл&nbsp;docker-compose:</p>
+
+<div class="console">
+<p>vi&nbsp;docker-compose.yml</p>
+</div>
+
+<p>И добавляем:</p>
+
+<div class="editor">
+<p>version: '3.9'<br>
+&nbsp; ...<br>
+<br>
+<span style="background-color:#FFFF00;">&nbsp; alertmanager-bot:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; command:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - --alertmanager.url=http://alertmanager:9093</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - --log.level=info</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - --store=bolt</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - --bolt.path=/data/bot.db</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - --telegram.admin=573454381</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - --telegram.token=5472129845:AAFTQRdujqIHgWHbbVtfYWQQvzvIN98KBqg</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; image: metalmatze/alertmanager-bot:0.4.3<br>
+&nbsp; &nbsp; user: root</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; ports:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - 8080:8080<br>
+&nbsp; &nbsp;&nbsp;container_name:&nbsp;alertmanager-bot<br>
+&nbsp; &nbsp;&nbsp;hostname: alertmanager-bot</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; environment:<br>
+&nbsp; &nbsp; &nbsp; TZ: "Europe/Moscow"<br>
+&nbsp; &nbsp; restart: unless-stopped</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; volumes:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - ./data:/data<br>
+&nbsp; &nbsp; networks:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - default</span><br>
+<br>
+<span style="background-color:#FFFF00;">&nbsp; alertmanager:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; image: prom/alertmanager:v0.21.0<br>
+&nbsp; &nbsp; user: root</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; ports:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - 127.0.0.1:9093:9093</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; volumes:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - ./alertmanager/:/etc/alertmanager/<br>
+&nbsp; &nbsp;&nbsp;container_name:&nbsp;alertmanager<br>
+&nbsp; &nbsp;&nbsp;hostname: alertmanager</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; environment:<br>
+&nbsp; &nbsp; &nbsp; TZ: "Europe/Moscow"<br>
+&nbsp; &nbsp; restart: unless-stopped</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; command:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - '--config.file=/etc/alertmanager/config.yml'</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - '--storage.path=/etc/alertmanager/data'<br>
+&nbsp; &nbsp; networks:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - default</span><br>
+<br>
+...</p>
+</div>
+
+<p><em>* мы добавили два сервиса —&nbsp;<strong>alertmanager-bot</strong> (телеграм бот для prometheus alertmanager) и&nbsp;<strong>alertmanager</strong> (система оповещений в prometheus).</em></p>
+
+<p>Теперь открываем конфигурационный файл для&nbsp;prometheus:</p>
+
+<div class="console">
+<p>vi prometheus/prometheus.yml</p>
+</div>
+
+<p>И добавим строки:</p>
+
+<div class="editor">
+<p>...<br>
+<br>
+rule_files:<br>
+&nbsp; - 'alert.rules'<br>
+<br>
+alerting:<br>
+&nbsp; alertmanagers:<br>
+&nbsp; - scheme: http<br>
+&nbsp; &nbsp; static_configs:<br>
+&nbsp; &nbsp; - targets:<br>
+&nbsp; &nbsp; &nbsp; - "alertmanager:9093"</p>
+</div>
+
+<p><em>* в данном примере мы указали, что наш сервер мониторинга должен использовать в качестве системы оповещения&nbsp;alertmanager, который доступен по адресу&nbsp;<strong>alertmanager:9093</strong>. Также мы добавили файл&nbsp;<strong>alert.rules</strong> с описанием правил оповещения.</em></p>
+
+<p>Создаем файл с правилами оповещения:</p>
+
+<div class="console">
+<p>vi&nbsp;prometheus/alert.rules</p>
+</div>
+
+<div class="editor">
+<p>groups:&nbsp;<br>
+- name: test<br>
+&nbsp; rules:<br>
+&nbsp; - alert: PrometheusTargetMissing<br>
+&nbsp; &nbsp; expr: up == 0<br>
+&nbsp; &nbsp; for: 0m<br>
+&nbsp; &nbsp; labels:<br>
+&nbsp; &nbsp; &nbsp; severity: critical<br>
+&nbsp; &nbsp; annotations:<br>
+&nbsp; &nbsp; &nbsp; summary: "Prometheus target missing (instance {{ $labels.instance }})"<br>
+&nbsp; &nbsp; &nbsp; description: "A Prometheus target has disappeared. An exporter might be crashed. VALUE = {{ $value }} &nbsp;LABELS: {{ $labels }}"</p>
+</div>
+
+<p><em>* в данном примере мы добавили правило, которое будет срабатывать при недоступности узла (node-exporter).</em></p>
+
+<p>Переходим к конфигурированию&nbsp;alertmanager:</p>
+
+<div class="console">
+<p>vi&nbsp;alertmanager/config.yml</p>
+</div>
+
+<div class="editor">
+<p>route:<br>
+&nbsp; &nbsp; receiver: 'alertmanager-bot'<br>
+<br>
+receivers:<br>
+- name: 'alertmanager-bot'<br>
+&nbsp; webhook_configs:<br>
+&nbsp; - send_resolved: true<br>
+&nbsp; &nbsp; url: 'http://alertmanager-bot:8080'</p>
+</div>
+
+<p><em>* данная конфигурация позволяет отправлять оповещения с помощью&nbsp;webhook на сервис&nbsp;<strong>alertmanager-bot:8080</strong> (наш телеграм бот для alertmanager).</em></p>
+
+<p>Запускаем новые сервисы docker:</p>
+
+<div class="console">
+<p>docker-compose up -d</p>
+</div>
+
+<p>Открываем браузер и переходим по адресу <u>http://&lt;IP-адрес сервера&gt;:9090</u> — на вкладке Alerts мы должны увидеть нашу настройку:</p>
+
+<p><img alt="Настроенное правило alertmanager" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/12.jpg" style="width: 651px; height: 379px;" title="Настроенное правило alertmanager"></p>
+
+<p>Попробуем проверить работу оповещения. Отключаем наш node exporter:</p>
+
+<div class="console">
+<p>docker stop&nbsp;exporter</p>
+</div>
+
+<p>На телеграм должно прийти оповещение:</p>
+
+<p><img alt="Оповещение на телеграм бота" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/15.jpg" style="width: 441px; height: 239px;" title="Оповещение на телеграм бота"></p>
+
+<p>Отправка уведомлений настроена.</p>
+
+<h2 id="blackbox">Blackbox exporter</h2>
+
+<p>Переходим к настройке мониторинга http сервисов. В нашем примере мы будем проверять работу сайта&nbsp;dmosk.ru.</p>
+
+<p>Открываем наш файл&nbsp;docker-compose:</p>
+
+<div class="console">
+<p>vi&nbsp;docker-compose.yml</p>
+</div>
+
+<p>Добавим в него:</p>
+
+<div class="editor">
+<p>version: '3.9'<br>
+<br>
+services:<br>
+&nbsp; ...<br>
+<br>
+<span style="background-color:#FFFF00;">&nbsp; blackbox:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; image: prom/blackbox-exporter</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; container_name: blackbox</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp;&nbsp;hostname: blackbox</span><br>
+<span style="background-color:#FFFF00;">&nbsp;&nbsp;&nbsp;&nbsp;ports:</span><br>
+<span style="background-color:#FFFF00;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 9115:9115</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; restart: unless-stopped</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; command:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - "--config.file=/etc/blackbox/blackbox.yml"</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; volumes:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - ./blackbox:/etc/blackbox</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; environment:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; TZ: "Europe/Moscow"</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; networks:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - default</span><br>
+<br>
+&nbsp; ...</p>
+</div>
+
+<p><em>* сервис&nbsp;<strong>blackbox</strong> является компонентом Prometheus для мониторинга сетевых сервисов по различным протоколам.</em></p>
+
+<p>Открываем конфигурационный файл prometheus:</p>
+
+<div class="console">
+<p>vi prometheus/prometheus.yml</p>
+</div>
+
+<p>И дописываем:</p>
+
+<div class="editor">
+<p>scrape_configs:<br>
+&nbsp; ...<br>
+<span style="background-color:#FFFF00;">&nbsp; - job_name: 'blackbox'</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; metrics_path: /probe</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; params:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; module: [http_2xx]</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; static_configs:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - targets:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; &nbsp; - https://www.dmosk.ru</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; relabel_configs:</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - source_labels: [__address__]</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; &nbsp; target_label: __param_target</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - source_labels: [__param_target]</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; &nbsp; target_label: instance</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; - target_label: __address__</span><br>
+<span style="background-color:#FFFF00;">&nbsp; &nbsp; &nbsp; &nbsp; replacement: blackbox:9115</span><br>
+<br>
+...</p>
+</div>
+
+<p><em>* подобная конфигурация позволит создать дополнительное задание мониторинга сайта&nbsp;<strong>https://www.dmosk.ru</strong>.</em></p>
+
+<p>Создаем конфигурационный файл&nbsp;blackbox:</p>
+
+<div class="console">
+<p>vi blackbox/blackbox.yml</p>
+</div>
+
+<div class="editor">
+<p>modules:<br>
+&nbsp; http_2xx:<br>
+&nbsp; &nbsp; prober: http<br>
+&nbsp; &nbsp; timeout: 5s<br>
+&nbsp; &nbsp; http:<br>
+&nbsp; &nbsp; &nbsp; valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]<br>
+&nbsp; &nbsp; &nbsp; valid_status_codes: [200]<br>
+&nbsp; &nbsp; &nbsp; method: GET<br>
+&nbsp; &nbsp; &nbsp; no_follow_redirects: true<br>
+&nbsp; &nbsp; &nbsp; fail_if_ssl: false<br>
+&nbsp; &nbsp; &nbsp; fail_if_not_ssl: false<br>
+&nbsp; &nbsp; &nbsp; fail_if_body_matches_regexp:<br>
+&nbsp; &nbsp; &nbsp; &nbsp; - "Could not connect to database"<br>
+&nbsp; &nbsp; &nbsp; fail_if_body_not_matches_regexp:<br>
+&nbsp; &nbsp; &nbsp; &nbsp; - "Download the latest version here"<br>
+&nbsp; &nbsp; &nbsp; fail_if_header_matches: # Verifies that no cookies are set<br>
+&nbsp; &nbsp; &nbsp; &nbsp; - header: Set-Cookie<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; allow_missing: true<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; regexp: '.*'<br>
+&nbsp; &nbsp; &nbsp; fail_if_header_not_matches:<br>
+&nbsp; &nbsp; &nbsp; &nbsp; - header: Access-Control-Allow-Origin<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; regexp: '(\*|example\.com)'<br>
+&nbsp; &nbsp; &nbsp; tls_config:<br>
+&nbsp; &nbsp; &nbsp; &nbsp; insecure_skip_verify: false<br>
+&nbsp; &nbsp; &nbsp; preferred_ip_protocol: "ip4"<br>
+&nbsp; &nbsp; &nbsp; ip_protocol_fallback: false</p>
+</div>
+
+<p><em>* во многом, данный пример взят с официальной <a href="https://github.com/prometheus/blackbox_exporter" target="_blank">страницы на Github</a>.</em></p>
+
+<p>Теперь откроем конфигурационный файл с описанием правил для предупреждений:</p>
+
+<div class="console">
+<p>vi&nbsp;prometheus/alert.rules</p>
+</div>
+
+<p>Добавим:</p>
+
+<div class="editor">
+<p>&nbsp; ...<br>
+<br>
+&nbsp; - alert: BlackboxSlowProbe<br>
+&nbsp; &nbsp; expr: avg_over_time(probe_duration_seconds[1m]) &gt; 5<br>
+&nbsp; &nbsp; for: 1m<br>
+&nbsp; &nbsp; labels:<br>
+&nbsp; &nbsp; &nbsp; severity: warning<br>
+&nbsp; &nbsp; annotations:<br>
+&nbsp; &nbsp; &nbsp; summary: Blackbox slow probe (instance {{ $labels.instance }})<br>
+&nbsp; &nbsp; &nbsp; description: "Blackbox probe took more than 1s to complete\n &nbsp;VALUE = {{ $value }}\n &nbsp;LABELS = {{ $labels }}"<br>
+<br>
+&nbsp; - alert: BlackboxProbeHttpFailure<br>
+&nbsp; &nbsp; expr: probe_http_status_code &lt;= 199 OR probe_http_status_code &gt;= 400<br>
+&nbsp; &nbsp; for: 0m<br>
+&nbsp; &nbsp; labels:<br>
+&nbsp; &nbsp; &nbsp; severity: critical<br>
+&nbsp; &nbsp; annotations:<br>
+&nbsp; &nbsp; &nbsp; summary: Blackbox probe HTTP failure (instance {{ $labels.instance }})<br>
+&nbsp; &nbsp; &nbsp; description: "HTTP status code is not 200-399\n &nbsp;VALUE = {{ $value }}\n &nbsp;LABELS = {{ $labels }}"</p>
+</div>
+
+<div class="post-console">
+<p>* в данном примере мы создали два правила:</p>
+
+<ul>
+	<li><strong>BlackboxSlowProbe —</strong> предупреждать, если сайт открывается дольше 5 секунд.</li>
+	<li><strong>BlackboxProbeHttpFailure —</strong> реагировать, в случае получения&nbsp;кода ответа с ошибкой работы сайта (более 400).</li>
+</ul>
+</div>
+
+<p>Запускаем добавленный в докер сервис:</p>
+
+<div class="console">
+<p>docker-compose up -d</p>
+</div>
+
+<p>Для визуализации мониторинга с помощью&nbsp;blackbox есть готовый дашборд в графане. Снова открываем страницу импорта:</p>
+
+<p><img alt="Переходим к импорту дашборда в графане" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/05.jpg" style="width: 374px; height: 249px;" title="Переходим к импорту дашборда в графане"></p>
+
+<p>Вводим идентификатор <strong>7587</strong> и выбираем источник (как делали при добавлении дашборда node exporter).</p>
+</div>
+		<div class="article-post-categories">
+			<a href="https://www.dmosk.ru/categories.php?object=devops"># DevOps</a> <a href="https://www.dmosk.ru/categories.php?object=linux"># Linux</a> <a href="https://www.dmosk.ru/categories.php?object=monitoring"># Мониторинг</a> <a href="https://www.dmosk.ru/categories.php?object=servers"># Серверы</a> 		</div>
+		<div class="article-post article-post-inst">
+			<div class="article-post-photo">
+				<img src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/myph.jpg" width="44" height="57" alt="Дмитрий Моск — частный мастер" title="Дмитрий Моск — частный мастер">
+			</div>
+			<div class="article-post-opros-instruktion">
+				Была ли полезна вам эта инструкция?
+				<p><a rel="nofollow" href="https://www.dmosk.ru/answer.php?mini=prometheus-stack-docker&amp;answer=yes" class="answer-yes-no">Да</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a rel="nofollow" href="https://www.dmosk.ru/answer.php?mini=prometheus-stack-docker&amp;answer=no" class="answer-yes-no">Нет</a></p>
+			</div>
+			
+			<div class="article-post-vk">
+				<div id="vk_like"></div>
+			</div>
+			<div class="article-post-chat">
+				<a href="https://t.me/group_dmosk_ru/311" class="descript_services tgram-follow-chat" target="_blank">Обсудить (телеграм-чат)</a>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="article-yet" style="top: 0px;">
+				<img src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/author.jpg" width="350" height="233" alt="Дмитрий Моск" title="Дмитрий Моск — частный мастер">
+		<div class="author-photo">
+			<span itemprop="author">Дмитрий Моск</span> — IT-специалист.<br>
+			<a href="https://www.dmosk.ru/server.php">Настройка серверов</a>, <a href="https://www.dmosk.ru/">услуги DevOps</a>.
+		</div>
+<p><a href="https://www.dmosk.ru/nastroyka-servera.php?object=monitoring" class="descript_services gen-descript_services">Заказать настройку мониторинга</a></p>
+		<p class="polezno-mail-low-margin">Нужна бесплатная консультация?</p>
+		<a href="https://t.me/group_dmosk_ru" class="descript_services tgram-follow" target="_blank">Написать в телеграм-чат</a>
+
+		<div class="article-yet-head m-t-20"><strong>Мини-инструкции</strong></div>
+		<div class="article-yet-links">
+
+<p><a href="https://www.dmosk.ru/miniinstruktions.php?mini=postfix-header-checks">Использование header_checks для замены заголовков в Postfix</a></p><p><a href="https://www.dmosk.ru/miniinstruktions.php?mini=ethereum-ubuntu">Как установить и выполнить базовую настройку ноды для Ethereum под Linux Ubuntu</a></p><p><a href="https://www.dmosk.ru/miniinstruktions.php?mini=keydb-cluster">Как настроить отказоустойчивого кластер из двух серверов KeyDB</a></p><p><strong>Мониторинг под ключ с docker — Prometheus + Grafana + Alertmanager</strong></p><p><a href="https://www.dmosk.ru/miniinstruktions.php?mini=gradle-build">Как с помощью Gradle и плагина ospackage собрать пакеты RPM и Deb</a></p><p><a href="https://www.dmosk.ru/miniinstruktions.php?mini=samba-zfs-snapshots">Создание снапшотов на ZFS с их просмотром на шаре Samba</a></p><p><a href="https://www.dmosk.ru/miniinstruktions.php?mini=gitlab-pipeline">Примеры работы с Gitlab CI/CD — написание конвейеров для автоматизации разработки</a></p><p><a href="https://www.dmosk.ru/miniinstruktions.php" class="b600">Другие инструкции</a></p><p><a href="https://www.dmosk.ru/polezno.php" class="b600">Все статьи</a></p>
+		</div>
+
+		<p class="polezno_mail">Нужна помощь? Пишите:</p>
+		<form method="post">
+           	<p>
+           		           		<textarea class="polezno" name="ideya" rows="5" cols="20" placeholder="Что хотите узнать..." required=""></textarea><br><br>
+               	<input class="polezno" name="kontakt" type="text" placeholder="Контактная эл. почта" value="" required="">
+				<br>
+           	</p>
+           	<p>
+           		<input class="but_polezno" type="submit" value="Получить инструкцию" name="but_send_ideya">
+           	</p>
+		</form>
+		<br><br>
+		<div class="adsense">
+			<!--noindex-->
+			<div class="ads-head">Реклама</div>
+			<div id="yandex_rtb_R-A-2121285-1"><div><template shadowrootmode="closed"><div class="bc436f5c9">
+            <div class="c14eb2e2e"></div>
+            <style>
+                :host {
+                    all: initial !important;
+                    font-family: inherit !important;
+                    
+            width: 100% !important;
+            height: 100% !important;
+        
+                    
+                }
+                .bc436f5c9 {
+                    max-width: 100%;
+                }
+                .c14eb2e2e {
+                    display: table;
+                    table-layout: fixed;
+                    width: 100%;
+                    height: 0;
+                    visibility: hidden;
+                }
+            </style>
+            <div data-container="outer" class="laf874fb1 i3696839e"><div class="r130f5076"><div class="i9e83d45c"></div><div data-ad-id="72057610184953182" data-name="adWrapper" lang="ru" class="q6e3de1b9 t100c0dfd"><div class="u9df887aa r433f2a5 t100c0dfd"><div data-name="adaptiveConstructorAd" id="id8464331715469420792" class="l57aacbce"><div class="l347a8e55 i17488af5"><div class="ndd12d9fc g9cb4f4d8 g34c7a41a"><div data-block-name="video" data-backpack="196.875" class="a1fd9601 hc4a01c5d"><div class="nc376fd1b yde42d47c"><a href="https://yandex.ru/an/count/WjCejI_zOoVX2LaA0oqM00DcaoOQbKgbKga4mGHzFfSxUxRVkVDTNpjVl-FrXZjS6ab6HDKHDcpO-8bIRmnHbOfwd2MY-1FwT4fnEufa9I8o2lgn_b2HbfIeI4f9GZAeHDQZ6qhMf1aZh4L2GqL6DwfBIacqa1qmPPC3zCaH3vdI1o090uC7JXXq76dAVlmW8ZaMCzJP-d5K4I1WY5Qo0hLqTZImRLA0je4jO07Q1hPC2j0siFqhGDl0rgy0RGFRk0Aq3MpF2j0Qy6F8uPQfmAnO0Ta6jd4vNmTey2XEV95xJbS4BZtoXx3_uFsGzHwu9Wmhc7EgAYjWW2yfahJeMcqnXS6JmXfZ1WVhXmHf-miYDSRNUEFjG0UfvW4cv_CDaust0XF8Mqhvl8DmRN5Igs5lhYrEQZLiew8aiJLYMiVgUes-WOfOLs7WLgGH6cwJPkk5004kI39Yo8i6jd41R3rMwotIWRoZqCZNOPGx35e1efe4CMAEOcMBXIrJrtMTgGXMdo4daAJBp9Q-ecaAspAw679Jnp9ZT9Yl3ZO25Z5w0KZ2T0KGu8MaYGrBMvfwVWXZyrk12MIJMu49P7EtG0N85ySWElrm0KUs7no21zN_Xk11zRqXU51zRZs8ztVl0ylOrnf9RVsizu5bZ6d6KMIMcKll3AskwpgMDZUpnAQgq8qoD9W964dl7CXq-mv2R_RWonu9472V9tiaM_H4FwOz-80wDIY8_Zi2cUvc9jFTvhpMrps9ksFqMUzrZ-L7A0KGpH09cSPsYSgLIgNoQa9oo6PIKFu5g5XNQ3HPOXGb_3pS0RO8Ge4u-liEvbp_3mPIELE0G7Mwgky7BwHD91F85nv2gbscTg5g6nC7lKWRzWccIcaXf0608NhZ21Xl2JyCO3jNLwj_ZG1nzElbvYyNBNbjCh27pGkA-wXSBMgF6fQ3rw3stD9t5GMTH8uILW8vnXe0~2?stat-id=1&amp;test-tag=8339245941129233&amp;banner-sizes=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjM1MHg1MjIifQ%3D%3D&amp;actual-format=14&amp;pcodever=1021761&amp;banner-test-tags=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjQyOTU1NDg5NDUifQ%3D%3D&amp;constructor-rendered-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6MzE0OX0&amp;rendered-direct-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6NDEzfQ&amp;width=350&amp;height=522&amp;pcode-active-testids=1018247%2C0%2C0&amp;subDesignId=1000870003" target="_blank" data-asset-click="image" class="t1af8bb1c g4a9a4a9f wfd5d70cc"><div data-name="adaptiveImageContainer" data-x="0.49875" data-y="0.405" data-width="400" data-height="300" class="gd2e472fe fc2d13cd9"><div class="reaf21aa"><div data-name="adaptiveImageTransform" class="cbe66b216 hf2c684be"><img data-name="adaptiveImage" src="https://avatars.mds.yandex.net/get-direct/5350113/-cUYswcvD0oEyhEPaDGa4A/y300" elementtiming="tgo-ssr-image" class="pfc6f995e"></div></div></div></a><div style="position: absolute; overflow: hidden; pointer-events: none; top: -1.182px; right: -2.1px; bottom: -1.182px; left: -2.1px; z-index: 2;" data-name="slot"><div style="display: block; overflow: hidden; backdrop-filter: blur(50px); position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;" data-name="canvas-blur-container"><div style="position: relative; overflow: hidden; filter: blur(20px); margin: -20px; width: calc(100% + 40px); height: calc(100% + 40px);"><canvas style="object-fit: cover; width: 100%; height: 100%; overflow: hidden;"></canvas></div></div><video muted="" volume="0" playsinline="" webkit-playsinline="" pip="false" data-name="video-slot" style="position: absolute; width: 100%; height: 100%; top: 0px; left: 0px; cursor: pointer;" preload="auto" src="https://strm.yandex.ru/vh-canvas-converted/vod-content/7653465683468474014/5b31b0fc-993d-4df0-a765-86a376947648/webm/VP8_426_240_500.webm?vsid=518fd7a9307dfbb55108ecc57ff030e1a2ec82b04535xVASx1761x1715467830"></video><a data-name="video-slot-clicker" target="_blank" rel="nofollow noreferrer" href="https://studyonline.hse.ru/?utm_source=yandex&amp;utm_medium=cpc&amp;type=context&amp;utm_campaign=magistratura_e_commerce&amp;utm_content=16147025246&amp;utm_term=---autotargeting&amp;position=0&amp;region_name=Antalya&amp;roistat=direct6_context_16147025246_---autotargeting&amp;roistat_referrer=www.dmosk.ru&amp;roistat_pos=none_0&amp;yclid=6639275707104231423&amp;stat-id=1&amp;test-tag=8339245941129233&amp;banner-sizes=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjM1MHg1MjIifQ%3D%3D&amp;actual-format=14&amp;pcodever=1021761&amp;banner-test-tags=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjQyOTU1NDg5NDUifQ%3D%3D&amp;constructor-rendered-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6MzE0OX0&amp;rendered-direct-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6NDEzfQ&amp;width=350&amp;height=522&amp;pcode-active-testids=1018247%2C0%2C0&amp;subDesignId=1000870003" style="position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; pointer-events: auto; cursor: pointer;"></a><div><div class="C2wHwIi" style="visibility: visible;"><template shadowrootmode="open"><div style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; cursor: pointer;"></div></template><style type="text/css">.C2wHwIi{animation:none 0s ease 0s 1 normal none running;-webkit-backface-visibility:visible;backface-visibility:visible;background:transparent none repeat 0 0/auto auto padding-box border-box scroll;border:none;border-collapse:separate;border-image:none;border-radius:0;border-spacing:0;bottom:auto;box-shadow:none;box-sizing:content-box;caption-side:top;clear:none;clip:auto;color:#000;column-fill:balance;grid-column-gap:normal;column-gap:normal;column-rule:medium none currentColor;column-span:1;columns:auto;content:normal;counter-increment:none;counter-reset:none;cursor:auto;direction:ltr;display:inline;empty-cells:show;float:none;font-family:serif;font-size:medium;font-style:normal;font-feature-settings:normal;font-variant:normal;font-weight:400;font-stretch:normal;line-height:normal;height:auto;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none;left:auto;letter-spacing:normal;list-style:disc outside none;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;opacity:1;orphans:2;outline:medium none invert;overflow:visible;overflow-x:visible;overflow-y:visible;padding:0;page-break-after:auto;page-break-before:auto;page-break-inside:auto;perspective:none;perspective-origin:50% 50%;position:static;right:auto;-moz-tab-size:8;tab-size:8;table-layout:auto;text-align:left;text-align-last:auto;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;top:auto;transform:none;transform-origin:50% 50% 0;transform-style:flat;transition:none 0s ease 0s;unicode-bidi:normal;vertical-align:baseline;visibility:visible;white-space:normal;widows:2;width:auto;word-spacing:normal;z-index:auto;all:initial;display:block;position:absolute;width:100%;height:100%;left:0;top:0;pointer-events:auto;visibility:hidden;overflow:hidden;z-index:0}</style></div></div><div class="hMeVtaJh"><template shadowrootmode="open"><div><div class="f10 notranslate Ev9C8HtUy2 OwSepp" translate="no" style="--skin-font-size: 0.8em; --skin-skip-button-font-size: 11.200000000000001px;"><div class="lfzx94"></div><div class="o9IKZTMS"><div class="ctP5"></div></div><div class="PHSN"></div><div class="jPEDX2VM notranslate" translate="no"></div></div><style type="text/css">.DxRk9{pointer-events:auto;position:absolute;top:0;right:0;bottom:0;left:0}</style><style type="text/css">.q20vPj{height:100%;opacity:0}.rHZ{opacity:1}.tixH14{height:calc(100% - var(--ctat-margin-top) - var(--ctat-margin-bottom));display:flex;align-items:center;justify-content:center;margin-left:var(--ctat-horizontal-margin);margin-right:var(--ctat-horizontal-margin);margin-top:var(--ctat-margin-top);position:relative;z-index:0}.RszrmDVG,.g1hwZAn6{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;color:#fff;font-family:YS Text Variable, YS Text, Arial, sans-serif;font-weight:600;text-shadow:0 0 16px rgba(0,0,0,.05),0 0 8px rgba(0,0,0,.05),0 4px 4px rgba(0,0,0,.05),0 2px 2px rgba(0,0,0,.05),0 1px 1px rgba(0,0,0,.05)}.rHZ .g1hwZAn6 .lGHpoQtmNe{--ctat-animation-delay-line:calc(var(--ctat-animation-title-part-duration)*3*var(--stw-text-line-index));--ctat-animation-delay-third:calc(var(--ctat-animation-title-part-duration)*var(--stw-text-char-inside-line-third));--ctat-animation-overlap-char:calc(var(--ctat-animation-delay-third) + var(--ctat-animation-delay-line));animation-name:QIxeLZr;animation-duration:var(--ctat-animation-title-part-duration);animation-delay:calc(var(--ctat-animation-current-time)*-1 + var(--ctat-animation-overlap-char) + var(--ctat-animation-title-animation-show-delay));animation-fill-mode:both;animation-timing-function:ease-in-out;animation-play-state:var(--ctat-animation-playing-state)}@keyframes QIxeLZr{0%{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}.RszrmDVG .mTkTH,.g1hwZAn6 .mTkTH{overflow:clip;pointer-events:auto}.rHZ .g1hwZAn6 .mTkTH{--ctat-animation-title-animation-enlarge-current-line-delay:calc(var(--ctat-animation-title-animation-enlargement-delay) + (var(--ctat-animation-title-animation-enlargement-duration) + var(--ctat-animation-title-enlargement-next-line-delay))*var(--stw-text-line-index));--ctat-animation-title-animation-hide-current-line-delay:calc(var(--ctat-animation-title-animation-hide-delay) + var(--ctat-animation-title-animation-hide-duration)*var(--stw-text-line-index));animation-name:UmKxgn4K,p5HcJMy;animation-duration:var(--ctat-animation-title-animation-enlargement-duration),var(--ctat-animation-title-animation-hide-duration);animation-delay:calc(var(--ctat-animation-current-time)*-1 + var(--ctat-animation-title-animation-enlarge-current-line-delay)),calc(var(--ctat-animation-current-time)*-1 + var(--ctat-animation-title-animation-hide-current-line-delay));animation-fill-mode:both,forwards;animation-timing-function:cubic-bezier(.35,0,.65,1),ease-in-out;animation-play-state:var(--ctat-animation-playing-state),var(--ctat-animation-playing-state)}@keyframes UmKxgn4K{0%{transform:scale(1) translateY(0)}to{transform:scale(1.1) translateY(0)}}@keyframes p5HcJMy{0%{transform:scale(1.1) translateY(0);opacity:1}99%{transform:scale(1.1) translateY(100%);opacity:0}to{transform:scale(1.1) translateY(9999px);opacity:0}}.rHZ .RszrmDVG .mTkTH{--ctat-animation-body-animation-show-current-line-delay:calc(var(--ctat-animation-body-animation-show-delay) + (var(--ctat-animation-body-animation-show-duration)*0.5 + var(--ctat-animation-body-animation-show-line-delay))*var(--stw-text-line-index));--ctat-animation-body-animation-enlargement-current-line-delay:calc(var(--ctat-animation-body-animation-enlargement-delay) + var(--ctat-animation-body-animation-show-duration)*var(--stw-text-line-index));animation-name:DhNPA,gmTZ;animation-duration:var(--ctat-animation-body-animation-show-duration),var(--ctat-animation-body-animation-enlargement-duration);animation-delay:calc(var(--ctat-animation-current-time)*-1 + var(--ctat-animation-body-animation-show-current-line-delay)),calc(var(--ctat-animation-current-time)*-1 + var(--ctat-animation-body-animation-enlargement-current-line-delay));animation-fill-mode:both,none;animation-timing-function:ease-in-out,ease-in-out;animation-play-state:var(--ctat-animation-playing-state),var(--ctat-animation-playing-state)}.rHZ .RszrmDVG{z-index:0;animation-name:nbFNXNN0oF;animation-delay:calc(var(--ctat-animation-current-time)*-1 + var(--ctat-animation-body-animation-show-delay));animation-duration:.1s;animation-timing-function:linear;animation-fill-mode:both}.rHZ .g1hwZAn6{z-index:1}@keyframes nbFNXNN0oF{0%{z-index:0}to{z-index:1}}@keyframes DhNPA{0%{transform:translateY(9999px);opacity:0}1%{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes gmTZ{0%{transform:scale(1);letter-spacing:normal}33%{transform:scale(1.1);letter-spacing:.1em}to{transform:scale(1);letter-spacing:normal}}.cEX{width:100%;height:100%;position:absolute;top:0;left:0;background-color:rgba(0,0,0,.1)}</style><style type="text/css">.Bgs6qfs8lb{position:absolute;top:50%;left:50%;display:flex;transform:translate(-50%,-50%)}.wdow9Z{position:absolute;top:0;right:0;bottom:0;left:0;-webkit-backdrop-filter:blur(1px);backdrop-filter:blur(1px);background-color:rgba(0,0,0,.2);display:grid;align-items:center;justify-items:center;place-items:center;pointer-events:auto;filter:drop-shadow(0 2px 3px rgba(0,0,0,.2))}.wdow9Z svg{fill:#fff;width:40px;height:43px}.nfhciI6sg{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:auto}</style><style type="text/css">.h7JXnOWG{--size:calc(28px*var(--responsive-multiplier));width:var(--size);height:var(--size);padding:4px;cursor:pointer;pointer-events:auto;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}</style><style type="text/css">.kBdyo6x{margin:4px 0 0 auto;min-width:0}.Sx58{margin-top:8px;margin-right:7px}.Et2R{--forward-bg-color:hsla(0,0%,100%,0.1);display:flex;align-items:center;margin-left:4px;padding:0 8px;height:24px;line-height:24px;font-size:12px;text-shadow:0 0 2px rgba(0,0,0,.75);border-radius:12px;background:linear-gradient(var(--forward-bg-color),var(--forward-bg-color)),rgba(35,37,38,.1);transition:100ms background-color ease-in}.Et2R:hover{background:linear-gradient(var(--forward-bg-color),var(--forward-bg-color)),rgba(35,37,38,.4)}.MJoy3b{display:inline-block;height:16px;width:16px;margin:0 6px 0 -2px;border-radius:50%}.XDlro{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}</style><style type="text/css">.ctP5{--responsive-multiplier:1;display:flex}.cjFq7OJx99{margin-top:15px;margin-left:6px}.mFI svg{filter:drop-shadow(0 2px 3px rgba(0,0,0,.2));fill:#f2f2f2;opacity:1}.VWOgpYi9F svg{position:relative;top:-2px}</style><style type="text/css">.ijbtEDlp{position:relative;display:flex;flex-flow:column nowrap;z-index:0;height:100%;width:100%;overflow:visible;justify-content:flex-end}.ijbtEDlp:before{z-index:-1;content:"";position:absolute;top:0;right:0;bottom:0;left:0;background-image:linear-gradient(180deg,transparent,rgba(0,0,0,.004) 6.67%,rgba(0,0,0,.018) 13.33%,rgba(0,0,0,.04) 20%,rgba(0,0,0,.073) 26.67%,rgba(0,0,0,.115) 33.33%,rgba(0,0,0,.165) 40%,rgba(0,0,0,.221) 46.67%,rgba(0,0,0,.278) 53.33%,rgba(0,0,0,.334) 60%,rgba(0,0,0,.384) 66.67%,rgba(0,0,0,.426) 73.33%,rgba(0,0,0,.459) 80%,rgba(0,0,0,.482) 86.67%,rgba(0,0,0,.495) 93.33%,rgba(0,0,0,.5));opacity:.65}.jWhn5xaUE:before{content:none}.sBh.ijbtEDlp:before{top:30px}.mPvv77f{opacity:1;transition:none}.sBh .mPvv77f{order:-1;opacity:.01;transition:opacity .3s ease-in-out,order 0s .3s}.r4Gtu{margin:0 16px;transition:none}.sBh .r4Gtu,.cRzn .r4Gtu{margin:0;transition:margin 0s .3s}.ijbtEDlp .kvV{width:35px;height:35px;padding-right:2px}.Ft1fYCiUC{display:flex;justify-content:space-between;align-items:flex-end}</style><style type="text/css">.kA6Qzv{}</style><style type="text/css">.vwJrSzNL{position:absolute;box-shadow:0 10px 20px -4px rgba(0,0,0,.36);background-color:#2f2f32;border-radius:6px;font-family:YS Text Variable, YS Text, Arial, sans-serif;color:#fff;font-weight:400;font-size:13px;line-height:16px;letter-spacing:-.31px}.wYNN{position:absolute;width:24px;height:8px}.wYNN svg{position:absolute;left:0;top:0}.Nal{display:flex}.jBKbKp{padding:5px 8px 7px}.KRFJzn1{pointer-events:auto;padding:5px 5px 0 0}</style><style type="text/css">.jPEDX2VM{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none}</style><style type="text/css">.f10{font-family:YS Text Variable, YS Text, Arial, sans-serif;font-size:var(--skin-font-size);color:#fff;position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;display:grid;grid-template-rows:auto 1fr auto auto auto;grid-template-columns:auto auto 1fr auto 35px}.T1hFQCP1Aj{grid-template-rows:auto 1fr auto auto 10%}.o9IKZTMS{grid-row:1;grid-column:1/5;position:relative}.cDzQEV{grid-row:3;grid-column:1/-1;overflow:hidden}.VYWFRbN{margin-bottom:.3em}.gHea6u{grid-row:4;grid-column:4/6;font-size:var(--skin-skip-button-font-size);padding-right:6px;align-self:flex-end}.jCg1R{visibility:hidden}.OwSepp .gAN{padding-top:0;padding-bottom:0}.OwSepp .TK6xGf3{height:32px}.I0NpnJns{grid-row:2/4;grid-column:1/6;padding:10px 36px;min-height:0;min-width:0;position:relative}.yYst{pointer-events:auto}.Ev9C8HtUy2 .I0NpnJns,.XRGQe6A .I0NpnJns,.XRGQe6A.Ev9C8HtUy2 .I0NpnJns{grid-row:2/4;grid-column:1/6;padding:10px 20px}.QXf4G1sPK0{position:relative;grid-row:4;grid-column:1;padding-left:16px;margin-bottom:4px;min-width:0}.VJxLzA{grid-column:3}.GssHg{grid-column:1/6;padding-right:6px}.OwSepp .QXf4G1sPK0{padding-left:6px;margin-bottom:0;align-self:flex-end}.OwSepp .NnbzgAQFzo{margin-right:4px;margin-left:4px;max-width:calc(100% - 8px)}.PHSN{grid-row:5;grid-column:1/6;display:flex}.IwG5,.lfzx94{position:absolute;right:0;bottom:0;left:0}.IwG5{height:236px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.01) 6.67%,rgba(0,0,0,.03) 13.33%,rgba(0,0,0,.07) 20%,rgba(0,0,0,.12) 26.67%,rgba(0,0,0,.19) 33.33%,rgba(0,0,0,.27) 40%,rgba(0,0,0,.35) 46.67%,rgba(0,0,0,.45) 53.33%,rgba(0,0,0,.53) 60%,rgba(0,0,0,.61) 66.67%,rgba(0,0,0,.68) 73.33%,rgba(0,0,0,.73) 80%,rgba(0,0,0,.77) 86.67%,rgba(0,0,0,.79) 93.33%,rgba(0,0,0,.8))}.IlEWSMS6d{position:relative;grid-row:4;grid-column:1/6;display:flex;overflow:hidden;padding:0 16px 8px;align-items:flex-end;justify-content:space-between;grid-gap:12px;gap:12px}.l8HVb{flex-grow:0;flex-shrink:1;overflow:hidden;max-width:400px}.UyFGIGV{display:flex;align-items:flex-end;flex:1 0 0;max-width:-webkit-fit-content;max-width:-moz-fit-content;max-width:fit-content;height:100%;min-width:40px}.M2gBV9{min-width:-webkit-fit-content;min-width:-moz-fit-content;min-width:fit-content}.x95vQ1DT,.Y4QKF1{grid-row:4/6;padding-bottom:60px}.x95vQ1DT{padding-bottom:65px}.cEX .q20vPj{overflow:hidden}</style></div></template><style type="text/css">.hMeVtaJh{animation:none 0s ease 0s 1 normal none running;-webkit-backface-visibility:visible;backface-visibility:visible;background:transparent none repeat 0 0/auto auto padding-box border-box scroll;border:none;border-collapse:separate;border-image:none;border-radius:0;border-spacing:0;bottom:auto;box-shadow:none;box-sizing:content-box;caption-side:top;clear:none;clip:auto;color:#000;column-fill:balance;grid-column-gap:normal;column-gap:normal;column-rule:medium none currentColor;column-span:1;columns:auto;content:normal;counter-increment:none;counter-reset:none;cursor:auto;direction:ltr;display:inline;empty-cells:show;float:none;font-family:serif;font-size:medium;font-style:normal;font-feature-settings:normal;font-variant:normal;font-weight:400;font-stretch:normal;height:auto;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none;left:auto;letter-spacing:normal;list-style:disc outside none;margin:0;max-height:none;max-width:none;min-height:0;min-width:0;opacity:1;orphans:2;outline:medium none invert;overflow:visible;overflow-x:visible;overflow-y:visible;padding:0;page-break-after:auto;page-break-before:auto;page-break-inside:auto;perspective:none;perspective-origin:50% 50%;position:static;right:auto;-moz-tab-size:8;tab-size:8;table-layout:auto;text-align:left;text-align-last:auto;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;top:auto;transform:none;transform-origin:50% 50% 0;transform-style:flat;transition:none 0s ease 0s;unicode-bidi:normal;vertical-align:baseline;visibility:visible;white-space:normal;widows:2;width:auto;word-spacing:normal;z-index:auto;all:initial;display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;font-size:16px;overflow:hidden;line-height:normal}</style></div></div><div data-name="vas-sound-control-container" class="lb8c3967 aa64a2f17" style="display: block;"><svg data-name="vas-sound-control-unmute" class="c1ad7306c" width="26" height="24" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block;"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.6102 4L2.5 5.3281L7.1447 9.24H3.6369V14.4411H7.6026L11.5763 18.342H12.9063V14.0928L19.92 20C19.92 20 20.22 19.7081 20.5402 19.3595C20.7822 19.0889 21.1225 18.6632 21.1225 18.6632L3.6102 4ZM16.517 12.4121L18.5193 14.0985C18.7468 13.3716 18.865 12.6115 18.865 11.84C18.865 9.9248 18.1361 8.0778 16.8106 6.6395L15.0795 8.1271C16.0262 9.1558 16.5476 10.4744 16.5476 11.84C16.5476 12.0319 16.5373 12.2228 16.517 12.4121ZM20.3337 15.6266L22.1247 17.1351C23.0226 15.5036 23.5 13.693 23.5 11.8401C23.5 8.969 22.3529 6.1984 20.2708 4.0389L18.5397 5.459C20.2441 7.2263 21.1826 9.4926 21.1826 11.8401C21.1826 13.1524 20.8896 14.4387 20.3337 15.6266ZM9.9814 6.9075L12.9063 9.371V5.3392H11.5763L9.9814 6.9075Z" fill="#F2F2F2"></path></svg><svg data-name="vas-sound-control-mute" class="c1ad7306c" width="26" height="24" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;"><path fill-rule="evenodd" clip-rule="evenodd" d="M20.263 4.06C22.3437 6.21903 23.49 8.98903 23.49 11.8595C23.49 14.731 22.3437 17.501 20.263 19.66L18.533 18.2392C20.2363 16.4723 21.1742 14.2075 21.1742 11.8595C21.1742 9.51251 20.2363 7.24671 18.533 5.47979L20.263 4.06ZM7.61007 9.25997L11.5741 5.36002H12.9034V18.36H11.5741L7.60318 14.4599H3.64001V9.25997H7.61007ZM18.858 11.8594C18.858 9.94462 18.1297 8.09802 16.8051 6.66003L15.0751 8.14731C16.0212 9.17579 16.5422 10.4941 16.5422 11.8594C16.5422 13.2259 16.0212 14.5442 15.0751 15.5727L16.8051 17.06C18.1297 15.6219 18.858 13.7754 18.858 11.8594Z" fill="#F2F2F2"></path></svg></div></div><div data-test="AdKebabAndLabel--adLabelContent" data-label="" class="h23eccbb7 y10a85dbb wa5c05154 c56d9ec94 wdc73f4f8"><span>Reklam</span><span class="ube89ded8">•</span><span>16+</span></div><div data-new-adtune="true" data-sticky-adtune="false" age="16+" language="6" adlabelclassname="y10a85dbb wa5c05154" class="q534400be sc5a096b o70172d63 e48cb6b1b"><div class="r1658fb5b c56d9ec94 ff0f7a53a"></div><div class="k765d4b95 c56d9ec94"><svg width="8" height="20" viewBox="0 0 8 20" fill="white" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="4" r="1.5"></circle><circle cx="4" cy="10" r="1.5"></circle><circle cx="4" cy="16" r="1.5"></circle></svg></div></div></div><div data-block-name="domain" data-backpack="30" class="a1fd9601 m46c2ad5f x75566081 vcbdc9955"><a href="https://yandex.ru/an/count/WjCejI_zOoVX2LaA0oqM00DcaoOQbKgbKga4mGHzFfSxUxRVkVDTNpjVl-FrXZjS6ab6HDKHDcpO-8bIRmnHbOfwd2MY-1FwT4fnEufa9I8o2lgn_b2HbfIeI4f9GZAeHDQZ6qhMf1aZh4L2GqL6DwfBIacqa1qmPPC3zCaH3vdI1o090uC7JXXq76dAVlmW8ZaMCzJP-d5K4I1WY5Qo0hLqTZImRLA0je4jO07Q1hPC2j0siFqhGDl0rgy0RGFRk0Aq3MpF2j0Qy6F8uPQfmAnO0Ta6jd4vNmTey2XEV95xJbS4BZtoXx3_uFsGzHwu9Wmhc7EgAYjWW2yfahJeMcqnXS6JmXfZ1WVhXmHf-miYDSRNUEFjG0UfvW4cv_CDaust0XF8Mqhvl8DmRN5Igs5lhYrEQZLiew8aiJLYMiVgUes-WOfOLs7WLgGH6cwJPkk5004kI39Yo8i6jd41R3rMwotIWRoZqCZNOPGx35e1efe4CMAEOcMBXIrJrtMTgGXMdo4daAJBp9Q-ecaAspAw679Jnp9ZT9Yl3ZO25Z5w0KZ2T0KGu8MaYGrBMvfwVWXZyrk12MIJMu49P7EtG0N85ySWElrm0KUs7no21zN_Xk11zRqXU51zRZs8ztVl0ylOrnf9RVsizu5bZ6d6KMIMcKll3AskwpgMDZUpnAQgq8qoD9W964dl7CXq-mv2R_RWonu9472V9tiaM_H4FwOz-80wDIY8_Zi2cUvc9jFTvhpMrps9ksFqMUzrZ-L7A0KGpH09cSPsYSgLIgNoQa9oo6PIKFu5g5XNQ3HPOXGb_3pS0RO8Ge4u-liEvbp_3mPIELE0G7Mwgky7BwHD91F85nv2gbscTg5g6nC7lKWRzWccIcaXf0608NhZ21Xl2JyCO3jNLwj_ZG1nzElbvYyNBNbjCh27pGkA-wXSBMgF6fQ3rw3stD9t5GMTH8uILW8vnXe0~2?stat-id=1&amp;test-tag=8339245941129233&amp;banner-sizes=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjM1MHg1MjIifQ%3D%3D&amp;actual-format=14&amp;pcodever=1021761&amp;banner-test-tags=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjQyOTU1NDg5NDUifQ%3D%3D&amp;constructor-rendered-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6MzE0OX0&amp;rendered-direct-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6NDEzfQ&amp;width=350&amp;height=522&amp;pcode-active-testids=1018247%2C0%2C0&amp;subDesignId=1000870003" target="_blank" data-asset-click="domain" class="wd115c6d1"><img data-favicon="" src="https://favicon.yandex.net/favicon/studyonline.hse.ru?size=32&amp;stub=2" alt="" class="o59b8155a p752218 j2320ab47"><div class="p72c23b4e"><div id="id7472821715469420794" data-scroller="" data-autoplay="" data-autoplay-duration="900" class="kdea0c173"><span class="u13b5e86c o661bab22 ne57f5174">studyonline.hse.ru</span></div></div></a></div><div data-block-name="title" data-backpack="84" class="a1fd9601 m46c2ad5f x75566081 fd5ae6598"><div class="h7a12a48"><a href="https://yandex.ru/an/count/WjCejI_zOoVX2LaA0oqM00DcaoOQbKgbKga4mGHzFfSxUxRVkVDTNpjVl-FrXZjS6ab6HDKHDcpO-8bIRmnHbOfwd2MY-1FwT4fnEufa9I8o2lgn_b2HbfIeI4f9GZAeHDQZ6qhMf1aZh4L2GqL6DwfBIacqa1qmPPC3zCaH3vdI1o090uC7JXXq76dAVlmW8ZaMCzJP-d5K4I1WY5Qo0hLqTZImRLA0je4jO07Q1hPC2j0siFqhGDl0rgy0RGFRk0Aq3MpF2j0Qy6F8uPQfmAnO0Ta6jd4vNmTey2XEV95xJbS4BZtoXx3_uFsGzHwu9Wmhc7EgAYjWW2yfahJeMcqnXS6JmXfZ1WVhXmHf-miYDSRNUEFjG0UfvW4cv_CDaust0XF8Mqhvl8DmRN5Igs5lhYrEQZLiew8aiJLYMiVgUes-WOfOLs7WLgGH6cwJPkk5004kI39Yo8i6jd41R3rMwotIWRoZqCZNOPGx35e1efe4CMAEOcMBXIrJrtMTgGXMdo4daAJBp9Q-ecaAspAw679Jnp9ZT9Yl3ZO25Z5w0KZ2T0KGu8MaYGrBMvfwVWXZyrk12MIJMu49P7EtG0N85ySWElrm0KUs7no21zN_Xk11zRqXU51zRZs8ztVl0ylOrnf9RVsizu5bZ6d6KMIMcKll3AskwpgMDZUpnAQgq8qoD9W964dl7CXq-mv2R_RWonu9472V9tiaM_H4FwOz-80wDIY8_Zi2cUvc9jFTvhpMrps9ksFqMUzrZ-L7A0KGpH09cSPsYSgLIgNoQa9oo6PIKFu5g5XNQ3HPOXGb_3pS0RO8Ge4u-liEvbp_3mPIELE0G7Mwgky7BwHD91F85nv2gbscTg5g6nC7lKWRzWccIcaXf0608NhZ21Xl2JyCO3jNLwj_ZG1nzElbvYyNBNbjCh27pGkA-wXSBMgF6fQ3rw3stD9t5GMTH8uILW8vnXe0~2?stat-id=1&amp;test-tag=8339245941129233&amp;banner-sizes=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjM1MHg1MjIifQ%3D%3D&amp;actual-format=14&amp;pcodever=1021761&amp;banner-test-tags=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjQyOTU1NDg5NDUifQ%3D%3D&amp;constructor-rendered-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6MzE0OX0&amp;rendered-direct-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6NDEzfQ&amp;width=350&amp;height=522&amp;pcode-active-testids=1018247%2C0%2C0&amp;subDesignId=1000870003" target="_blank" data-asset-click="title" class="l25202b3b"><div class="a4e8c73de t778eab7f k69091d39"><span class="u13b5e86c i9a8ba4e7">Высшее онлайн-образование в&nbsp;вузе №1 России — НИУ ВШЭ!</span></div></a></div></div><div data-block-name="body" data-backpack="44" class="a1fd9601 m46c2ad5f x75566081 qca82c41c"><div class="h7a12a48"><a href="https://yandex.ru/an/count/WjCejI_zOoVX2LaA0oqM00DcaoOQbKgbKga4mGHzFfSxUxRVkVDTNpjVl-FrXZjS6ab6HDKHDcpO-8bIRmnHbOfwd2MY-1FwT4fnEufa9I8o2lgn_b2HbfIeI4f9GZAeHDQZ6qhMf1aZh4L2GqL6DwfBIacqa1qmPPC3zCaH3vdI1o090uC7JXXq76dAVlmW8ZaMCzJP-d5K4I1WY5Qo0hLqTZImRLA0je4jO07Q1hPC2j0siFqhGDl0rgy0RGFRk0Aq3MpF2j0Qy6F8uPQfmAnO0Ta6jd4vNmTey2XEV95xJbS4BZtoXx3_uFsGzHwu9Wmhc7EgAYjWW2yfahJeMcqnXS6JmXfZ1WVhXmHf-miYDSRNUEFjG0UfvW4cv_CDaust0XF8Mqhvl8DmRN5Igs5lhYrEQZLiew8aiJLYMiVgUes-WOfOLs7WLgGH6cwJPkk5004kI39Yo8i6jd41R3rMwotIWRoZqCZNOPGx35e1efe4CMAEOcMBXIrJrtMTgGXMdo4daAJBp9Q-ecaAspAw679Jnp9ZT9Yl3ZO25Z5w0KZ2T0KGu8MaYGrBMvfwVWXZyrk12MIJMu49P7EtG0N85ySWElrm0KUs7no21zN_Xk11zRqXU51zRZs8ztVl0ylOrnf9RVsizu5bZ6d6KMIMcKll3AskwpgMDZUpnAQgq8qoD9W964dl7CXq-mv2R_RWonu9472V9tiaM_H4FwOz-80wDIY8_Zi2cUvc9jFTvhpMrps9ksFqMUzrZ-L7A0KGpH09cSPsYSgLIgNoQa9oo6PIKFu5g5XNQ3HPOXGb_3pS0RO8Ge4u-liEvbp_3mPIELE0G7Mwgky7BwHD91F85nv2gbscTg5g6nC7lKWRzWccIcaXf0608NhZ21Xl2JyCO3jNLwj_ZG1nzElbvYyNBNbjCh27pGkA-wXSBMgF6fQ3rw3stD9t5GMTH8uILW8vnXe0~2?stat-id=1&amp;test-tag=8339245941129233&amp;banner-sizes=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjM1MHg1MjIifQ%3D%3D&amp;actual-format=14&amp;pcodever=1021761&amp;banner-test-tags=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjQyOTU1NDg5NDUifQ%3D%3D&amp;constructor-rendered-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6MzE0OX0&amp;rendered-direct-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6NDEzfQ&amp;width=350&amp;height=522&amp;pcode-active-testids=1018247%2C0%2C0&amp;subDesignId=1000870003" target="_blank" data-asset-click="body" class="l25202b3b"><div class="d60f49252 w89f6c9f3 v5ddd7bbd"><span class="u13b5e86c i9a8ba4e7">ТОП-1 ВУЗ России по&nbsp;версии Forbes! Топ-3 в&nbsp;рейтинге RAEX. Скидки до&nbsp;70%. Успейте!</span></div></a></div></div><div data-block-name="sitelinks" data-backpack="89" class="a1fd9601 m46c2ad5f x75566081 i8060df5b"><div class="y62e41e8f"><a href="https://yandex.ru/an/count/WjCejI_zOoVX2LaA0oqM00DcaoOQbKgbKga4mGHzFfSxUxRVkVDTNpjVl-FrXZjS6ab6HDKHDcpO-8bIRmnHbOfwd2MY-1FwT4fnEufa9I8o2lgn_b2HbfIeI4f9GZAeHDQZ6qhMf1aZh4L2GqL6DwfBIacqa1qmPPC3zCaH3vdI1o090uC7JXXq76dAVlmW8ZaMCzJP-d5K4I1WY5Qo0hLqTZImRLA0je4jO07Q1hPC2j0siFqhGDl0rgy0RGFRk0Aq3MpF2j0Qy6F8uPQfmAnO0Ta6jd4vNmTey2XEV95xJbS4BZtoXx3_uFsGzHwu9Wmhc7EgAYjWW2yfahJeMcqnXS6JmXfZ1WVhXmHf-miYDSRNUEFjG0UfvW4cv_CDaust0XF8Mqhvl8DmRN5Igs5lhYrEQZLiew8aiJLYMiVgUes-WOfOLs7WLgGH6cwJPkk5004kI39Yo8i6jd41R3rMwotIWRoZqCZNOPGx35e1efe4CMAEOcMBXIrJrtMTgGXMdo4daAJBp9Q-ecaAspAw679Jnp9ZT9Yl3ZO25Z5w0KZ2T0KGu8MaYGrBMvfwVWXZyrk12MIJMu49P7EtG0N85ySWElrm0KUs7no21zN_Xk11zRqXU51zRZs8ztVl0ylOrnf9RVsizu5bZ6d6KMIMcKll3AskwpgMDZUpnAQgq8qoD9W964dl7CXq-mv2R_RWonu9472V9tiaM_H4FwxWmGVKgK51zDyHo7GtCvdkDkUrlkv9t1sZptglUom_GYc0Q8P8o3IsIrIkL2gLLnEIGpQJWlAJqKW2QJHPOXGb_3pS0RO8Ge4u-liEvbp_3mPIELE0G7Mwgky7BwHD91F85nv2gbscTg5g6nC7lKWRzWccIcaXf0608NhZ21Xl2JyCO3jNLwj_ZG1nzElbvYyNBNbjCh27pGkA-wXSBMgF6fQ3rw3stD9t5GMTH8uILW8vnXe0~2?stat-id=1&amp;test-tag=8339245941129233&amp;banner-sizes=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjM1MHg1MjIifQ%3D%3D&amp;actual-format=14&amp;pcodever=1021761&amp;banner-test-tags=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjQyOTU1NDg5NDUifQ%3D%3D&amp;constructor-rendered-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6MzE0OX0&amp;rendered-direct-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6NDEzfQ&amp;width=350&amp;height=522&amp;pcode-active-testids=1018247%2C0%2C0&amp;subDesignId=1000870003" target="_blank" data-asset-click="sitelinks" class="l52c68a5d h9081347a"><div class="k88e885b8 t75353ddf xea3eae99"><span class="u13b5e86c i9a8ba4e7">Карьерные перспективы</span></div><div class="d728f3ed1"><style>.l52c68a5d:hover path{fill: undefined}</style><svg width="7" height="9.333333333333334" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.8 6.00001L6.13941 6.33942C6.32686 6.15197 6.32686 5.84805 6.13941 5.6606L5.8 6.00001ZM0.660589 1.53942L5.46059 6.33942L6.13941 5.6606L1.33941 0.860601L0.660589 1.53942ZM5.46059 5.6606L0.660589 10.4606L1.33941 11.1394L6.13941 6.33942L5.46059 5.6606Z" fill="rgb(37, 39, 41)"></path></svg></div></a><a href="https://yandex.ru/an/count/WjCejI_zOoVX2LaA0oqM00DcaoOQbKgbKga4mGHzFfSxUxRVkVDTNpjVl-FrXZjS6ab6HDKHDcpO-8bIRmnHbOfwd2MY-1FwT4fnEufa9I8o2lgn_b2HbfIeI4f9GZAeHDQZ6qhMf1aZh4L2GqL6DwfBIacqa1qmPPC3zCaH3vdI1o090uC7JXXq76dAVlmW8ZaMCzJP-d5K4I1WY5Qo0hLqTZImRLA0je4jO07Q1hPC2j0siFqhGDl0rgy0RGFRk0Aq3MpF2j0Qy6F8uPQfmAnO0Ta6jd4vNmTey2XEV95xJbS4BZtoXx3_uFsGzHwu9Wmhc7EgAYjWW2yfahJeMcqnXS6JmXfZ1WVhXmHf-miYDSRNUEFjG0UfvW4cv_CDaust0XF8Mqhvl8DmRN5Igs5lhYrEQZLiew8aiJLYMiVgUes-WOfOLs7WLgGH6cwJPkk5004kI39Yo8i6jd41R3rMwotIWRoZqCZNOPGx35e1efe4CMAEOcMBXIrJrtMTgGXMdo4daAJBp9Q-ecaAspAw679Jnp9ZT9Yl3ZO25Z5w0KZ2T0KGu8MaYGrBMvfwVWXZyrk12MIJMu49P7EtG0N85ySWElrm0KUs7no21zN_Xk11zRqXU51zRZs8ztVl0ylOrnf9RVsizu5bZ6d6KMIMcKll3AskwpgMDZUpnAQgq8qoD9W964dl7CXq-mv2R_RWonu9472V9tiaM_H4FyRWmGVKgK51zDyHo7GtCvdkDkUrlkv9t1sZptglUom_GYc0Q8P8o3IsIrIkL2gLLnEIGpQJWl87EKBTQJHPOXGb_3pS0RO8Ge4u-liEvbp_3mPIELE0G7Mwgky7BwHD91F85nv2gbscTg5g6nC7lKWRzWccIcaXf0608NhZ21Xl2JyCO3jNLwj_ZG1nzElbvYyNBNbjCh27pGkA-wXSBMgF6fQ3rw3stD9t5GMTH8uILW8vnXe0~2?stat-id=1&amp;test-tag=8339245941129233&amp;banner-sizes=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjM1MHg1MjIifQ%3D%3D&amp;actual-format=14&amp;pcodever=1021761&amp;banner-test-tags=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjQyOTU1NDg5NDUifQ%3D%3D&amp;constructor-rendered-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6MzE0OX0&amp;rendered-direct-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6NDEzfQ&amp;width=350&amp;height=522&amp;pcode-active-testids=1018247%2C0%2C0&amp;subDesignId=1000870003" target="_blank" data-asset-click="sitelinks" class="l52c68a5d h9081347a"><div class="jdf130d1d v7dbce43c s855592fe"><span class="u13b5e86c i9a8ba4e7">Сильная поддерживающая среда</span></div><div class="d728f3ed1"><style>.l52c68a5d:hover path{fill: undefined}</style><svg width="7" height="9.333333333333334" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.8 6.00001L6.13941 6.33942C6.32686 6.15197 6.32686 5.84805 6.13941 5.6606L5.8 6.00001ZM0.660589 1.53942L5.46059 6.33942L6.13941 5.6606L1.33941 0.860601L0.660589 1.53942ZM5.46059 5.6606L0.660589 10.4606L1.33941 11.1394L6.13941 6.33942L5.46059 5.6606Z" fill="rgb(37, 39, 41)"></path></svg></div></a></div></div><div data-block-name="button" data-backpack="54" class="a1fd9601 m46c2ad5f x75566081 w879d5c53"><a href="https://yandex.ru/an/count/WjCejI_zOoVX2LaA0oqM00DcaoOQbKgbKga4mGHzFfSxUxRVkVDTNpjVl-FrXZjS6ab6HDKHDcpO-8bIRmnHbOfwd2MY-1FwT4fnEufa9I8o2lgn_b2HbfIeI4f9GZAeHDQZ6qhMf1aZh4L2GqL6DwfBIacqa1qmPPC3zCaH3vdI1o090uC7JXXq76dAVlmW8ZaMCzJP-d5K4I1WY5Qo0hLqTZImRLA0je4jO07Q1hPC2j0siFqhGDl0rgy0RGFRk0Aq3MpF2j0Qy6F8uPQfmAnO0Ta6jd4vNmTey2XEV95xJbS4BZtoXx3_uFsGzHwu9Wmhc7EgAYjWW2yfahJeMcqnXS6JmXfZ1WVhXmHf-miYDSRNUEFjG0UfvW4cv_CDaust0XF8Mqhvl8DmRN5Igs5lhYrEQZLiew8aiJLYMiVgUes-WOfOLs7WLgGH6cwJPkk5004kI39Yo8i6jd41R3rMwotIWRoZqCZNOPGx35e1efe4CMAEOcMBXIrJrtMTgGXMdo4daAJBp9Q-ecaAspAw679Jnp9ZT9Yl3ZO25Z5w0KZ2T0KGu8MaYGrBMvfwVWXZyrk12MIJMu49P7EtG0N85ySWElrm0KUs7no21zN_Xk11zRqXU51zRZs8ztVl0ylOrnf9RVsizu5bZ6d6KMIMcKll3AskwpgMDZUpnAQgq8qoD9W964dl7CXq-mv2R_RWonu9472V9tiaM_H4FwOz-80wDIY8_Zi2cUvc9jFTvhpMrps9ksFqMUzrZ-L7A0KGpH09cSPsYSgLIgNoQa9oo6PIKFu5g5XNQ3HPOXGb_3pS0RO8Ge4u-liEvbp_3mPIELE0G7Mwgky7BwHD91F85nv2gbscTg5g6nC7lKWRzWccIcaXf0608NhZ21Xl2JyCO3jNLwj_ZG1nzElbvYyNBNbjCh27pGkA-wXSBMgF6fQ3rw3stD9t5GMTH8uILW8vnXe0~2?stat-id=1&amp;test-tag=8339245941129233&amp;banner-sizes=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjM1MHg1MjIifQ%3D%3D&amp;actual-format=14&amp;pcodever=1021761&amp;banner-test-tags=eyI3MjA1NzYxMDE4NDk1MzE4MiI6IjQyOTU1NDg5NDUifQ%3D%3D&amp;constructor-rendered-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6MzE0OX0&amp;rendered-direct-assets=eyI3MjA1NzYxMDE4NDk1MzE4MiI6NDEzfQ&amp;width=350&amp;height=522&amp;pcode-active-testids=1018247%2C0%2C0&amp;subDesignId=1000870003" target="_blank" data-asset-click="button" data-test="button" class="b29119b80 v97bdb172"><span class="u13b5e86c">Узнать больше</span></a></div></div></div></div></div></div></div></div>
+        <style type="text/css">.r130f5076{width: 350px; min-width: 350px; height: 521.875px; box-sizing: border-box; background-color: #ffffff; color: #3d3f43; font-size: 13px; line-height: 1.23; font-weight: normal; font-family: YS Text Variable, YS Text, Arial, sans-serif; overflow: hidden; margin: auto; transform: translateZ(0); border-radius: 0px;}.i9e83d45c{width: 350px; height: 521.875px; box-sizing: border-box; position: absolute; pointer-events: none; z-index: 2; border-radius: 0px; border-left: 1px solid #F1F3F5; border-right: 1px solid #F1F3F5; border-top: 1px solid #F1F3F5; border-bottom: 1px solid #F1F3F5;}.t100c0dfd{z-index: 0;}.laf874fb1{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:100%;z-index:1;position:relative}.d7049f846{-webkit-box-flex:0;-ms-flex-positive:0;flex-grow:0}.i3696839e{max-height: 100%; max-width: 100%; flex-direction: column; min-height: 521.875px; justify-content: space-between; margin: auto;}.b12773d3f{min-height: 5px;}.q6e3de1b9{position:relative;display:block;width:100%;height:100%;border-radius:inherit}.s6b0dcf1{right:0;z-index:2}.s6b0dcf1,.d5a17439e{position:absolute;top:0}.d5a17439e{display:block;height:100%;width:100%;left:0;z-index:0;cursor:pointer}.u50befbc2{cursor:default;pointer-events:all;position:absolute;top:0;right:0;z-index:1000}.u9df887aa{pointer-events:none;width:100%;height:100%}.u9df887aa:hover .invisible-button-icon{opacity:.25}.r433f2a5{pointer-events:auto}.l57aacbce{position:relative;cursor:default;width:100%;height:100%;-webkit-box-sizing:border-box;box-sizing:border-box;font-style:normal}.j762df858 *{-webkit-transition:all 0s!important;-o-transition:all 0s!important;transition:all 0s!important;-webkit-animation:"none"!important;animation:"none"!important}.scffe76cc{position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch;height:100%;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1}.scffe76cc>div{-webkit-box-flex:0;-ms-flex:none;flex:none}.x7b99fca0{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch;height:100%;-webkit-box-sizing:border-box;box-sizing:border-box}.l347a8e55{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;position:relative;height:100%;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;max-width:100%}.l2f9f88db{width:100%;height:100%}.kdd7e92a2.bbe65c9a9{top:0;left:0;width:100%;background-color:#fff}.kdd7e92a2 .f47897041{display:none}.h61fa9330,.n3eb3f2e1{background-color:#e5eeff}.h61fa9330.bbe65c9a9,.n3eb3f2e1.bbe65c9a9{top:0;left:0;width:100%;height:100%}.h61fa9330 .f47897041,.n3eb3f2e1 .f47897041{display:none}.h61fa9330{background-color:#1e1e1e}.s39d55a94,.eab2aab05{background-color:#fff;border-radius:12px}.s39d55a94.bbe65c9a9,.eab2aab05.bbe65c9a9{top:0;left:0;width:100%;height:100%}.s39d55a94 .f47897041,.eab2aab05 .f47897041{display:none}.s39d55a94{background-color:#2f2f32}.m541238b8 .f47897041{width:100%;height:100%;-o-object-fit:cover;object-fit:cover;-webkit-filter:none;filter:none}.tec28c880.bbe65c9a9,.tec28c880 .f47897041{top:0;left:0;width:100%;overflow:hidden}.tec28c880 .f47897041{-webkit-transform:rotate(180deg) scaleX(-1);transform:rotate(180deg) scaleX(-1)}.tec28c880 .l2f9f88db{width:100%;height:100%;-webkit-mask:linear-gradient(180deg,hsla(0,0%,100%,.6),hsla(0,0%,100%,0) 150px);mask:linear-gradient(180deg,hsla(0,0%,100%,.6),hsla(0,0%,100%,0) 150px)}.d6427a0a4.bbe65c9a9,.d6427a0a4 .f47897041{left:0;bottom:0;width:100%;overflow:hidden}.d6427a0a4 .f47897041{-webkit-transform:rotate(180deg) scaleX(-1);transform:rotate(180deg) scaleX(-1)}.d6427a0a4 .l2f9f88db{-webkit-mask:-webkit-gradient(linear,left top,left bottom,from(hsla(0,0%,100%,.6)),color-stop(90%,hsla(0,0%,100%,0)));-webkit-mask:linear-gradient(180deg,hsla(0,0%,100%,.6),hsla(0,0%,100%,0) 90%);mask:-webkit-gradient(linear,left top,left bottom,from(hsla(0,0%,100%,.6)),color-stop(90%,hsla(0,0%,100%,0)));mask:linear-gradient(180deg,hsla(0,0%,100%,.6),hsla(0,0%,100%,0) 90%)}.a80b049cb.bbe65c9a9,.a80b049cb .f47897041{top:0;right:0;height:100%;overflow:hidden}.a80b049cb .f47897041{-webkit-transform:scaleX(-1);transform:scaleX(-1)}.a80b049cb .l2f9f88db{-webkit-mask:linear-gradient(270deg,hsla(0,0%,100%,.6),hsla(0,0%,100%,0) 150px);mask:linear-gradient(270deg,hsla(0,0%,100%,.6),hsla(0,0%,100%,0) 150px)}.fb1d16990.bbe65c9a9,.fb1d16990 .f47897041{top:0;left:0;height:100%;overflow:hidden}.fb1d16990 .f47897041{-webkit-transform:scaleX(-1);transform:scaleX(-1)}.fb1d16990 .l2f9f88db{-webkit-mask:linear-gradient(90deg,hsla(0,0%,100%,.6),hsla(0,0%,100%,0) 150px);mask:linear-gradient(90deg,hsla(0,0%,100%,.6),hsla(0,0%,100%,0) 150px)}.vec5fc288{background:-o-linear-gradient(162deg,#ffb6b9 0,#ffb6b9 35%,#fae3d9 calc(35% + 1px),#fae3d9 45%,#bbded6 calc(45% + 1px),#bbded6 65%,#61c0bf calc(65% + 1px),#61c0bf 100%),hsla(0,0%,100%,.13333);background:linear-gradient(288deg,#ffb6b9,#ffb6b9 35%,#fae3d9 calc(35% + 1px),#fae3d9 45%,#bbded6 calc(45% + 1px),#bbded6 65%,#61c0bf calc(65% + 1px),#61c0bf),hsla(0,0%,100%,.13333);background-blend-mode:overlay}.vec5fc288 .f47897041{display:none}.n1d258dab{background:-o-linear-gradient(211.28deg,#ebff00 0,#7700d5 100%),-o-linear-gradient(25.18deg,#ad00ff 0,red 100%),-o-linear-gradient(24.97deg,#0ff 0,red 99.79%),-o-radial-gradient(50%,67.08% 100%,at 0,#ff00c7 0,#1400ff 100%),-o-radial-gradient(100%,100% 140%,at 0,#5ed500 0,#20a 100%);background:linear-gradient(238.72deg,#ebff00,#7700d5),linear-gradient(64.82deg,#ad00ff,red),linear-gradient(65.03deg,#0ff,red 99.79%),radial-gradient(67.08% 100% at 50%,at 0,#ff00c7 0,#1400ff 100%),radial-gradient(100% 140% at 100%,at 0,#5ed500 0,#20a 100%);background:-o-linear-gradient(211.28deg,#ebff00 0,#7700d5 100%),-o-linear-gradient(25.18deg,#ad00ff 0,red 100%),-o-linear-gradient(24.97deg,#0ff 0,red 99.79%),-o-radial-gradient(50% 0,67.08% 100%,#ff00c7 0,#1400ff 100%),-o-radial-gradient(100% 0,100% 140%,#5ed500 0,#20a 100%);background:linear-gradient(238.72deg,#ebff00,#7700d5),linear-gradient(64.82deg,#ad00ff,red),linear-gradient(65.03deg,#0ff,red 99.79%),radial-gradient(67.08% 100% at 50% 0,#ff00c7 0,#1400ff 100%),radial-gradient(100% 140% at 100% 0,#5ed500 0,#20a 100%);background-blend-mode:color-dodge,difference,lighten,color-dodge,normal}.n1d258dab .f47897041{display:none}.nac7237ca{background:-o-linear-gradient(211.28deg,#ebff00 0,#8f00ff 100%),-o-linear-gradient(25.18deg,#ad00ff 0,red 100%),-o-linear-gradient(24.97deg,#0ff 0,red 99.79%),-o-radial-gradient(50%,67.08% 100%,at 100%,#ff00c7 0,#50005e 100%),-o-radial-gradient(100%,100% 140%,at 0,#5ed500 0,#20a 100%);background:linear-gradient(238.72deg,#ebff00,#8f00ff),linear-gradient(64.82deg,#ad00ff,red),linear-gradient(65.03deg,#0ff,red 99.79%),radial-gradient(67.08% 100% at 50%,at 100%,#ff00c7 0,#50005e 100%),radial-gradient(100% 140% at 100%,at 0,#5ed500 0,#20a 100%);background:-o-linear-gradient(211.28deg,#ebff00 0,#8f00ff 100%),-o-linear-gradient(25.18deg,#ad00ff 0,red 100%),-o-linear-gradient(24.97deg,#0ff 0,red 99.79%),-o-radial-gradient(50% 100%,67.08% 100%,#ff00c7 0,#50005e 100%),-o-radial-gradient(100% 0,100% 140%,#5ed500 0,#20a 100%);background:linear-gradient(238.72deg,#ebff00,#8f00ff),linear-gradient(64.82deg,#ad00ff,red),linear-gradient(65.03deg,#0ff,red 99.79%),radial-gradient(67.08% 100% at 50% 100%,#ff00c7 0,#50005e 100%),radial-gradient(100% 140% at 100% 0,#5ed500 0,#20a 100%);background-blend-mode:color-dodge,difference,lighten,color-dodge,normal}.nac7237ca .f47897041{display:none}.ob5cce3ed{background:-o-linear-gradient(left,hsla(0,0%,100%,0),hsla(0,0%,100%,0)),-o-radial-gradient(0,100% 244.46%,at 0,#cf0 0,#ff027c 100%),-o-radial-gradient(0,100% 244.46%,at 0,#cf0 0,#ff027c 100%),-o-radial-gradient(50%,50% 122.23%,at 50%,#9aa4ff 0,#306c00 100%),-o-radial-gradient(0,100.45% 245.58%,at 0,#000afe 0,#70ff00 100%),-o-linear-gradient(322.57deg,#7b0007 0,#8f73ff 100%);background:linear-gradient(90deg,hsla(0,0%,100%,0),hsla(0,0%,100%,0)),radial-gradient(100% 244.46% at 0,at 0,#cf0 0,#ff027c 100%),radial-gradient(100% 244.46% at 0,at 0,#cf0 0,#ff027c 100%),radial-gradient(50% 122.23% at 50%,at 50%,#9aa4ff 0,#306c00 100%),radial-gradient(100.45% 245.58% at 0,at 0,#000afe 0,#70ff00 100%),linear-gradient(127.43deg,#7b0007,#8f73ff);background:-o-linear-gradient(left,hsla(0,0%,100%,0),hsla(0,0%,100%,0)),-o-radial-gradient(0 0,100% 244.46%,#cf0 0,#ff027c 100%),-o-radial-gradient(0 0,100% 244.46%,#cf0 0,#ff027c 100%),-o-radial-gradient(50% 50%,50% 122.23%,#9aa4ff 0,#306c00 100%),-o-radial-gradient(0 0,100.45% 245.58%,#000afe 0,#70ff00 100%),-o-linear-gradient(322.57deg,#7b0007 0,#8f73ff 100%);background:linear-gradient(90deg,hsla(0,0%,100%,0),hsla(0,0%,100%,0)),radial-gradient(100% 244.46% at 0 0,#cf0 0,#ff027c 100%),radial-gradient(100% 244.46% at 0 0,#cf0 0,#ff027c 100%),radial-gradient(50% 122.23% at 50% 50%,#9aa4ff 0,#306c00 100%),radial-gradient(100.45% 245.58% at 0 0,#000afe 0,#70ff00 100%),linear-gradient(127.43deg,#7b0007,#8f73ff);background-blend-mode:overlay,screen,color-dodge,overlay,difference,normal}.ob5cce3ed .f47897041{display:none}.v3dcecf0c{background:-o-linear-gradient(left,#fff,hsla(0,0%,100%,0)),-o-radial-gradient(50%,50% 123.47%,at 50%,#00ff94 0,#720059 100%),-o-linear-gradient(328.72deg,#669600 0,red 100%),-o-linear-gradient(bottom,#0029ff 0,#8fff00 100%),-o-radial-gradient(100%,100% 164.72%,at 100%,#6100ff 0,#00ff57 100%),-o-radial-gradient(0,100% 148.07%,at 0,#fff500 0,#51d500 100%);background:linear-gradient(90deg,#fff,hsla(0,0%,100%,0)),radial-gradient(50% 123.47% at 50%,at 50%,#00ff94 0,#720059 100%),linear-gradient(121.28deg,#669600,red),linear-gradient(1turn,#0029ff,#8fff00),radial-gradient(100% 164.72% at 100%,at 100%,#6100ff 0,#00ff57 100%),radial-gradient(100% 148.07% at 0,at 0,#fff500 0,#51d500 100%);background:-o-linear-gradient(left,#fff,hsla(0,0%,100%,0)),-o-radial-gradient(50% 50%,50% 123.47%,#00ff94 0,#720059 100%),-o-linear-gradient(328.72deg,#669600 0,red 100%),-o-linear-gradient(bottom,#0029ff 0,#8fff00 100%),-o-radial-gradient(100% 100%,100% 164.72%,#6100ff 0,#00ff57 100%),-o-radial-gradient(0 0,100% 148.07%,#fff500 0,#51d500 100%);background:linear-gradient(90deg,#fff,hsla(0,0%,100%,0)),radial-gradient(50% 123.47% at 50% 50%,#00ff94 0,#720059 100%),linear-gradient(121.28deg,#669600,red),linear-gradient(1turn,#0029ff,#8fff00),radial-gradient(100% 164.72% at 100% 100%,#6100ff 0,#00ff57 100%),radial-gradient(100% 148.07% at 0 0,#fff500 0,#51d500 100%);background-blend-mode:overlay,screen,color-dodge,overlay,difference,normal}.v3dcecf0c .f47897041{display:none}.j6e949a2f{background:#fff;border:1px solid rgba(0,0,0,.05);-webkit-box-sizing:border-box;box-sizing:border-box}.j6e949a2f .f47897041{display:none}.a49edd593{background-image:-o-linear-gradient(15deg,#b6b6fb 0,#d8b6f1 3%,#efb9e5 9%,#fdbfda 20%,#ffccd5 36%,#ffd6d1 58%,#ffded1 78%,#ffebdc 91%,#fdf4e8 97%,#fefdf6 100%);background-image:linear-gradient(75deg,#b6b6fb,#d8b6f1 3%,#efb9e5 9%,#fdbfda 20%,#ffccd5 36%,#ffd6d1 58%,#ffded1 78%,#ffebdc 91%,#fdf4e8 97%,#fefdf6);-webkit-animation:h257152b4 10s ease-in-out infinite;animation:h257152b4 10s ease-in-out infinite}.a49edd593 .f47897041{display:none}.m135f2830{background-image:-o-linear-gradient(45deg,#d5d5e6 0,#e3d7ef 11%,#f4d2ef 22%,#ffd1ea 33%,#ffd1df 44%,#ffd0cc 56%,#ffd2b3 67%,#ffdb9e 78%,#ffe98f 89%,#fff585 100%);background-image:linear-gradient(45deg,#d5d5e6,#e3d7ef 11%,#f4d2ef 22%,#ffd1ea 33%,#ffd1df 44%,#ffd0cc 56%,#ffd2b3 67%,#ffdb9e 78%,#ffe98f 89%,#fff585);-webkit-animation:h257152b4 10s ease-in-out infinite;animation:h257152b4 10s ease-in-out infinite}.m135f2830 .f47897041{display:none}.j949774d1{background-image:-o-linear-gradient(170deg,#afaffd 0,#afb7fe 3%,#b4c2fd 7%,#bacbfc 12%,#c2d4fa 21%,#ceddf8 35%,#cecbf6 59%,#dcb8ea 80%,#eca1d1 91%,#f88baa 97%,#f87c7c 100%);background-image:linear-gradient(280deg,#afaffd,#afb7fe 3%,#b4c2fd 7%,#bacbfc 12%,#c2d4fa 21%,#ceddf8 35%,#cecbf6 59%,#dcb8ea 80%,#eca1d1 91%,#f88baa 97%,#f87c7c);-webkit-animation:h257152b4 10s ease-in-out infinite;animation:h257152b4 10s ease-in-out infinite}.j949774d1 .f47897041{display:none}.r351fa076{background-image:-o-linear-gradient(120deg,#ff8f8f 0,#ffa585 6%,#fdb87c 16%,#f2cf82 28%,#e2e594 40%,#d1f8af 52%,#f7e591 64%,#ffcf94 75%,#ffb7a8 85%,#ffadd3 94%,#feaefd 100%);background-image:linear-gradient(330deg,#ff8f8f,#ffa585 6%,#fdb87c 16%,#f2cf82 28%,#e2e594 40%,#d1f8af 52%,#f7e591 64%,#ffcf94 75%,#ffb7a8 85%,#ffadd3 94%,#feaefd);-webkit-animation:h257152b4 10s ease-in-out infinite;animation:h257152b4 10s ease-in-out infinite}.r351fa076 .f47897041{display:none}.ucca5b217{background-image:-o-linear-gradient(335deg,#b7b5e8 0,#bfbdeb 7%,#c6c4ed 19%,#ceccf0 32%,#d6d4f2 45%,#dedcf4 59%,#e9e7f8 71%,#f0effa 83%,#f8f7fd 93%,#fff 100%);background-image:linear-gradient(115deg,#b7b5e8,#bfbdeb 7%,#c6c4ed 19%,#ceccf0 32%,#d6d4f2 45%,#dedcf4 59%,#e9e7f8 71%,#f0effa 83%,#f8f7fd 93%,#fff);-webkit-animation:h257152b4 10s ease-in-out infinite;animation:h257152b4 10s ease-in-out infinite}.ucca5b217 .f47897041{display:none}.h961704b4{background-image:-o-linear-gradient(35deg,#f9a4e5 0,#faade7 7%,#fcbbec 18%,#fdc4ee 34%,#fdcef1 55%,#fed7f4 73%,#ffe1f6 84%,#ffebf9 92%,#fff5fc 97%,#fff 100%);background-image:linear-gradient(55deg,#f9a4e5,#faade7 7%,#fcbbec 18%,#fdc4ee 34%,#fdcef1 55%,#fed7f4 73%,#ffe1f6 84%,#ffebf9 92%,#fff5fc 97%,#fff);-webkit-animation:h257152b4 10s ease-in-out infinite;animation:h257152b4 10s ease-in-out infinite}.h961704b4 .f47897041{display:none}.i174f5155{background-image:-o-linear-gradient(35deg,#70ff94 0,#85ff9f 31%,#99ffac 49%,#a8ffb7 63%,#b8ffc2 73%,#c7ffce 81%,#d6ffdb 87%,#e5ffe8 93%,#f0fff1 97%,#fff 100%);background-image:linear-gradient(55deg,#70ff94,#85ff9f 31%,#99ffac 49%,#a8ffb7 63%,#b8ffc2 73%,#c7ffce 81%,#d6ffdb 87%,#e5ffe8 93%,#f0fff1 97%,#fff);-webkit-animation:h257152b4 10s ease-in-out infinite;animation:h257152b4 10s ease-in-out infinite}.i174f5155 .f47897041{display:none}.h50260efa{background-image:-o-linear-gradient(320deg,#f5c689 0,#f7cd97 6%,#f9d29f 15%,#fbd8ad 29%,#fcdfba 50%,#fee5c8 71%,#feecd7 84%,#fff3e6 91%,#fff8f0 97%,#fff 100%);background-image:linear-gradient(130deg,#f5c689,#f7cd97 6%,#f9d29f 15%,#fbd8ad 29%,#fcdfba 50%,#fee5c8 71%,#feecd7 84%,#fff3e6 91%,#fff8f0 97%,#fff);-webkit-animation:h257152b4 10s ease-in-out infinite;animation:h257152b4 10s ease-in-out infinite}.h50260efa .f47897041{display:none}.ke7ac209b{background-image:-o-linear-gradient(225deg,#b4f218 0,#bff344 6%,#c8f462 15%,#d3f679 29%,#dcf791 50%,#e4f9a9 71%,#ebfbbc 84%,#f3fcd4 91%,#f9fde7 97%,#fff 100%);background-image:linear-gradient(225deg,#b4f218,#bff344 6%,#c8f462 15%,#d3f679 29%,#dcf791 50%,#e4f9a9 71%,#ebfbbc 84%,#f3fcd4 91%,#f9fde7 97%,#fff);-webkit-animation:h257152b4 10s ease-in-out infinite;animation:h257152b4 10s ease-in-out infinite}.ke7ac209b .f47897041{display:none}.pcae2ae03{background-image:-o-linear-gradient(225deg,#ff7af4 0,#ff8af5 15%,#ff99f7 26%,#ffa8f8 35%,#ffb8f9 44%,#ffc7fa 52%,#ffd6fc 61%,#ffe5fd 69%,#fff0fe 80%,#fff 100%);background-image:linear-gradient(225deg,#ff7af4,#ff8af5 15%,#ff99f7 26%,#ffa8f8 35%,#ffb8f9 44%,#ffc7fa 52%,#ffd6fc 61%,#ffe5fd 69%,#fff0fe 80%,#fff);-webkit-animation:h257152b4 10s ease-in-out infinite;animation:h257152b4 10s ease-in-out infinite}.pcae2ae03 .f47897041{display:none}@-webkit-keyframes h257152b4{0%{-webkit-filter:hue-rotate(0deg);filter:hue-rotate(0deg)}50%{-webkit-filter:hue-rotate(100deg);filter:hue-rotate(100deg)}to{-webkit-filter:hue-rotate(0deg);filter:hue-rotate(0deg)}}@keyframes h257152b4{0%{-webkit-filter:hue-rotate(0deg);filter:hue-rotate(0deg)}50%{-webkit-filter:hue-rotate(100deg);filter:hue-rotate(100deg)}to{-webkit-filter:hue-rotate(0deg);filter:hue-rotate(0deg)}}.bbe65c9a9{position:absolute;width:100%;height:100%}.f47897041{position:absolute;-webkit-filter:blur(15px);filter:blur(15px)}.ndd12d9fc{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;max-width:100%}.t59dce407{background:rgba(0,0,0,.2)}.sc4781a38{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-negative:1;flex-shrink:1}.o7bdd6680{position:absolute;top:6px;right:4px}.m46c2ad5f{-webkit-transition:-webkit-filter .1s ease-in;transition:-webkit-filter .1s ease-in;-o-transition:filter .1s ease-in;transition:filter .1s ease-in;transition:filter .1s ease-in,-webkit-filter .1s ease-in}.m46c2ad5f:hover{-webkit-filter:brightness(120%) contrast(120%);filter:brightness(120%) contrast(120%)}.x75566081:hover{-webkit-filter:brightness(80%) contrast(180%);filter:brightness(80%) contrast(180%)}.g9cb4f4d8{justify-content: flex-start;}.re3d2e79{background-color: #AB8E89;}.g34c7a41a{flex-direction: column;}.y10a85dbb.wa5c05154{top: 4px; left: 4px;}@supports (-webkit-touch-callout:none){.n520f2239{font-family:-apple-system!important}}.i17488af5{padding-bottom: 24px;}.a1fd9601{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center;position:relative;-webkit-box-sizing:border-box;box-sizing:border-box;-ms-flex-negative:0;flex-shrink:0}.l72542574 a{cursor:default}.hc4a01c5d{padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 0px; margin-top: 0px; justify-content: flex-start; height: 196.875px; width: 350px;}.nc376fd1b{position:relative;-webkit-box-sizing:border-box;box-sizing:border-box;overflow:hidden;width:100%;height:100%;opacity:.999;pointer-events:auto}.yc4f0101b:after,.yc4f0101b:before{content:"";width:20px;height:100%;top:0;bottom:0;right:0;position:absolute;z-index:3;pointer-events:all}.yc4f0101b:before{left:0}.x76ba2462{position:absolute;top:8px;left:8px}.x76ba2462 [data-name=social-ad-label]{border-radius:3px}.t1af8bb1c{width:100%;height:100%}.t1af8bb1c,.ce493d8d8{position:absolute;z-index:2}.ce493d8d8{display:block;overflow:hidden;top:0;right:0;bottom:0;left:0}.tc7f0a32a{position:absolute;bottom:4px;right:4px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end;max-width:80%;z-index:2}.tc7f0a32a>[data-name=badge]:not(:first-child){margin-top:4px}.m8a4bf13a{-webkit-mask:-webkit-gradient(linear,left top,left bottom,color-stop(98%,#fff),to(hsla(0,0%,100%,0)));-webkit-mask:linear-gradient(180deg,#fff 98%,hsla(0,0%,100%,0));mask:-webkit-gradient(linear,left top,left bottom,color-stop(98%,#fff),to(hsla(0,0%,100%,0)));mask:linear-gradient(180deg,#fff 98%,hsla(0,0%,100%,0))}.wfd5d70cc [data-name=adaptiveImage]{-webkit-transition:-webkit-transform .1s ease-in;transition:-webkit-transform .1s ease-in;-o-transition:transform .1s ease-in;transition:transform .1s ease-in;transition:transform .1s ease-in,-webkit-transform .1s ease-in}.wfd5d70cc:hover [data-name=adaptiveImage]{-webkit-transform:scale(1.05);transform:scale(1.05)}.g4a9a4a9f{display: none;}.gd2e472fe{position:relative;width:100%;height:100%}.gd2e472fe:after{content:"";display:block;position:absolute;top:0;right:0;bottom:0;left:0}.m104f54d0:after{background:-webkit-gradient(linear,left top,left bottom,color-stop(0,transparent),color-stop(9.4%,rgba(0,0,0,.006)),color-stop(17.6%,rgba(0,0,0,.024)),color-stop(24.8%,rgba(0,0,0,.052)),color-stop(31.2%,rgba(0,0,0,.088)),color-stop(37%,rgba(0,0,0,.13)),color-stop(42.4%,rgba(0,0,0,.176)),color-stop(47.5%,rgba(0,0,0,.225)),color-stop(52.5%,rgba(0,0,0,.275)),color-stop(57.6%,rgba(0,0,0,.324)),color-stop(63%,rgba(0,0,0,.37)),color-stop(68.8%,rgba(0,0,0,.412)),color-stop(75.2%,rgba(0,0,0,.448)),color-stop(82.4%,rgba(0,0,0,.476)),color-stop(90.6%,rgba(0,0,0,.494)),to(rgba(0,0,0,.5)));background:-o-linear-gradient(top,transparent 0,rgba(0,0,0,.006) 9.4%,rgba(0,0,0,.024) 17.6%,rgba(0,0,0,.052) 24.8%,rgba(0,0,0,.088) 31.2%,rgba(0,0,0,.13) 37%,rgba(0,0,0,.176) 42.4%,rgba(0,0,0,.225) 47.5%,rgba(0,0,0,.275) 52.5%,rgba(0,0,0,.324) 57.6%,rgba(0,0,0,.37) 63%,rgba(0,0,0,.412) 68.8%,rgba(0,0,0,.448) 75.2%,rgba(0,0,0,.476) 82.4%,rgba(0,0,0,.494) 90.6%,rgba(0,0,0,.5));background:linear-gradient(180deg,transparent,rgba(0,0,0,.006) 9.4%,rgba(0,0,0,.024) 17.6%,rgba(0,0,0,.052) 24.8%,rgba(0,0,0,.088) 31.2%,rgba(0,0,0,.13) 37%,rgba(0,0,0,.176) 42.4%,rgba(0,0,0,.225) 47.5%,rgba(0,0,0,.275) 52.5%,rgba(0,0,0,.324) 57.6%,rgba(0,0,0,.37) 63%,rgba(0,0,0,.412) 68.8%,rgba(0,0,0,.448) 75.2%,rgba(0,0,0,.476) 82.4%,rgba(0,0,0,.494) 90.6%,rgba(0,0,0,.5))}.af47737b6 .gd2e472fe:after{content:"";display:block;position:absolute;top:0;right:0;bottom:0;left:0}.reaf21aa{position:relative}.e168ca949{height:100%}.cbe66b216{position:absolute;top:0;left:0}.q77ad3c95{height:100%;padding-top:0!important;-webkit-transform:none!important;transform:none!important}.pfc6f995e{position:absolute;left:0;top:0;width:100%;height:100%}.if04f303d{-o-object-fit:cover;object-fit:cover}.a724d54fa{-webkit-box-sizing:border-box;box-sizing:border-box;color:#c8ff00}.a724d54fa,.a724d54fa:after{position:absolute;border:3px solid currentColor}.a724d54fa:after{content:"";width:6px;height:6px;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);border-radius:50%}.r9fa16560{background:-o-linear-gradient(45deg,#fff 25%,transparent 25%,transparent 74%,#fff 75%,#fff),-o-linear-gradient(45deg,#fff 25%,transparent 25%,transparent 74%,#fff 75%,#fff);background:linear-gradient(45deg,#fff 25%,transparent 0,transparent 74%,#fff 75%,#fff),linear-gradient(45deg,#fff 25%,transparent 0,transparent 74%,#fff 75%,#fff);background-size:20px 20px;background-position:0 0,10px 10px;background-color:#f33}.hf2c684be{transform: translate(0%, -3.07%); width: 100%; padding-top: 75.18796992%;}.fc2d13cd9{background: #fff;}.lb8c3967{position:absolute;top:10px;left:10px;z-index:3;cursor:pointer}.lb8c3967:before{content:"";width:44px;height:44px;position:absolute;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.lb8c3967:hover{-webkit-filter:drop-shadow(0 2px 3px rgba(0,0,0,.2));filter:drop-shadow(0 2px 3px rgba(0,0,0,.2))}.aa64a2f17{top:20px}.c1ad7306c{display:none}.h55ad357e{position:absolute;bottom:4px;left:4px;display:-webkit-box;display:-ms-flexbox;display:flex;grid-gap:2px;gap:2px}.sc5a096b{cursor:pointer;position:absolute;top:4px;right:4px;z-index:10}.sc5a096b.dd9abed4e,.sc5a096b.e94dc4502{position:relative;top:unset;right:unset}.sc5a096b.bece640b{overflow:hidden}.q534400be.sc5a096b{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;pointer-events:auto;border-radius:50%;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}.q534400be.sc5a096b:before{content:"";position:absolute;top:-4px;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%)}.q534400be.sc5a096b.e94dc4502{height:12px;border-radius:16px}.q534400be.sc5a096b.e94dc4502 .k765d4b95{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.q534400be.sc5a096b.e94dc4502:before{top:50%;-webkit-transform:translateX(-50%) translateY(-50%);transform:translateX(-50%) translateY(-50%)}.q534400be.sc5a096b.dd9abed4e:before{top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.q534400be.sc5a096b.u40e2d025:hover{background-color:unset!important}.q534400be.sc5a096b:hover .r1658fb5b{opacity:.8}.q534400be.sc5a096b.ed2a8d990 .r1658fb5b{background-color:#fff;opacity:.8}.q534400be.sc5a096b.ed2a8d990 .k765d4b95 svg{fill:#575c66}.q534400be.sc5a096b.o8246fb08 .r1658fb5b,.q534400be.sc5a096b.x84cbed6a .r1658fb5b{background:none}.q534400be.sc5a096b.o8246fb08:hover{background-color:#e9e9e9}.q534400be.sc5a096b.x84cbed6a:hover{background-color:rgba(248,250,255,.2)}.q534400be.sc5a096b .k765d4b95 svg{fill:var(--tertiary-color)}.q534400be.s50f91805{width:12px;height:12px}.q534400be.s50f91805:before{width:28px;height:28px}.q534400be.s50f91805 .k765d4b95{-webkit-transform:scale(.6);transform:scale(.6)}.q534400be.ya8ef1cbd{width:16px;height:16px}.q534400be.ya8ef1cbd:before{width:32px;height:32px}.q534400be.ya8ef1cbd .k765d4b95{-webkit-transform:scale(.8);transform:scale(.8)}.q534400be.o70172d63{width:24px;height:24px}.q534400be.o70172d63:before{width:42px;height:42px}.q534400be.r67daa7c2{width:28px;height:28px}.q534400be.r67daa7c2:before{width:42px;height:42px}.q534400be.l2be7e21a{width:32px;height:32px}.q534400be.l2be7e21a:before{width:48px;height:48px}.r1658fb5b{height:100%;width:100%;position:absolute;top:0;left:0;z-index:-1;border-radius:inherit;-webkit-transition:opacity .15s;-o-transition:opacity .15s;transition:opacity .15s;-webkit-transition:background-color .5s ease-in-out;-o-transition:background-color .5s ease-in-out;transition:background-color .5s ease-in-out;color:var(--secondary-color);background:var(--label-bg-color)}.r1658fb5b.c56d9ec94:hover{opacity:.5}.r1658fb5b.o48704d76:hover{opacity:.9}.r1658fb5b.n36ecc191{background:none}.q534400be .k765d4b95{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;pointer-events:none;-webkit-transition:fill .5s ease-in-out;-o-transition:fill .5s ease-in-out;transition:fill .5s ease-in-out}.q534400be .k765d4b95 svg{fill:var(--tertiary-color)}@-webkit-keyframes j51352f7b{0%,to{opacity:0;visibility:hidden}4%,96%{visibility:visible;opacity:1}}@keyframes j51352f7b{0%,to{opacity:0;visibility:hidden}4%,96%{visibility:visible;opacity:1}}.rb7464712{margin-left:2px;pointer-events:auto;font-family:inherit;position:relative;-ms-flex-item-align:center;align-self:center}.h23eccbb7>.rb7464712:first-child{margin-left:0}.rb7464712.oa4b35844{margin-right:2px;margin-left:0}.h23eccbb7>.rb7464712.oa4b35844:first-child{margin-right:0}.h23eccbb7{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;cursor:pointer;position:absolute;left:4px;top:4px;z-index:10;font-family:YS Text Variable,Helvetica,Arial,sans-serif;white-space:nowrap;height:12px;line-height:normal;-webkit-box-sizing:border-box;box-sizing:border-box;padding:0 4px;border-radius:16px;font-size:8px;text-transform:uppercase;letter-spacing:.125em;pointer-events:none;text-decoration:none;-webkit-transition:color .5s ease-in-out;-o-transition:color .5s ease-in-out;transition:color .5s ease-in-out;color:var(--secondary-color);background:var(--label-bg-color)}.h23eccbb7.v1b6234ae{position:unset}.h23eccbb7.w8029d5f5{padding:0 1px 0 4px}.h23eccbb7.oa4b35844.w8029d5f5{padding:0 4px 0 1px}.h23eccbb7.ff0a02521,.h23eccbb7.oa4b35844.ff0a02521{padding:0}.h23eccbb7>a{text-decoration:none;color:inherit}.h23eccbb7.ed2a8d990{color:rgba(87,92,102,.8);background-color:hsla(0,0%,100%,.8)}.h23eccbb7.m558e2657,.h23eccbb7.v3a88286b{top:auto;left:auto;right:0;bottom:0;background:none;text-shadow:none;font-size:7px;padding:0;height:auto;opacity:.8;-webkit-backdrop-filter:none;backdrop-filter:none}.h23eccbb7.n36ecc191{background:none}.h23eccbb7.ae1e4bf47{max-width:calc(100% - 42px)}.h23eccbb7:empty{display:none}.ube89ded8{margin:0 2px}.h23eccbb7>.ube89ded8:first-child{display:none}.d655df914{text-decoration:none;pointer-events:auto;color:inherit}.wdc73f4f8{--secondary-color: rgba(255, 255, 255, 0.86); --label-bg-color: rgba(35, 35, 37, 0.36);}.e48cb6b1b{--tertiary-color: rgba(255, 255, 255, 0.6);}.ff0f7a53a{--secondary-color: rgba(255, 255, 255, 0.86); --label-bg-color: rgba(35, 35, 37, 0.36);}.vcbdc9955{padding-left: 24px; padding-right: 24px; padding-top: 0px; padding-bottom: 0px; margin-top: 14px; justify-content: flex-start; width: 350px;}.wd115c6d1{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;color:inherit;text-decoration:inherit;max-width:100%}.wd115c6d1.xa79da428{margin-left:auto}.b58f403a6{margin-right:6px}.p752218{-ms-flex-item-align:center;align-self:center}.t65f87148{-ms-flex-negative:0;flex-shrink:0}.o661bab22{overflow:hidden;-o-text-overflow:ellipsis;text-overflow:ellipsis;white-space:nowrap;max-width:100%;pointer-events:auto}.aaa9f9a6b{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;width:18px;height:18px;border-radius:3px;background:#fff}.ne57f5174{font-size: 14px; color: rgb(37, 39, 41);}.o59b8155a{width: 16px !important; height: 16px !important; margin-right: 6px;}.i82ba4cfb{width: 18px !important; height: 18px !important; margin-right: 6px;}.j2320ab47{display:block;width:16px;height:16px}.w6bad5309{display:block;width:32px;height:32px}.a48b837a9{display:block;width:48px;height:48px}.fb73e3773{display:block;width:60px;height:60px}.g65f79e7d{background-color:#fff;border-radius:2px}.p72c23b4e{overflow:hidden;pointer-events:all}.kdea0c173{overflow-x:auto;scrollbar-width:none}.kdea0c173::-webkit-scrollbar{display:none}.k5f33eb45{-webkit-mask-image:-webkit-gradient(linear,left top,right top,color-stop(0,transparent),color-stop(1em,#000),color-stop(#000),to(transparent));-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 1em,#000 calc(100% - 1em),transparent);mask-image:-webkit-gradient(linear,left top,right top,color-stop(0,transparent),color-stop(1em,#000),color-stop(#000),to(transparent));mask-image:linear-gradient(90deg,transparent 0,#000 1em,#000 calc(100% - 1em),transparent);-webkit-mask-size:100%;mask-size:100%;-webkit-mask-position:0;mask-position:0;-webkit-transition:-webkit-mask-image .3s;transition:-webkit-mask-image .3s;-o-transition:mask-image .3s;transition:mask-image .3s;transition:mask-image .3s,-webkit-mask-image .3s}.k5f33eb45.a6a21b712{-webkit-mask-image:-webkit-gradient(linear,left top,right top,color-stop(0,#000),color-stop(#000),to(transparent));-webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 1em),transparent);mask-image:-webkit-gradient(linear,left top,right top,color-stop(0,#000),color-stop(#000),to(transparent));mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 1em),transparent)}.k5f33eb45.m7655649{-webkit-mask-image:-webkit-gradient(linear,left top,right top,color-stop(0,transparent),color-stop(1em,#000),to(#000));-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 1em,#000);mask-image:-webkit-gradient(linear,left top,right top,color-stop(0,transparent),color-stop(1em,#000),to(#000));mask-image:linear-gradient(90deg,transparent 0,#000 1em,#000)}.u13b5e86c{display:inline}.bc24a95bd{word-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}.fd5ae6598{padding-left: 24px; padding-right: 24px; padding-top: 0px; padding-bottom: 0px; margin-top: 6px; justify-content: flex-start; width: 350px;}.l25202b3b{pointer-events:auto;position:relative;max-width:100%;color:inherit;text-decoration:inherit;font-weight:inherit;-webkit-hyphens:manual;hyphens:manual;letter-spacing:normal;line-height:inherit}.h7a12a48{font-size:0;max-width:100%}.sf3da62f4{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.i9a8ba4e7{color:inherit;text-decoration:inherit;font-weight:inherit;-webkit-hyphens:manual;hyphens:manual;letter-spacing:normal;line-height:inherit;max-width:100%}.k69091d39{font-size: 22px; line-height: 26px; font-weight: bold; color: rgb(37, 39, 41);} .a4e8c73de.t778eab7f:hover{color: rgb(37, 39, 41); transition: all 150ms ease 0ms;}.qca82c41c{padding-left: 24px; padding-right: 24px; padding-top: 0px; padding-bottom: 0px; margin-top: 6px; justify-content: flex-start; width: 350px;}.v5ddd7bbd{font-size: 14px; line-height: 19px; color: rgba(37, 39, 41, 0.77);} .i8060df5b{padding-left: 24px; padding-right: 24px; padding-top: 0px; padding-bottom: 0px; margin-top: 14px; justify-content: flex-start; width: 350px;}.y62e41e8f{pointer-events:auto;width:100%}.y62e41e8f,.l52c68a5d{position:relative}.l52c68a5d{display:block;border-bottom:solid rgba(7,9,12,.1);-webkit-box-sizing:border-box;box-sizing:border-box;color:inherit;text-decoration:inherit}.l52c68a5d:last-child{border-bottom:none}.d728f3ed1{position:absolute;right:0;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%)}.h9081347a{border-width: 1px; border-color: rgba(37, 39, 41, 0.13);}.xea3eae99{font-size: 14px; line-height: 19px; color: rgb(37, 39, 41); padding-top: 9px; padding-right: 19px; padding-bottom: 9px; border-width: 1px; delimiter-color: rgba(37, 39, 41, 0.13);}.s855592fe{font-size: 14px; line-height: 19px; color: rgb(37, 39, 41); padding-top: 9px; padding-right: 19px; padding-bottom: 9px; border-width: 1px; delimiter-color: rgba(37, 39, 41, 0.13);}.w879d5c53{padding-left: 24px; padding-right: 24px; padding-top: 0px; padding-bottom: 0px; margin-top: auto; justify-content: flex-start; width: 350px;}.b29119b80{pointer-events:auto;position:relative;text-decoration:inherit;font-weight:inherit;letter-spacing:normal;line-height:inherit;text-align:center;-webkit-box-sizing:border-box;box-sizing:border-box;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;white-space:nowrap}.b29119b80.mf4cdad{margin-left:auto}.a1331e6e3{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.a8b177178:before{content:"";position:absolute;width:100px;height:100%}.v97bdb172{height: 40px; line-height: 38px; font-size: 16px; favicon-size: 16px; favicon-margin-right: 6px; width: 100%; background: #3d7bf5; color: #ffffff; border-radius: 4px; border-color: transparent; border-width: 1px; border-style: solid; padding-right: 20px; padding-left: 20px;} .v97bdb172:hover{border-color: transparent; border-width: 1px; border-style: solid; transition: all 500ms ease-out 0ms;}</style></div></template></div></div>
+			<!--/noindex-->
+		</div>
+	</div>
+	
+</div>
+	<div class="progress-scroller" style="width: 137.985px;"></div>
+	
+		<script src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/jas.js"></script>
+	
+
+<script async="" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/js(1)"></script><script async="" src="https://vk.com/js/api/openapi.js?169"></script><script async="" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/context.js"></script><div style="position: fixed; left: -99px;"><div id="916d41c052"><iframe frameborder="no" scrolling="no" allowtransparency="true" hidefocus="true" tabindex="-1" marginwidth="0" marginheight="0" src="./Развертываем Prometheus через docker-compose вместе с Grafana и Alertmanager_files/render.html" id="id100" style="opacity: 1;"></iframe></div></div></body></html>

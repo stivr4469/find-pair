@@ -1,0 +1,53 @@
+Here's a Docker Compose YAML file for setting up Prometheus, Grafana, and Node Exporter:
+
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - monitoring
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+    networks:
+      - monitoring
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+
+networks:
+  monitoring:
+    driver: bridge
+```
+
+Объяснение:
+
+- Служба `prometheus`: запускает сервер Prometheus с открытым портом 9090. Монтирует локальный каталог `./prometheus` в `/etc/prometheus` в контейнере для пользовательской конфигурации Prometheus.
+
+- Сервис `grafana`: запускает Grafana с открытым портом 3000. Устанавливает пароль администратора по умолчанию «admin», используя переменную среды `GF_SECURITY_ADMIN_PASSWORD`.
+
+- Служба `node-exporter`: запускает Node Exporter с открытым портом 9100. Собирает метрики хоста и предоставляет их для очистки Prometheus.
+
+- Раздел `networks`: определяет пользовательскую сеть с именем `monitoring`, к которой подключаются все службы, обеспечивая связь между службами, изолируя их от других контейнеров на хосте.
+
+Обязательно создайте файл конфигурации prometheus.yml в каталоге ./prometheus относительно местоположения этого файла Docker Compose. Вы можете дополнительно настроить эту настройку, добавив дополнительные службы, настроив сохранение данных или настроив параметры сети по мере необходимости.
+Vot YAML-fayl Docker Compose dlya nastroyki Prometheus, Grafana i Node Exporter:

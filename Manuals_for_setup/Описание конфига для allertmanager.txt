@@ -1,0 +1,67 @@
+User
+global:
+  resolve_timeout: 5m
+  http_config:
+    follow_redirects: true
+    enable_http2: true
+  smtp_hello: localhost
+  smtp_require_tls: true
+  pagerduty_url: https://events.pagerduty.com/v2/enqueue
+  opsgenie_api_url: https://api.opsgenie.com/
+  wechat_api_url: https://qyapi.weixin.qq.com/cgi-bin/
+  victorops_api_url: https://alert.victorops.com/integrations/generic/20131114/alert/
+  telegram_api_url: https://api.telegram.org
+  webex_api_url: https://webexapis.com/v1/messages
+route:
+  receiver: web.hook
+  group_by:
+  - alertname
+  continue: false
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1h
+inhibit_rules:
+- source_match:
+    severity: critical
+  target_match:
+    severity: warning
+  equal:
+  - alertname
+  - dev
+  - instance
+receivers:
+- name: web.hook
+  webhook_configs:
+  - send_resolved: true
+    http_config:
+      follow_redirects: true
+      enable_http2: true
+    url: <secret>
+    url_file: ""
+    max_alerts: 0
+templates: [] 
+
+
+Этот конфигурационный файл представляет собой часть конфигурации Alertmanager, инструмента мониторинга и оповещения для системы Prometheus. Вот краткое описание каждого раздела:
+
+    Global (Глобальные настройки):
+        resolve_timeout: Время ожидания в минутах для разрешения оповещений.
+        http_config: Конфигурация HTTP-клиента для отправки оповещений, включая настройки следования за перенаправлениями и включения HTTP/2.
+        Настройки для различных интеграций (PagerDuty, OpsGenie, WeChat, VictorOps, Telegram, WebEx) для отправки оповещений на различные платформы.
+
+    Route (Маршрут):
+        receiver: Получатель, куда должны быть отправлены оповещения.
+        group_by: Критерии группировки оповещений.
+        continue: Продолжить или нет ожидание оповещений.
+        group_wait: Время ожидания для группировки оповещений.
+        group_interval: Интервал для повторной группировки оповещений.
+        repeat_interval: Интервал повтора оповещений.
+
+    Inhibit rules (Правила ингибирования): Правила для подавления оповещений на основе совпадений и атрибутов оповещений (например, срочность).
+
+    Receivers (Получатели): Настройки для различных получателей оповещений, таких как веб-хуки (webhook_configs).
+
+    Templates (Шаблоны): Шаблоны сообщений оповещений, которые могут быть использованы для форматирования текста оповещений.
+
+В вашем примере пока не определены шаблоны сообщений (templates: []), но они могут быть добавлены для определения кастомных сообщений оповещений в зависимости от требований вашей системы.
+

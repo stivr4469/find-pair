@@ -1,0 +1,14 @@
+ ssh drag@172.16.72.128
+ ssh git@172.16.72.130
+
+
+
+
+
+
+
+
+
+
+
+https://api.telegram.org/bot439772800/sendMessage?chat_id=439772800&text={message}
