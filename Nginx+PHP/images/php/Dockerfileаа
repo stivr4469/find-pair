@@ -1,0 +1,15 @@
+# Устанавливаем необходимые пакеты и копируем скрипт ожидания
+FROM php:8.1-fpm-alpine
+
+RUN apk --no-cache add bash mysql-client
+COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
+RUN chmod +x /usr/local/bin/wait-for-it.sh
+
+# Копируем файлы проекта
+COPY . /var/www/public_html
+
+# Устанавливаем права доступа
+RUN chown -R www-data:www-data /var/www/public_html
+
+CMD ["wait-for-it.sh", "mysql2:3306", "--", "php-fpm"]
+

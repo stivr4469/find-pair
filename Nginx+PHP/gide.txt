@@ -1,0 +1,84 @@
+Команда `mkdir -p` используется для создания директории или директорий и всех промежуточных директорий, если они не существуют. Например, если вы хотите создать директорию `/path/to/directory`, но директории `/path` и `/path/to` еще не существуют, команда `mkdir -p` автоматически создаст их.
+
+Вот пример использования команды `mkdir -p`:
+
+```sh
+mkdir -p /path/to/directory
+```
+
+Эта команда создаст директорию `/path/to/directory` и все промежуточные директории,
+
+run -d -p 8280:80 -v ./vhost.conf:/etc/nginx/conf.d/default.conf -v ./www:/var/www/public_html nginx
+IPAddress": "172.17.0.2"
+
+docker run -d -v ./www:/var/www/public_html php81fpm
+
+network php_my_network
+     - MYSQL_ROOT_PASSWORD=root
+root
+nano /etc/php-fpm.d/www.conf
+docker exec -it mysql2 sh
+docker exec -it php2 sh
+netstat -tuln
+docker exec -it nginx2 sh
+apk add --no-cache netcat-openbsd
+cd /usr/local/etc/php-fpm.d/www.conf                                              conf php
+docker-compose network create
+
+/Desktop/projects/php
+├── docker-compose.yaml
+├── images
+│   └── php
+│       └── Dockerfile
+├── vhost.conf
+└── www
+    ├── index.php
+    └── другие файлы проекта
+
+Найдите файл сокета MySQL на сервере как найти командой grep ?
+sudo grep -r "socket" /etc/mysql/         # Поиск в конфигурационных файлах MySQL
+sudo grep -r "socket" /etc/mysql/mysql.conf.d/ # Поиск в конфигурационных файлах MySQL
+sudo grep -r "socket" /var/run/mysqld/    # Поиск в стандартной директории для сокета MySQL
+sudo grep -r "socket" /tmp/               # Поиск в общей директории для сокетов, которая также может быть использована
+
+
+
+systemctl status mysql
+cat /var/log/mysql/error.log
+
+Эти строки указывают на то, что файл сокета MySQL находится в /var/run/mysqld/mysqld.sock.
+
+
+
+
+
+
+
+
+
+
+
+
+########################################################################################################################################server {
+    listen 80;  # Указывает на порт, на котором сервер будет прослушивать входящие HTTP-запросы.
+
+    server_name localhost;  # Указывает на имя сервера, которое будет обрабатывать входящие запросы. В этом случае, сервер будет обрабатывать запросы для хоста "localhost".
+
+    index index.php;  # Указывает на файлы-индексы, которые будут использоваться, если в URL не указано имя файла. Здесь указано, что при отсутствии конкретного файла будет использоваться index.php.
+
+    root /var/www/public_html;  # Указывает на корневую директорию, в которой будут искаться файлы для обработки запросов.
+
+    location ~ \.php$ {  # Определяет блок настроек для обработки запросов к PHP-скриптам. Здесь используется регулярное выражение, которое ищет строки, заканчивающиеся на .php.
+
+        try_files $uri =404;  # Пытается найти файл в файловой системе, соответствующий запрошенному URI. Если файл не найден, вернет код ошибки 404.
+
+        fastcgi_pass 172.17.0.2:9000;  # Указывает на адрес и порт FastCGI-сервера (например, PHP-FPM), который будет обрабатывать PHP-скрипты.
+
+        fastcgi_index index.php;  # Указывает на файл-индекс, который будет использоваться для запросов к директории, если не указан конкретный файл.
+
+        include fastcgi_params;  # Включает файл с общими параметрами для FastCGI-прокси.
+
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;  # Устанавливает значение переменной SCRIPT_FILENAME, которая указывает на путь к запрашиваемому файлу PHP.
+    }
+}
+
