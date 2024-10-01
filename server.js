@@ -19,15 +19,19 @@ app.listen(3000, () => {
     console.log('Сервер запущен на порту 3000');
 });
 
-// Команда start для Telegram бота
+// Команда /start для Telegram бота с кнопкой запуска игры
 bot.command('start', (ctx) => {
-    const gameLink = `https://find-pair-olive.vercel.app/?id=${ctx.from.id}`;
-    ctx.reply(`Добро пожаловать в игру! Перейдите по ссылке для игры: ${gameLink}`);
+    // Отправляем кнопку для запуска игры
+    ctx.replyWithGame({
+        game_short_name: 'find-pair' // Замените на короткое имя вашей игры, зарегистрированной через @BotFather
+    });
 });
 
-// Обработка текстовых сообщений
-bot.on('text', (ctx) => {
-    ctx.reply(`Ваше сообщение: ${ctx.message.text}`);
+// Обрабатываем нажатие кнопки и переход на игру
+bot.on('callback_query', (ctx) => {
+    // Переход по ссылке на вашу игру на Vercel с указанием id пользователя
+    const gameLink = `https://find-pair-olive.vercel.app/?id=${ctx.from.id}`;
+    ctx.answerGameQuery(gameLink);
 });
 
 // Запуск Telegram бота
