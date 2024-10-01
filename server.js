@@ -1,34 +1,35 @@
 const express = require('express');
 const path = require('path');
-const app = express();
 const { Telegraf } = require('telegraf');
+const app = express();
 
+// Ваш Telegram бот токен
 const bot = new Telegraf('8055073515:AAHHT_ZMZYqwks_s3EawcIxK6cf9YjEpAA8');
 
-// Обслуживание статических файлов из корневой папки
-app.use(express.static(__dirname)); // Обслуживаем файлы из корневой папки
+// Обслуживание статических файлов из текущей директории
+app.use(express.static(path.join(__dirname)));
 
 // Маршрут для игры
 app.get('/game/:id', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html')); // Убедитесь, что путь правильный
+    res.redirect('https://find-pair-olive.vercel.app');  // Перенаправляем пользователя на развернутую игру на Vercel
 });
 
 // Запуск сервера
-app.listen(3000, '0.0.0.0', () => {
+app.listen(3000, () => {
     console.log('Сервер запущен на порту 3000');
 });
 
-// Телеграм-бот: стартовая команда
+// Команда start для Telegram бота
 bot.command('start', (ctx) => {
-    const gameLink = `http://localhost:3000/game/${ctx.from.id}`;
-    ctx.reply(`Добро пожаловать в игру! Вы можете играть, перейдя по ссылке: ${gameLink}`);
+    const gameLink = `https://find-pair-olive.vercel.app/?id=${ctx.from.id}`;
+    ctx.reply(`Добро пожаловать в игру! Перейдите по ссылке для игры: ${gameLink}`);
 });
 
-// Обработка сообщений от пользователя
+// Обработка текстовых сообщений
 bot.on('text', (ctx) => {
-    ctx.reply(`Ваш результат: ${ctx.message.text}`);
+    ctx.reply(`Ваше сообщение: ${ctx.message.text}`);
 });
 
-// Запуск бота
+// Запуск Telegram бота
 bot.launch();
 
