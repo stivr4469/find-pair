@@ -22,10 +22,8 @@ bot.command('start', (ctx) => {
 
 // Обрабатываем нажатие кнопки и переход на игру
 bot.on('callback_query', async (ctx) => {
-    const gameLink = `https://find-pair-olive.vercel.app/?id=${ctx.from.id}`;  // Ссылка на вашу игру с id пользователя
-
-    // Уведомляем пользователя о начале игры
-    await ctx.reply(`Перейдите по ссылке, чтобы начать игру: ${gameLink}`);
+    const gameLink = `https://find-pair-olive.vercel.app/?id=${ctx.from.id}`;
+    await ctx.editMessageText(`Перейдите по ссылке, чтобы начать игру: ${gameLink}`);
     ctx.answerCallbackQuery(); // Уведомляем Telegram, что запрос обработан
 });
 
