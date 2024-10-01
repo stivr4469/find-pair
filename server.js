@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { Telegraf } = require('telegraf');
+
 const app = express();
 
 // Ваш Telegram бот токен
@@ -11,18 +12,33 @@ app.use(express.static(path.join(__dirname)));
 
 // Команда /start для Telegram бота с кнопкой запуска игры
 bot.command('start', (ctx) => {
-    // Отправляем кнопку для запуска игры с зарегистрированным коротким именем "findpair"
     ctx.replyWithGame({
         game_short_name: 'findpair'  // Используем зарегистрированное короткое имя игры
+    }).catch(err => {
+        console.error('Ошибка отправки игры:', err);
+        ctx.reply('Произошла ошибка при отправке игры. Попробуйте позже.');
     });
 });
 
 // Обрабатываем нажатие кнопки и переход на игру
-bot.on('callback_query', (ctx) => {
+bot.on('callback_query', async (ctx) => {
     const gameLink = `https://find-pair-olive.vercel.app/?id=${ctx.from.id}`;  // Ссылка на вашу игру с id пользователя
-    ctx.answerGameQuery(gameLink);
+
+    // Уведомляем пользователя о начале игры
+    await ctx.reply(`Перейдите по ссылке, чтобы начать игру: ${gameLink}`);
+    ctx.answerCallbackQuery(); // Уведомляем Telegram, что запрос обработан
 });
 
 // Запуск Telegram бота
-bot.launch();
+bot.launch().then(() => {
+    console.log('Бот запущен и готов к работе!');
+}).catch(err => {
+    console.error('Ошибка при запуске бота:', err);
+});
+
+// Запуск сервера Express
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Сервер запущен на порту ${PORT}`);
+});
 
