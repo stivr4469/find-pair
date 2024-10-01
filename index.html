@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Найди пару</title>
+    <link rel="stylesheet" href="../../styles.css"> <!-- Подключение внешнего файла стилей -->
+</head>
+<body>
+    <div class="container">
+        <h1>Найди пару</h1>
+
+        <!-- Выпадающий список для выбора категории -->
+        <label for="category-select">Выберите категорию:</label>
+        <select id="category-select">
+            <option value="verbs">Глаголы</option>
+            <option value="nouns">Существительные</option>
+            <option value="adjectives">Прилагательные</option>
+            <option value="adverbs">Наречия</option>
+        </select>
+
+        <!-- Выпадающий список для выбора количества пар -->
+        <label for="pair-count">Количество пар:</label>
+        <select id="pair-count">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+
+        <div class="columns">
+            <div id="left-column" class="column left-column"></div>
+            <div id="right-column" class="column right-column"></div>
+        </div>
+
+        <!-- Кнопка для начала новой игры -->
+        <button id="restart-button" onclick="initGame()">Начать заново</button>
+    </div>
+
+    <script src="../../script.js"></script> <!-- Подключение файла script.js -->
+</body>
+</html>
+
