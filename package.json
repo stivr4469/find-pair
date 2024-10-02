@@ -4,10 +4,13 @@
   "main": "server.js",
   "dependencies": {
     "express": "^4.17.1",
-    "telegraf": "^4.0.0" // или другая версия
+    "telegraf": "^4.0.0"
   },
   "scripts": {
     "start": "node server.js"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
 
