@@ -9,9 +9,11 @@ const app = express();
 const bot = new Telegraf('8055073515:AAHHT_ZMZYqwks_s3EawcIxK6cf9YjEpAA8');
 
 // Убедитесь, что файл favicon.ico находится в папке public
-app.use(favicon(path.join(__dirname, '../public', 'favicon.ico'))); // Обслуживание favicon
-// Обслуживание статических файлов
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); // Обслуживание favicon
+
+// Обслуживание статических файлов из папки public
+app.use(express.static(path.join(__dirname, 'public'))); // Убедитесь, что путь правильный
+
 // Обработка маршрута для главной страницы
 app.get('/', (req, res) => {
   res.send('Welcome to Find Pair Game');
@@ -32,14 +34,14 @@ bot.on('inline_query', (ctx) => {
     {
       type: 'game',
       id: '1',
-      game_short_name: 'findpair'
+      game_short_name: 'findpair' // Убедитесь, что имя игры соответствует тому, что вы зарегистрировали
     }
   ];
   ctx.answerInlineQuery(results);
 });
 
 // Запуск Telegram бота
-bot.launch();
+bot.launch().catch(err => console.error('Ошибка при запуске бота:', err));
 
 // Запуск Express сервера
 const PORT = process.env.PORT || 3000;
