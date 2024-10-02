@@ -9,7 +9,7 @@ const app = express();
 const bot = new Telegraf('8055073515:AAHHT_ZMZYqwks_s3EawcIxK6cf9YjEpAA8');
 
 // Убедитесь, что файл favicon.ico находится в папке public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); // Обслуживание favicon
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); // Обслуживание favicon
 app.use(express.static(path.join(__dirname, 'public'))); // Обслуживание статических файлов
 
 // Обработка маршрута для главной страницы
