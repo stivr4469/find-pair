@@ -1,5 +1,5 @@
 {
-  "name": "find-pair-game",
+  "name": "find-pair",
   "version": "1.0.0",
   "description": "Browser game to find word pairs with Telegram integration.",
   "main": "server.js",
