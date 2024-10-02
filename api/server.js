@@ -1,23 +1,22 @@
 const express = require('express');
 const path = require('path');
 const { Telegraf } = require('telegraf');
-const favicon = require('serve-favicon'); // Импортируем пакет serve-favicon
+const favicon = require('serve-favicon');
 
 const app = express();
 
 // Ваш Telegram бот токен
 const bot = new Telegraf('8055073515:AAHHT_ZMZYqwks_s3EawcIxK6cf9YjEpAA8');
 
-// Убедитесь, что файл favicon.ico находится в папке public
-const favicon = require('serve-favicon');
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); // Обслуживание favicon
+// Обслуживание favicon
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // Обслуживание статических файлов из папки public
-app.use(express.static(path.join(__dirname, 'public'))); // Убедитесь, что путь правильный
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Обработка маршрута для главной страницы
 app.get('/', (req, res) => {
-  res.send('Welcome to Find Pair Game');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Команда /start для запуска игры через диалог
@@ -29,20 +28,9 @@ bot.command('start', (ctx) => {
     });
 });
 
-// Обработка инлайн-запросов для отправки игры через инлайн-режим
-bot.on('inline_query', (ctx) => {
-  const results = [
-    {
-      type: 'game',
-      id: '1',
-      game_short_name: 'findpair' // Убедитесь, что имя игры соответствует тому, что вы зарегистрировали
-    }
-  ];
-  ctx.answerInlineQuery(results);
-});
-
 // Запуск Telegram бота
-bot.launch().catch(err => console.error('Ошибка при запуске бота:', err));
+bot.launch()
+  .catch(err => console.error('Ошибка при запуске бота:', err));
 
 // Запуск Express сервера
 const PORT = process.env.PORT || 3000;
