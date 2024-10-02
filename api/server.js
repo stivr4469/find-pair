@@ -12,7 +12,7 @@ const bot = new Telegraf('8055073515:AAHHT_ZMZYqwks_s3EawcIxK6cf9YjEpAA8');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); // Обслуживание favicon
 
 // Обслуживание статических файлов из папки public
-app.use(express.static(path.join(__dirname))); // Убедитесь, что путь правильный
+app.use(express.static(path.join(__dirname, 'public'))); // Убедитесь, что путь правильный
 
 // Обработка маршрута для главной страницы
 app.get('/', (req, res) => {
