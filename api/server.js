@@ -28,30 +28,13 @@ bot.on('inline_query', (ctx) => {
             game_short_name: 'findpair' // Используем короткое имя игры
         }
     ];
-    ctx.answerInlineQuery(results).catch(err => {
-        console.error('Ошибка отправки инлайн-игры:', err);
-    });
+    ctx.answerInlineQuery(results);
 });
 
-// Обработка нажатия кнопки при callback_query (если нужно перенаправить пользователя на игру)
-bot.on('callback_query', async (ctx) => {
-    const gameLink = `https://find-pair-olive.vercel.app/?id=${ctx.from.id}`; // Ссылка на вашу игру с id пользователя
+// Запуск бота
+bot.launch();
 
-    // Уведомляем пользователя о начале игры
-    await ctx.reply(`Перейдите по ссылке, чтобы начать игру: ${gameLink}`);
-    await ctx.answerCallbackQuery(); // Уведомляем Telegram, что запрос обработан
-});
-
-// Запуск Telegram бота
-bot.launch()
-    .then(() => {
-        console.log('Бот запущен и готов к работе!');
-    })
-    .catch(err => {
-        console.error('Ошибка при запуске бота:', err);
-    });
-
-// Запуск сервера Express
+// Запуск Express сервера
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Сервер запущен на порту ${PORT}`);
