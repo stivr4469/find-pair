@@ -29,7 +29,7 @@ bot.command('start', (ctx) => {
         Markup.inlineKeyboard([
             Markup.button.callback('Начать игру', 'start_game')
         ])
-    ).then(() => console.log('Кнопка отправлена пользователю'))
+    ).then(() => console.log('Кнопка отправлена пользователю:', ctx.from.id))
      .catch(err => console.error('Ошибка при отправке кнопки:', err));
 });
 
@@ -40,14 +40,16 @@ bot.action('start_game', async (ctx) => {
         const gameLink = `https://find-pair-new.vercel.app/?id=${ctx.from.id}`;
 
         // Уведомляем Telegram, что запрос нажатия кнопки обработан
-        await ctx.answerCbQuery().then(() => console.log('CallbackQuery обработан'));
+        await ctx.answerCbQuery()
+            .then(() => console.log('CallbackQuery обработан успешно для пользователя:', ctx.from.id))
+            .catch(err => console.error('Ошибка при обработке CallbackQuery:', err));
 
-        // Попытка отправить ссылку на игру
+        // Отправляем ссылку на игру
         await ctx.reply(`Перейдите по ссылке, чтобы начать игру: ${gameLink}`)
-            .then(() => console.log('Ссылка на игру отправлена успешно'))
+            .then(() => console.log('Ссылка на игру отправлена успешно пользователю:', ctx.from.id))
             .catch(err => console.error('Ошибка при отправке ссылки:', err));
     } catch (err) {
-        console.error('Ошибка обработки кнопки:', err);
+        console.error('Ошибка обработки кнопки start_game:', err);
         await ctx.reply('Произошла ошибка при обработке запроса. Попробуйте позже.');
     }
 });
