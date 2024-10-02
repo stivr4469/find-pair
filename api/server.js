@@ -29,8 +29,9 @@ bot.command('start', (ctx) => {
         Markup.inlineKeyboard([
             Markup.button.callback('Начать игру', 'start_game')
         ])
-    ).then(() => console.log('Кнопка отправлена пользователю:', ctx.from.id))
-     .catch(err => console.error('Ошибка при отправке кнопки:', err));
+    )
+    .then(() => console.log('Кнопка отправлена пользователю:', ctx.from.id))
+    .catch(err => console.error('Ошибка при отправке кнопки:', err));
 });
 
 // Обработка нажатия кнопки
