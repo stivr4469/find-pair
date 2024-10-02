@@ -21,12 +21,12 @@ app.get('/', (req, res) => {
 
 // Маршрут для игры
 app.get('/game/:id', (req, res) => {
-  res.redirect('https://find-pair-m60g5gawr-stivr4469gmailcoms-projects.vercel.app/');  // Перенаправляем пользователя на развернутую игру на Vercel
+  res.redirect('https://find-pair-new.vercel.app/');  // Перенаправляем пользователя на развернутую игру на Vercel
 });
 
 // Команда /start для запуска игры через диалог
 bot.command('start', (ctx) => {
-  const gameLink = `https://find-pair-m60g5gawr-stivr4469gmailcoms-projects.vercel.app/?id=${ctx.from.id}`;
+  const gameLink = `https://find-pair-new.vercel.app//?id=${ctx.from.id}`;
   ctx.reply(`Добро пожаловать в игру! Перейдите по ссылке для игры: ${gameLink}`);
 });
 
