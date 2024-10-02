@@ -1,14 +1,16 @@
 const express = require('express');
 const path = require('path');
 const { Telegraf } = require('telegraf');
+const favicon = require('serve-favicon'); // Импортируем пакет serve-favicon
 
 const app = express();
 
 // Ваш Telegram бот токен
 const bot = new Telegraf('8055073515:AAHHT_ZMZYqwks_s3EawcIxK6cf9YjEpAA8');
 
-// Обслуживание статических файлов
-app.use(express.static(path.join(__dirname)));
+// Убедитесь, что файл favicon.ico находится в папке public
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); // Обслуживание favicon
+app.use(express.static(path.join(__dirname, 'public'))); // Обслуживание статических файлов
 
 // Обработка маршрута для главной страницы
 app.get('/', (req, res) => {
