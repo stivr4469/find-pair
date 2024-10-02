@@ -8,11 +8,11 @@ const app = express();
 const bot = new Telegraf('8055073515:AAHHT_ZMZYqwks_s3EawcIxK6cf9YjEpAA8');
 
 // Обслуживание статических файлов из папки public
-app.use(express.static(path.join(__dirname, 'public'))); // Убедитесь, что путь правильный
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Маршрут для игры
 app.get('/game/:id', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html')); // Путь к вашей игре
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Запуск сервера Express
@@ -23,7 +23,7 @@ app.listen(PORT, () => {
 
 // Обработка команды /start
 bot.command('start', (ctx) => {
-    console.log('Команда /start получена от пользователя:', ctx.from.id); // Лог для отладки
+    console.log('Команда /start получена от пользователя:', ctx.from.id);
     ctx.reply(
         'Нажмите кнопку ниже, чтобы начать игру:',
         Markup.inlineKeyboard([
@@ -34,27 +34,27 @@ bot.command('start', (ctx) => {
 });
 
 // Обработка нажатия кнопки
-bot.action('start_game', (ctx) => {
-    console.log('Получен callback от кнопки start_game для пользователя:', ctx.from.id); // Лог для отладки
-    const gameLink = `https://find-pair-new.vercel.app/?id=${ctx.from.id}`; // Ссылка на вашу игру с id пользователя
-    
-    // Попытка отправить ссылку на игру
-    ctx.reply(`Перейдите по ссылке, чтобы начать игру: ${gameLink}`)
-        .then(() => console.log('Ссылка отправлена успешно'))
-        .catch(err => {
-            console.error('Ошибка при отправке ссылки:', err);
-            ctx.reply('Произошла ошибка при отправке ссылки. Попробуйте позже.');
-        });
+bot.action('start_game', async (ctx) => {
+    try {
+        console.log('Получен callback от кнопки start_game для пользователя:', ctx.from.id);
+        const gameLink = `https://find-pair-new.vercel.app/?id=${ctx.from.id}`;
 
-    // Уведомляем Telegram о том, что запрос обработан
-    ctx.answerCbQuery()
-        .then(() => console.log('CallbackQuery обработан'))
-        .catch(err => console.error('Ошибка обработки CallbackQuery:', err));
+        // Уведомляем Telegram, что запрос нажатия кнопки обработан
+        await ctx.answerCbQuery().then(() => console.log('CallbackQuery обработан'));
+
+        // Попытка отправить ссылку на игру
+        await ctx.reply(`Перейдите по ссылке, чтобы начать игру: ${gameLink}`)
+            .then(() => console.log('Ссылка на игру отправлена успешно'))
+            .catch(err => console.error('Ошибка при отправке ссылки:', err));
+    } catch (err) {
+        console.error('Ошибка обработки кнопки:', err);
+        await ctx.reply('Произошла ошибка при обработке запроса. Попробуйте позже.');
+    }
 });
 
 // Обработка текстовых сообщений
 bot.on('text', (ctx) => {
-    console.log('Получено сообщение от пользователя:', ctx.message.text); // Лог для отладки
+    console.log('Получено сообщение от пользователя:', ctx.message.text);
     ctx.reply(`Ваше сообщение: ${ctx.message.text}`);
 });
 
