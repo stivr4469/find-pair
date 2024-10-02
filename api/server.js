@@ -26,7 +26,7 @@ app.get('/game/:id', (req, res) => {
 
 // Команда /start для запуска игры через диалог
 bot.command('start', (ctx) => {
-  const gameLink = `https://find-pair-new.vercel.app//?id=${ctx.from.id}`;
+  const gameLink = `https://find-pair-new.vercel.app/?id=${ctx.from.id}`;
   ctx.reply(`Добро пожаловать в игру! Перейдите по ссылке для игры: ${gameLink}`);
 });
 
@@ -37,7 +37,7 @@ bot.on('text', (ctx) => {
 
 // Команда /start для запуска игры через диалог
 bot.command('start', (ctx) => {
-  const gameLink = `https://find-pair-m60g5gawr-stivr4469gmailcoms-projects.vercel.app/?id=${ctx.from.id}`;
+  const gameLink = `https://find-pair-new.vercel.app/?id=${ctx.from.id}`;
   ctx.reply(`Добро пожаловать в игру! Перейдите по ссылке для игры: ${gameLink}`);
 });
 
