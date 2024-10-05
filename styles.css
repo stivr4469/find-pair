@@ -55,9 +55,9 @@ h1 {
     text-align: center;
     border-radius: 4px;
     transition: background 0.3s;
-    font-size: 24px; /* Увеличиваем размер шрифта до 18px */
+    font-size: 30px; /* Увеличиваем размер шрифта до 30px */
+    font-weight: bold; /* Делаем текст полужирным */
     width: 100%; /* Задаем ширину 100% для элементов слов */
-
 }
 
 /* Стили при наведении */
