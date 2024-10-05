@@ -26,17 +26,14 @@ h1 {
     display: flex; /* Используем Flexbox для создания колонок */
     justify-content: space-between; /* Равномерное распределение колонок */
     margin-top: 20px;
-    flex-wrap: wrap; /* Позволяем колонкам переноситься */
 }
 
 .column {
-    flex: 1 1 45%; /* Устанавливаем адаптивную ширину для колонок */
+    width: 45%; /* Задаем ширину колонок */
     padding: 10px;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
     border-radius: 5px;
-    box-sizing: border-box; /* Учитываем padding и border в ширине */
-    overflow-wrap: break-word; /* Перенос длинных слов */
 }
 
 /* Цвета колонок */
@@ -58,10 +55,9 @@ h1 {
     text-align: center;
     border-radius: 4px;
     transition: background 0.3s;
-    font-size: 14px; /* Увеличиваем размер шрифта до 30px */
-    font-weight: bold; /* Делаем текст полужирным */
-    width: 100%;
-    box-sizing: border-box; /* Корректный расчет ширины для текста */
+    font-size: 18px; /* Увеличиваем размер шрифта до 18px */
+    width: 100%; /* Задаем ширину 100% для элементов слов */
+
 }
 
 /* Стили при наведении */
