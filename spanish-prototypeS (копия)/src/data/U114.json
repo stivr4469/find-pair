@@ -1,0 +1,30 @@
+{
+  "lessonId": "B1_U114",
+  "title": "Урок 114: Предлоги (5): para, por, con...",
+  "level": "B1",
+  "components": [
+    {
+      "type": "TheoryBlock",
+      "title": "Теория: Предлоги",
+      "content": [
+        { "text": "<strong>- `para` используется для:</strong><br> - указания пункта назначения или цели: <i>Mañana salimos <strong>para</strong> Londres.</i><br> - указания цели (с инфинитивом): <i>¿Tiene un cuchillo <strong>para</strong> pelar patatas?</i><br> - указания срока: <i>Necesitamos un apartamento <strong>para</strong> este verano.</i><br> - выражения мнения: <i><strong>Para</strong> Julio, su hermana es perfecta.</i>" },
+        { "text": "<strong>- `por` используется для:</strong><br> - указания причины или мотива действия: <i>Se suspendió el partido <strong>por</strong> la lluvia.</i><br> - указания средства, с помощью которого что-то делается: <i>Envíale la factura <strong>por</strong> fax.</i><br> - указания приблизительного местоположения или транзита: <i>Tiene que haber un banco <strong>por</strong> aquí.</i><br> - указания цены: <i>Hemos comprado un apartamento <strong>por</strong> cien mil euros.</i>" },
+        { "text": "<strong>- `con` используется для:</strong><br> - указания компании или сопровождения: <i>José sale <strong>con</strong> Tina los fines de semana.</i><br> - указания инструмента: <i>Pagó las entradas <strong>con</strong> la tarjeta de crédito.</i>" },
+        { "text": "<strong>- `sin` указывает на отсутствие чего-либо или кого-либо.</strong><br><i>Me he acostumbrado a beber cerveza <strong>sin</strong> alcohol.</i>" },
+        { "text": "<strong>- `contra` указывает на противопоставление.</strong><br><i>Este domingo juega el Real Madrid <strong>contra</strong> el River Plate.</i>" },
+        { "text": "<strong>- `según` указывает на точку зрения.</strong><br><i><strong>Según</strong> tú, ¿quién tiene razón?</i>" }
+      ]
+    },
+    {
+      "type": "FillInTheBlank",
+      "title": "Упражнение 1: Дополните фразы правильным предлогом (por/para)",
+      "tasks": [
+        { "id": "u114_e1_1", "sentence": "1. He comprado este regalo ___ ti.", "answer": "para" },
+        { "id": "u114_e1_2", "sentence": "2. No he venido ___ el trabajo, sino ___ verte.", "answer": "por, para" },
+        { "id": "u114_e1_3", "sentence": "3. Te cambio mi bicicleta ___ tu patineta.", "answer": "por" },
+        { "id": "u114_e1_4", "sentence": "4. ___ mí, esta es la mejor película del año.", "answer": "Para" },
+        { "id": "u114_e1_5", "sentence": "5. El ladrón entró ___ la ventana.", "answer": "por" }
+      ]
+    }
+  ]
+}

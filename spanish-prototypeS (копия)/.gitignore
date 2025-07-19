@@ -1,0 +1,38 @@
+# Dependencies
+/node_modules
+
+# Build artifacts
+/build
+/dist
+/public
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pglite-debug.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.private.env
+
+# Local development utility files (from GEMINI.md)
+debug.snapshots/
+notes.local.md
+questions.todo.md
+trace.log.md
+integration.mock.json
+
+# Project specific
+game/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

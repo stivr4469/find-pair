@@ -1,0 +1,120 @@
+/* src/components/FindPairGame.css */
+
+/* Контейнер для игры */
+.game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.game-container h1 {
+    text-align: center;
+    margin-top: 0;
+}
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.game-controls label {
+    font-weight: 500;
+}
+
+.game-controls select {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+/* Стили для колонок */
+.columns {
+    display: flex; /* Используем Flexbox для создания колонок */
+    justify-content: space-between; /* Равномерное распределение колонок */
+    margin-top: 20px;
+    flex-wrap: wrap; /* Позволяем колонкам переноситься */
+    gap: 20px;
+}
+
+.column {
+    flex: 1 1 45%; /* Устанавливаем адаптивную ширину для колонок */
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-sizing: border-box; /* Учитываем padding и border в ширине */
+    overflow-wrap: break-word; /* Перенос длинных слов */
+    min-height: 300px;
+}
+
+/* Цвета колонок */
+.left-column {
+    background-color: #f1f7ff; /* Цвет для левой колонки */
+}
+
+.right-column {
+    background-color: #fff7f1; /* Цвет для правой колонки */
+}
+
+/* Стили для элементов слов */
+.word {
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    background: #e8e8e8;
+    cursor: pointer;
+    text-align: center; /* Возвращаем центрирование */
+    border-radius: 4px;
+    transition: background 0.3s, color 0.3s, visibility 0.4s, opacity 0.4s;
+    font-size: 16px; 
+    font-weight: bold; 
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Стили при наведении */
+.word:hover {
+    background: #ddd;
+}
+
+/* Стили для выбранных слов */
+.word.selected {
+    background: #ffeb3b;
+    border-color: #fbc02d;
+}
+
+/* Стили для совпавших пар */
+.word.matched {
+    background: #a5d6a7;
+    color: #1b5e20;
+    cursor: default;
+    border-color: #4caf50;
+    visibility: hidden;
+    opacity: 0;
+}
+
+/* Кнопка для перезапуска */
+#restart-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    border: none;
+    background: #4caf50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+#restart-button:hover {
+    background: #45a049;
+}

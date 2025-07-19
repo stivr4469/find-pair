@@ -1,0 +1,30 @@
+{
+  "lessonId": "B1_U115",
+  "title": "Урок 115: Глаголы с предлогами",
+  "level": "B1",
+  "components": [
+    {
+      "type": "TheoryBlock",
+      "title": "Теория: Глаголы с предлогами",
+      "content": [
+        { "text": "Многие глаголы требуют определенных предлогов для связи с другими глаголами, существительными или местоимениями." },
+        { "text": "<strong>Глаголы + a + инфинитив/существительное/местоимение:</strong><br>acostumbrarse, aficionarse, ayudar, dedicarse, aprender, atreverse, comenzar, decidirse, enseñar, esperar, negarse, volver, ir, venir<br><i>Nos hemos <strong>acostumbrado a</strong> las comidas de Toni.</i>" },
+        { "text": "<strong>Глаголы + de + инфинитив/существительное/местоимение:</strong><br>acordarse, arrepentirse, cansarse, reírse, alegrarse, dejar, tratar, desconfiar, disfrutar, divorciarse, enamorarse, morir<br><i>¿Te <strong>acuerdas de</strong> Constantino?</i>" },
+        { "text": "<strong>Глаголы + con + инфинитив/существительное/местоимение:</strong><br>conformarse, contar, contentarse, soñar, casarse, compararse, enfadarse<br><i>Me <strong>contento con</strong> ser feliz.</i>" },
+        { "text": "<strong>Глаголы + en + инфинитив/существительное/местоимение:</strong><br>confiar, creer, fijarse, transformarse, molestarse, quedar, tardar<br><i><strong>Confío en</strong> no equivocarme mucho.</i>" }
+      ]
+    },
+    {
+      "type": "FillInTheBlank",
+      "title": "Упражнение 1: Дополните фразы правильным предлогом (a, de, con, en)",
+      "tasks": [
+        { "id": "u115_e1_1", "sentence": "1. Me he acostumbrado ___ levantarme temprano.", "answer": "a" },
+        { "id": "u115_e1_2", "sentence": "2. No me acuerdo ___ su nombre.", "answer": "de" },
+        { "id": "u115_e1_3", "sentence": "3. Luisa se casó ___ un amigo mío.", "answer": "con" },
+        { "id": "u115_e1_4", "sentence": "4. No confío ___ la gente que habla mucho.", "answer": "en" },
+        { "id": "u115_e1_5", "sentence": "5. ¿Te animas a venir ___ la fiesta?", "answer": "a" },
+        { "id": "u115_e1_6", "sentence": "6. Siempre sueño ___ el mismo monstruo.", "answer": "con" }
+      ]
+    }
+  ]
+}

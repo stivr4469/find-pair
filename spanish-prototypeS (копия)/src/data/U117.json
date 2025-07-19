@@ -1,0 +1,28 @@
+{
+  "lessonId": "B1_U117",
+  "title": "Урок 117: Придаточные цели",
+  "level": "B1",
+  "components": [
+    {
+      "type": "TheoryBlock",
+      "title": "Теория: Придаточные цели",
+      "content": [
+        { "text": "`Para estudiar` и `para que lo conozcáis` — это придаточные цели. Они указывают, зачем что-то делается." },
+        { "text": "<strong>- `para` + инфинитив</strong><br><i>Anoche me llamó Juan <strong>para quedar</strong> el domingo.</i><br><strong>- `para que` + сослагательное наклонение</strong><br><i>Me gustaría ver a Dolores <strong>para que</strong> me <strong>cuente</strong> la fiesta.</i>" },
+        { "text": "<strong>- Обычно используется `para` + инфинитив, когда подлежащее в обеих частях предложения одно и то же.</strong><br><i>Llamé (yo) a Antonio <strong>para invitarle</strong> (yo) a la fiesta.</i>" },
+        { "text": "<strong>- Обычно используется `para que` + сослагательное наклонение, когда подлежащие в обеих частях предложения разные.</strong><br><i>Fito ha cerrado (él) la puerta <strong>para que</strong> no le <strong>molesten</strong> (ellos) a sus padres.</i>" }
+      ]
+    },
+    {
+        "type": "FillInTheBlank",
+        "title": "Упражнение 1: Дополните фразы с 'para' или 'para que'",
+        "tasks": [
+            { "id": "u117_e1_1", "sentence": "1. He venido ___ hablar contigo.", "answer": "para" },
+            { "id": "u117_e1_2", "sentence": "2. Te he llamado ___ me ayudes.", "answer": "para que" },
+            { "id": "u117_e1_3", "sentence": "3. Te doy el dinero ___ compres el pan.", "answer": "para que" },
+            { "id": "u117_e1_4", "sentence": "4. Necesito el coche ___ ir a trabajar.", "answer": "para" },
+            { "id": "u117_e1_5", "sentence": "5. Habla más alto ___ todos te oigan.", "answer": "para que" }
+        ]
+    }
+  ]
+}

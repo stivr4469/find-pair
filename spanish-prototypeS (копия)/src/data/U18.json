@@ -1,0 +1,162 @@
+{
+  "lessonId": "A2_U18",
+  "title": "Урок 18: Притяжательные местоимения (1): mi, tu, su...",
+  "level": "A2",
+  "components": [
+    {
+      "type": "TheoryBlock",
+      "title": "Теория: Формы притяжательных местоимений (краткие)",
+      "content": [
+        {
+          "text": "<strong>Mi, tu, su, nuestro, vuestro, su</strong> и их формы множественного числа используются для указания владения и других отношений с людьми, животными или вещами: семья, происхождение и т.д.",
+          "speechText": "Mi, tu, su, nuestro, vuestro, su используются для указания владения."
+        },
+        {
+          "table": {
+            "headers": ["", "Ед. число (Singular)", "Мн. число (Plural)"],
+            "rows": [
+              ["(yo)", "mi", "mis"],
+              ["(tú)", "tu", "tus"],
+              ["(usted)", "su", "sus"],
+              ["(él, ella)", "su", "sus"],
+              ["(nosotros, -as)", "nuestro, nuestra", "nuestros, nuestras"],
+              ["(vosotros, -as)", "vuestro, vuestra", "vuestros, vuestras"],
+              ["(ustedes)", "su", "sus"],
+              ["(ellos, ellas)", "su", "sus"]
+            ]
+          }
+        },
+        {
+          "text": "Они всегда ставятся перед существительным: <i>Ayer vi a Ignacio con <strong>sus</strong> primas. / ¿Dónde están <strong>vuestras</strong> cosas?</i>",
+          "speechText": "Ayer vi a Ignacio con sus primas. ¿Dónde están vuestras cosas?"
+        },
+        {
+          "text": "<strong>ATENCIÓN:</strong><br> `su, sus` = de él; de ella; de usted; de ellos; de ellas; de ustedes<br><i>Jorge y sus hijos. (hijos de él)<br>Alicia en su coche. (coche de ella)<br>Generalmente, la situación indica a quién se refiere su. (Обычно из ситуации понятно, к кому относится `su`.)</i>"
+        },
+        {
+          "text": "<strong>Также используются `el, la, los, las` с частями тела, предметами одежды и другими личными вещами:</strong><br><i>Me duele <strong>la</strong> cabeza.<br>Quítate <strong>el</strong> abrigo.</i>",
+          "speechText": "Me duele la cabeza. Quítate el abrigo."
+        }
+      ]
+    },
+    {
+      "type": "TheoryBlock",
+      "title": "Примечание: Упражнение 18.1",
+      "content": [
+        {
+          "text": "<strong>Упражнение 18.1 пропущено, так как оно полностью основано на анализе изображения (семейного древа).</strong>"
+        }
+      ]
+    },
+    {
+      "type": "FillInTheBlanksComplex",
+      "title": "Упражнение 18.2: Дополните фразы, используя mi, tu, su...",
+      "tasks": [
+        {
+          "id": "u18_2_1",
+          "sentence": "1. –¿Cuál es ___ color preferido? –El azul.",
+          "answers": ["tu"],
+          "speechText": "¿Cuál es tu color preferido? –El azul."
+        },
+        {
+          "id": "u18_2_2",
+          "sentence": "2. Mi hermano y yo jugamos mucho al tenis. Es ___ deporte preferido.",
+          "answers": ["nuestro"],
+          "speechText": "Mi hermano y yo jugamos mucho al tenis. Es nuestro deporte preferido."
+        },
+        {
+          "id": "u18_2_3",
+          "sentence": "3. La señora Valverde y ___ hijas son muy agradables.",
+          "answers": ["sus"],
+          "speechText": "La señora Valverde y sus hijas son muy agradables."
+        },
+        {
+          "id": "u18_2_4",
+          "sentence": "4. –¿Dónde están Sol y Rocío? –En ___ casa.",
+          "answers": ["su"],
+          "speechText": "¿Dónde están Sol y Rocío? –En su casa."
+        },
+        {
+          "id": "u18_2_5",
+          "sentence": "5. Anoche fui al cine con ___ padre y ___ hermanos.",
+          "answers": ["mis", "mis"],
+          "speechText": "Anoche fui al cine con mis padres y mis hermanos."
+        },
+        {
+          "id": "u18_2_6",
+          "sentence": "6. Jorge, Juan, ¿dónde están ___ libros?",
+          "answers": ["vuestros"],
+          "speechText": "Jorge, Juan, ¿dónde están vuestros libros?"
+        },
+        {
+          "id": "u18_2_7",
+          "sentence": "7. –¿Cuál es ___ comida preferida, Enrique? –La paella.",
+          "answers": ["tu"],
+          "speechText": "¿Cuál es tu comida preferida, Enrique? –La paella."
+        },
+        {
+          "id": "u18_2_8",
+          "sentence": "8. Ayer conocí a ___ padres, Verónica. Son muy simpáticos.",
+          "answers": ["sus"],
+          "speechText": "Ayer conocí a sus padres, Verónica. Son muy simpáticos."
+        }
+      ]
+    },
+    {
+      "type": "InlineChoice",
+      "title": "Упражнение 18.3: Выберите правильную форму",
+      "tasks": [
+        {
+          "id": "u18_3_1",
+          "sentence": "1. Me estoy lavando (mi/el) pelo.",
+          "correctOptions": ["el"]
+        },
+        {
+          "id": "u18_3_2",
+          "sentence": "2. Átate (tus/los) zapatos.",
+          "correctOptions": ["los"]
+        },
+        {
+          "id": "u18_3_3",
+          "sentence": "3. Rodrigo trabaja con (su/el) padre.",
+          "correctOptions": ["su"]
+        },
+        {
+          "id": "u18_3_4",
+          "sentence": "4. Tenéis (vuestros/los) ojos rojos.",
+          "correctOptions": ["los"]
+        },
+        {
+          "id": "u18_3_5",
+          "sentence": "5. (Mis/Los) tíos viven en Puerto Rico.",
+          "correctOptions": ["Mis"]
+        },
+        {
+          "id": "u18_3_6",
+          "sentence": "6. Le di (mi/la) mano.",
+          "correctOptions": ["la"]
+        },
+        {
+          "id": "u18_3_7",
+          "sentence": "7. (Su/La) abuela tiene 85 años.",
+          "correctOptions": ["Su"]
+        },
+        {
+          "id": "u18_3_8",
+          "sentence": "8. Tienes una mancha en (tu/la) nariz.",
+          "correctOptions": ["la"]
+        },
+        {
+          "id": "u18_3_9",
+          "sentence": "9. Quitaos (vuestras/las) chaquetas.",
+          "correctOptions": ["las"]
+        },
+        {
+          "id": "u18_3_10",
+          "sentence": "10. Al señor Alfonsín se le ha estropeado (su/el) coche.",
+          "correctOptions": ["el"]
+        }
+      ]
+    }
+  ]
+}
