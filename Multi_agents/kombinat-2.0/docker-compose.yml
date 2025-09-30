@@ -1,0 +1,140 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --save 60 1 --loglevel warning
+
+  # Базовый сервис для наших агентов (без depends_on для возможности extends)
+  # Закомментирован, так как используется только для наследования
+  # base_agent:
+  #   build: .
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - ./src:/app/src
+  #   restart: on-failure
+  #   # ИСПРАВЛЕНИЕ: Явно указываем Docker, как найти хост-машину в любой ОС
+  #   extra_hosts:
+  #     - "host.docker.internal:host-gateway"
+
+  # Сервис для SpecAgent
+  spec_agent:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - HTTP_PROXY=
+      - HTTPS_PROXY=
+      - http_proxy=
+      - https_proxy=
+    volumes:
+      - ./src:/app/src
+    restart: on-failure
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - redis
+    command: python -m src.agents.spec_agent
+
+  # Сервис для DevAgent
+  dev_agent:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - HTTP_PROXY=
+      - HTTPS_PROXY=
+      - http_proxy=
+      - https_proxy=
+    volumes:
+      - ./src:/app/src
+    restart: on-failure
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - redis
+    command: python -m src.agents.dev_agent
+
+  # Сервис для LintAgent
+  lint_agent:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - HTTP_PROXY=
+      - HTTPS_PROXY=
+      - http_proxy=
+      - https_proxy=
+    volumes:
+      - ./src:/app/src
+    restart: on-failure
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - redis
+    command: python -m src.agents.lint_agent
+
+  # Рой Тест-Агентов - определен явно для надежного логирования
+  test_agent_1:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - HTTP_PROXY=
+      - HTTPS_PROXY=
+      - http_proxy=
+      - https_proxy=
+    volumes:
+      - ./src:/app/src
+    restart: on-failure
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - redis
+    command: python -m src.agents.test_agent
+
+  test_agent_2:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - HTTP_PROXY=
+      - HTTPS_PROXY=
+      - http_proxy=
+      - https_proxy=
+    volumes:
+      - ./src:/app/src
+    restart: on-failure
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - redis
+    command: python -m src.agents.test_agent
+
+  # Сервис Оркестратора-Слушателя
+  orchestrator_listener:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - HTTP_PROXY=
+      - HTTPS_PROXY=
+      - http_proxy=
+      - https_proxy=
+    volumes:
+      - ./src:/app/src
+    restart: on-failure
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - redis
+    command: python -m src.orchestrator.listener
+
+volumes:
+  redis-data:
