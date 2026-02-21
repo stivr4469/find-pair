@@ -1,0 +1,953 @@
+/**
+ * Tren Ir/Venir/Llegar - Spanish Verb Trainer
+ * Module 2: CSS Styles
+ *
+ * Color scheme: warm and vibrant train theme
+ * Исправленная версия для соответствия HTML-структуре.
+ *
+ * FIX v2: Enhanced text visibility for Mode 3 with stronger selectors
+ * FIX v3: Added styles for Mode 2 option buttons
+ */
+
+/* ============================================
+   CSS VARIABLES - COLOR PALETTE
+   ============================================ */
+:root {
+  /* Train theme colors - warm and vibrant */
+  --train-red: #e74c3c;
+  --train-orange: #f39c12;
+  --train-yellow: #f1c40f;
+  --train-gold: #f39c12;
+
+  /* Gradient directions */
+  --gradient-primary: linear-gradient(135deg, #e74c3c 0%, #f39c12 50%, #f1c40f 100%);
+  --gradient-secondary: linear-gradient(180deg, #ff6b6b 0%, #feca57 100%);
+  --gradient-button: linear-gradient(45deg, #ff9f43 0%, #ff6b6b 100%);
+
+  /* Functional colors */
+  --success-green: #27ae60;
+  --error-red: #c0392b;
+  --text-dark: #2c3e50;
+  --text-light: #7f8c8d;
+  --white: #ffffff;
+  --off-white: #f8f9fa;
+
+  /* Shadows */
+  --shadow-card: 0 10px 40px rgba(0, 0, 0, 0.15);
+  --shadow-button: 0 4px 15px rgba(0, 0, 0, 0.2);
+  --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.25);
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 30px;
+}
+
+/* ============================================
+   RESET & BASE STYLES
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  /* Colorful gradient background - train theme */
+  background: var(--gradient-primary);
+  background-size: 200% 200%;
+  animation: gradientShift 15s ease infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-sm);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated gradient background */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Decorative train track pattern */
+body::before {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: repeating-linear-gradient(
+    90deg,
+    #2c3e50 0px,
+    #2c3e50 20px,
+    transparent 20px,
+    transparent 40px
+  );
+  z-index: 1;
+}
+
+/* ============================================
+   APP HEADER
+   ============================================ */
+.app-header {
+  text-align: center;
+  padding: var(--spacing-md) var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  width: 100%;
+  max-width: 800px;
+}
+
+.app-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--white);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-card);
+}
+
+.app-header h1 span {
+  /* Highlight emoji */
+  display: inline-block;
+  animation: trainMove 3s ease-in-out infinite;
+}
+
+@keyframes trainMove {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+
+/* ============================================
+   MAIN MENU - MODE BUTTONS GRID
+   ============================================ */
+.main-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-sm);
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-sm);
+}
+
+/* ============================================
+   MODE BUTTONS - 5 MODES
+   ============================================ */
+.mode-button {
+  padding: var(--spacing-lg);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-button);
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Individual button colors for 5 modes */
+.mode-button[data-mode="mode1"] {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.mode-button[data-mode="mode2"] {
+  background: linear-gradient(135deg, #f39c12, #d68910);
+}
+
+.mode-button[data-mode="mode3"] {
+  background: linear-gradient(135deg, #f1c40f, #b7950b);
+}
+
+.mode-button[data-mode="mode4"] {
+  background: linear-gradient(135deg, #27ae60, #1e8449);
+}
+
+.mode-button[data-mode="mode5"] {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+/* Hover effects */
+.mode-button:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  filter: brightness(1.1);
+}
+
+.mode-button:active {
+  transform: translateY(-2px);
+}
+
+/* Active state - selected mode */
+.mode-button.active {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  filter: brightness(1.2);
+  outline: 3px solid var(--white);
+  outline-offset: 2px;
+}
+
+/* Disabled state */
+.mode-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  filter: grayscale(50%);
+}
+
+/* Button ripple effect */
+.mode-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.mode-button:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* ============================================
+   SCORE DISPLAY
+   ============================================ */
+.score-display {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+  border: 3px solid var(--train-yellow);
+  box-shadow: var(--shadow-card);
+  width: 100%;
+  max-width: 300px;
+}
+
+#score-label {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: var(--spacing-xs);
+}
+
+#score-value {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--train-red);
+  line-height: 1;
+}
+
+/* ============================================
+   GAME AREA - MAIN CONTENT CONTAINER
+   ============================================ */
+.game-area {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--spacing-lg);
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Decorative header stripe */
+.game-area::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: var(--gradient-secondary);
+}
+
+.game-area h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  color: var(--text-dark);
+  margin-bottom: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+}
+
+/* ============================================
+   HIDDEN STATE
+   ============================================ */
+.hidden {
+  display: none !important;
+}
+
+/* ============================================
+   MODE CONTENT AREA
+   ============================================ */
+.mode-content {
+  min-height: 200px;
+}
+
+/* ============================================
+   PROGRESS INDICATOR IN FOOTER
+   ============================================ */
+.app-footer {
+  width: 100%;
+  max-width: 400px;
+  margin-top: auto;
+  padding: var(--spacing-sm);
+}
+
+.progress {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-card);
+}
+
+#progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-xs);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+#progress-value {
+  font-size: 1.2rem;
+  color: var(--train-orange);
+  font-weight: 700;
+}
+
+/* Progress bar styles */
+.progress-bar {
+  height: 12px;
+  background: #e0e0e0;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+  margin-top: var(--spacing-xs);
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gradient-secondary);
+  border-radius: var(--radius-xl);
+  transition: width 0.5s ease;
+  width: 0%;
+  position: relative;
+}
+
+/* Animated shine effect on progress bar */
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ============================================
+   QUESTION & ANSWER STYLES
+   ============================================ */
+.question-area {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.verb-display {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  padding: var(--spacing-md);
+  background: var(--off-white);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-sm);
+  border-left: 5px solid var(--train-orange);
+  border-right: 5px solid var(--train-orange);
+}
+
+.tense-label {
+  font-size: 1rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: var(--spacing-sm);
+}
+
+.instruction {
+  font-size: 1.1rem;
+  color: var(--text-light);
+}
+
+/* ============================================
+   QUESTION TEXT - VISIBLE IN ALL MODES
+   FIX v2: Stronger selectors and explicit dark color for visibility
+   ============================================ */
+.question-text {
+  color: var(--text-dark) !important;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  text-shadow: none;
+}
+
+/* Mode 3 specific - MAXIMUM VISIBILITY FIX
+   Override any inline styles with stronger selector and !important */
+.game-area#mode3 #mode3-question,
+main#mode3 #mode3-question,
+#mode3 #mode3-question {
+  color: #1a1a1a !important;
+  font-size: 1.6rem;
+  font-weight: 700;
+  padding: var(--spacing-md);
+  background: var(--off-white);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--train-orange);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+/* Translation text style */
+.translation-text {
+  color: var(--text-light);
+  font-size: 1.1rem;
+  font-style: italic;
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-sm);
+  background: rgba(241, 196, 15, 0.1);
+  border-radius: var(--radius-md);
+}
+
+/* ============================================
+   ANSWER INPUT FIELD
+   ============================================ */
+.answer-input {
+  width: 100%;
+  padding: var(--spacing-md);
+  font-size: 1.2rem;
+  border: 3px solid #e0e0e0;
+  border-radius: var(--radius-md);
+  text-align: center;
+  transition: all 0.3s ease;
+  margin-bottom: var(--spacing-md);
+}
+
+.answer-input:focus {
+  outline: none;
+  border-color: var(--train-yellow);
+  box-shadow: 0 0 20px rgba(241, 196, 15, 0.3);
+}
+
+.answer-input::placeholder {
+  color: #bdc3c7;
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+.action-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--spacing-md);
+}
+
+/* Единый стиль для всех кнопок действия */
+.next-button, .check-button, .restart-button, .menu-button, .btn {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.next-button, .check-button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.next-button:hover, .check-button:hover {
+  background: linear-gradient(135deg, #5568d3, #6355aa);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.next-button:disabled, .check-button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.restart-button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.restart-button:hover {
+  background: linear-gradient(135deg, #5568d3, #6355aa);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.menu-button {
+  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+  color: white;
+}
+
+.menu-button:hover {
+  background: linear-gradient(135deg, #7f8c8d, #6c7a7d);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(149, 165, 166, 0.6);
+}
+
+.btn {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ff9f43, #ff6b6b);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 159, 67, 0.6);
+  filter: brightness(1.1);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(149, 165, 166, 0.6);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============================================
+   FEEDBACK ANIMATIONS
+   ============================================ */
+
+/* Correct answer - green flash */
+@keyframes correctFlash {
+  0% { background-color: var(--white); }
+  25% { background-color: #d5f5e3; }
+  50% { background-color: #abebc6; }
+  75% { background-color: #d5f5e3; }
+  100% { background-color: var(--white); }
+}
+
+.feedback-correct {
+  animation: correctFlash 0.8s ease;
+}
+
+.feedback-correct .answer-input {
+  border-color: var(--success-green);
+  background-color: #d5f5e3;
+}
+
+/* Wrong answer - red shake */
+@keyframes wrongShake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+  20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+.feedback-wrong {
+  animation: wrongShake 0.6s ease;
+}
+
+.feedback-wrong .answer-input {
+  border-color: var(--error-red);
+  background-color: #fadbd8;
+}
+
+/* Success checkmark animation */
+@keyframes checkmark {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.checkmark {
+  display: inline-block;
+  font-size: 3rem;
+  color: var(--success-green);
+  animation: checkmark 0.5s ease;
+}
+
+/* ============================================
+   FEEDBACK MESSAGE
+   ============================================ */
+.feedback-message {
+  text-align: center;
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 1.2rem;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedback-success {
+  background: #d5f5e3;
+  color: var(--success-green);
+  border: 2px solid var(--success-green);
+}
+
+.feedback-error {
+  background: #fadbd8;
+  color: var(--error-red);
+  border: 2px solid var(--error-red);
+}
+
+/* ============================================
+   OPTION BUTTONS FOR MULTIPLE CHOICE
+   ============================================ */
+.option-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-sm);
+  margin: var(--spacing-md) 0;
+}
+
+.option-btn {
+  padding: var(--spacing-md);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  background: var(--off-white);
+  border: 2px solid #e0e0e0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.option-btn:hover {
+  background: var(--train-yellow);
+  border-color: var(--train-yellow);
+  transform: translateY(-2px);
+}
+
+.option-btn.correct {
+  background: var(--success-green);
+  color: var(--white);
+  border-color: var(--success-green);
+}
+
+.option-btn.incorrect {
+  background: var(--error-red);
+  color: var(--white);
+  border-color: var(--error-red);
+}
+
+/* ============================================
+   MODE 2 SPECIFIC STYLES
+   See mode2-styles.css for Mode 2 specific styles
+   ============================================ */
+
+/* ============================================
+   CONJUGATION TABLE
+   ============================================ */
+.conjugation-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--spacing-md);
+  background: var(--off-white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.conjugation-table th,
+.conjugation-table td {
+  padding: var(--spacing-sm);
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.conjugation-table th {
+  background: var(--gradient-secondary);
+  color: var(--white);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.conjugation-table tr:hover {
+  background: rgba(243, 156, 18, 0.1);
+}
+
+.conjugation-table tr:last-child th,
+.conjugation-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 2rem;
+  }
+
+  .main-menu {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #score-value {
+    font-size: 2.5rem;
+  }
+
+  .game-area {
+    padding: var(--spacing-md);
+  }
+
+  .game-area h2 {
+    font-size: 1.5rem;
+  }
+
+  .verb-display {
+    font-size: 1.5rem;
+  }
+
+  /* Mode 3 responsive text size */
+  #mode3 #mode3-question {
+    font-size: 1.3rem;
+  }
+  
+  /* Mode 2 responsive buttons */
+  #mode2-options .option-btn {
+    padding: 12px 16px;
+    font-size: 1rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .app-header h1 {
+    font-size: 1.5rem;
+    padding: var(--spacing-sm);
+  }
+
+  .main-menu {
+    grid-template-columns: 1fr;
+  }
+
+  .mode-button {
+    padding: var(--spacing-sm);
+    font-size: 0.9rem;
+    min-height: 60px;
+  }
+
+  #score-value {
+    font-size: 2rem;
+  }
+
+  .game-area {
+    padding: var(--spacing-sm);
+  }
+
+  .game-area h2 {
+    font-size: 1.3rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .verb-display {
+    font-size: 1.3rem;
+    padding: var(--spacing-sm);
+  }
+
+  .answer-input {
+    font-size: 1rem;
+    padding: var(--spacing-sm);
+  }
+
+  .conjugation-table {
+    font-size: 0.85rem;
+  }
+
+  .conjugation-table th,
+  .conjugation-table td {
+    padding: var(--spacing-xs);
+  }
+
+  /* Mode 3 mobile text size */
+  #mode3 #mode3-question {
+    font-size: 1.2rem;
+  }
+  
+  /* Mode 2 mobile buttons */
+  #mode2-options .option-btn {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 360px) {
+  .app-header h1 {
+    font-size: 1.3rem;
+  }
+
+  #score-value {
+    font-size: 1.5rem;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Focus styles for keyboard navigation */
+.btn:focus,
+.mode-button:focus,
+.answer-input:focus,
+.option-btn:focus {
+  outline: 3px solid var(--train-yellow);
+  outline-offset: 2px;
+}
+
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .game-area {
+    border: 3px solid var(--text-dark);
+  }
+
+  .btn,
+  .mode-button {
+    border: 2px solid var(--text-dark);
+  }
+
+  /* Enhanced contrast for Mode 3 question */
+  #mode3 #mode3-question {
+    border: 2px solid var(--text-dark);
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  body {
+    background: white;
+    animation: none;
+  }
+
+  body::before {
+    display: none;
+  }
+
+  .app-header h1 {
+    background: none;
+    box-shadow: none;
+    color: var(--text-dark);
+  }
+
+  .game-area {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+
+  .mode-button,
+  .btn {
+    background: white;
+    color: black;
+    border: 1px solid #000;
+  }
+
+  .hidden {
+    display: none;
+  }
+}

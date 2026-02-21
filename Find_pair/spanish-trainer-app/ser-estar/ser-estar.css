@@ -1,0 +1,791 @@
+/**
+ * Ser vs Estar Trainer - Styles
+ * 
+ * Стили для всех режимов модуля Ser/Estar
+ * 
+ * Цветовая схема:
+ * - SER: #3498db (синий)
+ * - ESTAR: #27ae60 (зеленый)
+ */
+
+/* ============================================
+   ОБЩИЕ СТИЛИ КОНТЕЙНЕРОВ
+   ============================================ */
+
+.ser-estar-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ser-estar-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.ser-estar-header h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.ser-estar-subtitle {
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+/* ============================================
+   МЕНЮ ВЫБОРА РЕЖИМОВ
+   ============================================ */
+
+.ser-estar-mode-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.ser-estar-mode-btn {
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.ser-estar-mode-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.ser-estar-mode-btn.mode1 {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+}
+
+.ser-estar-mode-btn.mode2 {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    color: white;
+}
+
+.ser-estar-mode-btn.mode3 {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+    color: white;
+}
+
+.ser-estar-mode-btn.mode4 {
+    background: linear-gradient(135deg, #27ae60, #1e8449);
+    color: white;
+}
+
+.ser-estar-mode-btn .mode-icon {
+    font-size: 32px;
+}
+
+.ser-estar-mode-btn .mode-desc {
+    font-size: 12px;
+    font-weight: normal;
+    opacity: 0.9;
+}
+
+/* ============================================
+   ПРОГРЕСС И СЧЕТ
+   ============================================ */
+
+.ser-estar-progress-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #ecf0f1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.ser-estar-progress-text {
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+.ser-estar-score {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.ser-estar-score span {
+    color: #27ae60;
+}
+
+/* ============================================
+   ОБЛАСТЬ ВОПРОСА
+   ============================================ */
+
+.ser-estar-question-area {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.ser-estar-question-text {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.ser-estar-translation {
+    font-size: 16px;
+    text-align: center;
+    color: #7f8c8d;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+
+.ser-estar-russian {
+    font-size: 20px;
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* ============================================
+   КНОПКИ С ВАРИАНТАМИ
+   ============================================ */
+
+.ser-estar-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.ser-estar-option-btn {
+    padding: 15px 25px;
+    font-size: 18px;
+    font-weight: 600;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+    color: #2c3e50;
+}
+
+.ser-estar-option-btn:hover:not(:disabled) {
+    background: #e9ecef;
+    transform: scale(1.02);
+}
+
+.ser-estar-option-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Цвета для SER и ESTAR */
+.ser-estar-option-btn.ser {
+    background: #3498db;
+    color: white;
+}
+
+.ser-estar-option-btn.ser:hover:not(:disabled) {
+    background: #2980b9;
+}
+
+.ser-estar-option-btn.estar {
+    background: #27ae60;
+    color: white;
+}
+
+.ser-estar-option-btn.estar:hover:not(:disabled) {
+    background: #1e8449;
+}
+
+/* Правильный/неправильный ответ */
+.ser-estar-option-btn.correct {
+    background: #27ae60 !important;
+    color: white !important;
+    animation: pulse 0.5s ease;
+}
+
+.ser-estar-option-btn.incorrect {
+    background: #e74c3c !important;
+    color: white !important;
+}
+
+/* ============================================
+   ОБРАТНАЯ СВЯЗЬ
+   ============================================ */
+
+.ser-estar-feedback {
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 20px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ser-estar-feedback.correct {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.ser-estar-feedback.incorrect {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.ser-estar-feedback.warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+/* ============================================
+   КНОПКИ УПРАВЛЕНИЯ
+   ============================================ */
+
+.ser-estar-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.ser-estar-btn {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ser-estar-btn.primary {
+    background: #3498db;
+    color: white;
+}
+
+.ser-estar-btn.primary:hover {
+    background: #2980b9;
+}
+
+.ser-estar-btn.secondary {
+    background: #95a5a6;
+    color: white;
+}
+
+.ser-estar-btn.secondary:hover {
+    background: #7f8c8d;
+}
+
+.ser-estar-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ============================================
+   РЕЗУЛЬТАТЫ
+   ============================================ */
+
+.ser-estar-results {
+    text-align: center;
+    padding: 40px 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ser-estar-results h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.ser-estar-results p {
+    font-size: 20px;
+    color: #7f8c8d;
+    margin-bottom: 30px;
+}
+
+.ser-estar-final-score {
+    font-size: 36px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.ser-estar-message {
+    font-size: 22px;
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.ser-estar-message.excellent {
+    color: #9b59b6;
+    background: #f4ecf7;
+}
+
+.ser-estar-message.good {
+    color: #27ae60;
+    background: #d4edda;
+}
+
+.ser-estar-message.average {
+    color: #f39c12;
+    background: #fff3cd;
+}
+
+.ser-estar-message.poor {
+    color: #e74c3c;
+    background: #f8d7da;
+}
+
+/* ============================================
+   ТАБЛИЦА СПРЯЖЕНИЯ
+   ============================================ */
+
+.ser-estar-conjugation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.ser-estar-conjugation-table th,
+.ser-estar-conjugation-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.ser-estar-conjugation-table th {
+    background: #34495e;
+    color: white;
+    font-weight: 600;
+}
+
+.ser-estar-conjugation-table tr:hover {
+    background: #f8f9fa;
+}
+
+.ser-estar-conjugation-table .ser-col {
+    border-left: 3px solid #3498db;
+}
+
+.ser-estar-conjugation-table .estar-col {
+    border-left: 3px solid #27ae60;
+}
+
+/* ============================================
+   СПИСОК ПРАВИЛ
+   ============================================ */
+
+.ser-estar-rules-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.ser-estar-rules-list li {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+.ser-estar-rules-list li.ser-rule {
+    background: #ebf5fb;
+    border-color: #3498db;
+}
+
+.ser-estar-rules-list li.estar-rule {
+    background: #d5f5e3;
+    border-color: #27ae60;
+}
+
+.ser-estar-rules-list .rule-letter {
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.ser-estar-rules-list .rule-name {
+    font-weight: 600;
+}
+
+.ser-estar-rules-list .rule-desc {
+    font-size: 13px;
+    color: #7f8c8d;
+    margin-top: 5px;
+}
+
+/* ============================================
+   АНИМАЦИИ
+   ============================================ */
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.ser-estar-option-btn.incorrect {
+    animation: shake 0.3s ease;
+}
+
+/* ============================================
+   АДАПТИВНОСТЬ
+   ============================================ */
+
+@media (max-width: 600px) {
+    .ser-estar-container {
+        padding: 10px;
+    }
+
+    .ser-estar-mode-menu {
+        grid-template-columns: 1fr;
+    }
+
+    .ser-estar-options {
+        grid-template-columns: 1fr;
+    }
+
+    .ser-estar-question-text {
+        font-size: 20px;
+    }
+
+    .ser-estar-russian {
+        font-size: 18px;
+    }
+
+    .ser-estar-option-btn {
+        padding: 12px 15px;
+        font-size: 16px;
+    }
+
+    .ser-estar-controls {
+        flex-direction: column;
+    }
+
+    .ser-estar-btn {
+        width: 100%;
+    }
+}
+
+/* ============================================
+   УТИЛИТАРНЫЕ КЛАССЫ
+   ============================================ */
+
+.hidden {
+    display: none !important;
+}
+
+.text-ser {
+    color: #3498db;
+}
+
+.text-estar {
+    color: #27ae60;
+}
+
+.bg-ser {
+    background-color: #3498db;
+}
+
+.bg-estar {
+    background-color: #27ae60;
+}
+
+/* ============================================
+   MODE 2 - КНОПКИ И СПРЯЖЕНИЕ
+   ============================================ */
+
+.option-btn, .button-option {
+    padding: 15px;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    background: white;
+    color: #2c3e50;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.option-btn:hover, .button-option:hover {
+    background: #667eea;
+    color: white;
+}
+
+.options-container {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.verb-info {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f7fafc;
+    border-radius: 10px;
+}
+
+.feedback {
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 20px 0;
+    min-height: 30px;
+}
+
+.feedback.correct {
+    color: #48bb78;
+    background: #f0fff4;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.feedback.wrong {
+    color: #f56565;
+    background: #fff5f5;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* ============================================
+   ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ РЕЖИМОВ
+   ============================================ */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 80px 20px 20px;
+}
+
+.app-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.app-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.app-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.main-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    max-width: 800px;
+    margin: 0 auto 30px;
+}
+
+.mode-button {
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+    color: #2c3e50;
+}
+
+.mode-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.score-display {
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.game-area {
+    background: white;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.game-area h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.progress-text {
+    text-align: center;
+    color: #7f8c8d;
+    margin-bottom: 15px;
+}
+
+.question-text {
+    font-size: 1.3rem;
+    text-align: center;
+    margin: 20px 0;
+    color: #2c3e50;
+}
+
+.translation-text {
+    text-align: center;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.rules-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.rule-card {
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.ser-card {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.estar-card {
+    background: linear-gradient(135deg, #27ae60, #229954);
+}
+
+.rule-card h3 {
+    margin-bottom: 10px;
+}
+
+.rule-acronym {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.rule-card ul {
+    list-style: none;
+}
+
+.rule-card li {
+    margin: 8px 0;
+}
+
+.restart-button, .menu-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.restart-button {
+    background: #667eea;
+    color: white;
+}
+
+.restart-button:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.menu-button {
+    background: #95a5a6;
+    color: white;
+}
+
+.menu-button:hover {
+    background: #7f8c8d;
+}
+
+.app-footer {
+    text-align: center;
+    color: white;
+    margin-top: 30px;
+    opacity: 0.8;
+}
+
+.back-button-container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
