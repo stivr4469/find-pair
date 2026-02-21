@@ -102,12 +102,40 @@ function addEventListeners() {
 // Переменные для отслеживания выбранных слов
 let selectedLeftWord = null;
 let selectedRightWord = null;
+let isProcessing = false;  // Блокировка во время обработки
 
 // Обработчик кликов по словам
 function handleClick(event) {
     const word = event.target;
 
-    // Определяем, из какой колонки слово
+    // Игнорируем клики если уже идёт обработка или слово заблокировано
+    if (isProcessing || word.classList.contains('blocked') || word.classList.contains('matched')) {
+        return;
+    }
+
+    // Если слово уже выбрано - снимаем выделение
+    if (word.classList.contains('selected')) {
+        word.classList.remove('selected');
+        if (word.parentNode.id === 'left-column') {
+            selectedLeftWord = null;
+        } else {
+            selectedRightWord = null;
+        }
+        updateBlockedWords();
+        return;
+    }
+
+    // Если уже выбрано слово из этой же колонки - снимаем с него выделение
+    if (word.parentNode.id === 'left-column' && selectedLeftWord) {
+        selectedLeftWord.classList.remove('selected');
+        selectedLeftWord = null;
+    }
+    if (word.parentNode.id === 'right-column' && selectedRightWord) {
+        selectedRightWord.classList.remove('selected');
+        selectedRightWord = null;
+    }
+
+    // Выбираем слово
     if (word.parentNode.id === 'left-column') {
         selectedLeftWord = word;
         word.classList.add('selected');
@@ -116,30 +144,67 @@ function handleClick(event) {
         word.classList.add('selected');
     }
 
+    // Обновляем блокировку слов
+    updateBlockedWords();
+
     // Проверяем, выбраны ли оба слова
     if (selectedLeftWord && selectedRightWord) {
         checkMatch();
     }
 }
 
+// Блокировка лишних слов когда выбрано 2
+function updateBlockedWords() {
+    const allWords = document.querySelectorAll('.word');
+    
+    allWords.forEach(word => {
+        // Сбрасываем блокировку
+        word.classList.remove('blocked');
+        
+        // Если уже выбрано 2 слова (по одному из каждой колонки) - блокируем остальные
+        if (selectedLeftWord && selectedRightWord) {
+            if (word !== selectedLeftWord && word !== selectedRightWord && 
+                !word.classList.contains('matched')) {
+                word.classList.add('blocked');
+            }
+        }
+    });
+}
+
 // Функция для проверки соответствия выбранных слов
 function checkMatch() {
+    isProcessing = true;  // Блокируем клики во время проверки
+
     if (selectedLeftWord.dataset.match === selectedRightWord.textContent) {
         // Если пара совпадает, скрываем слова
         selectedLeftWord.style.visibility = 'hidden';
         selectedRightWord.style.visibility = 'hidden';
-    } else {
-        // Если пара не совпадает, снимаем выделение
+        selectedLeftWord.classList.add('matched');
+        selectedRightWord.classList.add('matched');
         selectedLeftWord.classList.remove('selected');
         selectedRightWord.classList.remove('selected');
+        
+        // Сбрасываем выбор
+        selectedLeftWord = null;
+        selectedRightWord = null;
+        isProcessing = false;
+        
+        // Снимаем блокировку с остальных слов
+        updateBlockedWords();
+        
+        // Проверяем окончание игры
+        checkGameEnd();
+    } else {
+        // Если пара не совпадает, снимаем выделение через небольшую задержку
+        setTimeout(() => {
+            selectedLeftWord.classList.remove('selected');
+            selectedRightWord.classList.remove('selected');
+            selectedLeftWord = null;
+            selectedRightWord = null;
+            isProcessing = false;
+            updateBlockedWords();
+        }, 300);
     }
-
-    // Сбрасываем выбор
-    selectedLeftWord = null;
-    selectedRightWord = null;
-
-    // Проверяем окончание игры
-    checkGameEnd();
 }
 
 // Функция для проверки завершения игры

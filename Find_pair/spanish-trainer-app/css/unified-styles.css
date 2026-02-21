@@ -25,6 +25,8 @@ body, html {
     padding: 80px 20px 20px;
     color: #2c3e50;
     line-height: 1.6;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* ============================================
@@ -60,6 +62,8 @@ h1, h2, h3 {
     top: 10px;
     left: 10px;
     z-index: 1000;
+    /* Отступ чтобы не перекрывать счёт на мобильных */
+    margin-top: 0;
 }
 
 .back-button, .back-link {
@@ -74,6 +78,17 @@ h1, h2, h3 {
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
+    /* Тень для лучшей видимости */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* Счёт не должен перекрываться кнопкой */
+.score-display {
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    margin-top: 60px;  /* Отступ чтобы не перекрывался кнопкой */
 }
 
 .back-button:hover, .back-link:hover {
@@ -446,6 +461,9 @@ select:focus {
     justify-content: space-between;
     margin-top: 20px;
     gap: 20px;
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+    padding: 5px;
 }
 
 .column {
@@ -453,6 +471,8 @@ select:focus {
     padding: 15px;
     border-radius: 10px;
     background: #f8f9fa;
+    max-height: 100%;
+    overflow-y: auto;
 }
 
 .left-column {
@@ -485,6 +505,12 @@ select:focus {
 .word.selected {
     background: #fff59d;
     border-color: #fbc02d;
+}
+
+/* Блокировка выбора когда уже выбрано 2 слова */
+.word.blocked {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .word.matched {

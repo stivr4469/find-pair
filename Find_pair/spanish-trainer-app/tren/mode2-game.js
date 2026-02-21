@@ -90,9 +90,12 @@ function generateQuestionMode2() {
  *   - message: сообщение обратной связи
  */
 function checkAnswerMode2(userAnswer, correct) {
-  // Нормализуем ответы: убираем пробелы, приводим к нижнему регистру
-  const normalizedUser = userAnswer.trim().toLowerCase();
-  const normalizedCorrect = correct.trim().toLowerCase();
+  // Функция нормализации: убирает пробелы, приводит к нижнему регистру, унифицирует Unicode
+  const normalize = (str) => str.trim().normalize('NFC').toLowerCase();
+  
+  // Нормализуем ответы
+  const normalizedUser = normalize(userAnswer);
+  const normalizedCorrect = normalize(correct);
 
   // Сравниваем
   const isCorrect = normalizedUser === normalizedCorrect;

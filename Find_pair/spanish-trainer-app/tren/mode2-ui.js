@@ -99,8 +99,11 @@ function checkMode2Answer(selected, correct, buttonElement) {
   const allButtons = document.querySelectorAll('#mode2-options .option-btn');
   allButtons.forEach(btn => btn.disabled = true);
 
-  // Проверяем ответ
-  const isCorrect = (selected === correct);
+  // Нормализация строк: убираем пробелы, приводим к нижнему регистру, унифицируем Unicode
+  const normalize = (str) => str.trim().normalize('NFC').toLowerCase();
+  
+  // Проверяем ответ с нормализацией
+  const isCorrect = normalize(selected) === normalize(correct);
 
   // Показываем обратную связь
   const feedback = document.getElementById('mode2-feedback');
@@ -114,7 +117,7 @@ function checkMode2Answer(selected, correct, buttonElement) {
 
     // Подсветить правильную кнопку
     allButtons.forEach(btn => {
-      if (btn.textContent === correct) {
+      if (normalize(btn.textContent) === normalize(correct)) {
         btn.classList.add('correct-answer');
       }
     });
