@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Испанские глаголы</title>
+    <!-- Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="css/unified-styles.css?v=7">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Основной контейнер -->
+    <div class="main-container">
+        <!-- Заголовок приложения -->
+        <header class="app-header">
+            <h1 class="app-title">
+                <span class="title-icon">🇪🇸</span>
+                Испанские глаголы
+            </h1>
+            <p class="app-subtitle">Выберите игру для тренировки</p>
+        </header>
+
+        <!-- Меню выбора игр -->
+        <nav class="games-menu">
+            <!-- Кнопка игры "Найди пару" -->
+            <a href="find-pair/" class="game-card" id="find-pair-card">
+                <div class="game-card-icon">🎮</div>
+                <h2 class="game-card-title">Найди пару</h2>
+                <p class="game-card-description">
+                    Сопоставь слова с переводом: глаголы, существительные, прилагательные, наречия
+                </p>
+                <div class="game-card-difficulty">
+                    <span class="difficulty-badge easy">Легко</span>
+                </div>
+            </a>
+
+            <!-- Кнопка игры "Глаголы движения" -->
+            <a href="tren/" class="game-card" id="tren-card">
+                <div class="game-card-icon">🚂</div>
+                <h2 class="game-card-title">Глаголы движения</h2>
+                <p class="game-card-description">
+                    Изучай спряжение глаголов ir, venir, llegar
+                </p>
+                <div class="game-card-difficulty">
+                    <span class="difficulty-badge medium">Средне</span>
+                </div>
+            </a>
+
+            <!-- Кнопка игры "Ser vs Estar" -->
+            <a href="ser-estar/" class="game-card" id="ser-estar-card">
+                <div class="game-card-icon">🎭</div>
+                <h2 class="game-card-title">Ser vs Estar</h2>
+                <p class="game-card-description">
+                    Научись различать глаголы SER и ESTAR
+                </p>
+                <div class="game-card-difficulty">
+                    <span class="difficulty-badge medium">Средне</span>
+                </div>
+            </a>
+        </nav>
+
+        <!-- Кнопка закрытия (только для Telegram) -->
+        <div class="close-section">
+            <button class="close-button hidden" id="close-btn" onclick="closeApp()">
+                ✕ Закрыть
+            </button>
+        </div>
+
+        <!-- Футер -->
+        <footer class="app-footer">
+            <p class="footer-text">Испанские глаголы • Тренажёр для изучения</p>
+            <p class="footer-text footer-year">Valencia 2026</p>
+        </footer>
+    </div>
+
+    <!-- Скрипт приложения -->
+    <script src="js/main.js"></script>
+</body>
+</html>

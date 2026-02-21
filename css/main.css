@@ -1,0 +1,477 @@
+/**
+ * Spanish Verbs - Main Menu Styles
+ * Главное меню приложения "Испанские глаголы"
+ * 
+ * Поддержка Telegram WebApp темизации
+ * Адаптивный дизайн для мобильных устройств
+ */
+
+/* ============================================
+   CSS VARIABLES - TELEGRAM THEME SUPPORT
+   ============================================ */
+:root {
+  /* Базовые цвета (будут переопределены Telegram) */
+  --tg-theme-bg-color: #f5f5f5;
+  --tg-theme-text-color: #000000;
+  --tg-theme-hint-color: #999999;
+  --tg-theme-link-color: #2481cc;
+  --tg-theme-button-color: #2481cc;
+  --tg-theme-button-text-color: #ffffff;
+  --tg-theme-secondary-bg-color: #ffffff;
+
+  /* Цвета игры "Найди пару" */
+  --find-pair-primary: #4CAF50;
+  --find-pair-secondary: #8BC34A;
+  --find-pair-accent: #CDDC39;
+
+  /* Цвета игры "Тренажёр глаголов" */
+  --tren-primary: #FF5722;
+  --tren-secondary: #FF9800;
+  --tren-accent: #FFC107;
+
+  /* Общие стили */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 30px;
+
+  /* Отступы */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+}
+
+/* ============================================
+   RESET & BASE STYLES
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 80px 20px 20px;
+  color: #2c3e50;
+  line-height: 1.6;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================
+   MAIN CONTAINER
+   ============================================ */
+.main-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-md);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   APP HEADER
+   ============================================ */
+.app-header {
+  text-align: center;
+  padding: var(--spacing-lg) var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.app-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--tg-theme-text-color);
+  margin-bottom: var(--spacing-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+.title-icon {
+  font-size: 2.5rem;
+  animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  75% { transform: rotate(-10deg); }
+}
+
+.app-subtitle {
+  font-size: 1rem;
+  color: var(--tg-theme-hint-color);
+  font-weight: 400;
+}
+
+/* ============================================
+   GAMES MENU - GRID LAYOUT
+   ============================================ */
+.games-menu {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+  flex: 1;
+  padding: var(--spacing-sm) 0;
+}
+
+/* ============================================
+   GAME CARD
+   ============================================ */
+.game-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-lg);
+  background-color: var(--tg-theme-secondary-bg-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+  color: var(--tg-theme-text-color);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.game-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+}
+
+/* Find Pair card colors */
+#find-pair-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--find-pair-primary), var(--find-pair-secondary));
+}
+
+/* Tren card colors */
+#tren-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--tren-primary), var(--tren-secondary));
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.game-card:active {
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   GAME CARD ICON
+   ============================================ */
+.game-card-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-sm);
+  animation: bounce 2s ease-in-out infinite;
+}
+
+#find-pair-card .game-card-icon {
+  animation-delay: 0s;
+}
+
+#tren-card .game-card-icon {
+  animation-delay: 0.5s;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ============================================
+   GAME CARD TITLE
+   ============================================ */
+.game-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+  color: var(--tg-theme-text-color);
+}
+
+/* ============================================
+   GAME CARD DESCRIPTION
+   ============================================ */
+.game-card-description {
+  font-size: 0.9rem;
+  color: var(--tg-theme-hint-color);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.4;
+}
+
+/* ============================================
+   DIFFICULTY BADGE
+   ============================================ */
+.game-card-difficulty {
+  margin-top: auto;
+}
+
+.difficulty-badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-xl);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+}
+
+.difficulty-badge.easy {
+  background: linear-gradient(135deg, var(--find-pair-primary), var(--find-pair-secondary));
+}
+
+.difficulty-badge.medium {
+  background: linear-gradient(135deg, var(--tren-primary), var(--tren-secondary));
+}
+
+/* ============================================
+   CLOSE SECTION
+   ============================================ */
+.close-section {
+  text-align: center;
+  padding: var(--spacing-md) 0;
+  margin-top: auto;
+}
+
+.close-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--tg-theme-hint-color);
+  background: transparent;
+  border: 2px solid var(--tg-theme-hint-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-button:hover {
+  background: var(--tg-theme-hint-color);
+  color: var(--tg-theme-secondary-bg-color);
+}
+
+.close-button:active {
+  transform: scale(0.95);
+}
+
+/* Hidden state */
+.hidden {
+  display: none !important;
+}
+
+/* ============================================
+   APP FOOTER
+   ============================================ */
+.app-footer {
+  text-align: center;
+  padding: var(--spacing-md) 0;
+  margin-top: var(--spacing-md);
+}
+
+.footer-text {
+  font-size: 0.8rem;
+  color: var(--tg-theme-hint-color);
+}
+
+.footer-year {
+  font-size: 0.75rem;
+  color: var(--tg-theme-hint-color);
+  opacity: 0.8;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet */
+@media (min-width: 600px) {
+  .games-menu {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .game-card {
+    padding: var(--spacing-lg);
+  }
+
+  .game-card-icon {
+    font-size: 3.5rem;
+  }
+
+  .game-card-title {
+    font-size: 1.3rem;
+  }
+
+  .game-card-description {
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .main-container {
+    padding: var(--spacing-sm);
+  }
+
+  .app-header {
+    padding: var(--spacing-md) var(--spacing-xs);
+  }
+
+  .app-title {
+    font-size: 1.5rem;
+  }
+
+  .title-icon {
+    font-size: 2rem;
+  }
+
+  .app-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .game-card {
+    padding: var(--spacing-md);
+  }
+
+  .game-card-icon {
+    font-size: 3rem;
+  }
+
+  .game-card-title {
+    font-size: 1.2rem;
+  }
+
+  .game-card-description {
+    font-size: 0.8rem;
+  }
+
+  .difficulty-badge {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 360px) {
+  .app-title {
+    font-size: 1.3rem;
+  }
+
+  .title-icon {
+    font-size: 1.5rem;
+  }
+
+  .game-card-icon {
+    font-size: 2.5rem;
+  }
+
+  .game-card-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* ============================================
+   DARK MODE SUPPORT (Telegram)
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Focus styles */
+.game-card:focus {
+  outline: 3px solid var(--tg-theme-link-color);
+  outline-offset: 2px;
+}
+
+.close-button:focus {
+  outline: 3px solid var(--tg-theme-link-color);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast */
+@media (prefers-contrast: high) {
+  .game-card {
+    border: 2px solid var(--tg-theme-text-color);
+  }
+
+  .close-button {
+    border-width: 3px;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  .game-card {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+
+  .close-section {
+    display: none;
+  }
+}

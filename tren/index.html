@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🚂 Tren Ir/Venir/Llegar</title>
+    <link rel="stylesheet" href="../css/unified-styles.css?v=7">
+    <style>
+        /* Дополнительные стили для специфичных элементов */
+        .score-area {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .progress {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .main-menu {
+            max-width: 700px;
+        }
+        .mode-button {
+            min-height: 80px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Кнопка назад в главное меню -->
+    <div class="back-button-container">
+        <a href="../" class="back-button">← Назад в меню</a>
+    </div>
+
+    <!-- Header con título de la aplicación -->
+    <header class="app-header">
+        <h1>🚂 Tren Ir/Venir/Llegar</h1>
+    </header>
+
+    <!-- Меню principal con 5 botones de mode -->
+    <nav class="main-menu">
+        <button id="mode1-btn" class="mode-button" data-mode="mode1" onclick="App.switchMode('mode1')">
+            Выбор глагола
+        </button>
+        <button id="mode2-btn" class="mode-button" data-mode="mode2" onclick="App.switchMode('mode2')">
+            Спряжение
+        </button>
+        <button id="mode3-btn" class="mode-button" data-mode="mode3" onclick="App.switchMode('mode3')">
+            Предлоги
+        </button>
+        <button id="mode4-btn" class="mode-button" data-mode="mode4" onclick="App.switchMode('mode4')">
+            Перевод
+        </button>
+        <button id="mode5-btn" class="mode-button" data-mode="mode5" onclick="App.switchMode('mode5')">
+            Контекст
+        </button>
+    </nav>
+
+    <!-- Область отображения счета -->
+    <section id="score-area" class="score-display">
+        <span id="score-label">Счет:</span>
+        <span id="score-value">0</span>
+    </section>
+
+    <!-- Игровая зона для режима 1: Выбор глагола -->
+    <main id="mode1-area" class="game-area hidden">
+        <h2>🎯 Выбор глагола</h2>
+        <div id="mode1-progress" class="progress-text">Вопрос 1 из 10</div>
+        <div id="mode1-question" class="question-text">Loading...</div>
+        <div id="mode1-translation" class="translation-text"></div>
+        <div class="options-container">
+            <button class="mode1-option button-option">Option 1</button>
+            <button class="mode1-option button-option">Option 2</button>
+            <button class="mode1-option button-option">Option 3</button>
+        </div>
+        <div id="mode1-feedback" class="feedback"></div>
+    </main>
+
+    <!-- Результаты Mode 1 -->
+    <main id="mode1-results" class="game-area hidden">
+        <h2>🏁 Результаты</h2>
+        <div id="mode1-final-score" class="final-score"></div>
+        <div id="mode1-message" class="final-message"></div>
+        <button onclick="restartMode1()" class="restart-button">🔄 Ещё раз</button>
+        <button onclick="showMainMenu()" class="menu-button">📋 Меню</button>
+    </main>
+
+    <!-- Игровая зона для режима 2: Спряжение -->
+    <main id="mode2-area" class="game-area hidden">
+        <h2>📝 Спряжение</h2>
+        <div id="mode2-content" class="mode-content">
+            <!-- Контент загружается динамически -->
+        </div>
+    </main>
+
+    <!-- Игровая зона для режима 3: Предлоги -->
+    <main id="mode3-area" class="game-area hidden">
+        <h2>📝 Предлоги (a/de/en)</h2>
+        <div id="mode3-progress" class="progress-text">Вопрос 1 из 10</div>
+        <div id="mode3-question" class="question-text">Loading...</div>
+        <div id="mode3-translation" class="translation-text"></div>
+        <div class="options-container">
+            <button class="mode3-preposition button-option">a</button>
+            <button class="mode3-preposition button-option">de</button>
+            <button class="mode3-preposition button-option">en</button>
+        </div>
+        <div id="mode3-feedback" class="feedback"></div>
+        <button id="mode3-next" class="next-button" disabled>Дальше →</button>
+    </main>
+
+    <!-- Результаты Mode 3 -->
+    <main id="mode3-results" class="game-area hidden">
+        <h2>🏁 Результаты</h2>
+        <div id="mode3-final-score" class="final-score"></div>
+        <div id="mode3-message" class="final-message"></div>
+        <button onclick="restartMode3()" class="restart-button">🔄 Ещё раз</button>
+        <button onclick="showMainMenu()" class="menu-button">📋 Меню</button>
+    </main>
+
+    <!-- Игровая зона для режима 4: Перевод -->
+    <main id="mode4-area" class="game-area hidden">
+        <h2>🌐 Перевод</h2>
+        <div id="mode4-progress" class="progress-text">Вопрос 1 из 15</div>
+        <div id="mode4-question" class="question-text">Loading...</div>
+        <div id="mode4-hint" class="hint-text"></div>
+        <div class="options-container">
+            <button class="mode4-option button-option">Option 1</button>
+            <button class="mode4-option button-option">Option 2</button>
+            <button class="mode4-option button-option">Option 3</button>
+            <button class="mode4-option button-option">Option 4</button>
+        </div>
+        <div id="mode4-feedback" class="feedback"></div>
+        <button id="mode4-next" class="next-button" disabled>Дальше →</button>
+    </main>
+
+    <!-- Результаты Mode 4 -->
+    <main id="mode4-results" class="game-area hidden">
+        <h2>🏁 Результаты</h2>
+        <div id="mode4-final-score" class="final-score"></div>
+        <div id="mode4-message" class="final-message"></div>
+        <button onclick="restartMode4()" class="restart-button">🔄 Ещё раз</button>
+        <button onclick="showMainMenu()" class="menu-button">📋 Меню</button>
+    </main>
+
+    <!-- Игровая зона для режима 5: Контекст -->
+    <main id="mode5" class="game-area hidden">
+        <h2>Контекст</h2>
+        <div id="mode5-content" class="mode-content">
+            <!-- Контент загружается динамически -->
+        </div>
+    </main>
+
+    <!-- Footer с индикатором прогресса -->
+    <footer class="app-footer">
+        <div id="progress-indicator" class="progress">
+            <span id="progress-label">Прогресс:</span>
+            <span id="progress-value">0%</span>
+        </div>
+    </footer>
+
+    <!-- Подключение скриптов -->
+    <script src="data.js"></script>
+    <!-- Mode 2 modules -->
+    <script src="mode2-options.js"></script>
+    <script src="mode2-ui.js?v=2"></script>
+    <script src="mode2-game.js?v=2"></script>
+    <script src="mode2-results.js"></script>
+    <script src="mode2.js"></script>
+    <!-- Other modes -->
+    <script src="mode1.js"></script>
+    <script src="mode3.js"></script>
+    <script src="mode4.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

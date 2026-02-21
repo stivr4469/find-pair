@@ -1,0 +1,474 @@
+/**
+ * Find Pair Game Styles
+ * Игра "Найди пару" - Испанские глаголы
+ * 
+ * Стили для игрового поля и карточек
+ */
+
+/* ============================================
+   GAME HEADER
+   ============================================ */
+.game-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    gap: var(--spacing-sm);
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--tg-theme-text-color);
+    background: var(--tg-theme-secondary-bg-color);
+    border: 2px solid var(--tg-theme-hint-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.back-button:hover {
+    background: var(--tg-theme-hint-color);
+    color: var(--tg-theme-secondary-bg-color);
+}
+
+.back-button:active {
+    transform: scale(0.95);
+}
+
+.game-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--tg-theme-text-color);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+}
+
+.game-icon {
+    animation: bounce 2s ease-in-out infinite;
+}
+
+/* ============================================
+   GAME INFO & SCORE BOARD
+   ============================================ */
+.game-info {
+    margin-bottom: var(--spacing-md);
+}
+
+.score-board {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background: var(--tg-theme-secondary-bg-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+}
+
+.score-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.score-label {
+    font-size: 0.8rem;
+    color: var(--tg-theme-hint-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.score-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--tg-theme-text-color);
+}
+
+/* ============================================
+   GAME BOARD - GRID LAYOUT
+   ============================================ */
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    background: var(--tg-theme-secondary-bg-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    flex: 1;
+}
+
+/* ============================================
+   GAME CARD
+   ============================================ */
+.game-card {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xs);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.game-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.game-card:active {
+    transform: translateY(-1px);
+}
+
+/* ============================================
+   CARD CONTENT
+   ============================================ */
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.game-card.flipped .card-content {
+    opacity: 1;
+}
+
+.card-text {
+    font-size: 0.85rem;
+    line-height: 1.2;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+.card-text.spanish {
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.card-text.russian {
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+/* ============================================
+   FLIPPED CARD STATE
+   ============================================ */
+.game-card.flipped {
+    background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);
+    cursor: default;
+}
+
+.game-card.flipped:hover {
+    transform: none;
+}
+
+/* ============================================
+   MATCHED CARD STATE
+   ============================================ */
+.game-card.matched {
+    background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
+    animation: matchPulse 0.5s ease;
+    cursor: default;
+}
+
+@keyframes matchPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* ============================================
+   INCORRECT CARD STATE
+   ============================================ */
+.game-card.incorrect {
+    background: linear-gradient(135deg, #FF5722 0%, #FF9800 100%);
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+/* ============================================
+   WIN MODAL
+   ============================================ */
+.win-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: var(--spacing-md);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: var(--tg-theme-secondary-bg-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: var(--shadow-hover);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-icon {
+    font-size: 5rem;
+    margin-bottom: var(--spacing-md);
+    animation: celebrate 0.5s ease;
+}
+
+@keyframes celebrate {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.2) rotate(10deg); }
+}
+
+.modal-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--tg-theme-text-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.modal-message {
+    font-size: 1.1rem;
+    color: var(--tg-theme-hint-color);
+    margin-bottom: var(--spacing-lg);
+}
+
+.modal-score {
+    background: var(--tg-theme-bg-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.final-score-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--tg-theme-hint-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.final-score-value {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #4CAF50;
+}
+
+/* ============================================
+   MODAL ACTIONS
+   ============================================ */
+.modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.action-button {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.action-button.primary {
+    background: linear-gradient(135deg, #4CAF50, #8BC34A);
+    color: white;
+}
+
+.action-button.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.action-button.secondary {
+    background: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
+    border: 2px solid var(--tg-theme-hint-color);
+}
+
+.action-button.secondary:hover {
+    background: var(--tg-theme-hint-color);
+    color: var(--tg-theme-secondary-bg-color);
+}
+
+.action-button:active {
+    transform: scale(0.95);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet */
+@media (min-width: 600px) {
+    .game-board {
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--spacing-sm);
+    }
+
+    .card-text {
+        font-size: 1rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .game-header {
+        padding: var(--spacing-sm);
+    }
+
+    .game-title {
+        font-size: 1.2rem;
+    }
+
+    .back-button {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+
+    .game-board {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        padding: 6px;
+    }
+
+    .game-card {
+        border-radius: var(--radius-sm);
+    }
+
+    .card-text {
+        font-size: 0.7rem;
+    }
+
+    .card-text.spanish {
+        font-size: 0.75rem;
+    }
+
+    .score-board {
+        gap: var(--spacing-md);
+        padding: var(--spacing-sm);
+    }
+
+    .score-value {
+        font-size: 1.2rem;
+    }
+
+    .modal-content {
+        padding: var(--spacing-lg);
+    }
+
+    .modal-icon {
+        font-size: 4rem;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+    }
+
+    .final-score-value {
+        font-size: 2.5rem;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 360px) {
+    .game-board {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+        padding: 4px;
+    }
+
+    .card-text {
+        font-size: 0.65rem;
+    }
+
+    .game-title {
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Focus styles */
+.back-button:focus,
+.action-button:focus,
+.game-card:focus {
+    outline: 3px solid var(--tg-theme-link-color);
+    outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast */
+@media (prefers-contrast: high) {
+    .game-card {
+        border: 2px solid var(--tg-theme-text-color);
+    }
+
+    .game-card.flipped,
+    .game-card.matched {
+        border-width: 3px;
+    }
+}
