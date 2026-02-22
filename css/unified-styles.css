@@ -728,3 +728,177 @@ select:focus {
 .mb-20 {
     margin-bottom: 20px;
 }
+
+/* ============================================
+   MODE0 - ВЫБОР ГЛАГОЛА
+   ============================================ */
+.verb-selection-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.verb-selection-container h3 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 1.2rem;
+}
+
+.verb-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.verb-btn {
+    display: block;
+    width: 100%;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.verb-btn:hover {
+    background: linear-gradient(135deg, #5568d3, #6355aa);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.verb-btn:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .verb-buttons {
+        max-width: 100%;
+    }
+    
+    .verb-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   MODE2 - НАСТРОЙКИ
+   ============================================ */
+.settings-container {
+    text-align: center;
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.settings-container h3 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+.setting-group {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.setting-group h4 {
+    color: #2c3e50;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+#verbs-settings, #tenses-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#verbs-settings label, #tenses-settings label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#verbs-settings label:hover, #tenses-settings label:hover {
+    background: #e9ecef;
+}
+
+#verbs-settings input[type="checkbox"], #tenses-settings input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #667eea;
+}
+
+.start-button {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.start-button:hover {
+    background: linear-gradient(135deg, #5568d3, #6355aa);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+/* Кнопка "К настройкам" */
+.back-to-settings-button {
+    display: block;
+    margin: 10px auto;
+    padding: 8px 16px;
+    background: transparent;
+    border: 2px solid #667eea;
+    border-radius: 6px;
+    color: #667eea;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-to-settings-button:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .settings-container {
+        padding: 15px;
+    }
+    
+    .setting-group {
+        padding: 15px;
+    }
+    
+    .start-button {
+        max-width: 100%;
+    }
+}

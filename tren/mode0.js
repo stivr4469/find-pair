@@ -1,14 +1,14 @@
 /**
- * Tren Ir/Venir - Mode 2: Main Module
+ * Tren Ir/Venir - Mode 0: Main Module
  *
  * Главный модуль режима спряжения испанских глаголов.
  * Объединяет все подмодули и экспортирует функции для глобального доступа.
  *
  * Подмодули:
- * - mode2-game.js - игровая логика
- * - mode2-options.js - генерация вариантов
- * - mode2-ui.js - отображение и ввод
- * - mode2-results.js - результаты и поток
+ * - mode0-game.js - игровая логика
+ * - mode0-options.js - генерация вариантов
+ * - mode0-ui.js - отображение и ввод
+ * - mode0-results.js - результаты и поток
  *
  * Функциональность:
  * - Генерация вопросов (глагол + время + лицо)
@@ -21,51 +21,46 @@
  */
 
 // Состояние игры (глобальное для всех модулей)
-let mode2State = {
+let mode0State = {
   score: 0,
   questionCount: 0,
   maxQuestions: 10,
   currentQuestion: null,
-  isAnswered: false,
-  isGameStarted: false, // Флаг, показывающий, начата ли игра
-  settings: {
-    verbs: ['ir', 'venir', 'llegar'], // Глаголы по умолчанию
-    tenses: ['presente', 'indefinido', 'imperfecto', 'futuro'] // Времена по умолчанию
-  }
+  isAnswered: false
 };
 
 // Экспорт состояния для других модулей
 if (typeof window !== 'undefined') {
-  window.mode2State = mode2State;
+  window.mode0State = mode0State;
 }
 
 // Экспорт для использования в Node.js (если потребуется для тестов)
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
-    mode2State,
+    mode0State,
     // Функции будут добавлены после загрузки скриптов
   };
 }
 
 /**
- * Инициализация Mode 2
+ * Инициализация Mode 0
  * Вызывается при переключении на режим спряжения
  */
-function initMode2() {
+function initMode0() {
   // Сброс состояния
-  mode2State.score = 0;
-  mode2State.questionCount = 0;
-  mode2State.isAnswered = false;
-  mode2State.isGameStarted = false;
+  mode0State.score = 0;
+  mode0State.questionCount = 0;
+  mode0State.selectedVerb = null;
+  mode0State.isAnswered = false;
 
-  // Обновляем общий счет в UI
-  updateScoreMode2();
+  // Обновить счёт
+  updateScoreMode0();
 
-  // Показываем экран настроек
-  displaySettingsMode2();
+  // Показываем выбор глагола (для начинающих)
+  displayVerbSelectionMode0();
 }
 
 // Экспорт функции
 if (typeof window !== 'undefined') {
-  window.initMode2 = initMode2;
+  window.initMode0 = initMode0;
 }

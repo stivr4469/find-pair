@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🚂 Tren Ir/Venir/Llegar</title>
-    <link rel="stylesheet" href="../css/unified-styles.css?v=7">
+    <link rel="stylesheet" href="../css/unified-styles.css?v=9">
     <style>
         /* Дополнительные стили для специфичных элементов */
         .score-area {
@@ -41,6 +41,9 @@
 
     <!-- Меню principal con 5 botones de mode -->
     <nav class="main-menu">
+        <button id="mode0-btn" class="mode-button" data-mode="mode0" onclick="App.switchMode('mode0')">
+            Базовое спряжение (A1)
+        </button>
         <button id="mode1-btn" class="mode-button" data-mode="mode1" onclick="App.switchMode('mode1')">
             Выбор глагола
         </button>
@@ -85,6 +88,14 @@
         <div id="mode1-message" class="final-message"></div>
         <button onclick="restartMode1()" class="restart-button">🔄 Ещё раз</button>
         <button onclick="showMainMenu()" class="menu-button">📋 Меню</button>
+    </main>
+
+    <!-- Игровая зона для режима 2: Спряжение -->
+    <main id="mode0-area" class="game-area hidden">
+        <h2>📝 Базовое спряжение (A1)</h2>
+        <div id="mode0-content" class="mode-content">
+            <!-- Контент будет загружаться динамически -->
+        </div>
     </main>
 
     <!-- Игровая зона для режима 2: Спряжение -->
@@ -162,6 +173,12 @@
 
     <!-- Подключение скриптов -->
     <script src="data.js"></script>
+    <!-- Mode 0 modules -->
+    <script src="mode0-options.js"></script>
+    <script src="mode0-ui.js?v=2"></script>
+    <script src="mode0-game.js?v=2"></script>
+    <script src="mode0-results.js"></script>
+    <script src="mode0.js"></script>
     <!-- Mode 2 modules -->
     <script src="mode2-options.js"></script>
     <script src="mode2-ui.js?v=2"></script>

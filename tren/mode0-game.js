@@ -1,24 +1,24 @@
 /**
- * Tren Ir/Venir - Mode 2: Game Logic
+ * Tren Ir/Venir - Mode 0: Game Logic
  *
  * Основная игровая логика режима спряжения.
  *
  * Функции:
- * - generateQuestionMode2() - генерирует вопрос
- * - checkAnswerMode2(userAnswer, correct) - проверяет ответ
+ * - generateQuestionMode0() - генерирует вопрос
+ * - checkAnswerMode0(userAnswer, correct) - проверяет ответ
  *
  * Данные:
- * - VERBS_MODE2, TENSES_MODE2, PERSONS_MODE2 - списки для генерации
- * - PERSON_DISPLAY_MODE2, TENSE_DISPLAY_MODE2 - отображение
+ * - VERBS_MODE0, TENSES_MODE0, PERSONS_MODE0 - списки для генерации
+ * - PERSON_DISPLAY_MODE0, TENSE_DISPLAY_MODE0 - отображение
  */
 
 // Списки для генерации вопросов
-const VERBS_MODE2 = ['ir', 'venir', 'llegar'];
-const TENSES_MODE2 = ['presente', 'indefinido', 'imperfecto', 'futuro'];
-const PERSONS_MODE2 = ['yo', 'tu', 'el/ella', 'nosotros', 'vosotros', 'ellos'];
+const VERBS_MODE0 = ['ir', 'venir', 'llegar'];
+const TENSES_MODE0 = ['presente'];
+const PERSONS_MODE0 = ['yo', 'tu', 'el/ella', 'nosotros', 'vosotros', 'ellos'];
 
 // Отображение лиц для вопросов (более читаемый формат)
-const PERSON_DISPLAY_MODE2 = {
+const PERSON_DISPLAY_MODE0 = {
   'yo': 'yo',
   'tu': 'tú',
   'el/ella': 'él/ella',
@@ -28,11 +28,8 @@ const PERSON_DISPLAY_MODE2 = {
 };
 
 // Отображение времён для вопросов
-const TENSE_DISPLAY_MODE2 = {
-  'presente': 'presente',
-  'indefinido': 'indefinido',
-  'imperfecto': 'imperfecto',
-  'futuro': 'futuro'
+const TENSE_DISPLAY_MODE0 = {
+  'presente': 'presente'
 };
 
 /**
@@ -40,30 +37,57 @@ const TENSE_DISPLAY_MODE2 = {
  * @param {Array} array - массив для выбора
  * @returns {*} Случайный элемент массива
  */
-function getRandomElementMode2(array) {
+function getRandomElementMode0(array) {
   return array[Math.floor(Math.random() * array.length)];
+}
+
+/**
+ * Запускает игру mode0 с выбранным глаголом
+ * @param {string} verb - выбранный глагол (ir, venir, llegar)
+ */
+function startMode0(verb) {
+  // Сохраняем выбранный глагол
+  mode0State.selectedVerb = verb;
+  mode0State.questionCount = 0;
+  mode0State.score = 0;
+  mode0State.isAnswered = false;
+
+  // Обновляем счёт
+  updateScoreMode0();
+
+  // Генерируем и показываем первый вопрос
+  const question = generateQuestionMode0();
+  displayQuestionMode0(question);
+}
+
+// Экспорт функции
+if (typeof window !== 'undefined') {
+  window.startMode0 = startMode0;
 }
 
 /**
  * Генерирует новый вопрос для спряжения
  * @returns {Object} Объект вопроса с полями:
  *   - verb: глагол (ir, venir, llegar)
- *   - tense: время (presente, indefinido, imperfecto, futuro)
+ *   - tense: время (presente)
  *   - person: лицо (yo, tu, el/ella, nosotros, vosotros, ellos)
  *   - questionText: текст вопроса для отображения
  *   - correctAnswer: правильный ответ
  */
-function generateQuestionMode2() {
-  // Случайный выбор глагола, времени и лица из настроек
-  const verb = getRandomElementMode2(mode2State.settings.verbs);
-  const tense = getRandomElementMode2(mode2State.settings.tenses);
-  const person = getRandomElementMode2(PERSONS_MODE2);
+function generateQuestionMode0() {
+  // Для mode0 используем выбранный глагол или случайный
+  const verb = mode0State.selectedVerb || getRandomElementMode0(VERBS_MODE0);
+  // Для mode0 используем только presente
+  const tense = 'presente';
+  // Для mode0 используем последовательный перебор лиц
+  const personIndex = mode0State.questionCount % 6;
+  const person = PERSONS_MODE0[personIndex];
 
   // Получаем правильный ответ из таблицы спряжений
   const correctAnswer = CONJUGATIONS[verb][tense][person];
 
   // Формируем текст вопроса на испанском
-  const questionText = `Conjuga '${verb}' en ${TENSE_DISPLAY_MODE2[tense]} para '${PERSON_DISPLAY_MODE2[person]}'`;
+  const questionText = `Conjuga '${verb}' en ${TENSE_DISPLAY_MODE0[tense]} para '${PERSON_DISPLAY_MODE0[person]}'`;
 
   // Создаём объект вопроса
   const question = {
@@ -75,8 +99,8 @@ function generateQuestionMode2() {
   };
 
   // Сохраняем текущий вопрос в состоянии
-  mode2State.currentQuestion = question;
-  mode2State.isAnswered = false;
+  mode0State.currentQuestion = question;
+  mode0State.isAnswered = false;
 
   return question;
 }
@@ -89,10 +113,10 @@ function generateQuestionMode2() {
  *   - isCorrect: true/false
  *   - message: сообщение обратной связи
  */
-function checkAnswerMode2(userAnswer, correct) {
+function checkAnswerMode0(userAnswer, correct) {
   // Функция нормализации: убирает пробелы, приводит к нижнему регистру, унифицирует Unicode
   const normalize = (str) => str.trim().normalize('NFC').toLowerCase();
-  
+
   // Нормализуем ответы
   const normalizedUser = normalize(userAnswer);
   const normalizedCorrect = normalize(correct);
@@ -102,12 +126,12 @@ function checkAnswerMode2(userAnswer, correct) {
 
   // Обновляем счёт
   if (isCorrect) {
-    mode2State.score++;
+    mode0State.score++;
   }
 
   // Увеличиваем счётчик вопросов
-  mode2State.questionCount++;
-  mode2State.isAnswered = true;
+  mode0State.questionCount++;
+  mode0State.isAnswered = true;
 
   // Возвращаем результат
   return {
@@ -116,35 +140,16 @@ function checkAnswerMode2(userAnswer, correct) {
   };
 }
 
-/**
- * Запускает практическую часть mode2 после настроек
- */
-function startPracticeMode2() {
-    mode2State.isGameStarted = true;
-    mode2State.score = 0;
-    mode2State.questionCount = 0;
-    updateScoreMode2(); // Сбросим счет на экране
-
-    // Генерируем и показываем первый вопрос
-    const question = generateQuestionMode2();
-    displayQuestionMode2(question);
-}
-
 // Экспорт для использования в других модулях
-if (typeof window !== 'undefined') {
-  window.startPracticeMode2 = startPracticeMode2;
-}
-
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
-    generateQuestionMode2,
-    checkAnswerMode2,
-    getRandomElementMode2,
-    startPracticeMode2,
-    VERBS_MODE2,
-    TENSES_MODE2,
-    PERSONS_MODE2,
-    PERSON_DISPLAY_MODE2,
-    TENSE_DISPLAY_MODE2
+    generateQuestionMode0,
+    checkAnswerMode0,
+    getRandomElementMode0,
+    VERBS_MODE0,
+    TENSES_MODE0,
+    PERSONS_MODE0,
+    PERSON_DISPLAY_MODE0,
+    TENSE_DISPLAY_MODE0
   };
 }

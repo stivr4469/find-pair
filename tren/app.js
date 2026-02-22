@@ -106,6 +106,14 @@ const App = {
         this.debug('Initializing mode: ' + modeId);
 
         switch(modeId) {
+            case 'mode0':
+                if (typeof initMode0 === 'function') {
+                    initMode0();
+                    this.debug('initMode0() called successfully');
+                } else {
+                    this.debug('ERROR: initMode0 is not a function');
+                }
+                break;
             case 'mode1':
                 if (typeof initMode1 === 'function') {
                     initMode1();
@@ -269,6 +277,12 @@ const App = {
 // Глобальные функции для доступа из HTML
 function showMainMenu() {
     App.showMainMenu();
+}
+
+function restartMode0() {
+    if (typeof initMode0 === 'function') {
+        initMode0();
+    }
 }
 
 function restartMode1() {
