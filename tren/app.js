@@ -147,12 +147,12 @@ const App = {
                 }
                 break;
             case 'mode5':
-                // Mode 5 - контекстный анализ (будущая реализация)
-                const mode5Content = document.getElementById('mode5-content');
-                if (mode5Content) {
-                    mode5Content.innerHTML = '<p>Режим в разработке...</p>';
+                if (typeof initMode5 === 'function') {
+                    initMode5();
+                    this.debug('initMode5() called successfully');
+                } else {
+                    this.debug('ERROR: initMode5 is not a function');
                 }
-                this.debug('Mode 5 - under development');
                 break;
             default:
                 this.debug('WARNING: Unknown mode: ' + modeId);

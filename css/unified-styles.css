@@ -893,12 +893,87 @@ select:focus {
     .settings-container {
         padding: 15px;
     }
-    
+
     .setting-group {
         padding: 15px;
     }
-    
+
     .start-button {
         max-width: 100%;
+    }
+}
+
+/* ============================================
+   MODE5 - КОНТЕКСТ
+   ============================================ */
+
+/* Стили для кнопок вариантов */
+.option-btn {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    color: #333;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.option-btn:hover:not(:disabled) {
+    background-color: #e0e0e0;
+    transform: translateY(-1px);
+}
+
+.option-btn.correct {
+    background-color: #4CAF50;
+    color: white;
+    box-shadow: 0 2px 5px rgba(76, 175, 80, 0.4);
+}
+
+.option-btn.incorrect {
+    background-color: #F44336;
+    color: white;
+    box-shadow: 0 2px 5px rgba(244, 67, 54, 0.4);
+}
+
+.option-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Стили для обратной связи */
+.feedback {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    min-height: 25px;
+}
+
+.feedback.correct {
+    color: #4CAF50;
+}
+
+.feedback.incorrect {
+    color: #F44336;
+}
+
+/* Стили для пропуска в предложении */
+.blank {
+    color: #ff9800;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .option-btn {
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+
+    .feedback {
+        font-size: 1rem;
     }
 }
