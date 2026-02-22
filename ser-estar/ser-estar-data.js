@@ -540,12 +540,22 @@ const MODE3_QUESTIONS = [
 ];
 
 // ============================================
+// ОБЪЕДИНЁННЫЕ ТАБЛИЦЫ СОПРЯЖЕНИЙ
+// ============================================
+
+const CONJUGATIONS = {
+    ser: SER_CONJUGATIONS,
+    estar: ESTAR_CONJUGATIONS
+};
+
+// ============================================
 // ЭКСПОРТ ДЛЯ NODE.JS И БРАУЗЕРА
 // ============================================
 
 if (typeof window !== 'undefined') {
     window.SER_CONJUGATIONS = SER_CONJUGATIONS;
     window.ESTAR_CONJUGATIONS = ESTAR_CONJUGATIONS;
+    window.CONJUGATIONS = CONJUGATIONS;
     window.SER_RULES = SER_RULES;
     window.ESTAR_RULES = ESTAR_RULES;
     window.MODE1_SENTENCES = MODE1_SENTENCES;
@@ -557,6 +567,7 @@ if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         SER_CONJUGATIONS,
         ESTAR_CONJUGATIONS,
+        CONJUGATIONS,
         SER_RULES,
         ESTAR_RULES,
         MODE1_SENTENCES,

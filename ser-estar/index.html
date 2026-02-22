@@ -18,19 +18,13 @@
         <p>Научись различать два глагола "to be"</p>
     </header>
 
-    <!-- Главное меню Ser/Estar - 4 режима -->
+    <!-- Главное меню Ser/Estar - 2 новых режима -->
     <nav class="main-menu">
-        <button class="mode-button" data-mode="mode1">
-            🎯 Выбор глагола
+        <button class="mode-button" data-mode="base">
+            📝 Базовое спряжение (A1)
         </button>
-        <button class="mode-button" data-mode="mode2">
-            ✍️ Спряжение
-        </button>
-        <button class="mode-button" data-mode="mode3">
-            📚 Правила
-        </button>
-        <button class="mode-button" data-mode="mode4">
-            🌐 Перевод
+        <button class="mode-button" data-mode="advanced">
+            ⚙️ Продвинутое спряжение (A2)
         </button>
     </nav>
 
@@ -40,99 +34,15 @@
         <span id="score-value">0</span>
     </section>
 
-    <!-- Mode 1: Выбор глагола -->
-    <main id="ser-estar-mode1-area" class="game-area hidden">
-        <h2>🎯 Выбор глагола</h2>
-        <div class="progress-text">Вопрос <span id="ser-estar-mode1-progress">1</span> из 10</div>
-        <div class="question-text" id="ser-estar-mode1-question"></div>
-        <div class="translation-text" id="ser-estar-mode1-translation"></div>
-        <div class="options-container">
-            <button class="ser-estar-mode1-option button-option"></button>
-            <button class="ser-estar-mode1-option button-option"></button>
-        </div>
-        <div class="feedback" id="ser-estar-mode1-feedback"></div>
+    <!-- Mode Base (A1): Базовое спряжение -->
+    <main id="ser-estar-base-area" class="game-area hidden">
+        <!-- Контент загружается динамически -->
     </main>
 
-    <!-- Mode 1 Results -->
-    <main id="ser-estar-mode1-results" class="game-area hidden">
-        <h2>🏁 Результаты</h2>
-        <div class="final-score" id="ser-estar-mode1-final-score"></div>
-        <div class="final-message" id="ser-estar-mode1-message"></div>
-        <button class="restart-button" onclick="restartSerEstarMode1()">🔄 Ещё раз</button>
-        <button class="menu-button" onclick="showMainMenu()">📋 Меню</button>
+    <!-- Mode Advanced (A2): Продвинутое спряжение -->
+    <main id="ser-estar-advanced-area" class="game-area hidden">
+        <!-- Контент загружается динамически -->
     </main>
-
-    <!-- Mode 2: Спряжение -->
-    <main id="ser-estar-mode2-area" class="game-area hidden">
-        <h2>✍️ Спряжение</h2>
-        <div class="progress-text">Вопрос <span id="ser-estar-mode2-progress">1</span> из 12</div>
-        <div class="verb-info" id="ser-estar-mode2-verb-info"></div>
-        <div class="options-container" id="ser-estar-mode2-options"></div>
-        <div class="feedback" id="ser-estar-mode2-feedback"></div>
-    </main>
-
-    <!-- Mode 2 Results -->
-    <main id="ser-estar-mode2-results" class="game-area hidden">
-        <h2>🏁 Результаты</h2>
-        <div class="final-score" id="ser-estar-mode2-final-score"></div>
-        <div class="final-message" id="ser-estar-mode2-message"></div>
-        <button class="restart-button" onclick="restartSerEstarMode2()">🔄 Ещё раз</button>
-        <button class="menu-button" onclick="showMainMenu()">📋 Меню</button>
-    </main>
-
-    <!-- Mode 3: Правила -->
-    <main id="ser-estar-mode3-area" class="game-area hidden">
-        <h2>📚 Правила использования</h2>
-        <div class="rules-container">
-            <div class="rule-card ser-card">
-                <h3>🟦 SER</h3>
-                <p class="rule-acronym">DOCTOR</p>
-                <ul>
-                    <li><strong>D</strong>escription (описание)</li>
-                    <li><strong>O</strong>ccupation (профессия)</li>
-                    <li><strong>C</strong>haracteristic (характеристика)</li>
-                    <li><strong>T</strong>ime (время, дата)</li>
-                    <li><strong>O</strong>rigin (происхождение)</li>
-                    <li><strong>R</strong>elationship (родство)</li>
-                </ul>
-            </div>
-            <div class="rule-card estar-card">
-                <h3>🟩 ESTAR</h3>
-                <p class="rule-acronym">PLACE</p>
-                <ul>
-                    <li><strong>P</strong>osition (позиция)</li>
-                    <li><strong>L</strong>ocation (место)</li>
-                    <li><strong>A</strong>ction (действие)</li>
-                    <li><strong>C</strong>ondition (состояние)</li>
-                    <li><strong>E</strong>motion (эмоция)</li>
-                </ul>
-            </div>
-        </div>
-        <button class="menu-button" onclick="showMainMenu()">📋 Меню</button>
-    </main>
-
-    <!-- Mode 4: Перевод -->
-    <main id="ser-estar-mode4-area" class="game-area hidden">
-        <h2>🌐 Перевод</h2>
-        <div class="progress-text">Вопрос <span id="ser-estar-mode4-progress">1</span> из 15</div>
-        <div class="question-text" id="ser-estar-mode4-russian"></div>
-        <div class="options-container">
-            <button class="ser-estar-mode4-option button-option"></button>
-            <button class="ser-estar-mode4-option button-option"></button>
-            <button class="ser-estar-mode4-option button-option"></button>
-        </div>
-        <div class="feedback" id="ser-estar-mode4-feedback"></div>
-    </main>
-
-    <!-- Mode 4 Results -->
-    <main id="ser-estar-mode4-results" class="game-area hidden">
-        <h2>🏁 Результаты</h2>
-        <div class="final-score" id="ser-estar-mode4-final-score"></div>
-        <div class="final-message" id="ser-estar-mode4-message"></div>
-        <button class="restart-button" onclick="restartSerEstarMode4()">🔄 Ещё раз</button>
-        <button class="menu-button" onclick="showMainMenu()">📋 Меню</button>
-    </main>
-
     <!-- Footer -->
     <footer class="app-footer">
         <p>Ser vs Estar • Тренажёр испанских глаголов</p>
@@ -140,14 +50,9 @@
 
     <!-- Scripts -->
     <script src="ser-estar-data.js"></script>
-    <script src="ser-estar-mode2-data.js"></script>
-    <script src="ser-estar-mode2-utils.js"></script>
-    <script src="ser-estar-mode2-logic.js"></script>
-    <script src="ser-estar-mode2-ui.js?v=2"></script>
-    <script src="ser-estar-mode1.js"></script>
+    <script src="ser-estar-base-ui.js"></script>
+    <script src="ser-estar-base-mode.js"></script>
     <script src="ser-estar-mode2.js"></script>
-    <script src="ser-estar-mode3.js"></script>
-    <script src="ser-estar-mode4.js"></script>
     <script src="ser-estar-app.js"></script>
 </body>
 </html>
