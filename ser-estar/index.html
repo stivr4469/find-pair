@@ -18,13 +18,16 @@
         <p>Научись различать два глагола "to be"</p>
     </header>
 
-    <!-- Главное меню Ser/Estar - 2 новых режима -->
+    <!-- Главное меню Ser/Estar - 3 режима -->
     <nav class="main-menu">
         <button class="mode-button" data-mode="base">
             📝 Базовое спряжение (A1)
         </button>
         <button class="mode-button" data-mode="advanced">
             ⚙️ Продвинутое спряжение (A2)
+        </button>
+        <button class="mode-button" data-mode="context">
+            🎯 Контекст (A2)
         </button>
     </nav>
 
@@ -48,15 +51,24 @@
         <div class="feedback" id="ser-estar-mode2-feedback"></div>
         <button id="ser-estar-mode2-next-btn" class="next-button" style="display: none;">Дальше →</button>
     </main>
+
+    <!-- Mode Context (A2): Контекст -->
+    <main id="ser-estar-context-area" class="game-area hidden">
+        <!-- Контент для контекстного режима -->
+    </main>
+
     <!-- Footer -->
     <footer class="app-footer">
         <p>Ser vs Estar • Тренажёр испанских глаголов</p>
     </footer>
 
     <!-- Scripts -->
+    <script src="../js/utils.js"></script>
     <script src="ser-estar-data.js"></script>
     <script src="ser-estar-base-ui.js"></script>
     <script src="ser-estar-base-mode.js"></script>
+    <script src="ser-estar-context-ui.js"></script>
+    <script src="ser-estar-context-mode.js"></script>
     <script src="ser-estar-mode2.js"></script>
     <script src="ser-estar-app.js"></script>
 </body>

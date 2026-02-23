@@ -100,26 +100,28 @@ function checkMode2Answer(selected, correct, buttonElement) {
   const allButtons = document.querySelectorAll('#mode2-options .option-btn');
   allButtons.forEach(btn => btn.disabled = true);
 
-  // Нормализация строк: убираем пробелы, приводим к нижнему регистру, унифицируем Unicode
-  const normalize = (str) => str.trim().normalize('NFC').toLowerCase();
-  
-  // Проверяем ответ с нормализацией
+  // Нормализация строк для корректного сравнения
+  const normalize = (str) => str ? str.trim().normalize('NFC').toLowerCase() : '';
+
   const isCorrect = normalize(selected) === normalize(correct);
 
   // Показываем обратную связь
   const feedback = document.getElementById('mode2-feedback');
+
   if (isCorrect) {
     feedback.textContent = '✅ ¡Correcto!';
     feedback.className = 'feedback correct';
+    buttonElement.classList.add('correct'); // ИСПРАВЛЕНИЕ: Добавляем класс правильному ответу
     mode2State.score++;
   } else {
     feedback.textContent = `❌ Incorrecto. La respuesta correcta es: ${correct}`;
     feedback.className = 'feedback wrong';
+    buttonElement.classList.add('incorrect'); // ИСПРАВЛЕНИЕ: Добавляем класс неправильному
 
-    // Подсветить правильную кнопку
+    // ИСПРАВЛЕНИЕ: Ищем и подсвечиваем правильный ответ
     allButtons.forEach(btn => {
       if (normalize(btn.textContent) === normalize(correct)) {
-        btn.classList.add('correct-answer');
+        btn.classList.add('correct');
       }
     });
   }
