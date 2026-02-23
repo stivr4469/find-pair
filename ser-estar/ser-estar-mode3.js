@@ -127,9 +127,14 @@ function checkSerEstarMode3Answer(selected, question) {
             btn.classList.add('incorrect');
         }
     });
-    
+
+    // Нормализация строк для корректного сравнения Unicode
+    const normalize = (str) => str.trim().normalize('NFC').toLowerCase();
+    const normalizedSelected = normalize(selected);
+    const normalizedCorrect = normalize(question.correctRule);
+
     // Проверка ответа
-    if (selected === question.correctRule) {
+    if (normalizedSelected === normalizedCorrect) {
         serEstarMode3State.score++;
         const ruleName = question.verb === 'ser' ? SER_RULES[question.correctRule].name : ESTAR_RULES[question.correctRule].name;
         feedback.textContent = `✅ ¡Correcto! ${question.verb.toUpperCase()}: ${ruleName}`;
@@ -140,17 +145,22 @@ function checkSerEstarMode3Answer(selected, question) {
         feedback.textContent = `❌ Incorrecto. Правильно: ${question.correctRule} - ${correctRuleName}`;
         feedback.className = 'feedback incorrect';
     }
-    
-    // Следующий вопрос через 2 секунды
-    setTimeout(() => {
-        serEstarMode3State.currentQuestion++;
-        
-        if (serEstarMode3State.currentQuestion >= serEstarMode3State.totalQuestions) {
-            showSerEstarMode3Results();
-        } else {
-            showSerEstarMode3Question();
-        }
-    }, 2000);
+
+    // Показываем кнопку "Дальше"
+    const nextButton = document.getElementById('ser-estar-mode3-next-btn');
+    if (nextButton) {
+        nextButton.style.display = 'inline-block';
+        nextButton.onclick = () => {
+            serEstarMode3State.currentQuestion++;
+            feedback.textContent = '';
+
+            if (serEstarMode3State.currentQuestion >= serEstarMode3State.totalQuestions) {
+                showSerEstarMode3Results();
+            } else {
+                showSerEstarMode3Question();
+            }
+        };
+    }
 }
 
 /**

@@ -134,15 +134,17 @@ function checkMode0Answer(selected, correct, buttonElement) {
   if (isCorrect) {
     feedback.textContent = '✅ ¡Correcto!';
     feedback.className = 'feedback correct';
+    buttonElement.classList.add('correct');  // Подсветка правильной кнопки
     mode0State.score++;
   } else {
     feedback.textContent = `❌ Incorrecto. La respuesta correcta es: ${correct}`;
     feedback.className = 'feedback wrong';
+    buttonElement.classList.add('incorrect');  // Подсветка неправильной кнопки
 
     // Подсветить правильную кнопку
     allButtons.forEach(btn => {
       if (normalize(btn.textContent) === normalize(correct)) {
-        btn.classList.add('correct-answer');
+        btn.classList.add('correct');
       }
     });
   }

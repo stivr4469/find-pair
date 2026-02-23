@@ -22,7 +22,7 @@
         <div class="game-settings">
             <div class="setting-item">
                 <label for="category-select">Категория:</label>
-                <select id="category-select">
+                <select id="category-select" onchange="initGame()">
                     <option value="verbs">Глаголы</option>
                     <option value="nouns">Существительные</option>
                     <option value="adjectives">Прилагательные</option>
@@ -32,7 +32,7 @@
 
             <div class="setting-item">
                 <label for="pair-count">Количество пар:</label>
-                <select id="pair-count">
+                <select id="pair-count" onchange="initGame()">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>

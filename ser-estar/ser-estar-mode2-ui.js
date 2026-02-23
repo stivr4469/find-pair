@@ -104,8 +104,8 @@ function handleSerEstarOptionClickUI(selected, correct) {
     serEstarMode2State.buttonsDisabled = true;
 
     // Отображаем обратную связь
-    feedbackEl.textContent = isCorrect 
-        ? `✅ ¡Correcto!` 
+    feedbackEl.textContent = isCorrect
+        ? `✅ ¡Correcto!`
         : `❌ Incorrecto. La respuesta correcta es: "${correct}"`;
     feedbackEl.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
 
@@ -119,10 +119,17 @@ function handleSerEstarOptionClickUI(selected, correct) {
         }
     });
 
-    // Переход к следующему вопросу через 1.5 секунды
-    setTimeout(() => {
-        handleSerEstarNextQuestionUI();
-    }, 1500);
+    // Показываем кнопку "Дальше"
+    const nextButton = document.getElementById('ser-estar-mode2-next-btn');
+    if (nextButton) {
+        nextButton.style.display = 'inline-block';
+        nextButton.onclick = () => {
+            serEstarMode2State.isAnswered = false;
+            serEstarMode2State.buttonsDisabled = false;
+            feedbackEl.textContent = '';
+            handleSerEstarNextQuestionUI();
+        };
+    }
 }
 
 /**

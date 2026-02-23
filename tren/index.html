@@ -70,15 +70,9 @@
     <!-- Игровая зона для режима 1: Выбор глагола -->
     <main id="mode1-area" class="game-area hidden">
         <h2>🎯 Выбор глагола</h2>
-        <div id="mode1-progress" class="progress-text">Вопрос 1 из 10</div>
-        <div id="mode1-question" class="question-text">Loading...</div>
-        <div id="mode1-translation" class="translation-text"></div>
-        <div class="options-container">
-            <button class="mode1-option button-option">Option 1</button>
-            <button class="mode1-option button-option">Option 2</button>
-            <button class="mode1-option button-option">Option 3</button>
+        <div id="mode1-content">
+            <!-- Сюда будет рендериться UI из mode1-ui.js -->
         </div>
-        <div id="mode1-feedback" class="feedback"></div>
     </main>
 
     <!-- Результаты Mode 1 -->
@@ -109,50 +103,17 @@
     <!-- Игровая зона для режима 3: Предлоги -->
     <main id="mode3-area" class="game-area hidden">
         <h2>📝 Предлоги (a/de/en)</h2>
-        <div id="mode3-progress" class="progress-text">Вопрос 1 из 10</div>
-        <div id="mode3-question" class="question-text">Loading...</div>
-        <div id="mode3-translation" class="translation-text"></div>
-        <div class="options-container">
-            <button class="mode3-preposition button-option">a</button>
-            <button class="mode3-preposition button-option">de</button>
-            <button class="mode3-preposition button-option">en</button>
+        <div id="mode3-content">
+            <!-- Сюда будет рендериться UI из mode3-ui.js -->
         </div>
-        <div id="mode3-feedback" class="feedback"></div>
-        <button id="mode3-next" class="next-button" disabled>Дальше →</button>
-    </main>
-
-    <!-- Результаты Mode 3 -->
-    <main id="mode3-results" class="game-area hidden">
-        <h2>🏁 Результаты</h2>
-        <div id="mode3-final-score" class="final-score"></div>
-        <div id="mode3-message" class="final-message"></div>
-        <button onclick="restartMode3()" class="restart-button">🔄 Ещё раз</button>
-        <button onclick="showMainMenu()" class="menu-button">📋 Меню</button>
     </main>
 
     <!-- Игровая зона для режима 4: Перевод -->
     <main id="mode4-area" class="game-area hidden">
         <h2>🌐 Перевод</h2>
-        <div id="mode4-progress" class="progress-text">Вопрос 1 из 15</div>
-        <div id="mode4-question" class="question-text">Loading...</div>
-        <div id="mode4-hint" class="hint-text"></div>
-        <div class="options-container">
-            <button class="mode4-option button-option">Option 1</button>
-            <button class="mode4-option button-option">Option 2</button>
-            <button class="mode4-option button-option">Option 3</button>
-            <button class="mode4-option button-option">Option 4</button>
+        <div id="mode4-content">
+            <!-- Сюда будет рендериться UI из mode4-ui.js -->
         </div>
-        <div id="mode4-feedback" class="feedback"></div>
-        <button id="mode4-next" class="next-button" disabled>Дальше →</button>
-    </main>
-
-    <!-- Результаты Mode 4 -->
-    <main id="mode4-results" class="game-area hidden">
-        <h2>🏁 Результаты</h2>
-        <div id="mode4-final-score" class="final-score"></div>
-        <div id="mode4-message" class="final-message"></div>
-        <button onclick="restartMode4()" class="restart-button">🔄 Ещё раз</button>
-        <button onclick="showMainMenu()" class="menu-button">📋 Меню</button>
     </main>
 
     <!-- Игровая зона для режима 5: Контекст -->
@@ -173,6 +134,7 @@
     </footer>
 
     <!-- Подключение скриптов -->
+    <script src="../js/utils.js"></script>
     <script src="data.js"></script>
     <!-- Mode 0 modules -->
     <script src="mode0-options.js"></script>
@@ -187,8 +149,14 @@
     <script src="mode2-results.js"></script>
     <script src="mode2.js"></script>
     <!-- Other modes -->
+    <script src="mode1-data.js"></script>
+    <script src="mode1-ui.js"></script>
     <script src="mode1.js"></script>
+    <script src="mode3-data.js"></script>
+    <script src="mode3-ui.js"></script>
     <script src="mode3.js"></script>
+    <script src="mode4-data.js"></script>
+    <script src="mode4-ui.js"></script>
     <script src="mode4.js"></script>
     <!-- Mode 5 modules -->
     <script src="mode5-data.js"></script>

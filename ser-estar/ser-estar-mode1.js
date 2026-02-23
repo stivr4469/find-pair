@@ -104,9 +104,14 @@ function checkSerEstarMode1Answer(selected, question) {
             btn.classList.add('incorrect');
         }
     });
-    
+
+    // Нормализация строк для корректного сравнения Unicode
+    const normalize = (str) => str.trim().normalize('NFC').toLowerCase();
+    const normalizedSelected = normalize(selected);
+    const normalizedCorrect = normalize(question.correct);
+
     // Проверка ответа
-    if (selected === question.correct) {
+    if (normalizedSelected === normalizedCorrect) {
         serEstarMode1State.score++;
         feedback.textContent = `✅ ¡Correcto! ${question.explanation}`;
         feedback.className = 'feedback correct';
@@ -115,20 +120,25 @@ function checkSerEstarMode1Answer(selected, question) {
         feedback.textContent = `❌ Incorrecto. ${question.explanation}`;
         feedback.className = 'feedback incorrect';
     }
-    
+
     // Обновить счет
     updateSerEstarScore();
-    
-    // Следующий вопрос через 2 секунды
-    setTimeout(() => {
-        serEstarMode1State.currentQuestion++;
-        
-        if (serEstarMode1State.currentQuestion >= serEstarMode1State.totalQuestions) {
-            showSerEstarMode1Results();
-        } else {
-            showSerEstarMode1Question();
-        }
-    }, 2000);
+
+    // Показываем кнопку "Дальше"
+    const nextButton = document.getElementById('ser-estar-mode1-next-btn');
+    if (nextButton) {
+        nextButton.style.display = 'inline-block';
+        nextButton.onclick = () => {
+            serEstarMode1State.currentQuestion++;
+            feedback.textContent = '';
+
+            if (serEstarMode1State.currentQuestion >= serEstarMode1State.totalQuestions) {
+                showSerEstarMode1Results();
+            } else {
+                showSerEstarMode1Question();
+            }
+        };
+    }
 }
 
 /**
