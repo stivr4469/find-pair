@@ -1,100 +1,29 @@
-/* Основные стили */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+/* find-pair/styles.css - НОВОЕ СОДЕРЖИМОЕ */
+
+/* Переопределяем глобальные стили, чтобы убрать прокрутку у body */
+/* Этот стиль будет действовать только для этой страницы */
+html, body {
+    overflow: hidden;
+    height: 100%;
 }
 
-h1 {
-    text-align: center;
-    margin-top: 20px;
-}
-
-/* Контейнер для игры */
+/* Превращаем главный контейнер в flex-колонку на всю высоту */
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100vh; /* Убедимся, что он не выходит за пределы экрана */
+    box-sizing: border-box; /* Учитываем padding в расчете высоты */
 }
 
-/* Стили для колонок */
+/* Указываем, что колонки должны растягиваться и прокручиваться */
 .columns {
-    display: flex; /* Используем Flexbox для создания колонок */
-    justify-content: space-between; /* Равномерное распределение колонок */
-    margin-top: 20px;
-    flex-wrap: wrap; /* Позволяем колонкам переноситься */
+    flex-grow: 1; /* Ключевое свойство: занять всё доступное место */
+    overflow-y: auto; /* И только здесь будет появляться скролл, если нужно */
+    min-height: 0; /* Обязательно для правильной работы flex-grow в сложных случаях */
 }
 
-.column {
-    flex: 1 1 45%; /* Устанавливаем адаптивную ширину для колонок */
-    padding: 10px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    box-sizing: border-box; /* Учитываем padding и border в ширине */
-    overflow-wrap: break-word; /* Перенос длинных слов */
+/* Запрещаем шапке и настройкам сжиматься */
+h1, .game-settings, #restart-button {
+    flex-shrink: 0;
 }
-
-/* Цвета колонок */
-.left-column {
-    background-color: #f1f7ff; /* Цвет для левой колонки */
-}
-
-.right-column {
-    background-color: #fff7f1; /* Цвет для правой колонки */
-}
-
-/* Стили для элементов слов */
-.word {
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    background: #e8e8e8;
-    cursor: pointer;
-    text-align: center;
-    border-radius: 4px;
-    transition: background 0.3s;
-    font-size: 14px; /* Увеличиваем размер шрифта до 30px */
-    font-weight: bold; /* Делаем текст полужирным */
-    width: 100%;
-    box-sizing: border-box; /* Корректный расчет ширины для текста */
-}
-
-/* Стили при наведении */
-.word:hover {
-    background: #ddd;
-}
-
-/* Стили для выбранных слов */
-.word.selected {
-    background: #ffeb3b;
-}
-
-/* Стили для совпавших пар */
-.word.matched {
-    background: #4caf50;
-    color: #ffffff;
-}
-
-/* Кнопка для перезапуска */
-button {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    border: none;
-    background: #4caf50;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background 0.3s;
-}
-
-button:hover {
-    background: #45a049;
-}
-
