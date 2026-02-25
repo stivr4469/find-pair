@@ -1,107 +1,136 @@
-// spanish-trainer-app/tren/mode5.js
 /**
- * Tren Ir/Venir/Llegar - Mode 5: Context Game Logic
- * Основная игровая логика режима "Контекст"
+ * Tren Ir/Venir/Llegar - Mode 5: Logic (Fixed & Synced)
+ * Объединяет новую циклическую очередь с существующим UI
  */
 
-// Состояние игры
+// Константы
+const MODE5_SESSION_LIMIT = 20;
+
+// Состояние
 let mode5State = {
-    currentQuestionIndex: 0,
+    questionsQueue: [],
     score: 0,
-    questions: [],
-    maxQuestions: 10,
-    isAnswered: false // Флаг, показывающий, ответил ли пользователь
+    totalAnswered: 0,
+    sessionLimit: MODE5_SESSION_LIMIT,
+    isAnswered: false
 };
 
 /**
- * Инициализация режима Mode 5
+ * Инициализация
  */
 function initMode5() {
-    mode5State.currentQuestionIndex = 0;
-    mode5State.score = 0;
-    mode5State.isAnswered = false; // Сброс флага
-    mode5State.questions = shuffleArray(MODE5_SENTENCES).slice(0, mode5State.maxQuestions);
-
-    // Обновляем счет в UI (если функция доступна)
-    if (typeof updateMode5ScoreUI === 'function') {
-        updateMode5ScoreUI();
-    }
+    console.log('[Mode 5] Initializing logic...');
     
-    displayMode5Question(); // Отображаем первый вопрос через UI
-}
-
-/**
- * Отображает текущий вопрос и варианты ответов (вызывает UI-функцию)
- */
-function displayMode5Question() {
-    if (mode5State.currentQuestionIndex >= mode5State.maxQuestions) {
-        // Показываем результаты, если вопросы закончились
-        if (typeof showMode5ResultsUI === 'function') {
-            showMode5ResultsUI();
-        } else {
-            console.error('showMode5ResultsUI is not defined');
-        }
+    // Используем MODE5_DATA из сгенерированного файла
+    const sourceData = typeof MODE5_DATA !== 'undefined' ? MODE5_DATA : (typeof MODE5_SENTENCES !== 'undefined' ? MODE5_SENTENCES : []);
+    
+    if (sourceData.length === 0) {
+        console.error('No data found for Mode 5! Check mode5-data.js');
         return;
     }
 
-    const question = mode5State.questions[mode5State.currentQuestionIndex];
-    mode5State.isAnswered = false; // Сбрасываем флаг для нового вопроса
+    mode5State.questionsQueue = shuffleArrayMode5([...sourceData]);
+    mode5State.score = 0;
+    mode5State.totalAnswered = 0;
+    mode5State.sessionLimit = Math.min(MODE5_SESSION_LIMIT, sourceData.length);
+    mode5State.isAnswered = false;
+
+    // Скрыть меню, показать область игры
+    document.querySelectorAll('.game-area').forEach(el => el.classList.add('hidden'));
+    document.querySelector('.main-menu').classList.add('hidden');
+    document.getElementById('mode5-area').classList.remove('hidden');
+
+    displayMode5Question();
+}
+
+/**
+ * Отображение текущего вопроса
+ */
+function displayMode5Question() {
+    if (mode5State.totalAnswered >= mode5State.sessionLimit) {
+        showMode5ResultsUI();
+        return;
+    }
+
+    mode5State.isAnswered = false;
+    const currentQuestion = mode5State.questionsQueue[0];
     
-    // Проверяем что UI функция доступна
     if (typeof displayMode5QuestionUI === 'function') {
-        displayMode5QuestionUI(question);
-    } else {
-        console.error('displayMode5QuestionUI is not defined');
+        displayMode5QuestionUI(currentQuestion);
     }
 }
 
 /**
- * Проверяет ответ пользователя
- * @param {string} selected - Выбранный пользователем ответ
- * @param {string} correct - Правильный ответ
- * @param {HTMLElement} buttonElement - Нажатая кнопка
+ * Проверка ответа (вызывается из UI)
  */
-function checkMode5Answer(selected, correct, buttonElement) {
-    mode5State.isAnswered = true; // Пользователь ответил
+function checkMode5Answer(selected, correct, buttonElement, explanation) {
+    mode5State.isAnswered = true;
 
     const feedback = document.getElementById('mode5-feedback');
     const allButtons = document.querySelectorAll('#mode5-options .option-btn');
     const nextButton = document.getElementById('mode5-next-btn');
 
-    allButtons.forEach(btn => btn.disabled = true); // Блокируем все кнопки
+    allButtons.forEach(btn => btn.disabled = true);
 
-    if (selected.toLowerCase() === correct.toLowerCase()) {
-        feedback.textContent = "✅ ¡Correcto! Правильно!";
-        feedback.className = "feedback correct";
+    // Умная нормализация
+    const normalize = (str) => str.replace(/[¡!¿?]/g, '').trim().toLowerCase();
+    const isCorrect = normalize(selected) === normalize(correct);
+
+    feedback.style.display = 'block';
+
+    if (isCorrect) {
+        feedback.innerHTML = `
+            <div style="color: #27ae60; font-weight: bold; margin-bottom: 8px;">✅ ¡Correcto!</div>
+            <div style="color: #444; font-size: 0.95rem; line-height: 1.4;">${explanation}</div>
+        `;
+        feedback.style.borderLeft = '5px solid #27ae60';
         buttonElement.classList.add('correct');
+        buttonElement.style.background = '#dcfce7';
         mode5State.score++;
-        updateMode5ScoreUI(); // Обновляем счет в UI
+        updateMode5ScoreUI();
     } else {
-        feedback.textContent = `❌ Incorrecto. Правильно: ${correct}`;
-        feedback.className = "feedback incorrect";
+        feedback.innerHTML = `
+            <div style="color: #e74c3c; font-weight: bold; margin-bottom: 8px;">❌ Incorrecto. Правильный ответ: ${correct}</div>
+            <div style="color: #444; font-size: 0.95rem; line-height: 1.4;">${explanation}</div>
+        `;
+        feedback.style.borderLeft = '5px solid #e74c3c';
         buttonElement.classList.add('incorrect');
-        // Подсветить правильный ответ
+        buttonElement.style.background = '#fee2e2';
+        
         allButtons.forEach(btn => {
-            if (btn.dataset.answer.toLowerCase() === correct.toLowerCase()) {
+            if (normalize(btn.dataset.answer) === normalize(correct)) {
                 btn.classList.add('correct');
+                btn.style.background = '#dcfce7';
             }
         });
     }
-    nextButton.style.display = 'inline-block'; // Показываем кнопку "Дальше"
+    
+    nextButton.style.display = 'block';
 }
 
 /**
- * Обработчик кнопки "Дальше"
+ * Переход к следующему вопросу (Очередь)
  */
 function handleNextMode5Question() {
-    mode5State.currentQuestionIndex++;
-    displayMode5Question(); // Отображаем следующий вопрос
+    // Циклическая логика: берем первый, кидаем в конец
+    const answered = mode5State.questionsQueue.shift();
+    mode5State.questionsQueue.push(answered);
+    
+    mode5State.totalAnswered++;
+    displayMode5Question();
 }
 
 /**
- * Вспомогательная функция для перемешивания массива
+ * Перезапуск
  */
-function shuffleArray(array) {
+function restartMode5() {
+    initMode5();
+}
+
+/**
+ * Вспомогательная функция
+ */
+function shuffleArrayMode5(array) {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -110,32 +139,8 @@ function shuffleArray(array) {
     return shuffled;
 }
 
-/**
- * Глобальная функция для перезапуска режима
- */
-function restartMode5() {
-    if (typeof initMode5 === 'function') {
-        initMode5();
-    }
-}
-
-// Экспорт для глобального доступа
-if (typeof window !== 'undefined') {
-    window.initMode5 = initMode5;
-    window.mode5State = mode5State;
-    window.shuffleArray = shuffleArray;
-    window.restartMode5 = restartMode5;
-    window.checkMode5Answer = checkMode5Answer;
-    window.handleNextMode5Question = handleNextMode5Question;
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        initMode5,
-        mode5State,
-        shuffleArray,
-        restartMode5,
-        checkMode5Answer,
-        handleNextMode5Question
-    };
-}
+// Экспорт
+window.initMode5 = initMode5;
+window.restartMode5 = restartMode5;
+window.checkMode5Answer = checkMode5Answer;
+window.handleNextMode5Question = handleNextMode5Question;

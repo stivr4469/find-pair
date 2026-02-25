@@ -1,43 +1,46 @@
-// spanish-trainer-app/ser-estar/ser-estar-context-mode.js
 /**
  * Ser vs Estar Trainer - Context Mode: Game Logic
- * Основная логика режима "Контекст"
+ * Внедрена циклическая очередь и поддержка 80 вопросов.
  */
 
+const SER_ESTAR_SESSION_LIMIT = 20;
+
 let contextModeState = {
-    currentQuestionIndex: 0,
+    questionsQueue: [],
     score: 0,
-    totalQuestions: 10,
-    questions: [],
+    totalAnswered: 0,
+    sessionLimit: SER_ESTAR_SESSION_LIMIT,
     isAnswered: false
 };
 
-// --- ЛОГИКА ИГРЫ ---
-
 function initContextMode() {
+    console.log('[SerEstar] Initializing logic...');
+    
     if (typeof MODE1_SENTENCES === 'undefined') {
-        console.error("Данные для Контекстного режима (MODE1_SENTENCES) не загружены.");
+        console.error("Данные Ser/Estar не загружены!");
         return;
     }
 
-    contextModeState.currentQuestionIndex = 0;
+    // Инициализируем очередь
+    contextModeState.questionsQueue = shuffleArray([...MODE1_SENTENCES]);
     contextModeState.score = 0;
+    contextModeState.totalAnswered = 0;
+    contextModeState.sessionLimit = Math.min(SER_ESTAR_SESSION_LIMIT, MODE1_SENTENCES.length);
     contextModeState.isAnswered = false;
-    contextModeState.questions = shuffleArray(MODE1_SENTENCES).slice(0, contextModeState.totalQuestions);
-    contextModeState.totalQuestions = contextModeState.questions.length;
 
     updateContextScoreUI();
     displayContextQuestion();
 }
 
 function displayContextQuestion() {
-    if (contextModeState.currentQuestionIndex >= contextModeState.totalQuestions) {
+    if (contextModeState.totalAnswered >= contextModeState.sessionLimit) {
         showContextResultsUI();
         return;
     }
-    const question = contextModeState.questions[contextModeState.currentQuestionIndex];
+
     contextModeState.isAnswered = false;
-    displayContextQuestionUI(question);
+    const currentQuestion = contextModeState.questionsQueue[0]; 
+    displayContextQuestionUI(currentQuestion);
 }
 
 function checkContextAnswer(selected, correct, buttonElement, explanation) {
@@ -49,27 +52,46 @@ function checkContextAnswer(selected, correct, buttonElement, explanation) {
 
     allButtons.forEach(btn => btn.disabled = true);
 
-    if (selected.toLowerCase() === correct.toLowerCase()) {
-        feedback.textContent = `✅ ¡Correcto! ${explanation}`;
-        feedback.className = "feedback correct";
+    const normalize = (str) => str.replace(/[¡!¿?]/g, '').trim().toLowerCase();
+    const isCorrect = normalize(selected) === normalize(correct);
+
+    feedback.style.display = 'block';
+
+    if (isCorrect) {
+        feedback.innerHTML = `
+            <div style="color: #27ae60; font-weight: bold; margin-bottom: 5px;">✅ ¡Correcto!</div>
+            <div style="color: #444; font-size: 0.95rem;">${explanation}</div>
+        `;
+        feedback.style.borderLeft = '5px solid #27ae60';
         buttonElement.classList.add('correct');
+        buttonElement.style.background = '#dcfce7';
         contextModeState.score++;
         updateContextScoreUI();
     } else {
-        feedback.textContent = `❌ Incorrecto. ${explanation}`;
-        feedback.className = "feedback incorrect";
+        feedback.innerHTML = `
+            <div style="color: #e74c3c; font-weight: bold; margin-bottom: 5px;">❌ Incorrecto. Ответ: ${correct}</div>
+            <div style="color: #444; font-size: 0.95rem;">${explanation}</div>
+        `;
+        feedback.style.borderLeft = '5px solid #e74c3c';
         buttonElement.classList.add('incorrect');
+        buttonElement.style.background = '#fee2e2';
+        
         allButtons.forEach(btn => {
-            if (btn.dataset.answer.toLowerCase() === correct.toLowerCase()) {
+            if (normalize(btn.dataset.answer) === normalize(correct)) {
                 btn.classList.add('correct');
+                btn.style.background = '#dcfce7';
             }
         });
     }
-    nextButton.style.display = 'inline-block';
+    nextButton.style.display = 'block';
 }
 
 function handleNextContextQuestion() {
-    contextModeState.currentQuestionIndex++;
+    // Циклическая логика: берем первый, кидаем в конец
+    const answered = contextModeState.questionsQueue.shift();
+    contextModeState.questionsQueue.push(answered);
+    
+    contextModeState.totalAnswered++;
     displayContextQuestion();
 }
 
@@ -77,10 +99,8 @@ function restartContextMode() {
     initContextMode();
 }
 
-// --- ЭКСПОРТЫ ---
-if (typeof window !== 'undefined') {
-    window.initContextMode = initContextMode;
-    window.restartContextMode = restartContextMode;
-    window.checkContextAnswer = checkContextAnswer;
-    window.handleNextContextQuestion = handleNextContextQuestion;
-}
+// Экспорт
+window.initContextMode = initContextMode;
+window.restartContextMode = restartContextMode;
+window.checkContextAnswer = checkContextAnswer;
+window.handleNextContextQuestion = handleNextContextQuestion;

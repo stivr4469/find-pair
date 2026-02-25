@@ -1,7 +1,6 @@
-// spanish-trainer-app/ser-estar/ser-estar-context-ui.js
 /**
  * Ser vs Estar Trainer - Context Mode: UI Functions
- * Функции отображения для режима "Контекст"
+ * Улучшенный интерфейс с поддержкой объяснений и прогресса.
  */
 
 function displayContextQuestionUI(question) {
@@ -10,19 +9,31 @@ function displayContextQuestionUI(question) {
 
     contentArea.innerHTML = `
         <div class="question-container">
-            <div class="progress-text">Вопрос ${contextModeState.currentQuestionIndex + 1} из ${contextModeState.totalQuestions}</div>
-            <div class="translation-text">${question.translation}</div>
-            <div class="question-text">${question.text.replace('___', '<span class="blank">___</span>')}</div>
-            <div class="options-container" id="context-options">
+            <div class="progress-text">Выполнено ${contextModeState.totalAnswered} из ${contextModeState.sessionLimit}</div>
+            
+            <div class="translation-text" style="color: #666; margin-bottom: 10px; font-style: italic;">
+                ${question.translation}
+            </div>
+            
+            <div class="question-text" style="font-size: 1.4rem; font-weight: bold; margin-bottom: 20px;">
+                ${question.text ? question.text.replace('___', '<span class="blank" style="color: #f59e0b;">___</span>') : ''}
+            </div>
+
+            <div class="options-container" id="context-options" style="display: grid; gap: 10px;">
                 ${question.options.map(option => `
                     <button class="option-btn" data-answer="${option}">${option}</button>
                 `).join('')}
             </div>
-            <div class="feedback" id="context-feedback"></div>
-            <button class="next-button" id="context-next-btn" style="display: none;">Дальше →</button>
+
+            <div class="feedback" id="context-feedback" style="min-height: 80px; padding: 15px; margin-top: 15px; background: #f8f9fa; border-radius: 8px; display: none; border-left: 5px solid #ccc;"></div>
+            
+            <button class="next-button" id="context-next-btn" style="display: none;">
+                Дальше →
+            </button>
         </div>
     `;
 
+    // Обработчики
     contentArea.querySelectorAll('.option-btn').forEach(button => {
         button.addEventListener('click', () => {
             if (!contextModeState.isAnswered) {
@@ -38,20 +49,19 @@ function showContextResultsUI() {
     const contentArea = document.getElementById('ser-estar-context-area');
     if (!contentArea) return;
 
-    const percentage = Math.round((contextModeState.score / contextModeState.totalQuestions) * 100);
-    let message = "";
-    if (percentage === 100) message = "🎉 ¡Excelente!";
-    else if (percentage >= 80) message = "👏 ¡Muy bien!";
-    else if (percentage >= 60) message = "👍 ¡Bien!";
-    else message = "📚 Sigue practicando!";
-
+    const percentage = Math.round((contextModeState.score / contextModeState.sessionLimit) * 100);
+    
     contentArea.innerHTML = `
-        <div class="results-container">
-            <h3>🏁 Результаты</h3>
-            <div class="final-score">${contextModeState.score} из ${contextModeState.totalQuestions} (${percentage}%)</div>
-            <div class="final-message">${message}</div>
-            <button class="restart-button" onclick="restartContextMode()">🔄 Ещё раз</button>
-            <button class="menu-button" onclick="showMainMenu()">📋 Меню</button>
+        <div class="results-container" style="text-align: center; padding: 20px;">
+            <h2>🏁 Сессия завершена!</h2>
+            <div class="final-score" style="font-size: 3rem; font-weight: bold; margin: 20px 0;">${contextModeState.score} / ${contextModeState.sessionLimit}</div>
+            <p style="margin-bottom: 30px; color: #666;">Вы прошли 20 вопросов по Ser и Estar. Вопросы перемещены в конец очереди.</p>
+            <button class="restart-button" onclick="restartContextMode()">
+                🔄 Продолжить тренировку
+            </button>
+            <button class="menu-button" onclick="showMainMenu()">
+                📋 В меню
+            </button>
         </div>
     `;
 }
@@ -63,9 +73,7 @@ function updateContextScoreUI() {
     }
 }
 
-// Экспорт для глобального доступа
-if (typeof window !== 'undefined') {
-    window.displayContextQuestionUI = displayContextQuestionUI;
-    window.showContextResultsUI = showContextResultsUI;
-    window.updateContextScoreUI = updateContextScoreUI;
-}
+// Экспорт
+window.displayContextQuestionUI = displayContextQuestionUI;
+window.showContextResultsUI = showContextResultsUI;
+window.updateContextScoreUI = updateContextScoreUI;
