@@ -19,24 +19,31 @@ function shuffleArray(array) {
 }
 
 // Глобальный синтезатор речи (Spanish)
+let ttsUnlocked = false;
+
 function speakSpanish(text) {
     if (!('speechSynthesis' in window)) return;
+
+    // Останавливаем текущую речь (критично для WebView Telegram)
+    window.speechSynthesis.cancel();
 
     // Очищаем текст от прочерков перед озвучкой
     const cleanText = text.replace(/_+/g, 'algo');
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'es-ES'; // Испанский (Испания)
-    utterance.rate = 0.9;     // Чуть медленнее для обучения
+    utterance.lang = 'es-ES';
+    utterance.rate = 0.9;
+    utterance.volume = 1.0; // Гарантируем громкость
 
-    // Попытка найти более качественный голос
-    const voices = speechSynthesis.getVoices();
-    const spanishVoice = voices.find(voice => voice.lang.startsWith('es-'));
-    if (spanishVoice) {
-        utterance.voice = spanishVoice;
-    }
+    // Ловим ошибку для отладки
+    utterance.onerror = (event) => {
+        console.error('TTS Error:', event);
+    };
 
-    speechSynthesis.speak(utterance);
+    // Помечаем как разблокированный после первого вызова
+    ttsUnlocked = true;
+
+    window.speechSynthesis.speak(utterance);
 }
 
 // Загрузка голосов (решает проблему первой задержки в Chrome)

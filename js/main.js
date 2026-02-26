@@ -161,12 +161,19 @@ function setupNavigation() {
  */
 function handleGameCardClick(e, gameType) {
     console.log('[NAVIGATION] Выбор игры:', gameType);
-    
+
     // Тактильная отдача в Telegram
     if (tg) {
         tg.HapticFeedback.impactOccurred('light');
     }
-    
+
+    // РАЗБЛОКИРОВКА ЗВУКА ДЛЯ TELEGRAM
+    if ('speechSynthesis' in window) {
+        const silent = new SpeechSynthesisUtterance('');
+        silent.volume = 0;
+        window.speechSynthesis.speak(silent);
+    }
+
     // Переход осуществляется через href ссылки
     // Дополнительная логика может быть добавлена здесь
 }

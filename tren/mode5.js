@@ -98,10 +98,11 @@ function checkMode5Answer(selected, correct, buttonElement, explanation) {
         mode5State.score++;
         updateMode5ScoreUI();
 
-        // Автоматическая озвучка правильного ответа
-        if (typeof playCurrentMode5Phrase === 'function') {
-            playCurrentMode5Phrase();
-        }
+        // АВТО-ОЗВУЧКА ОТКЛЮЧЕНА для Telegram
+        // Работает только кнопка 🔊 (прямой клик пользователя)
+        // if (typeof playCurrentMode5Phrase === 'function') {
+        //     playCurrentMode5Phrase();
+        // }
     } else {
         feedback.innerHTML = `
             <div style="color: #e74c3c; font-weight: bold; margin-bottom: 8px;">❌ Incorrecto. Правильный ответ: ${correct}</div>
