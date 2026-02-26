@@ -16,7 +16,7 @@ function displayContextQuestionUI(question) {
             </div>
             
             <div class="question-text" style="font-size: 1.4rem; font-weight: bold; margin-bottom: 20px;">
-                ${question.text ? question.text.replace('___', '<span class="blank" style="color: #f59e0b;">___</span>') : ''}
+                ${question.text ? question.text.replace('___', '<span class="blank" id="question-blank" style="color: #f59e0b;">___</span>') : ''}
             </div>
 
             <div class="options-container" id="context-options" style="display: grid; gap: 10px;">

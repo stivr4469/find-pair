@@ -55,6 +55,14 @@ function checkContextAnswer(selected, correct, buttonElement, explanation) {
     const normalize = (str) => str.replace(/[¡!¿?]/g, '').trim().toLowerCase();
     const isCorrect = normalize(selected) === normalize(correct);
 
+    // Заполняем пропуск правильным ответом
+    const blank = document.getElementById('question-blank');
+    if (blank) {
+        blank.textContent = correct;
+        blank.style.color = isCorrect ? '#27ae60' : '#e74c3c';
+        blank.style.fontWeight = 'bold';
+    }
+
     feedback.style.display = 'block';
 
     if (isCorrect) {
@@ -75,7 +83,7 @@ function checkContextAnswer(selected, correct, buttonElement, explanation) {
         feedback.style.borderLeft = '5px solid #e74c3c';
         buttonElement.classList.add('incorrect');
         buttonElement.style.background = '#fee2e2';
-        
+
         allButtons.forEach(btn => {
             if (normalize(btn.dataset.answer) === normalize(correct)) {
                 btn.classList.add('correct');
