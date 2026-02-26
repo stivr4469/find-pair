@@ -18,7 +18,34 @@ function shuffleArray(array) {
     return shuffled;
 }
 
+// Глобальный синтезатор речи (Spanish)
+function speakSpanish(text) {
+    if (!('speechSynthesis' in window)) return;
+
+    // Очищаем текст от прочерков перед озвучкой
+    const cleanText = text.replace(/_+/g, 'algo');
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'es-ES'; // Испанский (Испания)
+    utterance.rate = 0.9;     // Чуть медленнее для обучения
+
+    // Попытка найти более качественный голос
+    const voices = speechSynthesis.getVoices();
+    const spanishVoice = voices.find(voice => voice.lang.startsWith('es-'));
+    if (spanishVoice) {
+        utterance.voice = spanishVoice;
+    }
+
+    speechSynthesis.speak(utterance);
+}
+
+// Загрузка голосов (решает проблему первой задержки в Chrome)
+if ('speechSynthesis' in window) {
+    speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+}
+
 // Экспорт для глобального доступа
 if (typeof window !== 'undefined') {
     window.shuffleArray = shuffleArray;
+    window.speakSpanish = speakSpanish;
 }

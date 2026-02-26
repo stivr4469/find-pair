@@ -22,8 +22,9 @@ function displayMode5QuestionUI(question) {
 
             <div class="translation-text" style="color: #666; margin-bottom: 10px;">${question.translation}</div>
             
-            <div class="question-text" style="font-size: 1.4rem; font-weight: bold; margin-bottom: 20px;">
+            <div class="question-text" style="font-size: 1.4rem; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center;">
                 ${questionText.replace(/_____|___/g, '<span class="blank" id="question-blank" style="color: #f59e0b; text-decoration: underline;">_____</span>')}
+                <button id="speak-btn" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; margin-left: 10px;" title="Озвучить" onclick="playCurrentMode5Phrase()">🔊</button>
             </div>
 
             <div class="options-container" id="mode5-options" style="display: grid; gap: 10px;">
@@ -86,3 +87,21 @@ function updateMode5ScoreUI() {
 window.displayMode5QuestionUI = displayMode5QuestionUI;
 window.showMode5ResultsUI = showMode5ResultsUI;
 window.updateMode5ScoreUI = updateMode5ScoreUI;
+
+function playCurrentMode5Phrase() {
+    // Берем актуальный вопрос из состояния
+    const currentQuestion = mode5State.questionsQueue[0];
+    const text = currentQuestion.question || currentQuestion.text || "";
+    const correct = currentQuestion.correct || currentQuestion.correctForm;
+
+    // Заменяем прочерк на правильный ответ
+    const fullPhrase = text.replace(/_+/g, correct);
+
+    // Вызываем глобальную функцию из utils.js
+    if (typeof speakSpanish === 'function') {
+        speakSpanish(fullPhrase);
+    }
+}
+
+// Добавляем экспорт в конец файла
+window.playCurrentMode5Phrase = playCurrentMode5Phrase;
