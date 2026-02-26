@@ -12,7 +12,7 @@ function displayMode1QuestionUI(question) {
         <div class="question-container">
             <div class="progress-text">Вопрос ${mode1State.currentQuestionIndex + 1} из ${mode1State.totalQuestions}</div>
             <div class="translation-text">${question.translation}</div>
-            <div class="question-text">${question.text.replace('___', '<span class="blank">___</span>')}</div>
+            <div class="question-text">${question.text.replace('___', '<span class="blank" id="question-blank">___</span>')}</div>
             <div class="options-container" id="mode1-options">
                 ${shuffleArray(question.options).map(option => `
                     <button class="option-btn" data-answer="${option}">${option}</button>

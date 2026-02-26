@@ -14,7 +14,7 @@ function displayMode3QuestionUI(question) {
         <div class="question-container">
             <div class="progress-text">Вопрос ${mode3State.currentQuestionIndex + 1} из ${mode3State.totalQuestions}</div>
             <div class="translation-text">${question.translation}</div>
-            <div class="question-text">${question.text.replace('___', '<span class="blank">___</span>')}</div>
+            <div class="question-text">${question.text.replace('___', '<span class="blank" id="question-blank">___</span>')}</div>
             <div class="options-container" id="mode3-options">
                 ${options.map(option => `
                     <button class="option-btn" data-answer="${option}">${option}</button>

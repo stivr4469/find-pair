@@ -50,6 +50,14 @@ function checkMode1Answer(selected, correct, buttonElement) {
 
     allButtons.forEach(btn => btn.disabled = true);
 
+    // Заполняем пропуск правильным ответом
+    const blank = document.getElementById('question-blank');
+    if (blank) {
+        blank.textContent = correct;
+        blank.style.color = selected.toLowerCase() === correct.toLowerCase() ? '#27ae60' : '#e74c3c';
+        blank.style.fontWeight = 'bold';
+    }
+
     if (selected.toLowerCase() === correct.toLowerCase()) {
         feedback.textContent = "✅ ¡Correcto!";
         feedback.className = "feedback correct";

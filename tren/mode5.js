@@ -76,6 +76,15 @@ function checkMode5Answer(selected, correct, buttonElement, explanation) {
     const normalize = (str) => str.replace(/[¡!¿?]/g, '').trim().toLowerCase();
     const isCorrect = normalize(selected) === normalize(correct);
 
+    // Заполняем пропуск правильным ответом
+    const blankElement = document.getElementById('question-blank');
+    if (blankElement) {
+        blankElement.textContent = correct;
+        blankElement.style.color = isCorrect ? '#27ae60' : '#e74c3c';
+        blankElement.style.fontWeight = 'bold';
+        blankElement.style.textDecoration = 'none';
+    }
+
     feedback.style.display = 'block';
 
     if (isCorrect) {
@@ -96,7 +105,7 @@ function checkMode5Answer(selected, correct, buttonElement, explanation) {
         feedback.style.borderLeft = '5px solid #e74c3c';
         buttonElement.classList.add('incorrect');
         buttonElement.style.background = '#fee2e2';
-        
+
         allButtons.forEach(btn => {
             if (normalize(btn.dataset.answer) === normalize(correct)) {
                 btn.classList.add('correct');
@@ -104,7 +113,7 @@ function checkMode5Answer(selected, correct, buttonElement, explanation) {
             }
         });
     }
-    
+
     nextButton.style.display = 'block';
 }
 

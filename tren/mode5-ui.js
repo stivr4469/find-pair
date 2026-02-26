@@ -23,7 +23,7 @@ function displayMode5QuestionUI(question) {
             <div class="translation-text" style="color: #666; margin-bottom: 10px;">${question.translation}</div>
             
             <div class="question-text" style="font-size: 1.4rem; font-weight: bold; margin-bottom: 20px;">
-                ${questionText.replace(/_____|___/g, '<span class="blank" style="color: #f59e0b; text-decoration: underline;">_____</span>')}
+                ${questionText.replace(/_____|___/g, '<span class="blank" id="question-blank" style="color: #f59e0b; text-decoration: underline;">_____</span>')}
             </div>
 
             <div class="options-container" id="mode5-options" style="display: grid; gap: 10px;">
