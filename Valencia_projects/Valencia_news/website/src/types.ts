@@ -16,6 +16,8 @@ export interface ChannelData {
   articles: Article[];
 }
 
+export type ExportFile = ChannelData;
+
 export type ChannelId = "news" | "events" | "tourism" | "gastronomy";
 
 export const CHANNELS: { id: ChannelId; label: string; emoji: string }[] = [
