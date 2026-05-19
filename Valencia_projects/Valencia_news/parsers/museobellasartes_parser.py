@@ -172,13 +172,23 @@ def _parse_card(
     description = _fetch_description(title, url, session)
     time.sleep(0.5)
 
+    # Различаем: выставка уже идёт vs ещё не открылась
+    is_running = start_dt is not None and start_dt < now
+
     # Формируем текст для AI
     parts = [title]
     if description:
         parts.append(description)
-    if date_text:
+    if is_running:
+        # Выставка уже открылась — AI не должен писать "открывается"
+        end_str = end_dt.strftime("%d.%m.%Y")
+        parts.append(f"Сейчас идёт. Продолжается до {end_str}.")
+    elif date_text:
         parts.append(f"Exposición: {date_text}.")
     parts.append("Museo de Bellas Artes de Valencia (San Pío V). Entrada gratuita.")
+
+    # Для текущих выставок published_at = now, чтобы пройти фильтры агрегатора
+    effective_published_at = now if is_running else (start_dt or now)
 
     seen_urls.add(url)
     return ParsedArticle(
@@ -186,7 +196,7 @@ def _parse_card(
         title=title,
         text=" | ".join(parts),
         image_url=image_url,
-        published_at=start_dt or now,
+        published_at=effective_published_at,
         source_name="Museo Bellas Artes Valencia",
         source_url=BASE_URL,
         region="valencia",

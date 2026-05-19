@@ -312,11 +312,22 @@ class NewsAggregator:
             )
 
     def _get_known_event_urls(self) -> set[str]:
-        """URL событий за 3 дня: каждое событие может появляться раз в 3 дня."""
+        """URL событий: 3 дня для обычных событий, 30 дней для выставок."""
+        # Выставки месяцами остаются актуальными — без длинного окна они
+        # будут повторно публиковаться каждые 3 дня весь срок работы.
+        _EXHIBITION_SOURCES = [
+            "IVAM", "Museo Bellas Artes Valencia",
+            "CCCC Exposiciones", "Fundación Bancaja",
+        ]
         with get_session() as session:
-            return ArticleRepository(session).get_recent_urls(
-                hours=24 * 3, channel=self._cfg.channel
+            repo = ArticleRepository(session)
+            recent = repo.get_recent_urls(hours=24 * 3, channel=self._cfg.channel)
+            exhibitions = repo.get_recent_urls_for_sources(
+                hours=24 * 30,
+                source_names=_EXHIBITION_SOURCES,
+                channel=self._cfg.channel,
             )
+            return recent | exhibitions
 
     def _processed_to_storage_article(self, art: ProcessedArticle) -> Article:
         return Article(

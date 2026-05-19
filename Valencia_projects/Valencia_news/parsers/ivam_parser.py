@@ -173,13 +173,23 @@ def _parse_card(
         # Второй span обычно — название зала
         venue = spans[1] if len(spans) > 1 else ""
 
+    # Различаем: выставка уже идёт vs ещё не открылась
+    is_running = start_dt is not None and start_dt < now
+
     # Формируем текст для AI
     parts = [title]
-    if date_text:
+    if is_running:
+        # Выставка уже открылась — AI не должен писать "открывается"
+        end_str = end_dt.strftime("%d.%m.%Y")
+        parts.append(f"Сейчас идёт. Продолжается до {end_str}.")
+    elif date_text:
         parts.append(f"Fechas: {date_text}.")
     if venue:
         parts.append(f"Lugar: {venue}.")
     parts.append("IVAM — Institut Valencià d'Art Modern, Valencia.")
+
+    # Для текущих выставок published_at = now, чтобы пройти фильтры агрегатора
+    effective_published_at = now if is_running else (start_dt or now)
 
     seen_urls.add(url)
     return ParsedArticle(
@@ -187,7 +197,7 @@ def _parse_card(
         title=title,
         text=" | ".join(parts),
         image_url=image_url,
-        published_at=start_dt or now,
+        published_at=effective_published_at,
         source_name="IVAM",
         source_url=BASE_URL,
         region="valencia",
