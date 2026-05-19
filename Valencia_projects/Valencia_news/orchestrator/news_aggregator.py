@@ -333,6 +333,7 @@ class NewsAggregator:
         return Article(
             url=art.url,
             title=art.title,
+            title_ru=art.title_ru,
             original_text=art.content,
             summary_ru=art.summary_ru,
             category=art.category,

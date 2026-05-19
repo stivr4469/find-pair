@@ -41,6 +41,9 @@ class Article(Base):
     # Заголовок статьи
     title: Mapped[str] = mapped_column(String(512), nullable=False)
 
+    # Заголовок на русском языке (генерируется AI)
+    title_ru: Mapped[Optional[str]] = mapped_column(String(512), nullable=True)
+
     # Оригинальный текст статьи (может быть длинным)
     original_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 

@@ -9,11 +9,15 @@ logger = logging.getLogger(__name__)
 
 
 def run_migrations() -> None:
-    """Добавляет channel в articles и sources, если колонок нет."""
+    """Добавляет channel и title_ru в существующую БД."""
     with engine.connect() as conn:
-        for table, col in [("articles", "channel"), ("sources", "channel")]:
+        for table, col, default in [
+            ("articles", "channel", "'news'"),
+            ("sources", "channel", "'news'"),
+            ("articles", "title_ru", "NULL"),
+        ]:
             try:
-                conn.execute(text(f"ALTER TABLE {table} ADD COLUMN {col} TEXT DEFAULT 'news'"))
+                conn.execute(text(f"ALTER TABLE {table} ADD COLUMN {col} TEXT DEFAULT {default}"))
                 logger.info("Добавлена колонка %s.%s", table, col)
             except Exception:
                 logger.debug("Колонка %s.%s уже существует", table, col)
