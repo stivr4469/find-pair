@@ -51,13 +51,13 @@ def git_push_website(commit_message: str = "data: обновление данн�
     Вызывать из корня git-репозитория.
     """
     try:
-        subprocess.run(["git", "add", "website/public/data/"], check=True)
+        subprocess.run(["git", "add", "website/public/data/"], check=True, timeout=30)
         result = subprocess.run(["git", "diff", "--cached", "--quiet"], capture_output=True)
         if result.returncode == 0:
             logger.info("Нет изменений в данных сайта — git push пропущен")
             return
-        subprocess.run(["git", "commit", "-m", commit_message], check=True)
-        subprocess.run(["git", "push"], check=True)
+        subprocess.run(["git", "commit", "-m", commit_message], check=True, timeout=30)
+        subprocess.run(["git", "push"], check=True, timeout=60)
         logger.info("Данные сайта обновлены и запушены на Vercel")
     except subprocess.CalledProcessError as exc:
         logger.error("Git операция не удалась: %s (код: %d)", exc.cmd, exc.returncode)
