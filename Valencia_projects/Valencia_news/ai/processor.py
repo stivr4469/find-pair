@@ -270,7 +270,7 @@ class ArticleProcessor:
         if not teaser_ru and summary_ru:
             first_dot = summary_ru.find(".")
             teaser_ru = summary_ru[:first_dot + 1] if first_dot != -1 else summary_ru[:120]
-        teaser_ru = teaser_ru[:200]
+        teaser_ru = teaser_ru[:120]
 
         # Важность
         try:

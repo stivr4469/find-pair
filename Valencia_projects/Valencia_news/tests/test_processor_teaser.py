@@ -45,8 +45,8 @@ def test_teaser_ru_fallback_to_first_sentence_of_summary():
     assert result.teaser_ru == "Городской совет запустил программу."
 
 
-def test_teaser_ru_truncated_to_200_chars():
-    """Слишком длинный teaser обрезается до 200 символов."""
+def test_teaser_ru_truncated_to_120_chars():
+    """Слишком длинный teaser обрезается до 120 символов."""
     long_teaser = "А" * 250
     mock_client = MagicMock()
     mock_client.generate.return_value = (
@@ -57,4 +57,4 @@ def test_teaser_ru_truncated_to_200_chars():
     processor = ArticleProcessor(client=mock_client)
     result = processor.process_article(_make_article())
 
-    assert len(result.teaser_ru) <= 200
+    assert len(result.teaser_ru) <= 120
