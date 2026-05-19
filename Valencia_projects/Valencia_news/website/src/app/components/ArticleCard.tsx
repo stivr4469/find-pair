@@ -42,15 +42,8 @@ export default function ArticleCard({ article }: { article: Article }) {
           <span className="whitespace-nowrap">{formatRelativeTime(article.published_at)}</span>
         </div>
 
-        <h2 className="font-semibold text-[15px] leading-snug mb-2">
-          <a
-            href={isSafeUrl(article.url) ? article.url : '#'}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white hover:text-white/80 transition-colors"
-          >
-            {article.title_ru}
-          </a>
+        <h2 className="text-white font-semibold text-[15px] leading-snug mb-2">
+          {article.title_ru}
         </h2>
 
         <p
@@ -64,12 +57,12 @@ export default function ArticleCard({ article }: { article: Article }) {
           href={isSafeUrl(article.url) ? article.url : '#'}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm font-medium transition-colors mt-auto"
-          style={{ color: '#ccfbf1' }}
-          onMouseOver={e => (e.currentTarget.style.color = '#ffffff')}
-          onMouseOut={e => (e.currentTarget.style.color = '#ccfbf1')}
+          className="text-xs mt-auto transition-colors"
+          style={{ color: 'rgba(255,255,255,0.5)' }}
+          onMouseOver={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.9)')}
+          onMouseOut={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.5)')}
         >
-          Читать оригинал →
+          Источник: {article.source_name} →
         </a>
       </div>
     </article>
