@@ -42,8 +42,15 @@ export default function ArticleCard({ article }: { article: Article }) {
           <span className="whitespace-nowrap">{formatRelativeTime(article.published_at)}</span>
         </div>
 
-        <h2 className="text-white font-semibold text-[15px] leading-snug mb-2">
-          {article.title_ru}
+        <h2 className="font-semibold text-[15px] leading-snug mb-2">
+          <a
+            href={isSafeUrl(article.url) ? article.url : '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:text-white/80 transition-colors"
+          >
+            {article.title_ru}
+          </a>
         </h2>
 
         <p
