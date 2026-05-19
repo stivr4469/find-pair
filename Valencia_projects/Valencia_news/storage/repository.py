@@ -89,6 +89,20 @@ class ArticleRepository:
             stmt = stmt.where(Article.channel == channel)
         return set(self._session.scalars(stmt).all())
 
+    def get_latest_for_export(self, channel: str, limit: int = 50) -> list[Article]:
+        """Последние N статей канала с непустым summary_ru, для JSON-экспорта."""
+        stmt = (
+            select(Article)
+            .where(
+                Article.channel == channel,
+                Article.summary_ru.isnot(None),
+                Article.summary_ru != "",
+            )
+            .order_by(Article.published_at.desc())
+            .limit(limit)
+        )
+        return list(self._session.scalars(stmt).all())
+
     def mark_published(
         self,
         article_id: int,
