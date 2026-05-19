@@ -1,4 +1,5 @@
 import type { Article } from '@/types'
+import { isSafeUrl } from '@/lib/url'
 
 const CHANNEL_EMOJI: Record<string, string> = {
   news: '📰',
@@ -24,7 +25,7 @@ export default function ArticleCard({ article }: { article: Article }) {
       className="rounded-2xl border border-white/20 overflow-hidden flex flex-col"
       style={{ background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(12px)' }}
     >
-      {article.image_url && (
+      {isSafeUrl(article.image_url) && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={article.image_url}
@@ -53,7 +54,7 @@ export default function ArticleCard({ article }: { article: Article }) {
         </p>
 
         <a
-          href={article.url}
+          href={isSafeUrl(article.url) ? article.url : '#'}
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm font-medium transition-colors mt-auto"

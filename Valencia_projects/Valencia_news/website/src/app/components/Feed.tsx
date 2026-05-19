@@ -17,9 +17,14 @@ export default function Feed({ data }: FeedProps) {
     ? all
     : all.filter(a => a.channel === activeTab)
 
-  const sorted = [...filtered].sort(
-    (a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime(),
-  )
+  const sorted = [...filtered].sort((a, b) => {
+    const ta = new Date(a.published_at).getTime()
+    const tb = new Date(b.published_at).getTime()
+    if (isNaN(ta) && isNaN(tb)) return 0
+    if (isNaN(ta)) return 1
+    if (isNaN(tb)) return -1
+    return tb - ta
+  })
 
   return (
     <>
