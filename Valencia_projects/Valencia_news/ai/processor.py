@@ -118,8 +118,13 @@ julio=июл, agosto=авг, septiembre=сен, octubre=окт, noviembre=ноя
 Для туристических материалов: название объекта (монастырь, замок, пляж) даже без адреса.
 Если место не упоминается или новость не локальная — верни "".
 
+=== 6. teaser_ru ===
+Одно предложение для Telegram-анонса, максимум 120 символов.
+Начни с главного факта: «Валенсия...», «С июня...», «Городской совет...»
+Читатель должен захотеть перейти на сайт. Без вводных слов, без воды.
+
 ОТВЕТ — строго JSON:
-{{"title_ru": "...", "summary_ru": "...", "importance": 0.0, "category": "...", "location": "..."}}
+{{"title_ru": "...", "teaser_ru": "...", "summary_ru": "...", "importance": 0.0, "category": "...", "location": "..."}}
 """
 
 
@@ -245,17 +250,12 @@ class ArticleProcessor:
         article: ParsedArticle,
         ai_data: dict[str, Any],
     ) -> ProcessedArticle:
-        """
-        Собирает ProcessedArticle из исходной статьи и результатов AI.
-
-        Валидирует каждое поле: недопустимые значения заменяются дефолтами.
-        """
-        # Перевод заголовка: от AI или сохраняем оригинал
+        # Перевод заголовка
         title_ru: str = str(ai_data.get("title_ru", "")).strip()
         if not title_ru:
             title_ru = article.title
 
-        # Резюме: берём от AI. Если пустое или содержит бот-маркеры — fallback
+        # Резюме для сайта
         summary_ru: str = str(ai_data.get("summary_ru", "")).strip()
         is_clean, reason = check_summary(summary_ru)
         if not is_clean:
@@ -265,8 +265,14 @@ class ArticleProcessor:
         if not summary_ru:
             summary_ru = f"{title_ru}. Подробнее по ссылке."
 
-        # Важность: float в диапазоне [0.0, 1.0]
-        # Если AI не дал summary — статья не годится к публикации
+        # Тизер для Telegram (1 предложение)
+        teaser_ru: str = str(ai_data.get("teaser_ru", "")).strip()
+        if not teaser_ru and summary_ru:
+            first_dot = summary_ru.find(".")
+            teaser_ru = summary_ru[:first_dot + 1] if first_dot != -1 else summary_ru[:120]
+        teaser_ru = teaser_ru[:200]
+
+        # Важность
         try:
             importance = float(ai_data.get("importance", 0.3))
             importance = max(0.0, min(1.0, importance))
@@ -275,11 +281,11 @@ class ArticleProcessor:
         if _fallback_summary:
             importance = 0.0
 
-        # Категория: только из разрешённого списка
+        # Категория
         raw_category = str(ai_data.get("category", "другое")).strip().lower()
         category = raw_category if raw_category in VALID_CATEGORIES else "другое"
 
-        # Адрес/место: берём если AI нашёл что-то конкретное
+        # Место
         location: str = str(ai_data.get("location", "")).strip()
 
         return ProcessedArticle(
@@ -292,6 +298,7 @@ class ArticleProcessor:
             image_url=article.image_url,
             language=article.language,
             title_ru=title_ru,
+            teaser_ru=teaser_ru,
             summary_ru=summary_ru,
             importance_score=importance,
             category=category,
