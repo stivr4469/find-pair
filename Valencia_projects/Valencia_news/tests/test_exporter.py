@@ -95,3 +95,43 @@ def test_export_json_valid_structure(tmp_path):
     required = {"id", "title_ru", "summary_ru", "source_name", "url", "image_url",
                 "category", "published_at", "channel"}
     assert required.issubset(article.keys())
+
+
+def test_git_push_website_commits_and_pushes(tmp_path):
+    """git_push_website делает commit и push если есть изменения."""
+    from unittest.mock import call
+
+    calls = []
+
+    def fake_run(cmd, **kwargs):
+        result = MagicMock()
+        calls.append(cmd)
+        # diff --cached --quiet: returncode=1 означает "есть изменения"
+        result.returncode = 1 if cmd[1:3] == ["diff", "--cached"] else 0
+        return result
+
+    with patch("exporter.subprocess.run", side_effect=fake_run):
+        from exporter import git_push_website
+        git_push_website("data: тест")
+
+    assert ["git", "add", "website/public/data/"] in calls
+    assert ["git", "commit", "-m", "data: тест"] in calls
+    assert ["git", "push"] in calls
+
+
+def test_git_push_website_skips_when_no_changes():
+    """git_push_website не делает commit если нет изменений."""
+    calls = []
+
+    def fake_run(cmd, **kwargs):
+        result = MagicMock()
+        calls.append(cmd)
+        result.returncode = 0  # no changes
+        return result
+
+    with patch("exporter.subprocess.run", side_effect=fake_run):
+        from exporter import git_push_website
+        git_push_website()
+
+    assert ["git", "push"] not in calls
+    assert not any(c[0] == "git" and c[1] == "commit" for c in calls)

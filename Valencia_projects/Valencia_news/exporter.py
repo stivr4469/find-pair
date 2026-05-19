@@ -36,24 +36,35 @@ def export_to_website() -> None:
                 "articles": [_to_dict(a) for a in articles],
             }
             out = DATA_DIR / f"{channel}.json"
-            out.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-            logger.info("Экспорт %s: %d статей → %s", channel, len(articles), out)
+            try:
+                out.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+                logger.info("Экспорт %s: %d статей → %s", channel, len(articles), out)
+            except OSError as e:
+                logger.error("Не удалось записать %s: %s", out, e)
+                raise
 
 
 def git_push_website(commit_message: str = "data: обновление данных сайта") -> None:
-    """git add + commit + push для обновления Vercel."""
-    subprocess.run(["git", "add", "website/public/data/"], check=True)
-    # Пропускаем commit если нет изменений
-    result = subprocess.run(["git", "diff", "--cached", "--quiet"], capture_output=True)
-    if result.returncode == 0:
-        logger.info("Нет изменений в данных сайта — git push пропущен")
-        return
-    subprocess.run(["git", "commit", "-m", commit_message], check=True)
-    subprocess.run(["git", "push"], check=True)
-    logger.info("Данные сайта обновлены и запушены на Vercel")
+    """git add + commit + push для обновления Vercel.
+
+    Пропускает commit если нет изменений в данных.
+    Вызывать из корня git-репозитория.
+    """
+    try:
+        subprocess.run(["git", "add", "website/public/data/"], check=True)
+        result = subprocess.run(["git", "diff", "--cached", "--quiet"], capture_output=True)
+        if result.returncode == 0:
+            logger.info("Нет изменений в данных сайта — git push пропущен")
+            return
+        subprocess.run(["git", "commit", "-m", commit_message], check=True)
+        subprocess.run(["git", "push"], check=True)
+        logger.info("Данные сайта обновлены и запушены на Vercel")
+    except subprocess.CalledProcessError as exc:
+        logger.error("Git операция не удалась: %s (код: %d)", exc.cmd, exc.returncode)
+        raise
 
 
-def _to_dict(a: Article) -> dict:
+def _to_dict(a: Article) -> dict[str, object]:
     return {
         "id": a.id,
         "title_ru": a.title_ru or a.title,
