@@ -15,6 +15,7 @@ def run_migrations() -> None:
             ("articles", "channel", "'news'"),
             ("sources", "channel", "'news'"),
             ("articles", "title_ru", "NULL"),
+            ("articles", "teaser_ru", "NULL"),
         ]:
             try:
                 conn.execute(text(f"ALTER TABLE {table} ADD COLUMN {col} TEXT DEFAULT {default}"))

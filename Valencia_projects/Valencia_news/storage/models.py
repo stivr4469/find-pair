@@ -44,6 +44,9 @@ class Article(Base):
     # Заголовок на русском языке (генерируется AI)
     title_ru: Mapped[Optional[str]] = mapped_column(String(512), nullable=True)
 
+    # Тизер на русском (1-2 предложения, для превью в Telegram)
+    teaser_ru: Mapped[Optional[str]] = mapped_column(String(300), nullable=True)
+
     # Оригинальный текст статьи (может быть длинным)
     original_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 

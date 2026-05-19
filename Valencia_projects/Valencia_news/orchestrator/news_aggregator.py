@@ -334,6 +334,7 @@ class NewsAggregator:
             url=art.url,
             title=art.title,
             title_ru=art.title_ru,
+            teaser_ru=art.teaser_ru,
             original_text=art.content,
             summary_ru=art.summary_ru,
             category=art.category,
