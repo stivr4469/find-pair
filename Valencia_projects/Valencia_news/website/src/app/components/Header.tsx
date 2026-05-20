@@ -14,7 +14,11 @@ export default function Header() {
   useEffect(() => {
     fetch('https://wttr.in/Valencia?format=%t+%C&lang=ru')
       .then(r => r.text())
-      .then(t => setWeather(t.trim()))
+      .then(t => {
+        const clean = t.trim()
+        // отбрасываем HTML-страницы ошибок (wttr.in иногда возвращает их)
+        if (clean.length < 30 && !clean.includes('<')) setWeather(clean)
+      })
       .catch(() => {})
   }, [])
 
