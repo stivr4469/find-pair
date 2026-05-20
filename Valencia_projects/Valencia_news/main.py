@@ -538,18 +538,18 @@ if __name__ == "__main__":
 
         orch = ChannelOrchestrator()
 
-        if "--once" in args:
-            # Разовый запуск всех каналов (для отладки)
-            digest_type = "evening" if "--evening" in args else "morning"
-            orch.run_all_digests(digest_type)
-        elif "--events" in args:
-            orch.run_events_all()
-        elif "--channel" in args:
-            # python main.py --all-channels --channel news --once
+        if "--channel" in args:
+            # python main.py --all-channels --channel tourism --once
             idx = args.index("--channel")
             channel = args[idx + 1] if idx + 1 < len(args) else "news"
             digest_type = "evening" if "--evening" in args else "morning"
             orch.run_channel(channel, digest_type)
+        elif "--once" in args:
+            # Разовый запуск всех каналов
+            digest_type = "evening" if "--evening" in args else "morning"
+            orch.run_all_digests(digest_type)
+        elif "--events" in args:
+            orch.run_events_all()
         else:
             scheduler = MultiChannelScheduler(
                 orchestrator=orch,

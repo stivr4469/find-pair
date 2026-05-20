@@ -126,7 +126,6 @@ export default function Header() {
       <div className="border-t border-white/10">
         <StaticMarquee />
         <Marquee items={newsTicker} color="#a5f3fc" speed={50} />
-        <Marquee items={eventsTicker} color="#fde68a" speed={40} />
       </div>
 
       <style>{`
