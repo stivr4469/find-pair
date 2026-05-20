@@ -30,13 +30,21 @@ export default function Feed() {
     ? articles
     : articles.filter(a => a.channel === activeTab)
 
+  const now = Date.now()
   const sorted = [...filtered].sort((a, b) => {
     const ta = new Date(a.published_at).getTime()
     const tb = new Date(b.published_at).getTime()
     if (isNaN(ta) && isNaN(tb)) return 0
     if (isNaN(ta)) return 1
     if (isNaN(tb)) return -1
-    return tb - ta
+    const aFuture = ta > now
+    const bFuture = tb > now
+    // Будущие события — ближайшие первыми (по возрастанию)
+    if (aFuture && bFuture) return ta - tb
+    // Прошедшие — новейшие первыми (по убыванию)
+    if (!aFuture && !bFuture) return tb - ta
+    // Прошедшие перед будущими в общей ленте
+    return aFuture ? 1 : -1
   })
 
   return (

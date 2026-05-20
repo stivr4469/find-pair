@@ -10,13 +10,18 @@ const CHANNEL_EMOJI: Record<string, string> = {
 
 function formatRelativeTime(iso: string): string {
   if (!iso) return ''
-  const diff = Date.now() - new Date(iso).getTime()
+  const date = new Date(iso)
+  const diff = Date.now() - date.getTime()
+  if (diff < 0) {
+    // Будущая дата — событие ещё впереди
+    return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })
+  }
   const h = Math.floor(diff / 3_600_000)
   if (h < 1) return 'только что'
   if (h < 24) return `${h}ч назад`
   const d = Math.floor(h / 24)
   if (d < 8) return `${d}д назад`
-  return new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' })
+  return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' })
 }
 
 export default function ArticleCard({ article }: { article: Article }) {
