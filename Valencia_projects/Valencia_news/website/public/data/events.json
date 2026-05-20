@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-19T23:15:21.770751+00:00",
+  "updated_at": "2026-05-20T12:55:58.919387+00:00",
   "channel": "events",
   "articles": [
     {
@@ -209,6 +209,17 @@
       "image_url": "https://www.lesarts.com/img/image/fotos/3320.webp?w=550&h=632&sx=&sy=&sw=&sh=&zc=1&aoe=1&q=80&f=webp",
       "category": "культура",
       "published_at": "2026-06-18T20:00:00",
+      "channel": "events"
+    },
+    {
+      "id": 433,
+      "title_ru": "Коллекция IVAM до сегодняшнего дня",
+      "summary_ru": "17 июня, в среду, в IVAM откроется большая выставка, представляющая коллекцию музея во всем ее многообразии. Это история современного искусства Валенсии, собранная под одной крышей — от классики авангарда до смелых современных работ. Приходите в IVAM на Calle de Guillem de Castro, 118, чтобы увидеть шедевры, которые обычно хранятся в запасниках. Вход стоит 6€, а по субботам после 15:00 и по воскресеньям — бесплатно. Выставка будет доступна аж до апреля 2028 года!",
+      "source_name": "IVAM",
+      "url": "https://ivam.es/es/exposiciones/la-coleccion-del-ivam-hasta-hoy/",
+      "image_url": "https://ivam.es/wp-content/uploads/Marcel-Duchamp-Disques-optiques.-Rotorelief1935.-IVAM-Institut-Valencia-d´Art-Modern-Generalitat-377x277.jpeg",
+      "category": "культура",
+      "published_at": "2026-06-17T10:00:00",
       "channel": "events"
     },
     {
@@ -539,17 +550,6 @@
       "image_url": "https://www.lesarts.com/img/image/fotos/3290.jpeg?w=550&h=632&sx=&sy=&sw=&sh=&zc=1&aoe=1&q=80",
       "category": "культура",
       "published_at": "2026-05-27T20:00:00",
-      "channel": "events"
-    },
-    {
-      "id": 178,
-      "title_ru": "Sociedad Filarmónica de València III Concierto homenaje al Patrimonio Institucional",
-      "summary_ru": "Друзья, готовьтесь к вечеру высокой музыки! Филармоническое общество Валенсии приглашает на III Концерт-посвящение институциональному наследию. Это ваш шанс насладиться классикой в великолепном Palau de la Música. Отметьте в календаре: среда, 27 мая, начало в 19:15. Не упустите возможность прикоснуться к культурному сердцу Валенсии!",
-      "source_name": "Palau de la Música",
-      "url": "https://palauvalencia.com/event?id=2532&mod=1778586013",
-      "image_url": "https://www.servientradas.com/ERP/3.1/empresas/003/001/ficheros/t00030050/2532_58/med_SOCIEDAD-FILARMONICA-DE-VALENCIA-3633.png",
-      "category": "культура",
-      "published_at": "2026-05-27T19:15:00",
       "channel": "events"
     }
   ]
