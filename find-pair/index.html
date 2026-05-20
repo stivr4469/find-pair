@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Найди пару</title>
+    <link rel="stylesheet" href="../css/unified-styles.css?v=9">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Кнопка назад в главное меню -->
+    <div class="back-button-container">
+        <a href="../" class="back-button">← Назад в меню</a>
+    </div>
+
+    <div class="container">
+        <h1>Найди пару</h1>
+
+        <!-- Настройки игры в одной строке -->
+        <div class="game-settings">
+            <div class="setting-item">
+                <label for="category-select">Категория:</label>
+                <select id="category-select" onchange="initGame()">
+                    <option value="verbs">Глаголы</option>
+                    <option value="nouns">Существительные</option>
+                    <option value="adjectives">Прилагательные</option>
+                    <option value="adverbs">Наречия</option>
+                </select>
+            </div>
+
+            <div class="setting-item">
+                <label for="pair-count">Количество пар:</label>
+                <select id="pair-count" onchange="initGame()">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div id="left-column" class="column left-column"></div>
+            <div id="right-column" class="column right-column"></div>
+        </div>
+
+        <!-- Кнопка для начала новой игры -->
+        <button id="restart-button" class="restart-button" onclick="initGame()">🔄 Начать заново</button>
+    </div>
+
+    <script src="script.js?v=3"></script>
+</body>
+</html>
+
