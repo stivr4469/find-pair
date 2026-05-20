@@ -12,12 +12,16 @@ export default function Header() {
   const [weather, setWeather] = useState('')
 
   useEffect(() => {
-    fetch('https://wttr.in/Valencia?format=%t+%C&lang=ru')
-      .then(r => r.text())
-      .then(t => {
-        const clean = t.trim()
-        // отбрасываем HTML-страницы ошибок (wttr.in иногда возвращает их)
-        if (clean.length < 30 && !clean.includes('<')) setWeather(clean)
+    // wttr.in format=j1 возвращает JSON — надёжнее, чем текстовый формат
+    fetch('https://wttr.in/Valencia?format=j1')
+      .then(r => r.ok ? r.json() : null)
+      .then((data: Record<string, unknown> | null) => {
+        if (!data) return
+        const current = (data.current_condition as Record<string, unknown>[])?.[0]
+        if (!current) return
+        const temp = current.temp_C as string
+        const desc = (current.lang_ru as Record<string, string>[])?.[0]?.value || ''
+        if (temp) setWeather(`${temp}°C${desc ? ' ' + desc : ''}`)
       })
       .catch(() => {})
   }, [])
