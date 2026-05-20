@@ -228,6 +228,7 @@ _VALENCIA_SOURCES: list[SourceDict] = [
 
 # ---------------------------------------------------------------------------
 # Туризм и путешествия по Испании → канал "tourism"
+# Только настоящие туристические источники — гиды, маршруты, достопримечательности
 # ---------------------------------------------------------------------------
 _TOURISM_SOURCES: list[SourceDict] = [
     {
@@ -238,17 +239,17 @@ _TOURISM_SOURCES: list[SourceDict] = [
         "channel": "tourism",
     },
     {
-        "name": "Valencia Bonita Viajes",
-        "feed_url": "https://www.valenciabonita.es/feed/",
-        "site_url": "https://www.valenciabonita.es",
-        "region": "valencia",
+        "name": "El Mundo Viajes",
+        "feed_url": "https://www.elmundo.es/rss/viajes.xml",
+        "site_url": "https://www.elmundo.es/viajes.html",
+        "region": "spain",
         "channel": "tourism",
     },
     {
-        "name": "Valencia Secreta Viajes",
-        "feed_url": "https://valenciasecreta.com/feed/",
-        "site_url": "https://valenciasecreta.com",
-        "region": "valencia",
+        "name": "20minutos Viajes",
+        "feed_url": "https://www.20minutos.es/rss/viajes/",
+        "site_url": "https://www.20minutos.es/viajes/",
+        "region": "spain",
         "channel": "tourism",
     },
     {

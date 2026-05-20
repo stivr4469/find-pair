@@ -36,7 +36,7 @@ export default function ArticleCard({ article }: { article: Article }) {
         <img
           src={article.image_url}
           alt={article.title_ru}
-          className="w-full h-44 object-cover"
+          className="w-full h-44 object-cover object-top"
           loading="lazy"
         />
       )}
