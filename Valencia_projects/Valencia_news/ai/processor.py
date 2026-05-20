@@ -39,6 +39,23 @@ VALID_CATEGORIES: frozenset[str] = frozenset(
 # Паттерн для извлечения даты закрытия из текста текущих выставок
 _RUNNING_END_DATE_RE = re.compile(r"Продолжается до (\d{2}\.\d{2}\.\d{4})")
 
+
+def _sanitize_content(text: str) -> str:
+    """Очищает текст статьи перед включением в промпт.
+
+    Защищает от prompt injection: вредоносный источник не сможет
+    вставить HTML-теги или управляющие символы, способные повлиять на JSON-ответ AI.
+    """
+    # Удаляем HTML-теги
+    text = re.sub(r"<[^>]+>", " ", text)
+    # Удаляем управляющие символы (кроме \n и \t)
+    text = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]", "", text)
+    # Нормализуем пробелы и горизонтальные табуляции
+    text = re.sub(r"[ \t]+", " ", text)
+    # Сворачиваем три и более переводов строки в два
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip()[:3000]
+
 # Персона по умолчанию — используется если persona_prompt не передан
 _DEFAULT_PERSONA = """\
 Ты — главный редактор Telegram-канала для русскоязычных жителей Валенсии и Испании.
@@ -188,7 +205,7 @@ class ArticleProcessor:
         Текст статьи обрезается до 3000 символов — достаточно для качественного резюме,
         не перегружает контекстное окно модели.
         """
-        content_truncated = (article.content or article.title)[:3000]
+        content_truncated = _sanitize_content(article.content or article.title)
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         persona = (persona_prompt or _DEFAULT_PERSONA).strip()
 

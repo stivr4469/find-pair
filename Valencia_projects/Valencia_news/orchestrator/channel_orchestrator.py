@@ -30,6 +30,12 @@ class ChannelOrchestrator:
         init_db()
         logger.info("База данных инициализирована.")
 
+        errors = config.validate()
+        if errors:
+            for e in errors:
+                logger.error("Конфигурация: %s", e)
+            raise RuntimeError(f"Ошибка конфигурации: {errors[0]}")
+
         self._gemini = GeminiClient(
             api_key=config.gemini.api_key,
             model=config.gemini.model,

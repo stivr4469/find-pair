@@ -148,8 +148,9 @@ class AppConfig:
         """
         errors: list[str] = []
 
-        if not self.gemini.api_key:
-            errors.append("OPENROUTER_API_KEY не задан в .env")
+        import shutil
+        if not self.gemini.api_key and not shutil.which("gemini"):
+            errors.append("OPENROUTER_API_KEY не задан в .env (и gemini CLI не найден)")
         if not self.telegram.bot_token:
             errors.append("TELEGRAM_BOT_TOKEN не задан в .env")
         if not self.telegram.channel_news:

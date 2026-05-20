@@ -8,6 +8,7 @@ Telegram ограничивает длину сообщения 4096 симво�
 from __future__ import annotations
 
 import logging
+import re
 from datetime import datetime, timezone
 from urllib.parse import quote_plus
 
@@ -38,7 +39,9 @@ REGION_EMOJI: dict[str, str] = {
     "international": "🌍",
 }
 
-WEBSITE_URL = "https://valencia-news.vercel.app"
+import os as _os
+
+WEBSITE_URL: str = _os.getenv("WEBSITE_URL", "https://valencia-news.vercel.app")
 
 
 def _get_moscow_time() -> str:
@@ -175,20 +178,12 @@ def _region_label(region: str) -> str:
     return labels.get(region.lower(), region.capitalize())
 
 
-def _escape_markdown(text: str) -> str:
-    """
-    Экранирует спецсимволы для Telegram MarkdownV2.
+_MD_SPECIAL_RE = re.compile(r'([_*\[\]()~`>#+=|{}.!\-\\])')
 
-    Полный список: _ * [ ] ( ) ~ ` > # + - = | { } . !
-    """
-    special_chars = r"\_*[]()~`>#+-=|{}.!"
-    escaped = ""
-    for char in text:
-        if char in special_chars:
-            escaped += f"\\{char}"
-        else:
-            escaped += char
-    return escaped
+
+def _escape_markdown(text: str) -> str:
+    """Экранирует спецсимволы для Telegram MarkdownV2."""
+    return _MD_SPECIAL_RE.sub(r'\\\1', text)
 
 
 def _escape_url(url: str) -> str:

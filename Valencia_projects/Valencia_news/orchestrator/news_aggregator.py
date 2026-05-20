@@ -129,6 +129,12 @@ class NewsAggregator:
 
             # Шаг 5: AI-обработка с персоной канала
             persona = self._cfg.persona_prompt
+            if not persona:
+                logger.warning(
+                    "[%s] Файл персоны не найден: %s",
+                    self._cfg.channel,
+                    self._cfg.persona_file,
+                )
             processed: list[ProcessedArticle] = []
             to_process = unique[:60]
             for article in to_process:
@@ -235,6 +241,12 @@ class NewsAggregator:
 
             model_articles = [_parser_to_model(a) for a in raw]
             persona = self._cfg.persona_prompt
+            if not persona:
+                logger.warning(
+                    "[%s] Файл персоны не найден: %s",
+                    self._cfg.channel,
+                    self._cfg.persona_file,
+                )
 
             processed: list[ProcessedArticle] = []
             for article in model_articles:
@@ -358,11 +370,12 @@ class NewsAggregator:
             repo = ArticleRepository(session)
             for art in articles:
                 try:
-                    db_art = self._processed_to_storage_article(art)
-                    saved = repo.save_article(db_art)
-                    if saved.id is not None:
-                        repo.mark_published(saved.id, telegram_message_id=message_id_hint)
-                        count += 1
+                    with session.begin_nested():  # savepoint — ошибка одной статьи не откатывает остальные
+                        db_art = self._processed_to_storage_article(art)
+                        saved = repo.save_article(db_art)
+                        if saved.id is not None:
+                            repo.mark_published(saved.id, telegram_message_id=message_id_hint)
+                            count += 1
                 except Exception as exc:
                     logger.error("[%s] Ошибка сохранения '%s': %s", self._cfg.channel, art.title[:50], exc)
         return count
