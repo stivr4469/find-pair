@@ -27,6 +27,7 @@ function formatRelativeTime(iso: string): string {
 export default function ArticleCard({ article }: { article: Article }) {
   return (
     <article
+      id={`article-${article.id}`}
       className="rounded-2xl border border-white/20 overflow-hidden flex flex-col"
       style={{ background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(12px)' }}
     >

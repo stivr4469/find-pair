@@ -5,10 +5,53 @@ import { CHANNELS } from '@/types'
 import TabBar from './TabBar'
 import ArticleCard from './ArticleCard'
 
+// Каналы с «живыми» новостями — показываем только самый свежий день
+const NEWS_CHANNELS = new Set(['news', 'tourism', 'gastronomy'])
+
+// Группировка источников афиши по подкатегориям
+const EVENT_SOURCE_GROUP: Record<string, string> = {
+  'Palau de la Música': 'music',
+  'Les Arts': 'music',
+  'Valencia CF': 'sport',
+  'Valencia.es Agenda': 'city',
+  'IVAM': 'exhibitions',
+  'CCCC Exposiciones': 'exhibitions',
+  'Museo Bellas Artes Valencia': 'exhibitions',
+  'Oceanogràfic Valencia': 'exhibitions',
+  'Feria Valencia': 'exhibitions',
+}
+
+const EVENT_FILTERS = [
+  { value: 'all',         label: 'Все' },
+  { value: 'city',        label: '🏛️ Город' },
+  { value: 'music',       label: '🎵 Музыка' },
+  { value: 'sport',       label: '⚽ Спорт' },
+  { value: 'exhibitions', label: '🖼️ Выставки' },
+]
+
+function latestDayOnly(articles: Article[]): Article[] {
+  if (articles.length === 0) return articles
+  // Находим самую позднюю дату публикации (не будущую)
+  const now = Date.now()
+  const past = articles.filter(a => new Date(a.published_at).getTime() <= now)
+  if (past.length === 0) return articles
+
+  const maxTs = Math.max(...past.map(a => new Date(a.published_at).getTime()))
+  // Берём статьи опубликованные в тот же календарный день (UTC)
+  const maxDate = new Date(maxTs).toISOString().slice(0, 10)
+  return articles.filter(a => a.published_at.startsWith(maxDate))
+}
+
 export default function Feed() {
   const [activeTab, setActiveTab] = useState('all')
-  const [articles, setArticles] = useState<Article[]>([])
+  const [eventsFilter, setEventsFilter] = useState('all')
+  const [byChannel, setByChannel] = useState<Record<string, Article[]>>({})
   const [loading, setLoading] = useState(true)
+
+  function handleTabChange(tab: string) {
+    setActiveTab(tab)
+    setEventsFilter('all')
+  }
 
   useEffect(() => {
     Promise.all(
@@ -18,17 +61,24 @@ export default function Feed() {
           .catch(() => null)
       )
     ).then(results => {
-      const all = results
-        .filter((r): r is ExportFile => r !== null)
-        .flatMap(f => f.articles)
-      setArticles(all)
+      const map: Record<string, Article[]> = {}
+      results.forEach((r, i) => {
+        const id = CHANNELS[i].id
+        const raw = r?.articles ?? []
+        map[id] = NEWS_CHANNELS.has(id) ? latestDayOnly(raw) : raw
+      })
+      setByChannel(map)
       setLoading(false)
     })
   }, [])
 
-  const filtered = activeTab === 'all'
-    ? articles
-    : articles.filter(a => a.channel === activeTab)
+  const baseFiltered: Article[] = activeTab === 'all'
+    ? CHANNELS.flatMap(({ id }) => byChannel[id] ?? [])
+    : (byChannel[activeTab] ?? [])
+
+  const filtered: Article[] = (activeTab === 'events' && eventsFilter !== 'all')
+    ? baseFiltered.filter(a => EVENT_SOURCE_GROUP[a.source_name] === eventsFilter)
+    : baseFiltered
 
   const now = Date.now()
   const sorted = [...filtered].sort((a, b) => {
@@ -39,12 +89,9 @@ export default function Feed() {
     if (isNaN(tb)) return -1
     const aFuture = ta > now
     const bFuture = tb > now
-    // Будущие события — ближайшие первыми (по возрастанию)
-    if (aFuture && bFuture) return ta - tb
-    // Прошедшие — новейшие первыми (по убыванию)
-    if (!aFuture && !bFuture) return tb - ta
-    // Прошедшие перед будущими в общей ленте
-    return aFuture ? 1 : -1
+    if (aFuture && bFuture) return ta - tb   // события: ближайшие первыми
+    if (!aFuture && !bFuture) return tb - ta  // новости: свежие первыми
+    return aFuture ? 1 : -1                   // новости перед событиями
   })
 
   return (
@@ -54,7 +101,25 @@ export default function Feed() {
         style={{ top: '56px', background: 'rgba(0,0,0,0.15)', backdropFilter: 'blur(8px)' }}
       >
         <div className="max-w-4xl mx-auto">
-          <TabBar active={activeTab} onChange={setActiveTab} />
+          <TabBar active={activeTab} onChange={handleTabChange} />
+          {activeTab === 'events' && (
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide mt-2">
+              {EVENT_FILTERS.map(f => (
+                <button
+                  key={f.value}
+                  onClick={() => setEventsFilter(f.value)}
+                  className={[
+                    'flex-shrink-0 px-3 py-1 rounded-full text-xs font-medium transition-all',
+                    eventsFilter === f.value
+                      ? 'bg-white/30 text-white shadow'
+                      : 'bg-white/10 text-white/70 hover:bg-white/20',
+                  ].join(' ')}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

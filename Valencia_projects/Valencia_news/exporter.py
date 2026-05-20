@@ -28,8 +28,12 @@ def export_to_website() -> None:
 
     with get_session() as session:
         repo = ArticleRepository(session)
+        # news: больший лимит чтобы показывать на сайте все статьи дня, а не только топ-Telegram
+        # events: большой лимит — будущие концерты вытесняют текущие новости культуры
+        CHANNEL_LIMITS = {"news": 100, "events": 200}
         for channel in CHANNELS:
-            articles = repo.get_latest_for_export(channel=channel, limit=50)
+            limit = CHANNEL_LIMITS.get(channel, 50)
+            articles = repo.get_latest_for_export(channel=channel, limit=limit)
             data = {
                 "updated_at": now,
                 "channel": channel,
@@ -67,7 +71,7 @@ def git_push_website(commit_message: str = "data: обновление данн�
 def _to_dict(a: Article) -> dict[str, object]:
     return {
         "id": a.id,
-        "title_ru": a.title_ru or a.title,
+        "title_ru": a.title_ru or _title_from_summary(a.summary_ru) or a.title,
         "summary_ru": a.summary_ru or "",
         "source_name": a.source_name or "",
         "url": a.url,
@@ -76,3 +80,14 @@ def _to_dict(a: Article) -> dict[str, object]:
         "published_at": a.published_at.isoformat() if a.published_at else "",
         "channel": a.channel,
     }
+
+
+def _title_from_summary(summary: str | None) -> str:
+    """Извлекает первое предложение summary_ru как заголовок если title_ru отсутствует."""
+    if not summary:
+        return ""
+    for sep in ('.', '!', '?'):
+        idx = summary.find(sep)
+        if 20 < idx < 120:
+            return summary[:idx + 1].strip()
+    return summary[:100].strip()

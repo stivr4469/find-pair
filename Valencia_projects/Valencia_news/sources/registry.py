@@ -295,6 +295,54 @@ _GASTRONOMY_SOURCES: list[SourceDict] = [
 ]
 
 # ---------------------------------------------------------------------------
+# Спорт Испании и Валенсии → канал "sport"
+# ---------------------------------------------------------------------------
+_SPORT_SOURCES: list[SourceDict] = [
+    {
+        "name": "Marca",
+        "feed_url": "https://www.marca.com/rss/portada.xml",
+        "site_url": "https://www.marca.com",
+        "region": "spain",
+        "channel": "sport",
+    },
+    {
+        "name": "AS",
+        "feed_url": "https://as.com/rss/tags/ultimas_noticias.xml",
+        "site_url": "https://as.com",
+        "region": "spain",
+        "channel": "sport",
+    },
+    {
+        "name": "Superdeporte",
+        "feed_url": "https://www.superdeporte.es/rss/portada.xml",
+        "site_url": "https://www.superdeporte.es",
+        "region": "valencia",
+        "channel": "sport",
+    },
+    {
+        "name": "Valencia CF Noticias",
+        "feed_url": "https://www.valenciacf.com/rss",
+        "site_url": "https://www.valenciacf.com",
+        "region": "valencia",
+        "channel": "sport",
+    },
+    {
+        "name": "Sport",
+        "feed_url": "https://www.sport.es/rss/portada.xml",
+        "site_url": "https://www.sport.es",
+        "region": "spain",
+        "channel": "sport",
+    },
+    {
+        "name": "Mundo Deportivo",
+        "feed_url": "https://www.mundodeportivo.com/rss/home.xml",
+        "site_url": "https://www.mundodeportivo.com",
+        "region": "spain",
+        "channel": "sport",
+    },
+]
+
+# ---------------------------------------------------------------------------
 # Объединённый список всех источников
 # ---------------------------------------------------------------------------
 SOURCES: list[SourceDict] = (
@@ -302,6 +350,7 @@ SOURCES: list[SourceDict] = (
     + _VALENCIA_SOURCES
     + _TOURISM_SOURCES
     + _GASTRONOMY_SOURCES
+    + _SPORT_SOURCES
 )
 
 

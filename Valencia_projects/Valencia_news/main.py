@@ -110,7 +110,7 @@ class NewsOrchestrator:
         self._formatter = MessageFormatter()
         self._publisher = TelegramPublisher(
             bot_token=config.telegram.bot_token,
-            channel_id=config.telegram.channel_id,
+            channel_id=config.telegram.channel_news,
         )
 
         logger.info("NewsOrchestrator инициализирован.")

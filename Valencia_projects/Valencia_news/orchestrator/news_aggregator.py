@@ -164,7 +164,11 @@ class NewsAggregator:
                 self._log(digest_type, fetched, 0, "partial")
                 return
 
-            # Шаг 7: Форматирование и публикация
+            # Шаг 6.5: Сохраняем все прошедшие фильтр статьи в БД для сайта
+            # (is_published=False — Telegram не получит, но сайт покажет)
+            self._save_website_articles(processed)
+
+            # Шаг 7: Форматирование и публикация топа в Telegram
             messages = self._formatter.format_digest(articles=top, digest_type=digest_type)
             sent_ids = self._publisher.publish_digest(messages=messages, articles=top)
             published = self._save_articles(top, sent_ids[0] if sent_ids else None)
@@ -359,6 +363,23 @@ class NewsAggregator:
             image_url=art.image_url,
             channel=self._cfg.channel,
         )
+
+    def _save_website_articles(self, articles: list[ProcessedArticle]) -> int:
+        """Сохраняет все обработанные статьи в БД для сайта (без публикации в Telegram)."""
+        count = 0
+        with get_session() as session:
+            repo = ArticleRepository(session)
+            for art in articles:
+                try:
+                    with session.begin_nested():
+                        db_art = self._processed_to_storage_article(art)
+                        saved = repo.save_article(db_art)
+                        if saved.id is not None:
+                            count += 1
+                except Exception as exc:
+                    logger.error("[%s] Ошибка сохранения для сайта '%s': %s", self._cfg.channel, art.title[:50], exc)
+        logger.info("[%s] Сохранено для сайта: %d статей", self._cfg.channel, count)
+        return count
 
     def _save_articles(
         self,
