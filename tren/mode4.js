@@ -50,20 +50,22 @@ function checkMode4Answer(selected, correct, buttonElement, explanation) {
     allButtons.forEach(btn => btn.disabled = true);
 
     const explanationHtml = explanation
-        ? `<div style="color: #444; font-size: 0.9rem; margin-top: 6px; line-height: 1.4;">${explanation}</div>`
+        ? `<div style="font-size: 0.9rem; margin-top: 8px; line-height: 1.4; opacity: 0.85;">${explanation}</div>`
         : '';
 
     if (selected.toLowerCase() === correct.toLowerCase()) {
-        feedback.innerHTML = `<div style="color: #27ae60; font-weight: bold;">✅ ¡Correcto!</div>${explanationHtml}`;
-        feedback.style.borderLeft = '4px solid #27ae60';
+        feedback.innerHTML = `<div style="font-weight: bold;">✅ ¡Correcto!</div>${explanationHtml}`;
         feedback.className = "feedback correct";
+        feedback.style.flexDirection = 'column';
+        feedback.style.alignItems = 'center';
         buttonElement.classList.add('correct');
         mode4State.score++;
         updateMode4ScoreUI();
     } else {
-        feedback.innerHTML = `<div style="color: #e74c3c; font-weight: bold;">❌ Incorrecto. Правильно: ${correct}</div>${explanationHtml}`;
-        feedback.style.borderLeft = '4px solid #e74c3c';
+        feedback.innerHTML = `<div style="font-weight: bold;">❌ Incorrecto. Правильно: ${correct}</div>${explanationHtml}`;
         feedback.className = "feedback incorrect";
+        feedback.style.flexDirection = 'column';
+        feedback.style.alignItems = 'center';
         buttonElement.classList.add('incorrect');
         allButtons.forEach(btn => {
             if (btn.dataset.answer.toLowerCase() === correct.toLowerCase()) {
