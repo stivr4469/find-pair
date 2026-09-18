@@ -26,7 +26,7 @@ function displayMode1QuestionUI(question) {
     contentArea.querySelectorAll('.option-btn').forEach(button => {
         button.addEventListener('click', () => {
             if (!mode1State.isAnswered) {
-                checkMode1Answer(button.dataset.answer, question.correct, button);
+                checkMode1Answer(button.dataset.answer, question.correct, button, question.explanation);
             }
         });
     });

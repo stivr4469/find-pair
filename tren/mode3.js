@@ -40,7 +40,7 @@ function displayMode3Question() {
     displayMode3QuestionUI(question);
 }
 
-function checkMode3Answer(selected, correct, buttonElement) {
+function checkMode3Answer(selected, correct, buttonElement, explanation) {
     mode3State.isAnswered = true;
 
     const feedback = document.getElementById('mode3-feedback');
@@ -57,14 +57,20 @@ function checkMode3Answer(selected, correct, buttonElement) {
         blank.style.fontWeight = 'bold';
     }
 
+    const explanationHtml = explanation
+        ? `<div style="color: #444; font-size: 0.9rem; margin-top: 6px; line-height: 1.4;">${explanation}</div>`
+        : '';
+
     if (selected.toLowerCase() === correct.toLowerCase()) {
-        feedback.textContent = "✅ ¡Correcto!";
+        feedback.innerHTML = `<div style="color: #27ae60; font-weight: bold;">✅ ¡Correcto!</div>${explanationHtml}`;
+        feedback.style.borderLeft = '4px solid #27ae60';
         feedback.className = "feedback correct";
         buttonElement.classList.add('correct');
         mode3State.score++;
         updateMode3ScoreUI();
     } else {
-        feedback.textContent = `❌ Incorrecto. Правильно: ${correct}`;
+        feedback.innerHTML = `<div style="color: #e74c3c; font-weight: bold;">❌ Incorrecto. Правильно: ${correct}</div>${explanationHtml}`;
+        feedback.style.borderLeft = '4px solid #e74c3c';
         feedback.className = "feedback incorrect";
         buttonElement.classList.add('incorrect');
         allButtons.forEach(btn => {
