@@ -684,6 +684,253 @@ const FORMULAS_DATA = [
       }
     ]
   }
+,
+  // ─── Формулы 21–27: дополнительные конструкции ───────────────────────────────
+
+  {
+    id: 21,
+    name: "Формула 21: Будущее (ir + a)",
+    shortName: "Futuro inmediato",
+    emoji: "🚀",
+    description: "Ближайшее будущее — самый частый способ выразить будущее в разговорной речи",
+    rule: "ir (conjugado) + a + infinitivo",
+    example: "Voy a comer",
+    exampleRu: "Я собираюсь поесть / Я поем",
+    examples: [
+      { es: "Vamos a estudiar mañana", ru: "Мы будем учиться завтра" },
+      { es: "¿Qué vas a hacer?", ru: "Что ты собираешься делать?" }
+    ],
+    quiz: [
+      {
+        question: "Я собираюсь поесть",
+        options: ["Voy comer", "Voy a comer", "Voy a come", "Iré a comer"],
+        correct: 1,
+        hint: "ir + a + ИНФИНИТИВ. «voy» (иду) + «a» + «comer» (есть)"
+      },
+      {
+        question: "Мы будем учиться завтра",
+        options: ["Vamos estudiar mañana", "Iremos a estudiar mañana", "Vamos a estudiando mañana", "Vamos a estudiar mañana"],
+        correct: 3,
+        hint: "vamos (мы идём) + a + infinitivo. Не герундий! estudiar, не estudiando"
+      },
+      {
+        question: "Что ты собираешься делать?",
+        options: ["¿Qué haces?", "¿Qué vas hacer?", "¿Qué vas a hacer?", "¿Qué irás a hacer?"],
+        correct: 2,
+        hint: "¿Qué + vas + a + hacer? Предлог «a» обязателен"
+      }
+    ]
+  },
+
+  {
+    id: 22,
+    name: "Формула 22: Условное (condicional)",
+    shortName: "Condicional",
+    emoji: "💭",
+    description: "Вежливые просьбы, гипотезы и желания — «я бы хотел», «мог бы»",
+    rule: "infinitivo + -ía/-ías/-ía/-íamos/-íais/-ían",
+    example: "Me gustaría un café",
+    exampleRu: "Я бы хотел кофе",
+    examples: [
+      { es: "¿Podrías ayudarme?", ru: "Не мог бы ты мне помочь?" },
+      { es: "Debería estudiar más", ru: "Мне следовало бы учиться больше" }
+    ],
+    quiz: [
+      {
+        question: "Я бы хотел кофе (вежливо)",
+        options: ["Quiero un café", "Quisiera un café", "Me gustaría un café", "Me gustaba un café"],
+        correct: 2,
+        hint: "gustar в конdicional: me gustaría (мне бы понравился = я бы хотел)"
+      },
+      {
+        question: "Не мог бы ты мне помочь?",
+        options: ["¿Puedes ayudarme?", "¿Podrías ayudarme?", "¿Podías ayudarme?", "¿Podrás ayudarme?"],
+        correct: 1,
+        hint: "poder в конdicional: podría/podrías (мог бы). Звучит вежливее, чем puedes"
+      },
+      {
+        question: "Мне следовало бы учиться больше",
+        options: ["Debo estudiar más", "Debía estudiar más", "Debería estudiar más", "Deba estudiar más"],
+        correct: 2,
+        hint: "deber в конdicional: debería (следовало бы). Выражает мягкий совет"
+      }
+    ]
+  },
+
+  {
+    id: 23,
+    name: "Формула 23: Императив",
+    shortName: "Imperativo",
+    emoji: "📢",
+    description: "Команды, просьбы и инструкции — «говори», «ешь», «иди»",
+    rule: "tú: 3л.ед.ч. наст. | usted: субхунтиво | negación: no + субхунтиво",
+    example: "Habla más despacio",
+    exampleRu: "Говори медленнее",
+    examples: [
+      { es: "Come la verdura", ru: "Ешь овощи" },
+      { es: "No hables tan rápido", ru: "Не говори так быстро" }
+    ],
+    quiz: [
+      {
+        question: "Говори (tú, позитивный)",
+        options: ["Hablas", "Hablar", "Habla", "Hable"],
+        correct: 2,
+        hint: "Imperativo tú = форма 3-го лица ед.ч.: él habla → ¡Habla!"
+      },
+      {
+        question: "Не говори (tú, негативный)",
+        options: ["No habla", "No hablas", "No hablar", "No hables"],
+        correct: 3,
+        hint: "Негативный императив tú = no + субхунтиво: no hables"
+      },
+      {
+        question: "Говорите (usted, вежливый)",
+        options: ["Habla", "Hablas", "Hable", "Hablen"],
+        correct: 2,
+        hint: "Imperativo usted = форма субхунтиво: (que) hable → ¡Hable!"
+      }
+    ]
+  },
+
+  {
+    id: 24,
+    name: "Формула 24: Poder / Deber",
+    shortName: "Poder / Deber",
+    emoji: "⚙️",
+    description: "Модальные глаголы — «могу/могу ли», «должен/следует»",
+    rule: "poder/deber (conjugado) + infinitivo",
+    example: "Puedo ayudarte",
+    exampleRu: "Я могу тебе помочь",
+    examples: [
+      { es: "¿Puedo entrar?", ru: "Можно войти?" },
+      { es: "Debes descansar", ru: "Тебе нужно отдохнуть" }
+    ],
+    quiz: [
+      {
+        question: "Я могу тебе помочь",
+        options: ["Puedo ayudando", "Puedo a ayudar", "Poder ayudarte", "Puedo ayudarte"],
+        correct: 3,
+        hint: "poder (спряжённый) + инфинитив: puedo + ayudar"
+      },
+      {
+        question: "Тебе нужно отдохнуть",
+        options: ["Debes descansando", "Debes a descansar", "Debes descansar", "Deber descansar"],
+        correct: 2,
+        hint: "deber (спряжённый) + инфинитив: debes + descansar"
+      },
+      {
+        question: "Можно войти? (вежливо)",
+        options: ["¿Puedo entrar?", "¿Puedo entrando?", "¿Poder entrar?", "¿Puedo a entrar?"],
+        correct: 0,
+        hint: "¿Puedo + infinitivo? — вежливый запрос разрешения"
+      }
+    ]
+  },
+
+  {
+    id: 25,
+    name: "Формула 25: Acabar de",
+    shortName: "Acabar de",
+    emoji: "🕐",
+    description: "Недавно завершённое действие — «только что сделал»",
+    rule: "acabar (conjugado) + de + infinitivo",
+    example: "Acabo de llegar",
+    exampleRu: "Я только что пришёл",
+    examples: [
+      { es: "Acaban de comer", ru: "Они только что поели" },
+      { es: "¿Acabas de llamar?", ru: "Ты только что звонил?" }
+    ],
+    quiz: [
+      {
+        question: "Я только что пришёл",
+        options: ["Llegué ahora", "Acabo llegar", "Acabo de llegar", "Acabo de llegando"],
+        correct: 2,
+        hint: "acabar + de + инфинитив: acabo + de + llegar. «de» обязательно!"
+      },
+      {
+        question: "Они только что поели",
+        options: ["Acaban comer", "Acaban de comer", "Acaban de comiendo", "Acabaron de comer"],
+        correct: 1,
+        hint: "acaban (3л.мн.ч.) + de + comer. Настоящее время, не прошедшее!"
+      },
+      {
+        question: "Мы только что посмотрели фильм",
+        options: ["Acabamos ver la película", "Acabamos de viendo la película", "Acabamos de ver la película", "Acabamos a ver la película"],
+        correct: 2,
+        hint: "acabamos + de + ver (инфинитив). Не герундий (viendo)!"
+      }
+    ]
+  },
+
+  {
+    id: 26,
+    name: "Формула 26: Пассивная se",
+    shortName: "Pasiva con se",
+    emoji: "🔇",
+    description: "Безличная пассивная конструкция — акцент на действии, не на деятеле",
+    rule: "se + verbo (3л. ед. или мн.ч.)",
+    example: "Se habla español",
+    exampleRu: "Здесь говорят по-испански",
+    examples: [
+      { es: "Se venden pisos", ru: "Продаются квартиры" },
+      { es: "Se busca cocinero", ru: "Требуется повар" }
+    ],
+    quiz: [
+      {
+        question: "Здесь говорят по-испански (безлично)",
+        options: ["Hablan español aquí", "Se habla español", "Se hablan español", "Español se hablar"],
+        correct: 1,
+        hint: "se + verbo ед.ч., т.к. español (ед.ч.): se habla. Деятель не указан"
+      },
+      {
+        question: "Продаются квартиры",
+        options: ["Se vende pisos", "Pisos se venden", "Se venden pisos", "Se vender pisos"],
+        correct: 2,
+        hint: "pisos — мн.ч., поэтому глагол тоже мн.ч.: se venden"
+      },
+      {
+        question: "Требуется секретарь",
+        options: ["Se buscan secretario", "Se busca secretario", "Se buscar secretario", "Buscan secretario se"],
+        correct: 1,
+        hint: "secretario — ед.ч., глагол ед.ч.: se busca. Объявление о работе"
+      }
+    ]
+  },
+
+  {
+    id: 27,
+    name: "Формула 27: Перифразы (volver/seguir/dejar)",
+    shortName: "Перифразы",
+    emoji: "🔁",
+    description: "Глагольные перифразы: снова, продолжать, перестать",
+    rule: "volver a + inf | seguir + ger | dejar de + inf",
+    example: "Vuelvo a intentarlo",
+    exampleRu: "Я пробую снова",
+    examples: [
+      { es: "Sigo estudiando", ru: "Я продолжаю учиться" },
+      { es: "Dejó de fumar", ru: "Он бросил курить" }
+    ],
+    quiz: [
+      {
+        question: "Я пробую снова",
+        options: ["Intento de nuevo", "Vuelvo a intentarlo", "Vuelvo intentarlo", "Sigo a intentarlo"],
+        correct: 1,
+        hint: "volver a + инфинитив = делать снова. «a» обязательно!"
+      },
+      {
+        question: "Она продолжает учиться",
+        options: ["Ella sigue a estudiar", "Ella vuelve estudiando", "Ella sigue estudiar", "Ella sigue estudiando"],
+        correct: 3,
+        hint: "seguir + ГЕРУНДИЙ (не инфинитив!): sigue + estudiando"
+      },
+      {
+        question: "Он бросил курить",
+        options: ["Dejó fumar", "Dejó de fumando", "Dejó de fumar", "Dejó a fumar"],
+        correct: 2,
+        hint: "dejar de + инфинитив = перестать. «de» обязательно!"
+      }
+    ]
+  }
 ];
 
 if (typeof window !== 'undefined') {
