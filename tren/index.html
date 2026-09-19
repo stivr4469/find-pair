@@ -59,6 +59,12 @@
         <button id="mode5-btn" class="mode-button" data-mode="mode5" onclick="App.switchMode('mode5')">
             Контекст
         </button>
+        <button id="mode6-btn" class="mode-button" data-mode="mode6" onclick="App.switchMode('mode6')">
+            Inline выбор
+        </button>
+        <button id="mode7-btn" class="mode-button" data-mode="mode7" onclick="App.switchMode('mode7')">
+            Распредели слова
+        </button>
     </nav>
 
     <!-- Область отображения счета -->
@@ -125,6 +131,22 @@
         </div>
     </main>
 
+    <!-- Игровая зона для режима 6: Inline выбор -->
+    <main id="mode6-area" class="game-area hidden">
+        <h2>✏️ Inline выбор</h2>
+        <div id="mode6-content">
+            <!-- Сюда будет рендериться UI из mode6-ui.js -->
+        </div>
+    </main>
+
+    <!-- Игровая зона для режима 7: Распредели слова -->
+    <main id="mode7-area" class="game-area hidden">
+        <h2>🗂️ Распредели слова</h2>
+        <div id="mode7-content">
+            <!-- Сюда будет рендериться UI из mode7-ui.js -->
+        </div>
+    </main>
+
     <!-- Footer с индикатором прогресса -->
     <footer class="app-footer">
         <div id="progress-indicator" class="progress">
@@ -134,27 +156,33 @@
     </footer>
 
     <!-- Подключение скриптов -->
-    <script src="../js/utils.js"></script>
-    <script src="mode2-data.js"></script>
-    <script src="mode1-data.js"></script>
-    <script src="mode3-data.js"></script>
-    <script src="mode4-data.js"></script>
-    <script src="mode5-data.js"></script>
-    <script src="mode0-game.js"></script>
-    <script src="mode0-options.js"></script>
-    <script src="mode0-results.js"></script>
-    <script src="mode0-ui.js"></script>
-    <script src="mode1-ui.js"></script>
-    <script src="mode2-ui.js"></script>
-    <script src="mode3-ui.js"></script>
-    <script src="mode4-ui.js"></script>
-    <script src="mode5-ui.js"></script>
-    <script src="mode0.js"></script>
-    <script src="mode1.js"></script>
-    <script src="mode2.js"></script>
-    <script src="mode3.js"></script>
-    <script src="mode4.js"></script>
-    <script src="mode5.js"></script>
-    <script src="app.js"></script>
+    <script src="../js/utils.js?v=10"></script>
+    <script src="mode2-data.js?v=10"></script>
+    <script src="mode1-data.js?v=10"></script>
+    <script src="mode3-data.js?v=10"></script>
+    <script src="mode4-data.js?v=10"></script>
+    <script src="mode5-data.js?v=10"></script>
+    <script src="mode6-data.js?v=10"></script>
+    <script src="mode7-data.js?v=10"></script>
+    <script src="mode0-game.js?v=10"></script>
+    <script src="mode0-options.js?v=10"></script>
+    <script src="mode0-results.js?v=10"></script>
+    <script src="mode0-ui.js?v=10"></script>
+    <script src="mode1-ui.js?v=10"></script>
+    <script src="mode2-ui.js?v=10"></script>
+    <script src="mode3-ui.js?v=10"></script>
+    <script src="mode4-ui.js?v=10"></script>
+    <script src="mode5-ui.js?v=10"></script>
+    <script src="mode6-ui.js?v=10"></script>
+    <script src="mode7-ui.js?v=10"></script>
+    <script src="mode0.js?v=10"></script>
+    <script src="mode1.js?v=10"></script>
+    <script src="mode2.js?v=10"></script>
+    <script src="mode3.js?v=10"></script>
+    <script src="mode4.js?v=10"></script>
+    <script src="mode5.js?v=10"></script>
+    <script src="mode6.js?v=10"></script>
+    <script src="mode7.js?v=10"></script>
+    <script src="app.js?v=10"></script>
 </body>
 </html>

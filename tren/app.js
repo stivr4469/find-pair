@@ -154,6 +154,22 @@ const App = {
                     this.debug('ERROR: initMode5 is not a function');
                 }
                 break;
+            case 'mode6':
+                if (typeof initMode6 === 'function') {
+                    initMode6();
+                    this.debug('initMode6() called successfully');
+                } else {
+                    this.debug('ERROR: initMode6 is not a function');
+                }
+                break;
+            case 'mode7':
+                if (typeof initMode7 === 'function') {
+                    initMode7();
+                    this.debug('initMode7() called successfully');
+                } else {
+                    this.debug('ERROR: initMode7 is not a function');
+                }
+                break;
             default:
                 this.debug('WARNING: Unknown mode: ' + modeId);
         }
@@ -306,6 +322,18 @@ function restartMode3() {
 function restartMode4() {
     if (typeof initMode4 === 'function') {
         initMode4();
+    }
+}
+
+function restartMode6() {
+    if (typeof initMode6 === 'function') {
+        initMode6();
+    }
+}
+
+function restartMode7() {
+    if (typeof initMode7 === 'function') {
+        initMode7();
     }
 }
 
