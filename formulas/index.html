@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>📚 20 Формул испанского</title>
+    <link rel="stylesheet" href="../css/unified-styles.css?v=11">
+    <style>
+        .formulas-main {
+            width: 100%;
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 16px 80px;
+        }
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .formula-card {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 12px;
+            padding: 14px 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.15s, background 0.15s;
+            color: #fff;
+        }
+        .formula-card:hover {
+            background: rgba(255,255,255,0.22);
+            transform: translateY(-2px);
+        }
+        .formula-card-emoji {
+            font-size: 1.6rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .formula-card-num {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .formula-card-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 4px 0 2px;
+        }
+        .formula-card-rule {
+            font-size: 0.72rem;
+            opacity: 0.75;
+            font-style: italic;
+        }
+        /* Detail card */
+        .formula-detail {
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 16px 0;
+            color: #fff;
+        }
+        .formula-detail-header {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .formula-rule-box {
+            background: rgba(255,255,255,0.15);
+            border-left: 3px solid rgba(255,255,255,0.6);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            margin: 12px 0;
+        }
+        .formula-example-main {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 10px 0 4px;
+        }
+        .formula-example-ru {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 12px;
+        }
+        .formula-examples-list {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 16px;
+        }
+        .formula-examples-list li {
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+        .formula-examples-list li span {
+            display: block;
+            opacity: 0.7;
+            font-size: 0.8rem;
+        }
+        .formula-nav-btns {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.25); }
+        .btn-primary {
+            background: rgba(255,255,255,0.9);
+            color: #5b2d8e;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .btn-primary:hover { background: #fff; }
+        /* Quiz */
+        .quiz-header {
+            margin-bottom: 16px;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        .quiz-formula-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 12px 0 20px;
+            line-height: 1.4;
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .quiz-option {
+            background: rgba(255,255,255,0.12);
+            border: 2px solid rgba(255,255,255,0.25);
+            border-radius: 10px;
+            padding: 12px 16px;
+            text-align: left;
+            color: #fff;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quiz-option:hover:not(:disabled) {
+            background: rgba(255,255,255,0.22);
+            border-color: rgba(255,255,255,0.5);
+        }
+        .quiz-option:disabled { cursor: default; }
+        .quiz-option.correct {
+            background: rgba(40,167,69,0.3);
+            border-color: #28a745;
+        }
+        .quiz-option.wrong {
+            background: rgba(220,53,69,0.3);
+            border-color: #dc3545;
+        }
+        .quiz-option-letter {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+        .quiz-hint {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.85rem;
+            margin: 10px 0;
+            opacity: 0.9;
+        }
+        .quiz-results {
+            text-align: center;
+            padding: 32px 16px;
+        }
+        .quiz-results-emoji { font-size: 3rem; margin-bottom: 12px; }
+        .quiz-results-score { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+        .quiz-results-pct { font-size: 1rem; opacity: 0.8; margin-bottom: 24px; }
+        .all-quiz-btn {
+            width: 100%;
+            background: rgba(255,255,255,0.15);
+            border: 2px dashed rgba(255,255,255,0.4);
+            border-radius: 12px;
+            padding: 16px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: background 0.15s;
+        }
+        .all-quiz-btn:hover { background: rgba(255,255,255,0.25); }
+        @media (max-width: 480px) {
+            .formula-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+            .quiz-question { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Кнопка назад в главное меню -->
+    <div class="back-button-container">
+        <a href="../" class="back-button">← Назад в меню</a>
+    </div>
+
+    <!-- Заголовок приложения -->
+    <header class="app-header">
+        <h1>📚 20 Формул испанского</h1>
+    </header>
+
+    <!-- Область отображения счёта -->
+    <section id="score-area" class="score-display hidden">
+        <span id="score-label">Счёт:</span>
+        <span id="score-value">0</span>
+    </section>
+
+    <!-- Основной контент -->
+    <main id="formulas-content" class="formulas-main"></main>
+
+    <!-- Футер -->
+    <footer class="app-footer">
+        <p>Нажми на формулу чтобы изучить правило и пройти тест</p>
+    </footer>
+
+    <!-- Скрипты -->
+    <script src="../js/utils.js?v=11"></script>
+    <script src="data.js?v=11"></script>
+    <script src="ui.js?v=11"></script>
+    <script src="app.js?v=11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof FormulasApp !== 'undefined') {
+                FormulasApp.init();
+            }
+        });
+    </script>
+</body>
+</html>
