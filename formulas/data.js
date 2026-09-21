@@ -930,6 +930,56 @@ const FORMULAS_DATA = [
         hint: "dejar de + инфинитив = перестать. «de» обязательно!"
       }
     ]
+  },
+
+  {
+    id: 28,
+    name: "Формула 28: Se me / Se te (непреднамеренное)",
+    shortName: "Se me / Se te",
+    emoji: "🤷",
+    description: "Непреднамеренные действия — «я случайно», «само получилось», «не виноват»",
+    rule: "se + me/te/le/nos/os/les + verbo (3л., согласован с субъектом)",
+    example: "Se me olvidó el libro",
+    exampleRu: "Я забыл книгу (само забылось мне)",
+    examples: [
+      { es: "Se me cayeron las llaves", ru: "Я уронил ключи (они упали сами)" },
+      { es: "Se te rompió el teléfono", ru: "У тебя сломался телефон (само сломалось)" }
+    ],
+    quiz: [
+      {
+        question: "Я забыл книгу (случайно, не виноват)",
+        options: [
+          "Me olvidé el libro",
+          "Yo olvidé el libro",
+          "Se me olvidó el libro",
+          "Se me olvidaron el libro"
+        ],
+        correct: 2,
+        hint: "libro — ед.ч., глагол ед.ч.: se me olvidó. Порядок: se + me + verbo (ед.ч.)"
+      },
+      {
+        question: "Я уронил ключи (они сами упали)",
+        options: [
+          "Se me cayó las llaves",
+          "Me cayeron las llaves",
+          "Se le cayeron las llaves",
+          "Se me cayeron las llaves"
+        ],
+        correct: 3,
+        hint: "llaves — мн.ч., глагол мн.ч.: se me cayeron. Глагол согласуется с ключами, не со мной"
+      },
+      {
+        question: "У него закончились деньги (сами закончились)",
+        options: [
+          "Se le acabó el dinero",
+          "Se me acabó el dinero",
+          "Le acabó el dinero",
+          "Se le acabaron el dinero"
+        ],
+        correct: 0,
+        hint: "él → le: se le acabó. dinero — ед.ч. → глагол ед.ч. acabó"
+      }
+    ]
   }
 ];
 
