@@ -942,8 +942,16 @@ const FORMULAS_DATA = [
     example: "Se me olvidó el libro",
     exampleRu: "Я забыл книгу (само забылось мне)",
     examples: [
-      { es: "Se me cayeron las llaves", ru: "Я уронил ключи (они упали сами)" },
-      { es: "Se te rompió el teléfono", ru: "У тебя сломался телефон (само сломалось)" }
+      { es: "Se me cayeron las llaves", ru: "Я уронил ключи (ключи упали сами)" },
+      { es: "Se te rompió el teléfono", ru: "У тебя сломался телефон (само сломалось)" },
+      { es: "Se le perdió el pasaporte", ru: "Он потерял паспорт (паспорт потерялся у него)" },
+      { es: "Se nos fue el autobús", ru: "Мы опоздали на автобус (автобус ушёл сам)" },
+      { es: "Se me quemó la comida", ru: "У меня сгорела еда (еда сгорела сама)" },
+      { es: "Se te olvidaron las llaves", ru: "Ты забыл ключи (ключи забылись у тебя)" },
+      { es: "Se le escapó el perro", ru: "У него убежала собака (собака убежала сама)" },
+      { es: "Se nos acabó el tiempo", ru: "У нас кончилось время (время само кончилось)" },
+      { es: "Se me derramó el café", ru: "Я пролил кофе (кофе разлился сам)" },
+      { es: "Se te fue la idea", ru: "Ты забыл мысль (мысль сама ушла у тебя)" }
     ],
     quiz: [
       {
