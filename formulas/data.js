@@ -15,7 +15,13 @@ const FORMULAS_DATA = [
     exampleRu: "Красная быстрая машина",
     examples: [
       { es: "La casa grande y bonita", ru: "Большой красивый дом" },
-      { es: "El libro nuevo e interesante", ru: "Новая интересная книга" }
+      { es: "El libro nuevo e interesante", ru: "Новая интересная книга" },
+      { es: "El gato negro y pequeño", ru: "Чёрный маленький кот" },
+      { es: "La chica alta y delgada", ru: "Высокая стройная девушка" },
+      { es: "Un coche viejo pero rápido", ru: "Старая, но быстрая машина" },
+      { es: "Una ciudad grande y moderna", ru: "Большой современный город" },
+      { es: "El día frío e invernizo", ru: "Холодный зимний день" },
+      { es: "Una película larga y aburrida", ru: "Длинный и скучный фильм" }
     ],
     quiz: [
       {
@@ -49,7 +55,13 @@ const FORMULAS_DATA = [
     exampleRu: "Роберто бежит быстро",
     examples: [
       { es: "Ella canta bellamente", ru: "Она поёт красиво" },
-      { es: "Él trabaja diligentemente", ru: "Он работает усердно" }
+      { es: "Él trabaja diligentemente", ru: "Он работает усердно" },
+      { es: "Hablas claramente", ru: "Ты говоришь чётко" },
+      { es: "Conduce cuidadosamente", ru: "Он водит осторожно" },
+      { es: "Responden correctamente", ru: "Они отвечают правильно" },
+      { es: "Escucha atentamente", ru: "Она слушает внимательно" },
+      { es: "Llegaron puntualmente", ru: "Они пришли вовремя" },
+      { es: "Vive felizmente en Madrid", ru: "Он счастливо живёт в Мадриде" }
     ],
     quiz: [
       {
@@ -83,7 +95,13 @@ const FORMULAS_DATA = [
     exampleRu: "Сколько денег у тебя?",
     examples: [
       { es: "¿Qué hora es?", ru: "Который час?" },
-      { es: "¿Quién es él?", ru: "Кто он?" }
+      { es: "¿Quién es él?", ru: "Кто он?" },
+      { es: "¿Dónde vives?", ru: "Где ты живёшь?" },
+      { es: "¿Cuántos años tienes?", ru: "Сколько тебе лет?" },
+      { es: "¿Cómo te llamas?", ru: "Как тебя зовут?" },
+      { es: "¿Por qué estudias español?", ru: "Почему ты учишь испанский?" },
+      { es: "¿Cuándo llega el tren?", ru: "Когда приходит поезд?" },
+      { es: "¿Cuánto cuesta este libro?", ru: "Сколько стоит эта книга?" }
     ],
     quiz: [
       {
@@ -117,7 +135,13 @@ const FORMULAS_DATA = [
     exampleRu: "Сандра покупает шоколад Марии",
     examples: [
       { es: "Yo le doy un libro a Juan", ru: "Я даю книгу Хуану" },
-      { es: "Ella me envía una carta a mí", ru: "Она отправляет письмо мне" }
+      { es: "Ella me envía una carta a mí", ru: "Она отправляет письмо мне" },
+      { es: "Te presto dinero a ti", ru: "Я одалживаю деньги тебе" },
+      { es: "Les digo la verdad a mis hijos", ru: "Я говорю правду своим детям" },
+      { es: "Nos trae la comida a nosotros", ru: "Он приносит нам еду" },
+      { es: "Le explico la lección al estudiante", ru: "Я объясняю урок студенту" },
+      { es: "Os mando un mensaje a vosotros", ru: "Я отправляю вам сообщение" },
+      { es: "Le compra flores a su novia", ru: "Он покупает цветы своей девушке" }
     ],
     quiz: [
       {
@@ -151,7 +175,13 @@ const FORMULAS_DATA = [
     exampleRu: "Роберто видит свою мать",
     examples: [
       { es: "Visito a mi abuela", ru: "Я навещаю свою бабушку" },
-      { es: "Conozco a Pedro", ru: "Я знаю Педро" }
+      { es: "Conozco a Pedro", ru: "Я знаю Педро" },
+      { es: "Llamo a mi madre", ru: "Я звоню маме" },
+      { es: "Busco a mi amigo", ru: "Я ищу своего друга" },
+      { es: "Esperamos a nuestro profesor", ru: "Мы ждём нашего учителя" },
+      { es: "Ayuda a los niños", ru: "Она помогает детям" },
+      { es: "¿Ves a María en clase?", ru: "Ты видишь Марию на уроке?" },
+      { es: "Extraño a mis padres", ru: "Я скучаю по родителям" }
     ],
     quiz: [
       {
@@ -185,7 +215,13 @@ const FORMULAS_DATA = [
     exampleRu: "le дублирует a María",
     examples: [
       { es: "Le doy el regalo a ella", ru: "Я даю подарок ей" },
-      { es: "Les escribo una carta a mis padres", ru: "Я пишу письмо своим родителям" }
+      { es: "Les escribo una carta a mis padres", ru: "Я пишу письмо своим родителям" },
+      { es: "Le cuento la historia a él", ru: "Я рассказываю историю ему" },
+      { es: "Les mando fotos a mis amigos", ru: "Я отправляю фото своим друзьям" },
+      { es: "Le compro flores a mi madre", ru: "Я покупаю цветы маме" },
+      { es: "Les explico el problema a ellos", ru: "Я объясняю проблему им" },
+      { es: "Le pido ayuda a mi jefe", ru: "Я прошу помощи у начальника" },
+      { es: "Les traigo café a los clientes", ru: "Я приношу кофе клиентам" }
     ],
     quiz: [
       {
@@ -219,7 +255,13 @@ const FORMULAS_DATA = [
     exampleRu: "Джессика красится",
     examples: [
       { es: "Me lavo las manos", ru: "Я мою руки" },
-      { es: "Se visten rápidamente", ru: "Они быстро одеваются" }
+      { es: "Se visten rápidamente", ru: "Они быстро одеваются" },
+      { es: "Te duchas por la mañana", ru: "Ты принимаешь душ утром" },
+      { es: "Ella se peina cada día", ru: "Она расчёсывается каждый день" },
+      { es: "Nos despertamos tarde", ru: "Мы просыпаемся поздно" },
+      { es: "Se acuestan a las diez", ru: "Они ложатся спать в десять" },
+      { es: "Me afeito por las mañanas", ru: "Я бреюсь по утрам" },
+      { es: "Se sienta junto a la ventana", ru: "Он садится у окна" }
     ],
     quiz: [
       {
@@ -253,7 +295,13 @@ const FORMULAS_DATA = [
     exampleRu: "Я хочу есть",
     examples: [
       { es: "Necesito estudiar", ru: "Мне нужно учиться" },
-      { es: "Prefiero leer", ru: "Я предпочитаю читать" }
+      { es: "Prefiero leer", ru: "Я предпочитаю читать" },
+      { es: "Sé cocinar muy bien", ru: "Я умею очень хорошо готовить" },
+      { es: "Odio levantarme temprano", ru: "Я ненавижу вставать рано" },
+      { es: "Quieren viajar a España", ru: "Они хотят поехать в Испанию" },
+      { es: "Pienso estudiar más", ru: "Я планирую учиться больше" },
+      { es: "Espero terminar pronto", ru: "Я надеюсь закончить скоро" },
+      { es: "Consigue hablar sin acento", ru: "Ему удаётся говорить без акцента" }
     ],
     quiz: [
       {
@@ -287,7 +335,13 @@ const FORMULAS_DATA = [
     exampleRu: "Нужно учиться",
     examples: [
       { es: "Hay que comer bien", ru: "Нужно хорошо питаться" },
-      { es: "Hay que dormir ocho horas", ru: "Нужно спать восемь часов" }
+      { es: "Hay que dormir ocho horas", ru: "Нужно спать восемь часов" },
+      { es: "Hay que ser puntual", ru: "Нужно быть пунктуальным" },
+      { es: "Hay que escuchar con atención", ru: "Нужно слушать внимательно" },
+      { es: "Hay que respetar las reglas", ru: "Нужно соблюдать правила" },
+      { es: "Hay que practicar cada día", ru: "Нужно практиковаться каждый день" },
+      { es: "Hay que tener paciencia", ru: "Нужно иметь терпение" },
+      { es: "Hay que beber mucha agua", ru: "Нужно пить много воды" }
     ],
     quiz: [
       {
@@ -321,7 +375,13 @@ const FORMULAS_DATA = [
     exampleRu: "Ты должен учиться",
     examples: [
       { es: "Tengo que ir al banco", ru: "Я должен пойти в банк" },
-      { es: "Ella tiene que trabajar", ru: "Она должна работать" }
+      { es: "Ella tiene que trabajar", ru: "Она должна работать" },
+      { es: "Tienes que estudiar más", ru: "Тебе нужно учиться больше" },
+      { es: "Tenemos que comprar comida", ru: "Нам нужно купить еду" },
+      { es: "Él tiene que llamar al médico", ru: "Ему нужно позвонить врачу" },
+      { es: "Tienen que llegar a tiempo", ru: "Им нужно прийти вовремя" },
+      { es: "Tenéis que terminar el proyecto", ru: "Вам нужно завершить проект" },
+      { es: "Tengo que hablar con mi jefe", ru: "Мне нужно поговорить с начальником" }
     ],
     quiz: [
       {
@@ -355,7 +415,13 @@ const FORMULAS_DATA = [
     exampleRu: "Я поел (настоящее совершенное)",
     examples: [
       { es: "Hemos visto la película", ru: "Мы посмотрели фильм" },
-      { es: "Ella ha escrito un libro", ru: "Она написала книгу" }
+      { es: "Ella ha escrito un libro", ru: "Она написала книгу" },
+      { es: "He desayunado ya", ru: "Я уже позавтракал" },
+      { es: "¿Has visitado Madrid?", ru: "Ты бывал в Мадриде?" },
+      { es: "Han llegado tarde", ru: "Они опоздали (пришли поздно)" },
+      { es: "Habéis trabajado mucho hoy", ru: "Вы много работали сегодня" },
+      { es: "¿Has comido algo?", ru: "Ты что-нибудь ел?" },
+      { es: "Se ha roto la silla", ru: "Стул сломался" }
     ],
     quiz: [
       {
@@ -389,7 +455,13 @@ const FORMULAS_DATA = [
     exampleRu: "Я сейчас учусь",
     examples: [
       { es: "Estamos comiendo", ru: "Мы едим (сейчас)" },
-      { es: "Él está leyendo", ru: "Он читает (сейчас)" }
+      { es: "Él está leyendo", ru: "Он читает (сейчас)" },
+      { es: "Estoy escuchando música", ru: "Я сейчас слушаю музыку" },
+      { es: "Está lloviendo fuera", ru: "Сейчас идёт дождь на улице" },
+      { es: "Estás durmiendo la siesta", ru: "Ты сейчас спишь днём" },
+      { es: "Están hablando por teléfono", ru: "Они сейчас говорят по телефону" },
+      { es: "Estoy trabajando desde casa", ru: "Я сейчас работаю из дома" },
+      { es: "¿Qué estás haciendo?", ru: "Что ты сейчас делаешь?" }
     ],
     quiz: [
       {
@@ -423,7 +495,13 @@ const FORMULAS_DATA = [
     exampleRu: "Я учусь уже два часа",
     examples: [
       { es: "Llevo un año viviendo aquí", ru: "Я живу здесь уже год" },
-      { es: "Llevan tres días viajando", ru: "Они путешествуют уже три дня" }
+      { es: "Llevan tres días viajando", ru: "Они путешествуют уже три дня" },
+      { es: "Llevas media hora esperando", ru: "Ты ждёшь уже полчаса" },
+      { es: "Lleva un mes aprendiendo italiano", ru: "Она учит итальянский уже месяц" },
+      { es: "Llevamos años conociéndonos", ru: "Мы знаем друг друга уже годами" },
+      { es: "Llevan dos horas discutiendo", ru: "Они спорят уже два часа" },
+      { es: "Llevo toda la mañana trabajando", ru: "Я работаю всё утро" },
+      { es: "¿Cuánto tiempo llevas estudiando español?", ru: "Сколько времени ты учишь испанский?" }
     ],
     quiz: [
       {
@@ -457,7 +535,13 @@ const FORMULAS_DATA = [
     exampleRu: "Это для тебя (цель)",
     examples: [
       { es: "Salgo para Madrid", ru: "Я уезжаю в Мадрид (цель)" },
-      { es: "Lo hago por ti", ru: "Я делаю это ради тебя (причина)" }
+      { es: "Lo hago por ti", ru: "Я делаю это ради тебя (причина)" },
+      { es: "Estudio para aprender", ru: "Я учусь, чтобы знать (цель)" },
+      { es: "Gracias por tu ayuda", ru: "Спасибо за твою помощь (за что)" },
+      { es: "Este regalo es para mi madre", ru: "Этот подарок для мамы (получатель)" },
+      { es: "Pagué veinte euros por la camisa", ru: "Я заплатил 20 евро за рубашку (обмен)" },
+      { es: "Lo hicieron por miedo", ru: "Они сделали это из страха (причина)" },
+      { es: "Un café para llevar, por favor", ru: "Кофе с собой, пожалуйста (назначение)" }
     ],
     quiz: [
       {
@@ -491,7 +575,13 @@ const FORMULAS_DATA = [
     exampleRu: "Вы едите быстрее, чем я",
     examples: [
       { es: "Este libro es más interesante que aquel", ru: "Эта книга интереснее той" },
-      { es: "Ella es tan alta como su hermano", ru: "Она такая же высокая, как её брат" }
+      { es: "Ella es tan alta como su hermano", ru: "Она такая же высокая, как её брат" },
+      { es: "Mi casa es más grande que la tuya", ru: "Мой дом больше твоего" },
+      { es: "Habla tan rápido como un nativo", ru: "Он говорит так же быстро, как носитель" },
+      { es: "Este examen es menos difícil que el otro", ru: "Этот экзамен менее сложный, чем тот" },
+      { es: "Gana tanto dinero como su jefe", ru: "Он зарабатывает столько же, сколько шеф" },
+      { es: "El verano es más caluroso que el invierno", ru: "Лето жарче, чем зима" },
+      { es: "Hablas español tan bien como yo", ru: "Ты говоришь по-испански так же хорошо, как я" }
     ],
     quiz: [
       {
@@ -524,8 +614,14 @@ const FORMULAS_DATA = [
     example: "Lo veo",
     exampleRu: "Я это вижу (м.р.)",
     examples: [
-      { es: "Lo veo", ru: "Я вижу его/это" },
-      { es: "Las compro", ru: "Я покупаю их (ж.р.мн.ч.)" }
+      { es: "Lo veo", ru: "Я вижу его/это (м.р.ед.ч.)" },
+      { es: "Las compro", ru: "Я покупаю их (ж.р.мн.ч.)" },
+      { es: "La llamo esta tarde", ru: "Я позвоню ей сегодня вечером" },
+      { es: "Los necesito urgente", ru: "Мне они нужны срочно (м.р.мн.ч.)" },
+      { es: "¿La ves? — Sí, la veo", ru: "Ты её видишь? — Да, вижу (ж.р.ед.ч.)" },
+      { es: "¿Lo tienes? — No lo tengo", ru: "У тебя это есть? — Нет" },
+      { es: "El libro — lo leo cada noche", ru: "Книгу — я читаю её каждый вечер" },
+      { es: "Las llaves — las busco por todas partes", ru: "Ключи — я ищу их везде" }
     ],
     quiz: [
       {
@@ -559,7 +655,13 @@ const FORMULAS_DATA = [
     exampleRu: "Это очень интересно",
     examples: [
       { es: "Es muy difícil / Es dificilísimo", ru: "Это очень сложно" },
-      { es: "Ella es guapísima", ru: "Она очень красивая" }
+      { es: "Ella es guapísima", ru: "Она очень красивая" },
+      { es: "La comida está riquísima", ru: "Еда очень вкусная" },
+      { es: "Es muy cansado este trabajo", ru: "Эта работа очень утомительная" },
+      { es: "El hotel era comodísimo", ru: "Отель был очень удобным" },
+      { es: "Hablas muy bien español", ru: "Ты очень хорошо говоришь по-испански" },
+      { es: "La película fue larguísima", ru: "Фильм был очень длинным" },
+      { es: "Estoy muy cansado hoy", ru: "Я очень устал сегодня" }
     ],
     quiz: [
       {
@@ -593,7 +695,13 @@ const FORMULAS_DATA = [
     exampleRu: "Я ему/ей это дал",
     examples: [
       { es: "Se lo compré", ru: "Я это ему/ей купил" },
-      { es: "Se la di", ru: "Я её ему/ей дал" }
+      { es: "Se la di", ru: "Я её ему/ей дал" },
+      { es: "Se lo dije ayer", ru: "Я сказал ему это вчера" },
+      { es: "Se los mandamos", ru: "Мы отправили им их (мн.ч.)" },
+      { es: "Se la expliqué despacio", ru: "Я объяснил это ей медленно" },
+      { es: "¿Se lo diste ya?", ru: "Ты уже отдал ему это?" },
+      { es: "Se las enviamos por correo", ru: "Мы отправили им их по почте" },
+      { es: "¿Se lo has contado a ella?", ru: "Ты рассказал ей об этом?" }
     ],
     quiz: [
       {
@@ -627,7 +735,13 @@ const FORMULAS_DATA = [
     exampleRu: "Мне нравится искусство",
     examples: [
       { es: "Me encantan los libros", ru: "Мне очень нравятся книги" },
-      { es: "Les molesta el ruido", ru: "Их беспокоит шум" }
+      { es: "Les molesta el ruido", ru: "Их беспокоит шум" },
+      { es: "Te gusta el café, ¿verdad?", ru: "Тебе нравится кофе, правда?" },
+      { es: "Nos falta dinero", ru: "Нам не хватает денег" },
+      { es: "Le duele la cabeza", ru: "У него болит голова" },
+      { es: "Os interesa el español", ru: "Вам интересен испанский" },
+      { es: "Me aburren las matemáticas", ru: "Математика мне надоедает / мне скучно на ней" },
+      { es: "Le parece bien la idea", ru: "Ему нравится эта идея" }
     ],
     quiz: [
       {
@@ -661,7 +775,13 @@ const FORMULAS_DATA = [
     exampleRu: "Я надеюсь, что ты в порядке",
     examples: [
       { es: "Quiero que vengas", ru: "Я хочу, чтобы ты пришёл" },
-      { es: "Dudo que lo sepa", ru: "Я сомневаюсь, что он это знает" }
+      { es: "Dudo que lo sepa", ru: "Я сомневаюсь, что он это знает" },
+      { es: "Espero que tengas razón", ru: "Я надеюсь, что ты прав" },
+      { es: "Necesito que me ayudes", ru: "Мне нужно, чтобы ты мне помог" },
+      { es: "Me alegra que estés aquí", ru: "Я рад, что ты здесь" },
+      { es: "Ojalá haga buen tiempo", ru: "Хотелось бы, чтобы была хорошая погода" },
+      { es: "Es importante que estudies", ru: "Важно, чтобы ты учился" },
+      { es: "Recomiendo que pruebes el gazpacho", ru: "Рекомендую попробовать гаспачо" }
     ],
     quiz: [
       {
@@ -698,7 +818,13 @@ const FORMULAS_DATA = [
     exampleRu: "Я собираюсь поесть / Я поем",
     examples: [
       { es: "Vamos a estudiar mañana", ru: "Мы будем учиться завтра" },
-      { es: "¿Qué vas a hacer?", ru: "Что ты собираешься делать?" }
+      { es: "¿Qué vas a hacer?", ru: "Что ты собираешься делать?" },
+      { es: "Va a llover esta tarde", ru: "Сегодня вечером будет дождь" },
+      { es: "Voy a llamarte después", ru: "Я позвоню тебе потом" },
+      { es: "Van a abrir un restaurante nuevo", ru: "Они собираются открыть новый ресторан" },
+      { es: "¿Vas a venir a la fiesta?", ru: "Ты придёшь на вечеринку?" },
+      { es: "Voy a dormir temprano hoy", ru: "Я лягу спать рано сегодня" },
+      { es: "Vamos a ver qué pasa", ru: "Посмотрим, что будет" }
     ],
     quiz: [
       {
@@ -733,7 +859,13 @@ const FORMULAS_DATA = [
     exampleRu: "Я бы хотел кофе",
     examples: [
       { es: "¿Podrías ayudarme?", ru: "Не мог бы ты мне помочь?" },
-      { es: "Debería estudiar más", ru: "Мне следовало бы учиться больше" }
+      { es: "Debería estudiar más", ru: "Мне следовало бы учиться больше" },
+      { es: "Me gustaría vivir en España", ru: "Я бы хотел жить в Испании" },
+      { es: "¿Podría ver la carta?", ru: "Можно мне посмотреть меню?" },
+      { es: "Sería mejor salir temprano", ru: "Лучше было бы выйти пораньше" },
+      { es: "¿Te gustaría venir conmigo?", ru: "Тебе хотелось бы пойти со мной?" },
+      { es: "Yo en tu lugar, estudiaría más", ru: "На твоём месте я бы учился больше" },
+      { es: "Hablaría con él, pero no me escucha", ru: "Я бы поговорил с ним, но он меня не слушает" }
     ],
     quiz: [
       {
@@ -768,7 +900,13 @@ const FORMULAS_DATA = [
     exampleRu: "Говори медленнее",
     examples: [
       { es: "Come la verdura", ru: "Ешь овощи" },
-      { es: "No hables tan rápido", ru: "Не говори так быстро" }
+      { es: "No hables tan rápido", ru: "Не говори так быстро" },
+      { es: "Escucha bien la explicación", ru: "Слушай объяснение внимательно" },
+      { es: "No comas tanta azúcar", ru: "Не ешь так много сахара" },
+      { es: "Llame al médico, por favor", ru: "Позвоните врачу, пожалуйста (usted)" },
+      { es: "No llegues tarde", ru: "Не опаздывай" },
+      { es: "¡Ven aquí ahora mismo!", ru: "Иди сюда прямо сейчас!" },
+      { es: "Hagan silencio, por favor", ru: "Тишина, пожалуйста (ustedes)" }
     ],
     quiz: [
       {
@@ -803,7 +941,13 @@ const FORMULAS_DATA = [
     exampleRu: "Я могу тебе помочь",
     examples: [
       { es: "¿Puedo entrar?", ru: "Можно войти?" },
-      { es: "Debes descansar", ru: "Тебе нужно отдохнуть" }
+      { es: "Debes descansar", ru: "Тебе нужно отдохнуть" },
+      { es: "No puedo dormir", ru: "Я не могу спать" },
+      { es: "Deben llegar a tiempo", ru: "Они должны прийти вовремя" },
+      { es: "¿Puede repetirlo, por favor?", ru: "Вы можете повторить, пожалуйста?" },
+      { es: "Deberías hablar con él", ru: "Тебе следует поговорить с ним" },
+      { es: "No puedes fumar aquí", ru: "Здесь нельзя курить" },
+      { es: "Podemos salir cuando quieras", ru: "Мы можем выйти, когда захочешь" }
     ],
     quiz: [
       {
@@ -838,7 +982,13 @@ const FORMULAS_DATA = [
     exampleRu: "Я только что пришёл",
     examples: [
       { es: "Acaban de comer", ru: "Они только что поели" },
-      { es: "¿Acabas de llamar?", ru: "Ты только что звонил?" }
+      { es: "¿Acabas de llamar?", ru: "Ты только что звонил?" },
+      { es: "Acaba de salir de casa", ru: "Она только что вышла из дома" },
+      { es: "Acabamos de hablar de eso", ru: "Мы только что говорили об этом" },
+      { es: "Acabo de escuchar la noticia", ru: "Я только что услышал новость" },
+      { es: "Acabáis de terminar el examen", ru: "Вы только что закончили экзамен" },
+      { es: "¡Acaba de llegar!", ru: "Он только что приехал!" },
+      { es: "Acabo de darme cuenta", ru: "Я только что понял (осознал)" }
     ],
     quiz: [
       {
@@ -873,7 +1023,13 @@ const FORMULAS_DATA = [
     exampleRu: "Здесь говорят по-испански",
     examples: [
       { es: "Se venden pisos", ru: "Продаются квартиры" },
-      { es: "Se busca cocinero", ru: "Требуется повар" }
+      { es: "Se busca cocinero", ru: "Требуется повар" },
+      { es: "Se abre a las nueve", ru: "Открывается в девять" },
+      { es: "Se prohíbe fumar", ru: "Курить запрещено" },
+      { es: "Se alquila habitación", ru: "Сдаётся комната" },
+      { es: "Se necesitan camareros", ru: "Требуются официанты" },
+      { es: "Aquí se come muy bien", ru: "Здесь едят очень хорошо" },
+      { es: "Se dice que va a llover", ru: "Говорят, что будет дождь" }
     ],
     quiz: [
       {
@@ -908,7 +1064,13 @@ const FORMULAS_DATA = [
     exampleRu: "Я пробую снова",
     examples: [
       { es: "Sigo estudiando", ru: "Я продолжаю учиться" },
-      { es: "Dejó de fumar", ru: "Он бросил курить" }
+      { es: "Dejó de fumar", ru: "Он бросил курить" },
+      { es: "Vuelve a intentarlo", ru: "Попробуй снова (он пробует снова)" },
+      { es: "Sigue lloviendo", ru: "Дождь всё ещё идёт" },
+      { es: "Dejé de beber café", ru: "Я перестал пить кофе" },
+      { es: "Volvió a llamar", ru: "Он позвонил снова" },
+      { es: "Siguen discutiendo", ru: "Они продолжают спорить" },
+      { es: "Deja de quejarte", ru: "Перестань жаловаться" }
     ],
     quiz: [
       {
