@@ -988,6 +988,448 @@ const FORMULAS_DATA = [
         hint: "él → le: se le acabó. dinero — ед.ч. → глагол ед.ч. acabó"
       }
     ]
+  },
+
+  // ─── Формула 29 ────────────────────────────────────────────────────────────
+  {
+    id: 29,
+    name: "Формула 29: Hace + tiempo + que (давность)",
+    shortName: "Hace + que",
+    emoji: "⏱️",
+    description: "Выражает, как давно что-то происходит или произошло",
+    rule: "Hace + [время] + que + [глагол в presente/pretérito]",
+    example: "Hace dos años que vivo en Madrid",
+    exampleRu: "Я живу в Мадриде уже два года",
+    examples: [
+      { es: "Hace una hora que espero", ru: "Я жду уже час" },
+      { es: "Hace tres días que no duermo", ru: "Я не сплю уже три дня" },
+      { es: "Hace un mes que estudia español", ru: "Он учит испанский уже месяц" },
+      { es: "Hace diez años que nos conocemos", ru: "Мы знакомы уже десять лет" },
+      { es: "Hace cinco minutos que empezó la clase", ru: "Урок начался пять минут назад" },
+      { es: "¿Cuánto tiempo hace que vives aquí?", ru: "Сколько времени ты живёшь здесь?" }
+    ],
+    quiz: [
+      {
+        question: "Я живу в Мадриде уже два года",
+        options: [
+          "Vivo en Madrid desde dos años",
+          "Hace dos años que vivo en Madrid",
+          "Desde dos años vivo en Madrid",
+          "Dos años hace que vivo en Madrid"
+        ],
+        correct: 1,
+        hint: "Порядок строго: Hace + время + que + глагол (presente). Не 'desde dos años'"
+      },
+      {
+        question: "Он учит испанский уже три месяца",
+        options: [
+          "Hace tres meses que estudia español",
+          "Desde tres meses estudia español",
+          "Estudia español desde tres meses",
+          "Hace tres meses estudia español"
+        ],
+        correct: 0,
+        hint: "Hace tres meses que + глагол (presente). Союз 'que' обязателен"
+      },
+      {
+        question: "Сколько времени ты ждёшь? (конструкция hace + que)",
+        options: [
+          "¿Cuánto tiempo hace que esperas?",
+          "¿Cuánto tiempo esperas?",
+          "¿Desde cuándo esperas?",
+          "¿Por cuánto tiempo esperas?"
+        ],
+        correct: 0,
+        hint: "Вопрос: ¿Cuánto tiempo hace que + глагол presente? — давность действия"
+      }
+    ]
+  },
+
+  // ─── Формула 30 ────────────────────────────────────────────────────────────
+  {
+    id: 30,
+    name: "Формула 30: Двойное отрицание (no + nada/nadie/nunca)",
+    shortName: "Двойное отрицание",
+    emoji: "🚫",
+    description: "В испанском несколько отрицаний в предложении — норма, а не ошибка",
+    rule: "No + verbo + nada / nadie / nunca / ningún...",
+    example: "No sé nada",
+    exampleRu: "Я ничего не знаю",
+    examples: [
+      { es: "No viene nadie", ru: "Никто не приходит" },
+      { es: "No tengo nada", ru: "У меня ничего нет" },
+      { es: "No lo he visto nunca", ru: "Я никогда его не видел" },
+      { es: "No hay nadie en casa", ru: "Дома никого нет" },
+      { es: "No quiero nada más", ru: "Я больше ничего не хочу" },
+      { es: "No sé nada de eso", ru: "Я ничего об этом не знаю" },
+      { es: "Nadie lo sabe", ru: "Никто не знает (nadie перед глаголом — одно отрицание)" }
+    ],
+    quiz: [
+      {
+        question: "Я ничего не знаю",
+        options: [
+          "No sé nada",
+          "Sé nada",
+          "No sé ninguna cosa",
+          "Nada no sé"
+        ],
+        correct: 0,
+        hint: "No + sé + nada — стандартное двойное отрицание. 'Sé nada' неграмматично"
+      },
+      {
+        question: "Я никогда не ем рыбу (двойное отрицание)",
+        options: [
+          "Nunca como pescado",
+          "No como nunca pescado",
+          "No como pescado nunca",
+          "No como nada pescado"
+        ],
+        correct: 2,
+        hint: "No + глагол + nunca (после глагола). 'Nunca' перед глаголом — одно отрицание без 'no'"
+      },
+      {
+        question: "У меня ничего нет",
+        options: [
+          "Tengo nada",
+          "No tengo ninguna cosa",
+          "No tengo nada",
+          "Nada tengo yo"
+        ],
+        correct: 2,
+        hint: "No tengo nada — двойное отрицание: 'no' + 'nada'. Это норма испанского языка"
+      }
+    ]
+  },
+
+  // ─── Формула 31 ────────────────────────────────────────────────────────────
+  {
+    id: 31,
+    name: "Формула 31: Ponerse / Quedarse + прилагательное",
+    shortName: "Ponerse / Quedarse",
+    emoji: "😮",
+    description: "Ponerse — внезапная реакция; Quedarse — оставаться в состоянии как результат",
+    rule: "ponerse + adj (внезапно) | quedarse + adj (результат/оставаться)",
+    example: "Se puso rojo de vergüenza",
+    exampleRu: "Он покраснел от стыда",
+    examples: [
+      { es: "Me puse nervioso antes del examen", ru: "Я занервничал перед экзаменом" },
+      { es: "Se quedó sorprendido con la noticia", ru: "Он остался удивлённым от новости" },
+      { es: "Te pusiste muy contento", ru: "Ты обрадовался / стал очень радостным" },
+      { es: "Nos quedamos sin palabras", ru: "Мы лишились слов / остались без слов" },
+      { es: "Se puso triste al escuchar eso", ru: "Она загрустила, услышав это" },
+      { es: "Me quedé dormido en el sofá", ru: "Я заснул на диване (и остался спать)" },
+      { es: "Se puso pálido de miedo", ru: "Он побледнел от страха" }
+    ],
+    quiz: [
+      {
+        question: "Она покраснела (внезапная реакция)",
+        options: [
+          "Se quedó roja",
+          "Se puso roja",
+          "Está roja",
+          "Se volvió roja"
+        ],
+        correct: 1,
+        hint: "Ponerse = внезапная эмоциональная или физическая реакция: se puso roja"
+      },
+      {
+        question: "Мы онемели от удивления (остались в этом состоянии)",
+        options: [
+          "Nos pusimos mudos",
+          "Estuvimos mudos",
+          "Nos quedamos mudos",
+          "Fuimos mudos"
+        ],
+        correct: 2,
+        hint: "Quedarse = оставаться в состоянии как результат события: nos quedamos mudos"
+      },
+      {
+        question: "Я занервничал перед экзаменом",
+        options: [
+          "Me quedé nervioso",
+          "Me puse nervioso",
+          "Estuve nervioso",
+          "Tuve nervioso"
+        ],
+        correct: 1,
+        hint: "Ponerse nervioso — внезапная реакция на ситуацию. Quedarse nervioso — остаться в нервном состоянии"
+      }
+    ]
+  },
+
+  // ─── Формула 32 ────────────────────────────────────────────────────────────
+  {
+    id: 32,
+    name: "Формула 32: Si + presente → futuro (реальное условие)",
+    shortName: "Si real (если...то)",
+    emoji: "🔀",
+    description: "Реальное условие: если произойдёт X, то результат Y возможен",
+    rule: "Si + presente indicativo → futuro / presente / imperativo",
+    example: "Si tengo tiempo, te llamaré",
+    exampleRu: "Если у меня будет время, я тебе позвоню",
+    examples: [
+      { es: "Si llueve, no salimos", ru: "Если будет дождь, не выходим" },
+      { es: "Si estudias, aprobarás", ru: "Если будешь учиться, сдашь экзамен" },
+      { es: "Si tienes hambre, come algo", ru: "Если голоден, поешь что-нибудь" },
+      { es: "Si viene Pedro, avísame", ru: "Если придёт Педро, сообщи мне" },
+      { es: "Si hace calor, vamos a la playa", ru: "Если жарко, идём на пляж" },
+      { es: "Si no entiendes, pregunta", ru: "Если не понимаешь, спроси" }
+    ],
+    quiz: [
+      {
+        question: "Если у него будет время, он придёт",
+        options: [
+          "Si tendrá tiempo, vendrá",
+          "Si tiene tiempo, vendrá",
+          "Si tiene tiempo, vendría",
+          "Si tuviera tiempo, vendrá"
+        ],
+        correct: 1,
+        hint: "Реальное условие: Si + PRESENTE (не futuro!), + futuro. Никогда 'si + tendrá'"
+      },
+      {
+        question: "Если будешь учиться, сдашь экзамен",
+        options: [
+          "Si estudiarás, aprobarás",
+          "Si estudias, aprobas",
+          "Si estudias, aprobarás",
+          "Si estudies, aprobarás"
+        ],
+        correct: 2,
+        hint: "Si + presente indicativo (estudias) + futuro (aprobarás). 'estudies' — субхунтиво, здесь неверно"
+      },
+      {
+        question: "Если голоден — поешь (повелительное в результате)",
+        options: [
+          "Si tienes hambre, comerás",
+          "Si tendrás hambre, come",
+          "Si tienes hambre, come",
+          "Si tienes hambre, comer"
+        ],
+        correct: 2,
+        hint: "Si + presente, + imperativo — реальное условие с советом или приказом"
+      }
+    ]
+  },
+
+  // ─── Формула 33 ────────────────────────────────────────────────────────────
+  {
+    id: 33,
+    name: "Формула 33: Придаточные определительные (que / donde / lo que)",
+    shortName: "Que / Donde / Lo que",
+    emoji: "🔗",
+    description: "Связывают главное предложение с придаточным, уточняя существительное",
+    rule: "[sustantivo] + que (для людей/вещей) / donde (для мест) / lo que (без антецедента)",
+    example: "El libro que leí es interesante",
+    exampleRu: "Книга, которую я прочитал, интересная",
+    examples: [
+      { es: "La ciudad donde vivo es bonita", ru: "Город, в котором я живу, красивый" },
+      { es: "Lo que dices es verdad", ru: "То, что ты говоришь, — правда" },
+      { es: "El chico que conocí es simpático", ru: "Парень, которого я встретил, симпатичный" },
+      { es: "La película que vimos fue genial", ru: "Фильм, который мы посмотрели, был отличным" },
+      { es: "La casa donde nació es muy antigua", ru: "Дом, где он родился, очень старый" },
+      { es: "Lo que necesito es descansar", ru: "То, что мне нужно, — это отдохнуть" }
+    ],
+    quiz: [
+      {
+        question: "Книга, которую я купил, очень дорогая",
+        options: [
+          "El libro donde compré es muy caro",
+          "El libro que compré es muy caro",
+          "El libro lo que compré es muy caro",
+          "El libro quien compré es muy caro"
+        ],
+        correct: 1,
+        hint: "Для вещей — 'que', не 'quien' (quien — для людей) и не 'donde' (donde — для мест)"
+      },
+      {
+        question: "Город, где я родился, находится на севере",
+        options: [
+          "La ciudad que nací está en el norte",
+          "La ciudad lo que nací está en el norte",
+          "La ciudad donde nací está en el norte",
+          "La ciudad cuando nací está en el norte"
+        ],
+        correct: 2,
+        hint: "'Donde' — для мест. La ciudad donde nací = 'город, где я родился'"
+      },
+      {
+        question: "То, что ты говоришь, — правда",
+        options: [
+          "Que dices es verdad",
+          "Lo que dices es verdad",
+          "Eso que dices es verdad siempre",
+          "Cual dices es verdad"
+        ],
+        correct: 1,
+        hint: "'Lo que' = 'то, что' — без конкретного существительного. Lo que dices es verdad"
+      }
+    ]
+  },
+
+  // ─── Формула 34 ────────────────────────────────────────────────────────────
+  {
+    id: 34,
+    name: "Формула 34: Lo + прилагательное (абстрактное значение)",
+    shortName: "Lo + adj",
+    emoji: "💡",
+    description: "'Lo' + прилагательное = абстрактное существительное: 'главное', 'хорошее', 'важное'",
+    rule: "Lo + adjetivo/participio = 'то, что является [прилагательным]'",
+    example: "Lo importante es intentarlo",
+    exampleRu: "Главное — это попробовать",
+    examples: [
+      { es: "Lo bueno de la vida es disfrutarla", ru: "Хорошее в жизни — наслаждаться ею" },
+      { es: "Lo malo es que no hay tiempo", ru: "Плохое то, что времени нет" },
+      { es: "Lo mejor de Madrid es el clima", ru: "Лучшее в Мадриде — это климат" },
+      { es: "Lo difícil no es empezar", ru: "Трудное — это не начать" },
+      { es: "Lo más importante es la salud", ru: "Самое главное — это здоровье" },
+      { es: "Lo interesante es el final", ru: "Интересное — это финал" }
+    ],
+    quiz: [
+      {
+        question: "Главное — это быть здоровым",
+        options: [
+          "El importante es ser sano",
+          "Lo importante es ser sano",
+          "La importante es ser sano",
+          "Importante es ser sano"
+        ],
+        correct: 1,
+        hint: "Нейтральный артикль 'lo' + прилагательное = абстрактное понятие. Не 'el/la'"
+      },
+      {
+        question: "Лучшее в путешествии — это встречи",
+        options: [
+          "El mejor del viaje son los encuentros",
+          "Lo mejor del viaje son los encuentros",
+          "La mejor del viaje son los encuentros",
+          "Lo bueno del viaje son los encuentros"
+        ],
+        correct: 1,
+        hint: "Lo mejor = 'лучшее'. Lo + превосходная степень прилагательного"
+      },
+      {
+        question: "Плохое то, что уже поздно",
+        options: [
+          "El malo es que ya es tarde",
+          "Lo malo que ya es tarde",
+          "Lo malo es que ya es tarde",
+          "El malo es ya tarde"
+        ],
+        correct: 2,
+        hint: "Lo malo es que... — 'плохое то, что'. Структура: Lo + adj + es + que + предложение"
+      }
+    ]
+  },
+
+  // ─── Формула 35 ────────────────────────────────────────────────────────────
+  {
+    id: 35,
+    name: "Формула 35: Para que + subjuntivo (цель для другого)",
+    shortName: "Para que + subj",
+    emoji: "🎯",
+    description: "Цель для другого человека — 'чтобы ты...', 'для того, чтобы он...'",
+    rule: "Para que + subjuntivo (разные подлежащие) | Para + infinitivo (одно подлежащее)",
+    example: "Te lo digo para que lo sepas",
+    exampleRu: "Говорю тебе, чтобы ты знал",
+    examples: [
+      { es: "Habla más despacio para que te entiendan", ru: "Говори медленнее, чтобы тебя поняли" },
+      { es: "Te llamo para que no olvides", ru: "Звоню тебе, чтобы ты не забыл" },
+      { es: "Explícalo para que todos comprendan", ru: "Объясни, чтобы все поняли" },
+      { es: "Abre la ventana para que entre aire", ru: "Открой окно, чтобы вошёл воздух" },
+      { es: "Lo escribo para no olvidarlo", ru: "Записываю, чтобы не забыть (одно подлежащее → infinitivo)" },
+      { es: "Viene para que lo ayudemos", ru: "Он приходит, чтобы мы ему помогли" }
+    ],
+    quiz: [
+      {
+        question: "Говорю тебе, чтобы ты знал",
+        options: [
+          "Te lo digo para que sabes",
+          "Te lo digo para saber",
+          "Te lo digo para que sepas",
+          "Te lo digo para que lo saber"
+        ],
+        correct: 2,
+        hint: "Para que + SUBJUNTIVO: sepas (subj. presente от saber). Не 'sabes' (indicativo)!"
+      },
+      {
+        question: "Объясни, чтобы все поняли",
+        options: [
+          "Explícalo para que todos entienden",
+          "Explícalo para todos entender",
+          "Explícalo para que todos entiendan",
+          "Explícalo para entender todos"
+        ],
+        correct: 2,
+        hint: "Para que + subj: entiendan (3л. мн.ч. субхунтиво от entender). Разные подлежащие → para que"
+      },
+      {
+        question: "Записываю, чтобы не забыть (одно подлежащее — я)",
+        options: [
+          "Lo escribo para que no olvide",
+          "Lo escribo para no olvidar",
+          "Lo escribo para que no olvidas",
+          "Lo escribo para que no olvidar"
+        ],
+        correct: 1,
+        hint: "Одно подлежащее → para + infinitivo (не 'para que'). Para no olvidar"
+      }
+    ]
+  },
+
+  // ─── Формула 36 ────────────────────────────────────────────────────────────
+  {
+    id: 36,
+    name: "Формула 36: Si + imperfecto subj → condicional (нереальное условие)",
+    shortName: "Si irreal (если бы...)",
+    emoji: "💭",
+    description: "Нереальное или маловероятное условие — 'если бы у меня было..., я бы...'",
+    rule: "Si + imperfecto de subjuntivo (-ra/-se), + condicional simple (-ría)",
+    example: "Si tuviera dinero, viajaría por el mundo",
+    exampleRu: "Если бы у меня были деньги, я бы путешествовал по миру",
+    examples: [
+      { es: "Si fuera rico, compraría una casa", ru: "Если бы я был богатым, купил бы дом" },
+      { es: "Si hablara chino, encontraría trabajo fácil", ru: "Если бы я говорил по-китайски, легко нашёл бы работу" },
+      { es: "Si tuviera tiempo, aprendería a tocar la guitarra", ru: "Если бы у меня было время, научился бы играть" },
+      { es: "Si viviera en España, hablaría español mejor", ru: "Если бы я жил в Испании, говорил бы лучше" },
+      { es: "Si pudiera, te ayudaría", ru: "Если бы я мог, помог бы тебе" },
+      { es: "Si no lloviera tanto, saldríamos más", ru: "Если бы дождя было меньше, мы выходили бы чаще" }
+    ],
+    quiz: [
+      {
+        question: "Если бы у меня были деньги, я купил бы дом",
+        options: [
+          "Si tengo dinero, compraría una casa",
+          "Si tendría dinero, compraría una casa",
+          "Si tuviera dinero, compraría una casa",
+          "Si tuviera dinero, compraré una casa"
+        ],
+        correct: 2,
+        hint: "Si + imperfecto subj (tuviera) + condicional (compraría). Никогда 'si + condicional'!"
+      },
+      {
+        question: "Если бы я жил в Мадриде, ходил бы в музеи каждую неделю",
+        options: [
+          "Si vivo en Madrid, iría a museos cada semana",
+          "Si viviera en Madrid, iría a museos cada semana",
+          "Si vivería en Madrid, iría a museos cada semana",
+          "Si viviera en Madrid, iré a museos cada semana"
+        ],
+        correct: 1,
+        hint: "Si viviera (imperfecto subj) → iría (condicional). Нереальное условие в настоящем"
+      },
+      {
+        question: "Если бы я мог, помог бы тебе",
+        options: [
+          "Si puedo, te ayudaría",
+          "Si podría, te ayudaría",
+          "Si podré, te ayudaría",
+          "Si pudiera, te ayudaría"
+        ],
+        correct: 3,
+        hint: "pudiera — imperfecto de subjuntivo от 'poder'. Si pudiera → te ayudaría"
+      }
+    ]
   }
 ];
 
