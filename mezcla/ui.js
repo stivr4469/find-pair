@@ -217,7 +217,7 @@ const MezclaUI = {
           'pointer-events: none;',
           'box-shadow: 0 2px 8px rgba(0,0,0,0.3);',
         '">',
-          (isEs ? '🇷🇺 ' : '🇪🇸 ') + _escHtmlM(tooltipText),
+          (isEs ? 'RU: ' : 'ES: ') + _escHtmlM(tooltipText),
         '</span>',
       ].join('') : '';
 
