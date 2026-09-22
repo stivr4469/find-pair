@@ -179,12 +179,44 @@ Add new modules here as `<a href="MODULE_DIR/" class="game-card">` blocks inside
 | 2 | tren/ | 🚂 | Глаголы движения | medium |
 | 3 | ser-estar/ | 🎭 | Ser vs Estar | medium |
 | 4 | formulas/ | 📚 | 36 Формул | hard/Грамматика |
+| 5 | mezcla/ | 🌀 | Mezcla | medium/Чтение |
+| 6 | pasado/ | ⏪ | Прошедшее время | hard/Грамматика |
 
 ---
 
-## Module 5 — PLANNED: pasado/ (Прошедшее время)
+## Module 5 — mezcla/ (смешанное чтение)
 
-**Goal:** 16 formulas covering the 4 core past tenses, 6 questions each (96 total).
+**Идея:** тексты с регулируемой долей испанских слов (0–100%). Каждый токен — смысловая фраза `{ru, es}`.
+
+```
+mezcla/
+├── index.html    ← <main id="mezcla-content">, scripts with ?v=1
+├── data.js       ← const MEZCLA_DATA = [...]  (6 текстов, ~58–61 токен каждый)
+├── ui.js         ← const MezclaUI = {...}
+└── app.js        ← const MezclaApp = {...}
+                     window aliases prefix: mezclaXxx
+```
+
+**Структура токена:**
+```js
+{ ru: "пошёл в магазин", es: "fui a la tienda" }
+```
+
+**Тексты:** 🛒 Магазин · 🍽️ Ресторан · ✈️ Аэропорт · 🌳 Парк · 🤝 Знакомство · 🌦️ Погода
+
+**Ключевые функции:**
+- `mezclaSetPct(v)` — устанавливает % и пересчитывает `tokenLangs`
+- `mezclaReshuffle()` — тот же %, другие случайные токены
+- `mezclaTapToken(i)` — показать/скрыть перевод токена (tooltip)
+- `MezclaApp._assignTokens(count, pct)` — Fisher-Yates shuffle для выбора токенов
+
+**Cache-busting:** текущая версия `data.js`, `ui.js`, `app.js` — `?v=1`
+
+---
+
+## Module 6 — pasado/ (Прошедшее время)
+
+**Состав:** 16 формул × 6 вопросов = 96 вопросов.
 
 ```
 pasado/
@@ -195,21 +227,19 @@ pasado/
                      window aliases prefix: pasadoXxx
 ```
 
-**Formula groups:**
+**Группы формул:**
 
-| Group | Tense | Formulas |
+| Группа | Время | Формулы |
 |---|---|---|
-| F1–F4 | Pretérito Indefinido | Regular -AR, -ER/-IR, irregular (ser/ir/tener/hacer), stem-changing |
-| F5–F8 | Pretérito Imperfecto | Regular -AR, -ER/-IR, irregular (ser/ir/ver), usage rules |
-| F9–F12 | Pretérito Perfecto Compuesto | haber conjugation, past participles, regular/irregular, usage |
-| F13–F16 | Pluscuamperfecto | Formation (había + pp), usage, comparison with Indefinido |
+| F1–F4 | Pretérito Indefinido | -AR, -ER/-IR, ser/ir/hacer/tener, stem-changing |
+| F5–F8 | Pretérito Imperfecto | -AR, -ER/-IR, ser/ir/ver, употребление |
+| F9–F12 | Pretérito Perfecto Compuesto | haber, правильные и нестанд. причастия, употребление |
+| F13–F16 | Pluscuamperfecto | форма, употребление, нестанд. причастия, сравнение 4 времён |
 
-**Naming conventions for pasado module:**
-- Data global: `PASADO_DATA`
-- App global: `PasadoApp`
-- UI global: `PasadoUI`
+**Naming:**
+- Data: `PASADO_DATA` · App: `PasadoApp` · UI: `PasadoUI`
 - Window aliases: `pasadoShowCard(i)`, `pasadoStartQuiz(i)`, `pasadoHandleAnswer(i)`, `pasadoNext()`, `pasadoBackToList()`, `pasadoShowPrev()`, `pasadoShowNext()`, `pasadoStartAllQuiz()`
-- Main container id: `pasado-content`
+- Container id: `pasado-content`
 
 ---
 
@@ -217,12 +247,12 @@ pasado/
 
 | Concern | Pattern | Example |
 |---|---|---|
-| Data global | `UPPER_MODULE_DATA` | `FORMULAS_DATA`, `PASADO_DATA` |
-| App global | `ModuleApp` | `FormulasApp`, `PasadoApp` |
-| UI global | `ModuleUI` | `FormulasUI`, `PasadoUI` |
-| Window aliases | `moduleFunctionName` | `formulaStartQuiz`, `pasadoStartQuiz` |
-| Main container id | `module-content` | `formulas-content`, `pasado-content` |
-| Score area id | `score-area` | same across modules |
+| Data global | `UPPER_MODULE_DATA` | `FORMULAS_DATA`, `PASADO_DATA`, `MEZCLA_DATA` |
+| App global | `ModuleApp` | `FormulasApp`, `PasadoApp`, `MezclaApp` |
+| UI global | `ModuleUI` | `FormulasUI`, `PasadoUI`, `MezclaUI` |
+| Window aliases | `moduleFunctionName` | `formulaStartQuiz`, `pasadoStartQuiz`, `mezclaSetPct` |
+| Main container id | `module-content` | `formulas-content`, `pasado-content`, `mezcla-content` |
+| Score area id | `score-area` | same across quiz modules (not used in mezcla) |
 
 ---
 
