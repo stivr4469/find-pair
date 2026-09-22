@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⏪ Прошедшее время</title>
+    <link rel="stylesheet" href="../css/unified-styles.css?v=11">
+    <style>
+        .pasado-main {
+            width: 100%;
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 16px 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="back-button-container">
+        <a href="../" class="back-button">← Назад в меню</a>
+    </div>
+
+    <header class="app-header">
+        <h1>⏪ Прошедшее время</h1>
+    </header>
+
+    <section id="score-area" class="score-display hidden">
+        <span id="score-label">Счёт:</span>
+        <span id="score-value">0</span>
+    </section>
+
+    <main id="pasado-content" class="pasado-main"></main>
+
+    <footer class="app-footer">
+        <p>4 времени · Indefinido · Imperfecto · Perfecto · Pluscuamperfecto</p>
+    </footer>
+
+    <script src="../js/utils.js?v=12"></script>
+    <script src="data.js?v=1"></script>
+    <script src="ui.js?v=1"></script>
+    <script src="app.js?v=1"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof PasadoApp !== 'undefined') {
+                PasadoApp.init();
+            }
+        });
+    </script>
+</body>
+</html>
