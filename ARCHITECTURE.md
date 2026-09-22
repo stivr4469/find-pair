@@ -1,4 +1,4 @@
-# Architecture: Spanish Trainer App
+# Architecture: VamoS — Spanish Trainer App
 
 > Read this file at the start of every session to skip codebase exploration.
 > **Update this file whenever modules, data structures, or conventions change.**
