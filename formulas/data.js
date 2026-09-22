@@ -41,6 +41,24 @@ const FORMULAS_DATA = [
         options: ["El nuevo libro interesante", "El libro es nuevo interesante", "El libro nuevo e interesante", "Nuevo interesante el libro"],
         correct: 2,
         hint: "Перед словами, начинающимися на i/hi, «y» меняется на «e»"
+      },
+      {
+        question: "Высокая девушка",
+        options: ["La alta chica", "La chica alta", "Alta la chica", "La chica es alta"],
+        correct: 1,
+        hint: "Прилагательное стоит ПОСЛЕ существительного: la chica alta (ж.р.)"
+      },
+      {
+        question: "Красные машины",
+        options: ["Los coches rojo", "Rojos los coches", "Los rojos coches", "Los coches rojos"],
+        correct: 3,
+        hint: "Во множественном числе прилагательное тоже принимает форму мн.ч.: coches rojos"
+      },
+      {
+        question: "Старый и мудрый мужчина",
+        options: ["El hombre viejo sabio", "El hombre viejo y sabio", "El viejo y sabio el hombre", "Viejo y sabio hombre"],
+        correct: 1,
+        hint: "Два прилагательных соединяются через y и стоят после существительного"
       }
     ]
   },
@@ -81,6 +99,24 @@ const FORMULAS_DATA = [
         options: ["Ellos diligentes trabajan", "Ellos trabajan muy diligente", "Diligentemente los ellos", "Ellos trabajan diligentemente"],
         correct: 3,
         hint: "trabajar + diligentemente. Наречие стоит после глагола"
+      },
+      {
+        question: "Он водит осторожно",
+        options: ["Él conduce cuidadosa", "Él cuidadoso conduce", "Él conduce cuidadosamente", "Cuidadosamente él conduce"],
+        correct: 2,
+        hint: "Наречие образуется от женской формы прилагательного + -mente: cuidadosa → cuidadosamente"
+      },
+      {
+        question: "Она отвечает правильно",
+        options: ["Ella correctamente responde", "Ella responde correcto", "Ella responde correcta", "Ella responde correctamente"],
+        correct: 3,
+        hint: "Наречие ставится ПОСЛЕ глагола: responde + correctamente"
+      },
+      {
+        question: "Ты говоришь чётко",
+        options: ["Hablas claro mucho", "Hablas claramente", "Claramente tú habla", "Hablas en clara"],
+        correct: 1,
+        hint: "claro → форма ж.р. clara → claramente. Наречие после глагола"
       }
     ]
   },
@@ -121,6 +157,24 @@ const FORMULAS_DATA = [
         options: ["¿Cuesta cuánto?", "¿Cuánto es cuesta?", "Cuánto cuesta", "¿Cuánto cuesta?"],
         correct: 3,
         hint: "¿Cuánto + глагол? — вопросительное слово стоит перед глаголом"
+      },
+      {
+        question: "Почему ты учишь испанский?",
+        options: ["¿Tú por qué estudias español?", "¿Por qué estudias español?", "Por qué estudias español?", "¿Por qué español estudias?"],
+        correct: 1,
+        hint: "¿Por qué + глагол + подлежащее? Нужны оба знака вопроса: ¿...?"
+      },
+      {
+        question: "Когда приходит поезд?",
+        options: ["¿El tren cuándo llega?", "Cuándo llega el tren?", "¿Cuándo el tren llega?", "¿Cuándo llega el tren?"],
+        correct: 3,
+        hint: "¿Cuándo + глагол + подлежащее? — вопросительное слово стоит первым"
+      },
+      {
+        question: "Как тебя зовут?",
+        options: ["¿Tú cómo te llamas?", "¿Cómo te llamas tú?", "Cómo te llamas?", "¿Te llamas cómo?"],
+        correct: 1,
+        hint: "¿Cómo + возвратный глагол + подлежащее? Оба знака вопроса обязательны"
       }
     ]
   },
@@ -161,6 +215,24 @@ const FORMULAS_DATA = [
         options: ["Nosotros regalamos flores Ana le", "Nosotros le regalamos a Ana flores", "Nosotros flores regalamos a Ana", "Nosotros le regalamos flores a Ana"],
         correct: 3,
         hint: "le перед глаголом, прямое дополнение (flores) после глагола, «a Ana» в конце"
+      },
+      {
+        question: "Я показываю фотографии своим друзьям",
+        options: ["Yo muestro fotos a mis amigos les", "Yo les muestro a mis amigos fotos", "Yo muestro les fotos mis amigos", "Yo les muestro fotos a mis amigos"],
+        correct: 3,
+        hint: "Множественное число: les (не le). les перед глаголом + прямое дополнение + «a mis amigos»"
+      },
+      {
+        question: "Она говорит правду детям",
+        options: ["Ella dice la verdad a los niños les", "Ella les dice a niños la verdad", "Ella les dice la verdad a los niños", "Ella dice les la verdad a los niños"],
+        correct: 2,
+        hint: "les стоит ПЕРЕД глаголом, прямое дополнение после глагола, «a los niños» — уточнение"
+      },
+      {
+        question: "Я одалживаю деньги тебе",
+        options: ["Yo presto dinero tú", "Yo presto te dinero a ti", "Yo te presto dinero a ti", "Yo a ti presto te dinero"],
+        correct: 2,
+        hint: "te (местоимение) стоит перед глаголом, «a ti» — уточнение в конце"
       }
     ]
   },
@@ -201,6 +273,24 @@ const FORMULAS_DATA = [
         options: ["Ella conoce María", "Ella a conoce María", "Ella conoce para María", "Ella conoce a María"],
         correct: 3,
         hint: "conocer + a + имя человека. «a» стоит между глаголом и именем"
+      },
+      {
+        question: "Я ищу своего друга",
+        options: ["Busco mi amigo", "Busco para mi amigo", "Busco de mi amigo", "Busco a mi amigo"],
+        correct: 3,
+        hint: "buscar + a + человек: личное «a» обязательно перед одушевлённым дополнением"
+      },
+      {
+        question: "Я читаю книгу (неодушевлённое)",
+        options: ["Leo a un libro", "Leo para un libro", "Leo un libro", "Leo de un libro"],
+        correct: 2,
+        hint: "С неодушевлёнными предметами личное «a» НЕ используется: leo un libro"
+      },
+      {
+        question: "Они ждут своего учителя",
+        options: ["Esperan su profesor", "Esperan para su profesor", "Esperan de su profesor", "Esperan a su profesor"],
+        correct: 3,
+        hint: "esperar + a + человек. Личное «a» обязательно перед конкретным человеком"
       }
     ]
   },
@@ -241,6 +331,24 @@ const FORMULAS_DATA = [
         options: ["Explica el tema al alumno", "Le explica el tema alumno", "Le al alumno explica el tema", "Le explica el tema al alumno"],
         correct: 3,
         hint: "le перед глаголом, прямое дополнение после глагола, «al alumno» в конце"
+      },
+      {
+        question: "Я рассказываю историю друзьям (с уточнением)",
+        options: ["Cuento la historia a mis amigos", "Les cuento a mis amigos la historia les", "Les cuento la historia mis amigos", "Les cuento la historia a mis amigos"],
+        correct: 3,
+        hint: "Множественное число: les перед глаголом + прямое дополнение + «a mis amigos» в конце"
+      },
+      {
+        question: "Я показываю дорогу ему (с уточнением)",
+        options: ["Muestro el camino a él", "Le muestro el camino él", "Le al él muestro el camino", "Le muestro el camino a él"],
+        correct: 3,
+        hint: "le перед глаголом, прямое дополнение после, «a él» — уточнение в конце"
+      },
+      {
+        question: "Я приношу кофе клиентам (с уточнением)",
+        options: ["Traigo café a los clientes", "Le traigo café a los clientes", "Les a los clientes traigo café", "Les traigo café a los clientes"],
+        correct: 3,
+        hint: "Множественное число OI: les (не le). Порядок: les + глагол + OD + «a los clientes»"
       }
     ]
   },
@@ -281,6 +389,24 @@ const FORMULAS_DATA = [
         options: ["Sentamos", "Nosotros sentamos nos", "Nos estamos sentado", "Nos sentamos"],
         correct: 3,
         hint: "Возвратное nos стоит перед глаголом: nos sentamos"
+      },
+      {
+        question: "Я встаю рано",
+        options: ["Levanto temprano", "Yo me levanta temprano", "Me levanto temprano", "Yo levanto me temprano"],
+        correct: 2,
+        hint: "me стоит ПЕРЕД спрягаемым глаголом: me levanto (levantarse, 1 л. ед.ч.)"
+      },
+      {
+        question: "Он бреется каждое утро",
+        options: ["Él afeita cada mañana", "Él se afeita cada mañana", "Él se afeitar cada mañana", "Se él afeita cada mañana"],
+        correct: 1,
+        hint: "se перед спрягаемым глаголом: Él se afeita (afeitarse, 3 л. ед.ч.)"
+      },
+      {
+        question: "Меня зовут Карлос",
+        options: ["Soy llamado Carlos", "Me llama Carlos", "Me llamo Carlos", "Carlos me llamas"],
+        correct: 2,
+        hint: "llamarse (называться): me llamo = «я называюсь». Возвратное me перед глаголом"
       }
     ]
   },
@@ -321,6 +447,24 @@ const FORMULAS_DATA = [
         options: ["Necesitan que trabajar", "Necesitan trabajando", "Necesitan trabajan", "Necesitan trabajar"],
         correct: 3,
         hint: "necesitar + инфинитив: necesitan + trabajar"
+      },
+      {
+        question: "Я умею готовить",
+        options: ["Sé que cocinar", "Sé cocinando", "Sé cocino", "Sé cocinar"],
+        correct: 3,
+        hint: "saber + инфинитив напрямую: sé + cocinar (без «que»)"
+      },
+      {
+        question: "Она предпочитает читать",
+        options: ["Ella prefiere que leer", "Ella prefiere leyendo", "Ella prefiere leer", "Ella prefiere lee"],
+        correct: 2,
+        hint: "preferir + инфинитив: prefiere + leer. После preferir инфинитив без «que»"
+      },
+      {
+        question: "Я не могу петь",
+        options: ["No soy poder cantar", "No puedo cantando", "No puedo que cante", "No puedo cantar"],
+        correct: 3,
+        hint: "Отрицание ставится перед спрягаемым глаголом: no puedo + cantar (инфинитив)"
       }
     ]
   },
@@ -361,6 +505,24 @@ const FORMULAS_DATA = [
         options: ["Hay dormir bien", "Hay que duerme bien", "Tienes hay que dormir bien", "Hay que dormir bien"],
         correct: 3,
         hint: "Hay que + инфинитив. После hay que глагол не спрягается"
+      },
+      {
+        question: "Нужно быть вежливым (безлично)",
+        options: ["Tienes que ser amable", "Hay que eres amable", "Hay ser amable", "Hay que ser amable"],
+        correct: 3,
+        hint: "Hay que + инфинитив: hay que ser. Форма всегда неизменна, не спрягается"
+      },
+      {
+        question: "Не нужно кричать (безлично)",
+        options: ["No tienes que gritar", "Hay que no gritar", "No hay gritar", "No hay que gritar"],
+        correct: 3,
+        hint: "Отрицание: no hay que + инфинитив. no стоит перед hay"
+      },
+      {
+        question: "Нужно купить хлеб (безлично, не личная обязанность)",
+        options: ["Tienes que comprar pan", "Hay que compra pan", "Hay comprar pan", "Hay que comprar pan"],
+        correct: 3,
+        hint: "Hay que — безличная форма (никто конкретный). Tienes que — личная. После hay que — инфинитив"
       }
     ]
   },
@@ -401,6 +563,24 @@ const FORMULAS_DATA = [
         options: ["Hay que trabajamos", "Tenemos trabajar", "Tenemos que trabajamos", "Tenemos que trabajar"],
         correct: 3,
         hint: "tenemos que + инфинитив. После «que» глагол не спрягается"
+      },
+      {
+        question: "Вам (вы, мн.ч.) нужно позвонить врачу",
+        options: ["Tenéis que llamas al médico", "Habéis que llamar al médico", "Tenéis llamar al médico", "Tenéis que llamar al médico"],
+        correct: 3,
+        hint: "tenéis (2 л. мн.ч. tener) + que + инфинитив llamar. После «que» — не спрягать глагол"
+      },
+      {
+        question: "Им нужно поесть перед работой",
+        options: ["Tienen comer antes de trabajar", "Tienen que come antes de trabajar", "Tienen que comer antes de trabajar", "Han que comer antes de trabajar"],
+        correct: 2,
+        hint: "tienen (3 л. мн.ч.) + que + инфинитив comer. Не «come» (спряжённая форма)"
+      },
+      {
+        question: "Мне нужно вернуться домой рано?",
+        options: ["¿Tengo que volver a casa pronto?", "¿Tengo volver a casa pronto?", "¿Hay que vuelvo a casa pronto?", "¿Tengo que vuelvo a casa pronto?"],
+        correct: 0,
+        hint: "Вопрос: ¿Tengo que + инфинитив? Личная форма tener + que + volver (инф.)"
       }
     ]
   },
@@ -441,6 +621,24 @@ const FORMULAS_DATA = [
         options: ["Hemos vistos la película", "Nosotros han visto la película", "Hemos ver la película", "Hemos visto la película"],
         correct: 3,
         hint: "hemos (1 л. мн.ч.) + visto (неправильное причастие от ver). Не «vistos»"
+      },
+      {
+        question: "Ты сделал домашнее задание?",
+        options: ["¿Has hacido los deberes?", "¿Has hacer los deberes?", "¿Haces los deberes ya?", "¿Has hecho los deberes?"],
+        correct: 3,
+        hint: "has (2 л. ед.ч. haber) + hecho (неправильное причастие от hacer). Не «hacido»"
+      },
+      {
+        question: "Она ещё не сказала правду",
+        options: ["Ella no ha decido la verdad todavía", "Ella no ha dicho la verdad todavía", "Ella no haber dicho la verdad", "Ella no ha decir la verdad todavía"],
+        correct: 1,
+        hint: "ha + dicho (неправильное причастие от decir). Не «decido». Отрицание: no + ha + participio"
+      },
+      {
+        question: "Вы (мн.ч.) положили ключи на стол",
+        options: ["Habéis ponido las llaves en la mesa", "Habéis poner las llaves en la mesa", "Habéis puesto las llaves en la mesa", "Habéis puestos las llaves en la mesa"],
+        correct: 2,
+        hint: "habéis + puesto (неправильное причастие от poner). Причастие не согласуется: puesto, не puestos"
       }
     ]
   },
@@ -481,6 +679,24 @@ const FORMULAS_DATA = [
         options: ["Estamos comer", "Somos comiendo", "Hemos comiendo", "Estamos comiendo"],
         correct: 3,
         hint: "estamos + comiendo. Не haber, не ser — только estar для Progressive"
+      },
+      {
+        question: "Вы (мн.ч.) сейчас разговариваете по телефону?",
+        options: ["¿Estáis hablar por teléfono?", "¿Sois hablando por teléfono?", "¿Estáis hablando por teléfono?", "¿Estáis hablados por teléfono?"],
+        correct: 2,
+        hint: "estáis (2 л. мн.ч. estar) + hablando (герундий от hablar). Не ser"
+      },
+      {
+        question: "Они сейчас спят",
+        options: ["Están dormiendo", "Están durmiendo", "Están dormando", "Son durmiendo"],
+        correct: 1,
+        hint: "dormir → durmiendo (неправильный герундий, чередование o→u). Не «dormiendo»"
+      },
+      {
+        question: "Куда ты идёшь? (прямо сейчас)",
+        options: ["¿A dónde estás ir?", "¿A dónde eres yendo?", "¿A dónde estás yendo?", "¿A dónde estás ido?"],
+        correct: 2,
+        hint: "ir → yendo (неправильный герундий). estás + yendo. Не «ir» (инфинитив) и не «ido» (причастие)"
       }
     ]
   },
@@ -521,6 +737,24 @@ const FORMULAS_DATA = [
         options: ["Están tres días viajando", "Llevan tres días viajar", "Llevan viajando tres días", "Llevan tres días viajando"],
         correct: 3,
         hint: "llevan (3 л. мн.ч.) + tres días + viajando. Время — между глаголом и герундием"
+      },
+      {
+        question: "Сколько времени ты уже ждёшь?",
+        options: ["¿Cuánto tiempo llevas esperando?", "¿Cuánto tiempo llevas esperar?", "¿Cuánto tiempo estás llevas esperando?", "¿Cuánto tiempo llevas esperado?"],
+        correct: 0,
+        hint: "¿Cuánto tiempo llevas + герундий? — вопрос о длительности. Не «esperar» (инф.) и не «esperado» (причастие)"
+      },
+      {
+        question: "Мы бежим уже двадцать минут",
+        options: ["Estamos veinte minutos corriendo", "Llevamos veinte minutos correr", "Llevamos veinte minutos corriendo", "Llevamos corriendo desde veinte minutos"],
+        correct: 2,
+        hint: "llevamos (1 л. мн.ч.) + veinte minutos + corriendo. Время — между глаголом и герундием"
+      },
+      {
+        question: "Они едят уже час",
+        options: ["Están una hora comiendo", "Llevan una hora comiendo", "Llevan una hora comer", "Llevan comiendo por una hora"],
+        correct: 1,
+        hint: "llevan (3 л. мн.ч.) + una hora + comiendo. Не estar, не por, порядок: llevar + время + герундий"
       }
     ]
   },
@@ -561,6 +795,24 @@ const FORMULAS_DATA = [
         options: ["Salgo por Madrid", "Salgo a Madrid", "Salgo de Madrid", "Salgo para Madrid"],
         correct: 3,
         hint: "para + направление = цель поездки. por Madrid = через Мадрид (транзит)"
+      },
+      {
+        question: "Я смотрел телевизор два часа (длительность)",
+        options: ["Vi la televisión para dos horas", "Vi la televisión a dos horas", "Vi la televisión en dos horas", "Vi la televisión por dos horas"],
+        correct: 3,
+        hint: "por + промежуток времени = длительность действия. para + срок = дедлайн (к определённому моменту)"
+      },
+      {
+        question: "Это задание нужно сдать к завтрашнему утру (срок)",
+        options: ["Esta tarea es por mañana por la mañana", "Esta tarea es de mañana por la mañana", "Esta tarea es para mañana por la mañana", "Esta tarea es hasta mañana por la mañana"],
+        correct: 2,
+        hint: "para + срок/дедлайн: para mañana = к завтрашнему дню. por = причина или длительность"
+      },
+      {
+        question: "Я купил этот словарь за десять евро (обмен/цена)",
+        options: ["Compré este diccionario para diez euros", "Compré este diccionario de diez euros", "Compré este diccionario a diez euros", "Compré este diccionario por diez euros"],
+        correct: 3,
+        hint: "por + цена/обмен: compré por diez euros. para = назначение/получатель, не цена"
       }
     ]
   },
@@ -601,6 +853,24 @@ const FORMULAS_DATA = [
         options: ["Él habla más despacio como yo", "Él habla tan despacio que yo", "Él habla despacio que yo", "Él habla más despacio que yo"],
         correct: 3,
         hint: "más + наречие + que. Сравнение неравенства: más... que"
+      },
+      {
+        question: "Этот фильм менее скучный, чем тот",
+        options: ["Esta película es menos aburrida como aquella", "Esta película es tan aburrida que aquella", "Esta película es más aburrida que aquella", "Esta película es menos aburrida que aquella"],
+        correct: 3,
+        hint: "menos + прилагательное + que. Сравнение неравенства (меньше): menos... que, не como"
+      },
+      {
+        question: "У него столько же денег, сколько у неё",
+        options: ["Él tiene tan dinero como ella", "Él tiene tanto dinero que ella", "Él tiene tanto dinero como ella", "Él tiene más dinero como ella"],
+        correct: 2,
+        hint: "tanto/a/os/as + существительное + como. dinero (м.р.) → tanto dinero como"
+      },
+      {
+        question: "Этот ресторан лучший в городе (превосходная степень)",
+        options: ["Este restaurante es el más bueno de la ciudad", "Este restaurante es el bien de la ciudad", "Este restaurante es el mayor de la ciudad", "Este restaurante es el mejor de la ciudad"],
+        correct: 3,
+        hint: "bueno имеет неправильную сравнительную форму: bueno → mejor, превосходная: el mejor. Не «más bueno»"
       }
     ]
   },
@@ -641,6 +911,24 @@ const FORMULAS_DATA = [
         options: ["Ella lo lee", "Ella le lee", "Ella las lee", "Ella la lee"],
         correct: 0,
         hint: "periódico (газета) = м.р. ед.ч. → lo"
+      },
+      {
+        question: "Я выпил вино → Я его выпил (vino = м.р.)",
+        options: ["La bebí", "Le bebí", "Los bebí", "Lo bebí"],
+        correct: 3,
+        hint: "vino = м.р. ед.ч. → lo. Не la (ж.р.), не los (мн.ч.)"
+      },
+      {
+        question: "Мама купила яблоки → Она их купила (manzanas = ж.р. мн.ч.)",
+        options: ["Ella lo compró", "Ella los compró", "Ella la compró", "Ella las compró"],
+        correct: 3,
+        hint: "manzanas = ж.р. мн.ч. → las. Не los (м.р. мн.ч.), не la (ед.ч.)"
+      },
+      {
+        question: "Я хочу увидеть детей → Я хочу их увидеть (niños = м.р. мн.ч.)",
+        options: ["Quiero verlos", "Quiero verlas", "Quiero lo ver", "Los quiero ver"],
+        correct: 0,
+        hint: "niños = м.р. мн.ч. → los. При инфинитиве местоимение присоединяется к нему: quiero ver + los = quiero verlos"
       }
     ]
   },
@@ -681,6 +969,24 @@ const FORMULAS_DATA = [
         options: ["Ella es muy guapísima", "Ella es guapa muy", "Ella es guapísimas", "Ella es guapísima"],
         correct: 3,
         hint: "guapa + -ísima = guapísima. Суффикс согласуется по роду. Без muy"
+      },
+      {
+        question: "Эта еда очень вкусная (неправильная форма -ísimo от rico)",
+        options: ["La comida está muy ricísima", "La comida está ricoísima", "La comida está ricaísima", "La comida está riquísima"],
+        correct: 3,
+        hint: "rico → riquísimo (орфографическое изменение: c → qu перед -ísimo). Не ricísimo, не muy ricísimo"
+      },
+      {
+        question: "Фильм был очень хорошим (неправильная форма)",
+        options: ["La película fue buenísima", "La película fue muy buenísima", "La película fue buenísima", "La película fue lo mejor"],
+        correct: 0,
+        hint: "bueno → buenísimo (суффикс -ísimo к основе). Не muy + -ísimo вместе"
+      },
+      {
+        question: "Она очень горячая (о еде/погоде) — через -ísimo (caliente → ?)",
+        options: ["Es calientísima", "Es calienteísima", "Es mucho caliente", "Es calentísima"],
+        correct: 3,
+        hint: "прилагательные, оканчивающиеся на -e, теряют -e перед -ísimo: caliente → calent- → calentísima"
       }
     ]
   },
@@ -721,6 +1027,24 @@ const FORMULAS_DATA = [
         options: ["Ella les la contó", "Ella se lo contó", "Ella la se contó", "Ella se la contó"],
         correct: 3,
         hint: "historia = ж.р. → la. les → se перед la. Ella se la contó"
+      },
+      {
+        question: "Мы отправили им (мн.ч.) документы (documentos = м.р. мн.ч.)",
+        options: ["Les los mandamos", "Se los mandamos", "Se las mandamos", "Los les mandamos"],
+        correct: 1,
+        hint: "documentos = м.р. мн.ч. → los. les → se перед los. Порядок: se + los + глагол"
+      },
+      {
+        question: "Ты уже отдал ему это?",
+        options: ["¿Le lo has dado ya?", "¿Lo se has dado ya?", "¿Se lo has dado ya?", "¿Has dado se lo ya?"],
+        correct: 2,
+        hint: "le → se перед lo. Порядок: se lo + вспомогательный глагол + причастие: ¿Se lo has dado?"
+      },
+      {
+        question: "Я им этого не говорил (история = ж.р.)",
+        options: ["No les la dije", "No la se dije", "No se la dije", "No se lo dije"],
+        correct: 2,
+        hint: "historia = ж.р. → la. les → se перед la. Отрицание: No + se la + глагол. Не «se lo» (м.р.)"
       }
     ]
   },
@@ -761,6 +1085,24 @@ const FORMULAS_DATA = [
         options: ["¿Te gustan el español?", "¿Tú gustas el español?", "¿Te gusta de español?", "¿Te gusta el español?"],
         correct: 3,
         hint: "el español = ед.ч. → gusta. Te = тебе. Не «de español», не «tú gustas»"
+      },
+      {
+        question: "Нам очень нравятся путешествия (encantar)",
+        options: ["Nos encanta los viajes", "Nos encantan los viajes", "Nos encantamos los viajes", "Nos encanta de los viajes"],
+        correct: 1,
+        hint: "los viajes — мн.ч. → encantan. nos = нам. encantar работает как gustar: глагол согласуется с тем, что нравится"
+      },
+      {
+        question: "У него болит спина (doler)",
+        options: ["Le duelen la espalda", "Él duele la espalda", "Le duele la espalda", "Le duele las espaldas"],
+        correct: 2,
+        hint: "la espalda — ед.ч. → duele. le = ему. doler — глагол типа gustar, согласуется с подлежащим"
+      },
+      {
+        question: "Вам (vosotros) не хватает практики (faltar)",
+        options: ["Os faltan la práctica", "Os falta la práctica", "Os faltáis la práctica", "Os faltamos la práctica"],
+        correct: 1,
+        hint: "la práctica — ед.ч. → falta. os = вам (vosotros). faltar — глагол типа gustar"
       }
     ]
   },
@@ -801,6 +1143,24 @@ const FORMULAS_DATA = [
         options: ["Dudan que lo sabe", "Dudan que lo saber", "Dudan lo sepa", "Dudan que lo sepa"],
         correct: 3,
         hint: "dudar + que + субхунтиво: sepa (не sabe — это индикатив). Нужно «que»"
+      },
+      {
+        question: "Мне нужно, чтобы ты мне помог (necesitar que)",
+        options: ["Necesito que me ayudas", "Necesito que me ayudar", "Necesito me ayudes", "Necesito que me ayudes"],
+        correct: 3,
+        hint: "necesitar que + субхунтиво: ayudes (не ayudas — это индикатив). Обязательно «que»"
+      },
+      {
+        question: "Я рад, что ты здесь (alegrarse de que)",
+        options: ["Me alegra que estás aquí", "Me alegro de que estés aquí", "Me alegro que estás aquí", "Me alegra de que estar aquí"],
+        correct: 1,
+        hint: "alegrarse de que + субхунтиво: estés. Конструкция: me alegro de que + subjuntivo"
+      },
+      {
+        question: "Я рекомендую тебе попробовать (recomendar que) — форма haga",
+        options: ["Recomiendo que lo hace", "Recomiendo que lo haga", "Recomiendo que lo hacer", "Recomiendo lo haga"],
+        correct: 1,
+        hint: "recomendar que + субхунтиво: haga (нерегулярная форма hacer в субхунтиво). Обязательно «que»"
       }
     ]
   }
@@ -844,6 +1204,24 @@ const FORMULAS_DATA = [
         options: ["¿Qué haces?", "¿Qué vas hacer?", "¿Qué vas a hacer?", "¿Qué irás a hacer?"],
         correct: 2,
         hint: "¿Qué + vas + a + hacer? Предлог «a» обязателен"
+      },
+      {
+        question: "Он не собирается приходить (отрицание)",
+        options: ["No ir a venir", "No va venir", "No va a venir", "No voy a venir él"],
+        correct: 2,
+        hint: "Отрицание: no + va + a + infinitivo. «a» сохраняется: no va a venir"
+      },
+      {
+        question: "Вы (vosotros) собираетесь отдыхать?",
+        options: ["¿Van a descansar?", "¿Váis a descansar?", "¿Vosotros van a descansar?", "¿Vais a descansar?"],
+        correct: 3,
+        hint: "vosotros → vais (не «van» — это ellos). vais + a + infinitivo"
+      },
+      {
+        question: "Они собираются открыть ресторан?",
+        options: ["¿Van a abrir un restaurante?", "¿Vais a abrir un restaurante?", "¿Irán a abrir un restaurante?", "¿Van abrir un restaurante?"],
+        correct: 0,
+        hint: "ellos → van + a + infinitivo. «a» обязательно. Вопрос: ¿Van a abrir...?"
       }
     ]
   },
@@ -885,6 +1263,24 @@ const FORMULAS_DATA = [
         options: ["Debo estudiar más", "Debía estudiar más", "Debería estudiar más", "Deba estudiar más"],
         correct: 2,
         hint: "deber в конdicional: debería (следовало бы). Выражает мягкий совет"
+      },
+      {
+        question: "Я бы поговорил с ним (hablar)",
+        options: ["Hablaría con él", "Hablaré con él", "Hablaba con él", "Hablaría a él"],
+        correct: 0,
+        hint: "hablar + -ía = hablaría (кондисьональ, 1л. ед.ч.). Суффикс -ía добавляется к инфинитиву"
+      },
+      {
+        question: "Он бы пришёл (venir — нерегулярный кондисьональ)",
+        options: ["Venería", "Veniría", "Vendría", "Viniera"],
+        correct: 2,
+        hint: "venir — нерегулярный: основа vendr- + -ía = vendría. Не veniría!"
+      },
+      {
+        question: "Мы бы положили это туда (poner — нерегулярный кондисьональ)",
+        options: ["Poneríamos", "Podríamos", "Pondríamos", "Pusimos"],
+        correct: 2,
+        hint: "poner — нерегулярный: основа pondr- + -íamos = pondríamos (1л. мн.ч.)"
       }
     ]
   },
@@ -926,6 +1322,24 @@ const FORMULAS_DATA = [
         options: ["Habla", "Hablas", "Hable", "Hablen"],
         correct: 2,
         hint: "Imperativo usted = форма субхунтиво: (que) hable → ¡Hable!"
+      },
+      {
+        question: "Ешь (tú, позитивный) vs Не ешь (tú, негативный) — выбери негативную форму",
+        options: ["No come", "No comer", "No comiendo", "No comas"],
+        correct: 3,
+        hint: "Негативный императив tú = no + субхунтиво: no comas. Позитивный tú: ¡Come! (3л.ед.ч.)"
+      },
+      {
+        question: "Иди сюда! (tú, нерегулярный императив от venir)",
+        options: ["¡Viene!", "¡Vengas!", "¡Ven!", "¡Venir!"],
+        correct: 2,
+        hint: "venir — нерегулярный позитивный императив tú: ¡Ven! (не viene, не vengas)"
+      },
+      {
+        question: "Говорите (ustedes, множественная вежливая форма)",
+        options: ["Habla", "Hable", "Habláis", "Hablen"],
+        correct: 3,
+        hint: "Imperativo ustedes = субхунтиво 3л.мн.ч.: hablen. Не hable (usted ед.ч.) и не habláis (vosotros)"
       }
     ]
   },
@@ -967,6 +1381,24 @@ const FORMULAS_DATA = [
         options: ["¿Puedo entrar?", "¿Puedo entrando?", "¿Poder entrar?", "¿Puedo a entrar?"],
         correct: 0,
         hint: "¿Puedo + infinitivo? — вежливый запрос разрешения"
+      },
+      {
+        question: "Вы (vosotros) можете выйти сейчас",
+        options: ["Pueden salir ahora", "Podéis salir ahora", "Podáis salir ahora", "Podéis a salir ahora"],
+        correct: 1,
+        hint: "vosotros → podéis (не pueden — это ellos). podéis + infinitivo без предлога"
+      },
+      {
+        question: "Они должны прийти вовремя (deber)",
+        options: ["Ellos pueden llegar a tiempo", "Ellos deben a llegar a tiempo", "Ellos deben llegar a tiempo", "Ellos debiendo llegar a tiempo"],
+        correct: 2,
+        hint: "deber (3л.мн.ч.) = deben + infinitivo. Без предлога «a»! deber = должны/обязаны"
+      },
+      {
+        question: "Здесь нельзя курить (запрет через no puedes)",
+        options: ["No debes fumar aquí", "No puedes fumar aquí", "No poder fumar aquí", "No puedes a fumar aquí"],
+        correct: 1,
+        hint: "no puedes + infinitivo = нельзя (запрет). no debes — тоже возможно, но означает «не следует» (moral). Без «a»!"
       }
     ]
   },
@@ -1008,6 +1440,24 @@ const FORMULAS_DATA = [
         options: ["Acabamos ver la película", "Acabamos de viendo la película", "Acabamos de ver la película", "Acabamos a ver la película"],
         correct: 2,
         hint: "acabamos + de + ver (инфинитив). Не герундий (viendo)!"
+      },
+      {
+        question: "Он только что позвонил (3-е лицо ед.ч.)",
+        options: ["Acaba llamar", "Acabó de llamar", "Acaba de llamando", "Acaba de llamar"],
+        correct: 3,
+        hint: "3л.ед.ч.: acaba + de + infinitivo. Настоящее время! «de» обязательно. Не герундий"
+      },
+      {
+        question: "Вы (vosotros) только что закончили экзамен",
+        options: ["Acabéis de terminar el examen", "Acabasteis de terminar el examen", "Acabáis de terminar el examen", "Acabáis terminar el examen"],
+        correct: 2,
+        hint: "vosotros → acabáis + de + infinitivo. Настоящее время (не прошедшее acabasteis)"
+      },
+      {
+        question: "Ты только что позвонил? (вопрос)",
+        options: ["¿Acabaste de llamar?", "¿Acabas llamar?", "¿Acabas de llamando?", "¿Acabas de llamar?"],
+        correct: 3,
+        hint: "Вопрос: ¿Acabas de + infinitivo? tú → acabas. «de» обязательно. Не герундий"
       }
     ]
   },
@@ -1049,6 +1499,24 @@ const FORMULAS_DATA = [
         options: ["Se buscan secretario", "Se busca secretario", "Se buscar secretario", "Buscan secretario se"],
         correct: 1,
         hint: "secretario — ед.ч., глагол ед.ч.: se busca. Объявление о работе"
+      },
+      {
+        question: "Курить запрещено (se prohíbe)",
+        options: ["Se prohíben fumar", "Se prohíbe a fumar", "Se prohíbe fumar", "Se prohibe fumando"],
+        correct: 2,
+        hint: "fumar (инфинитив, ед.ч.) → глагол ед.ч.: se prohíbe. Без «a», не герундий"
+      },
+      {
+        question: "Продаётся квартира (ед.ч.) — выбери правильную форму",
+        options: ["Se venden el piso", "Se vende el piso", "Se vender el piso", "Se vende los pisos"],
+        correct: 1,
+        hint: "el piso — ед.ч. → глагол ед.ч.: se vende. Cf: se venden pisos (мн.ч.)"
+      },
+      {
+        question: "Говорят, что он богат (se dice que)",
+        options: ["Se dicen que es rico", "Se dice de que es rico", "Se dice que es rico", "Se dices que es rico"],
+        correct: 2,
+        hint: "se dice que + indikativ — безличная конструкция, глагол всегда ед.ч. Без «de» перед «que»"
       }
     ]
   },
@@ -1090,6 +1558,24 @@ const FORMULAS_DATA = [
         options: ["Dejó fumar", "Dejó de fumando", "Dejó de fumar", "Dejó a fumar"],
         correct: 2,
         hint: "dejar de + инфинитив = перестать. «de» обязательно!"
+      },
+      {
+        question: "Ты продолжаешь жаловаться (seguir + герундий)",
+        options: ["Sigues quejarte", "Sigues de quejarte", "Sigues quejándote", "Sigues a quejarte"],
+        correct: 2,
+        hint: "seguir + ГЕРУНДИЙ: sigues + quejándote. Не инфинитив, не «de»!"
+      },
+      {
+        question: "Они перестали спорить (dejar de)",
+        options: ["Dejan discutir", "Dejan de discutiendo", "Dejan discutiendo", "Dejan de discutir"],
+        correct: 3,
+        hint: "dejar de + ИНФИНИТИВ: dejan de + discutir. «de» обязательно, не герундий"
+      },
+      {
+        question: "Мы снова пробуем (volver a) — выбери правильную форму",
+        options: ["Volvemos intentarlo", "Seguimos a intentarlo", "Volvemos a intentarlo", "Volvemos de intentarlo"],
+        correct: 2,
+        hint: "volver a + инфинитив: volvemos + a + intentarlo. Предлог «а» обязателен, не «de»"
       }
     ]
   },
@@ -1148,6 +1634,24 @@ const FORMULAS_DATA = [
         ],
         correct: 0,
         hint: "él → le: se le acabó. dinero — ед.ч. → глагол ед.ч. acabó"
+      },
+      {
+        question: "У тебя разбился стакан (само разбилось)",
+        options: ["Se me rompió el vaso", "Se te rompió el vaso", "Se te rompieron el vaso", "Te rompiste el vaso"],
+        correct: 1,
+        hint: "tú → te: se te rompió. vaso — ед.ч. → глагол ед.ч. rompió. Не путать me (я) и te (ты)"
+      },
+      {
+        question: "Мы забыли билеты (они сами забылись у нас)",
+        options: ["Se nos olvidó las entradas", "Se me olvidaron las entradas", "Se nos olvidaron las entradas", "Nos olvidamos las entradas"],
+        correct: 2,
+        hint: "nosotros → nos: se nos olvidaron. entradas — мн.ч. → глагол мн.ч. olvidaron. Согласование с объектом"
+      },
+      {
+        question: "У него убежала собака (сама убежала)",
+        options: ["Se le escaparon el perro", "Se les escapó el perro", "Se me escapó el perro", "Se le escapó el perro"],
+        correct: 3,
+        hint: "él → le: se le escapó. perro — ед.ч. → глагол ед.ч. escapó. Сравните: se les (им, мн.ч.)"
       }
     ]
   },
@@ -1203,6 +1707,24 @@ const FORMULAS_DATA = [
         ],
         correct: 0,
         hint: "Вопрос: ¿Cuánto tiempo hace que + глагол presente? — давность действия"
+      },
+      {
+        question: "Я не ем мясо уже несколько месяцев (отрицательная конструкция)",
+        options: ["Hace meses que no como carne", "Hace meses que no coma carne", "Desde meses no como carne", "Hace meses no como carne"],
+        correct: 0,
+        hint: "Отрицание: Hace + tiempo + que + no + глагол (presente). Союз 'que' обязателен; 'desde meses' — неверно"
+      },
+      {
+        question: "Сколько времени ты изучаешь французский? (конструкция hace + que)",
+        options: ["¿Cuánto hace que estudias francés?", "¿Desde cuándo estudias francés?", "¿Cuánto tiempo hace que estudias francés?", "¿Por cuánto tiempo estudias francés?"],
+        correct: 2,
+        hint: "¿Cuánto tiempo hace que + presente? — стандартный вопрос о давности. 'Desde cuándo' тоже возможно, но здесь требуется конструкция hace + que"
+      },
+      {
+        question: "Он уже год как не звонил мне (незаконченное прошлое: hacía)",
+        options: ["Hace un año que no me llama", "Hacía un año que no me llamaba", "Hace un año que no me llamó", "Desde un año no me llamó"],
+        correct: 1,
+        hint: "Прошедшее продолженное: Hacía + tiempo + que + imperfecto. 'Hacía un año que no me llamaba' = к тому моменту прошёл год"
       }
     ]
   },
@@ -1259,6 +1781,24 @@ const FORMULAS_DATA = [
         ],
         correct: 2,
         hint: "No tengo nada — двойное отрицание: 'no' + 'nada'. Это норма испанского языка"
+      },
+      {
+        question: "Дома никого нет",
+        options: ["Hay nadie en casa", "No hay alguien en casa", "No hay nadie en casa", "Nadie no hay en casa"],
+        correct: 2,
+        hint: "No hay nadie — двойное отрицание с глаголом 'hay'. 'Hay nadie' без 'no' — неграмматично в испанском"
+      },
+      {
+        question: "У меня нет никаких проблем",
+        options: ["No tengo ningún problema", "No tengo algún problema", "Tengo ningún problema", "No tengo ningunas problemas"],
+        correct: 0,
+        hint: "No tengo ningún problema — 'ningún' перед существительным м.р. ед.ч. Обычно ед.ч., даже если логически мн.ч."
+      },
+      {
+        question: "Мне тоже не нравится (tampoco — тоже нет)",
+        options: ["A mí también no me gusta", "A mí tampoco me gusta", "A mí tampoco no me gusta", "A mí no también me gusta"],
+        correct: 1,
+        hint: "'Tampoco' само по себе отрицание, 'no' перед глаголом не нужно. A mí tampoco me gusta = мне тоже не нравится"
       }
     ]
   },
@@ -1315,6 +1855,24 @@ const FORMULAS_DATA = [
         ],
         correct: 1,
         hint: "Ponerse nervioso — внезапная реакция на ситуацию. Quedarse nervioso — остаться в нервном состоянии"
+      },
+      {
+        question: "Он ослеп (остался слепым навсегда — результат)",
+        options: ["Se puso ciego", "Se quedó ciego", "Estuvo ciego", "Se volvió ciego"],
+        correct: 1,
+        hint: "Quedarse = остаться в состоянии как постоянный результат: se quedó ciego. Ponerse — лишь временная реакция"
+      },
+      {
+        question: "Я обрадовался, когда услышал новость (внезапная реакция)",
+        options: ["Me quedé contento", "Estuve contento", "Me puse contento", "Fui contento"],
+        correct: 2,
+        hint: "Ponerse + прилагательное = внезапная эмоциональная реакция: me puse contento. Quedarse — для длительного состояния"
+      },
+      {
+        question: "Вы испугались (остались испуганными — вы, множ.ч.)",
+        options: ["Os pusisteis asustados", "Os quedasteis asustados", "Os quedasteis asustado", "Nos quedamos asustados"],
+        correct: 1,
+        hint: "Quedarse = остаться в состоянии. vosotros → os quedasteis. Прилагательное мн.ч.: asustados. Не путать nos (мы) и os (вы)"
       }
     ]
   },
@@ -1370,6 +1928,24 @@ const FORMULAS_DATA = [
         ],
         correct: 2,
         hint: "Si + presente, + imperativo — реальное условие с советом или приказом"
+      },
+      {
+        question: "Если у неё будет время, она будет работать (ближайшее будущее с ir a)",
+        options: ["Si tendrá tiempo, va a trabajar", "Si tiene tiempo, va a trabajar", "Si tiene tiempo, va trabajar", "Si tenga tiempo, va a trabajar"],
+        correct: 1,
+        hint: "Si + presente indicativo (tiene), результат — va a + infinitivo. Никогда 'si + tendrá' (futuro в условии)"
+      },
+      {
+        question: "Если будет дождь, мы остаёмся дома (presente в результате)",
+        options: ["Si llueve, nos quedamos en casa", "Si lloverá, nos quedamos en casa", "Si llueva, nos quedamos en casa", "Si llueve, nos quedaríamos en casa"],
+        correct: 0,
+        hint: "Реальное условие: Si + presente → presente (факт/привычка). Si llueve, nos quedamos — оба глагола в presente"
+      },
+      {
+        question: "Если не будешь учиться, не сдашь экзамен (отрицание в условии)",
+        options: ["Si no estudias, no aprobarás", "Si no estudiarás, no aprobarás", "Si no estudies, no aprobarás", "Si no estudias, no aprobarías"],
+        correct: 0,
+        hint: "Отрицание в условии: Si no + presente (estudias) + futuro (aprobarás). Модель та же, что и в положительном"
       }
     ]
   },
@@ -1425,6 +2001,24 @@ const FORMULAS_DATA = [
         ],
         correct: 1,
         hint: "'Lo que' = 'то, что' — без конкретного существительного. Lo que dices es verdad"
+      },
+      {
+        question: "Женщина, которую я встретил, работает врачом (относительное для людей)",
+        options: ["La mujer quien conocí es médica", "La mujer que conocí es médica", "La mujer la cual conocí es médica", "La mujer donde conocí es médica"],
+        correct: 1,
+        hint: "'Que' используется для людей и предметов в большинстве случаев. 'Quien' нужен только после предлога или без антецедента: la mujer que conocí"
+      },
+      {
+        question: "Город, в котором я живу, очень красивый (предлог + относительное)",
+        options: ["La ciudad que vivo es muy bonita", "La ciudad donde vivo es muy bonita", "La ciudad en la que vivo es muy bonita", "La ciudad en que vivo es muy bonita"],
+        correct: 2,
+        hint: "После предлога 'en' нужен артикль + que: en la que. 'Donde' — тоже допустимо, но здесь проверяется форма 'en la que'"
+      },
+      {
+        question: "Ты знаешь, насколько это интересно? (восклицательное lo + adj)",
+        options: ["¿Sabes lo que es interesante?", "¿Sabes que es muy interesante?", "¿Sabes lo interesante que es?", "¿Sabes cómo interesante es?"],
+        correct: 2,
+        hint: "Восклицательная/эмфатическая структура: lo + adj + que + es. ¿Sabes lo interesante que es? = 'знаешь, насколько это интересно'"
       }
     ]
   },
@@ -1480,6 +2074,24 @@ const FORMULAS_DATA = [
         ],
         correct: 2,
         hint: "Lo malo es que... — 'плохое то, что'. Структура: Lo + adj + es + que + предложение"
+      },
+      {
+        question: "Любопытно то, что никто не заметил (lo curioso — подлежащее)",
+        options: ["El curioso es que nadie lo notó", "Lo curioso que nadie lo notó", "Lo curioso es que nadie lo notó", "La curiosa es que nadie lo notó"],
+        correct: 2,
+        hint: "Lo curioso es que... — нейтральный артикль lo + прилагательное в роли подлежащего. Структура: Lo + adj + es + que + предложение"
+      },
+      {
+        question: "Трудное в этом — найти время (lo difícil — с предлогом de)",
+        options: ["El difícil de esto es encontrar tiempo", "Lo difícil de esto es encontrar tiempo", "Lo difícil en esto es encontrar tiempo", "Lo difícil esto es encontrar tiempo"],
+        correct: 1,
+        hint: "Lo difícil de esto — 'трудное в этом'. Предлог 'de' указывает, чего это касается. Не 'el difícil'"
+      },
+      {
+        question: "Ты знаешь, насколько это скучно? (lo + adj в восклицании)",
+        options: ["¿Sabes que es muy aburrido?", "¿Sabes lo aburrido que es?", "¿Sabes lo que es aburrido?", "¿Sabes cuán aburrido es?"],
+        correct: 1,
+        hint: "¿Sabes lo aburrido que es? — эмфаза через lo + adj + que + es. 'Lo que es aburrido' меняет смысл на 'то, что скучно'"
       }
     ]
   },
@@ -1535,6 +2147,24 @@ const FORMULAS_DATA = [
         ],
         correct: 1,
         hint: "Одно подлежащее → para + infinitivo (не 'para que'). Para no olvidar"
+      },
+      {
+        question: "Отправляю тебе ссылку, чтобы ты мог прочитать (разные подлежащие)",
+        options: ["Te mando el enlace para poder leer", "Te mando el enlace para que puedes leer", "Te mando el enlace para que puedas leer", "Te mando el enlace para que leer"],
+        correct: 2,
+        hint: "Разные подлежащие (я отправляю, ты читаешь) → para que + subjuntivo: puedas (от poder). Не 'puedes' (indicativo)"
+      },
+      {
+        question: "Напоминаю им, чтобы они не забыли (разные подлежащие, отрицание)",
+        options: ["Les recuerdo para que no se olvidan", "Les recuerdo para no olvidar", "Les recuerdo para que no se olviden", "Les recuerdo para que no olvidar"],
+        correct: 2,
+        hint: "Para que + subj: no se olviden (3л. мн.ч. субхунтиво от olvidarse). Разные подлежащие → нельзя para + infinitivo"
+      },
+      {
+        question: "Она звонит, чтобы поговорить (одно подлежащее — она)",
+        options: ["Llama para que hable", "Llama para que hablar", "Llama para hablar", "Llama para que hablemos"],
+        correct: 2,
+        hint: "Одно подлежащее → para + infinitivo (не 'para que'). Llama para hablar. 'Para que + subj' нужен только при смене подлежащего"
       }
     ]
   },
@@ -1590,6 +2220,24 @@ const FORMULAS_DATA = [
         ],
         correct: 3,
         hint: "pudiera — imperfecto de subjuntivo от 'poder'. Si pudiera → te ayudaría"
+      },
+      {
+        question: "Если бы я был на твоём месте, поступил бы иначе (si + fuera)",
+        options: ["Si sería tú, haría algo diferente", "Si fuera tú, haría algo diferente", "Si fuera tú, haré algo diferente", "Si fui tú, haría algo diferente"],
+        correct: 1,
+        hint: "fuera — imperfecto de subjuntivo от 'ser'. Si fuera tú → haría. Никогда 'si sería' (condicional в условии — грубая ошибка)"
+      },
+      {
+        question: "Если бы я знал ответ, сказал бы тебе (si + supiera)",
+        options: ["Si sabría la respuesta, te lo diría", "Si sé la respuesta, te lo diría", "Si supiera la respuesta, te lo diría", "Si supiera la respuesta, te lo diré"],
+        correct: 2,
+        hint: "supiera — imperfecto de subjuntivo от 'saber'. Si supiera → te lo diría (condicional). Никогда 'si sabría'"
+      },
+      {
+        question: "Что бы ты сделал, если бы выиграл в лотерею?",
+        options: ["¿Qué harías si ganarías la lotería?", "¿Qué harías si ganas la lotería?", "¿Qué harías si ganara la lotería?", "¿Qué harías si ganaste la lotería?"],
+        correct: 2,
+        hint: "Si + imperfecto de subjuntivo (ganara) + condicional (harías). 'Si ganarías' — ОШИБКА: condicional после si запрещён"
       }
     ]
   }

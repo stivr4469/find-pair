@@ -51,14 +51,16 @@ const FormulasApp = {
     const formula = FORMULAS_DATA[formulaIndex];
     if (!formula) return;
 
-    // Build question list with formulaId and formulaName attached
-    const questions = formula.quiz.map(function(q) {
+    // Build question pool, shuffle, pick 3 — so each retake feels different
+    var pool = formula.quiz.map(function(q) {
       return Object.assign({}, q, {
         formulaId: formula.id,
         formulaName: formula.shortName,
         formulaEmoji: formula.emoji,
       });
     });
+    var shuffled = (typeof shuffleArray === 'function') ? shuffleArray(pool) : pool;
+    var questions = shuffled.slice(0, 3);
 
     this.state.currentFormulaIndex = formulaIndex;
     this.state.quizMode = 'single';
