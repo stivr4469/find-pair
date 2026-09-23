@@ -28,35 +28,32 @@ function speakSpanish(text) {
 
     const cleanText = text.replace(/_+/g, '').trim();
 
-    // Web Speech API — работает без сети, без блокировок
-    if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
+    if (!window.speechSynthesis) return;
+
+    const ss = window.speechSynthesis;
+
+    function _doSpeak() {
         const utter = new SpeechSynthesisUtterance(cleanText);
         utter.lang = 'es-ES';
         utter.rate = 0.88;
-        utter.pitch = 1;
 
-        // Предпочитаем испанский голос если доступен
-        const voices = window.speechSynthesis.getVoices();
+        // Ищем испанский голос
+        const voices = ss.getVoices();
         const esVoice = voices.find(v => v.lang.startsWith('es'));
         if (esVoice) utter.voice = esVoice;
 
-        window.speechSynthesis.speak(utter);
-        return;
+        // Chrome Android: cancel() + немедленный speak() теряется — нужна пауза
+        ss.cancel();
+        setTimeout(() => ss.speak(utter), 50);
     }
 
-    // Запасной вариант: Google TTS
-    const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(cleanText)}&tl=es&client=tw-ob`;
-    const audio = new Audio(url);
-    audio.play().catch(err => console.error('TTS fallback failed:', err));
-}
-
-// Прогреваем список голосов заранее (асинхронная загрузка в Chrome)
-if (typeof window !== 'undefined' && window.speechSynthesis) {
-    window.speechSynthesis.getVoices();
-    window.speechSynthesis.addEventListener('voiceschanged', () => {
-        window.speechSynthesis.getVoices();
-    });
+    // Если голоса ещё не загружены — ждём voiceschanged (первая загрузка)
+    const voices = ss.getVoices();
+    if (voices.length === 0) {
+        ss.addEventListener('voiceschanged', _doSpeak, { once: true });
+    } else {
+        _doSpeak();
+    }
 }
 
 // Экспорт для глобального доступа
