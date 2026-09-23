@@ -12,6 +12,24 @@
     <link rel="stylesheet" href="../css/unified-styles.css?v=14">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
+        /* ── Naranjito compact during quiz ── */
+        #buddy { --nj-h: 110px; }
+
+        /* ── Кнопка "Дальше" фиксирована внизу ── */
+        #context-next-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            min-width: 220px;
+        }
+
+        /* Отступ снизу чтобы контент не прятался за fixed-кнопку */
+        #ser-estar-context-area {
+            padding-bottom: 80px;
+        }
+
         /* ── Context mode question card ── */
         .ctx-question-card {
             background: var(--surface);
