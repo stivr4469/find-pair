@@ -117,15 +117,9 @@ function handleClassifyChoice(choice) {
         // Анимация: карточка трясётся
         animateCardWrong(choice);
 
-        // Показываем правило
+        // Показываем правило + кнопку «Дальше»
         showClassifyFeedback(classifyState.current);
-
-        // Через 2 секунды — следующая карточка
-        classifyState.pendingNext = true;
-        setTimeout(() => {
-            classifyState.totalAnswered++;
-            showNextClassifyQuestion();
-        }, 2000);
+        showClassifyNextButton();
     }
 }
 
@@ -146,6 +140,23 @@ function updateClassifyGlobalScore() {
     if (scoreValue) {
         scoreValue.textContent = classifyState.score;
     }
+}
+
+/**
+ * Показывает кнопку «Дальше →» после неправильного ответа
+ */
+function showClassifyNextButton() {
+    const feedback = document.getElementById('classify-feedback');
+    if (!feedback) return;
+
+    const btn = document.createElement('button');
+    btn.className = 'classify-next-btn';
+    btn.textContent = 'Дальше →';
+    btn.onclick = function() {
+        classifyState.totalAnswered++;
+        showNextClassifyQuestion();
+    };
+    feedback.appendChild(btn);
 }
 
 // Экспорт
