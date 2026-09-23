@@ -2,248 +2,289 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#FBF6EF" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#14110F" media="(prefers-color-scheme: dark)">
     <title>VamoS</title>
+
+    <!-- Анимация появления: только при первом открытии за сессию -->
+    <script>
+      try {
+        if (!sessionStorage.getItem('vamos:intro')) {
+          document.documentElement.classList.add('intro');
+          sessionStorage.setItem('vamos:intro', '1');
+        }
+      } catch (e) {}
+    </script>
+
     <!-- Telegram WebApp SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/unified-styles.css?v=13">
-    <link rel="stylesheet" href="css/main.css?v=6">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
+    <!-- unified-styles.css главной больше не нужен: он перебивал шрифты и отступы -->
+    <link rel="stylesheet" href="css/main.css?v=7">
 </head>
 <body>
-    <!-- Основной контейнер -->
-    <div class="main-container">
-        <!-- Заголовок приложения -->
-        <header class="app-header">
-            <h1 class="app-title">
-                <span class="title-icon">🇪🇸</span>
-                VamoS
-            </h1>
-            <p class="app-subtitle">Выберите игру для тренировки</p>
+    <!-- Иконки Lucide, встроены спрайтом: без CDN и без мигания при загрузке -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+      <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></symbol>
+      <symbol id="i-branch" viewBox="0 0 24 24"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+      <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+      <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 3l14 9-14 9z"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    </svg>
+
+    <div class="app">
+        <!-- Верхняя панель -->
+        <header class="top">
+            <div class="brand">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span class="brand-name">Vamo<span>S</span></span>
+            </div>
+            <div class="streak" id="streak" title="Дней подряд" hidden>
+                <svg class="i" aria-hidden="true"><use href="#i-flame"/></svg>
+                <span id="streak-count">1</span>
+            </div>
         </header>
 
-        <!-- Меню выбора игр -->
-        <nav class="games-menu">
-            <!-- Кнопка игры "Найди пару" -->
-            <a href="find-pair/" class="game-card" id="find-pair-card">
-                <div class="game-card-icon"><i data-lucide="layers"></i></div>
-                <h2 class="game-card-title">Найди пару</h2>
-                <p class="game-card-description">
-                    Сопоставь слова с переводом: глаголы, существительные, прилагательные, наречия
-                </p>
-                <div class="game-card-difficulty">
-                    <span class="difficulty-badge easy">Легко</span>
-                </div>
+        <!-- Приветствие -->
+        <section class="hero" style="--i:0">
+            <p class="eyebrow" id="greeting">¡Hola!</p>
+            <h1 class="hero-title">Что тренируем сегодня?</h1>
+        </section>
+
+        <!-- «Продолжить»: появляется, когда есть последняя игра -->
+        <a href="#" class="resume" id="resume" style="--i:1" hidden>
+            <span class="resume-play"><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></span>
+            <span class="resume-text">
+                <span class="resume-label" id="resume-label">Продолжить</span>
+                <span class="resume-title" id="resume-title"></span>
+            </span>
+            <svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </a>
+
+        <p class="section-label" style="--i:2">Все тренировки</p>
+
+        <!-- Список игр -->
+        <nav class="games" aria-label="Игры">
+            <a href="find-pair/" class="game-card" data-game="find-pair" style="--i:3">
+                <span class="game-card-icon"><svg class="i" aria-hidden="true"><use href="#i-layers"/></svg></span>
+                <span class="game-card-body">
+                    <h2 class="game-card-title">Найди пару</h2>
+                    <p class="game-card-description">Сопоставь слова с переводом: глаголы, существительные, прилагательные, наречия</p>
+                    <span class="game-card-meta">
+                        <span class="tag">Лексика</span>
+                        <span class="level" data-level="1" aria-label="Сложность: легко"><i></i><i></i><i></i></span>
+                    </span>
+                </span>
+                <span class="game-card-arrow"><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></span>
+                <span class="game-card-progress" aria-hidden="true"></span>
             </a>
 
-            <!-- Кнопка игры "Глаголы движения" -->
-            <a href="tren/" class="game-card" id="tren-card">
-                <div class="game-card-icon"><i data-lucide="compass"></i></div>
-                <h2 class="game-card-title">Глаголы движения</h2>
-                <p class="game-card-description">
-                    Изучай спряжение глаголов ir, venir, llegar
-                </p>
-                <div class="game-card-difficulty">
-                    <span class="difficulty-badge medium">Средне</span>
-                </div>
+            <a href="tren/" class="game-card" data-game="tren" style="--i:4">
+                <span class="game-card-icon"><svg class="i" aria-hidden="true"><use href="#i-compass"/></svg></span>
+                <span class="game-card-body">
+                    <h2 class="game-card-title">Глаголы движения</h2>
+                    <p class="game-card-description">Спряжение глаголов ir, venir, llegar</p>
+                    <span class="game-card-meta">
+                        <span class="tag">Спряжение</span>
+                        <span class="level" data-level="2" aria-label="Сложность: средне"><i></i><i></i><i></i></span>
+                    </span>
+                </span>
+                <span class="game-card-arrow"><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></span>
+                <span class="game-card-progress" aria-hidden="true"></span>
             </a>
 
-            <!-- Кнопка игры "Ser vs Estar" -->
-            <a href="ser-estar/" class="game-card" id="ser-estar-card">
-                <div class="game-card-icon"><i data-lucide="git-branch"></i></div>
-                <h2 class="game-card-title">Ser vs Estar</h2>
-                <p class="game-card-description">
-                    Научись различать глаголы SER и ESTAR
-                </p>
-                <div class="game-card-difficulty">
-                    <span class="difficulty-badge medium">Средне</span>
-                </div>
+            <a href="ser-estar/" class="game-card" data-game="ser-estar" style="--i:5">
+                <span class="game-card-icon"><svg class="i" aria-hidden="true"><use href="#i-branch"/></svg></span>
+                <span class="game-card-body">
+                    <h2 class="game-card-title">Ser vs Estar</h2>
+                    <p class="game-card-description">Научись различать глаголы SER и ESTAR</p>
+                    <span class="game-card-meta">
+                        <span class="tag">Грамматика</span>
+                        <span class="level" data-level="2" aria-label="Сложность: средне"><i></i><i></i><i></i></span>
+                    </span>
+                </span>
+                <span class="game-card-arrow"><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></span>
+                <span class="game-card-progress" aria-hidden="true"></span>
             </a>
 
-            <!-- Кнопка "20 Формул" -->
-            <a href="formulas/" class="game-card" id="formulas-card">
-                <div class="game-card-icon"><i data-lucide="book-open"></i></div>
-                <h2 class="game-card-title">36 Формул</h2>
-                <p class="game-card-description">
-                    Изучи 36 грамматических формул испанского и проверь себя
-                </p>
-                <div class="game-card-difficulty">
-                    <span class="difficulty-badge hard">Грамматика</span>
-                </div>
+            <a href="formulas/" class="game-card" data-game="formulas" style="--i:6">
+                <span class="game-card-icon"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg></span>
+                <span class="game-card-body">
+                    <h2 class="game-card-title">36 формул</h2>
+                    <p class="game-card-description">36 грамматических формул испанского с проверкой</p>
+                    <span class="game-card-meta">
+                        <span class="tag">Грамматика</span>
+                        <span class="level" data-level="3" aria-label="Сложность: сложно"><i></i><i></i><i></i></span>
+                    </span>
+                </span>
+                <span class="game-card-arrow"><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></span>
+                <span class="game-card-progress" aria-hidden="true"></span>
             </a>
 
-            <!-- Кнопка "Mezcla" -->
-            <a href="mezcla/" class="game-card" id="mezcla-card">
-                <div class="game-card-icon"><i data-lucide="shuffle"></i></div>
-                <h2 class="game-card-title">Mezcla</h2>
-                <p class="game-card-description">
-                    Читай тексты с регулируемой смесью русских и испанских слов
-                </p>
-                <div class="game-card-difficulty">
-                    <span class="difficulty-badge medium">Чтение</span>
-                </div>
+            <a href="mezcla/" class="game-card" data-game="mezcla" style="--i:7">
+                <span class="game-card-icon"><svg class="i" aria-hidden="true"><use href="#i-shuffle"/></svg></span>
+                <span class="game-card-body">
+                    <h2 class="game-card-title">Mezcla</h2>
+                    <p class="game-card-description">Тексты с регулируемой смесью русских и испанских слов</p>
+                    <span class="game-card-meta">
+                        <span class="tag">Чтение</span>
+                        <span class="level" data-level="2" aria-label="Сложность: средне"><i></i><i></i><i></i></span>
+                    </span>
+                </span>
+                <span class="game-card-arrow"><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></span>
+                <span class="game-card-progress" aria-hidden="true"></span>
             </a>
 
-            <!-- Кнопка "Прошедшее время" -->
-            <a href="pasado/" class="game-card" id="pasado-card">
-                <div class="game-card-icon"><i data-lucide="clock"></i></div>
-                <h2 class="game-card-title">Прошедшее время</h2>
-                <p class="game-card-description">
-                    Indefinido, Imperfecto, Perfecto Compuesto, Pluscuamperfecto — 16 формул и 96 вопросов
-                </p>
-                <div class="game-card-difficulty">
-                    <span class="difficulty-badge hard">Грамматика</span>
-                </div>
+            <a href="pasado/" class="game-card" data-game="pasado" style="--i:8">
+                <span class="game-card-icon"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg></span>
+                <span class="game-card-body">
+                    <h2 class="game-card-title">Прошедшее время</h2>
+                    <p class="game-card-description">Indefinido, Imperfecto, Perfecto Compuesto, Pluscuamperfecto: 16 формул и 96 вопросов</p>
+                    <span class="game-card-meta">
+                        <span class="tag">Грамматика</span>
+                        <span class="level" data-level="3" aria-label="Сложность: сложно"><i></i><i></i><i></i></span>
+                    </span>
+                </span>
+                <span class="game-card-arrow"><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></span>
+                <span class="game-card-progress" aria-hidden="true"></span>
             </a>
         </nav>
 
-        <!-- Кнопка закрытия (только для Telegram) -->
+        <!-- Кнопка закрытия: вне Telegram скрыта, в Telegram обычно не нужна -->
         <div class="close-section">
-            <button class="close-button hidden" id="close-btn" onclick="closeApp()">
-                ✕ Закрыть
-            </button>
+            <button class="close-button hidden" id="close-btn" onclick="closeApp()">Закрыть</button>
         </div>
 
-        <!-- Футер -->
-        <footer class="app-footer">
-            <p class="footer-text">VamoS • Тренажёр испанского</p>
-            <p class="footer-text footer-year">Valencia 2026</p>
-        </footer>
+        <footer class="app-footer">VamoS · Тренажёр испанского · Valencia 2026</footer>
     </div>
 
-    <!-- Скрипт приложения -->
     <script src="js/main.js"></script>
-    <script>lucide.createIcons();</script>
     <script>
+    /**
+     * Главная VamoS: тема Telegram, haptic, «Продолжить», прогресс, серия дней, spotlight.
+     *
+     * Прогресс сохраняют сами игры одной строкой (в любом месте игры):
+     *   VamoS.save('pasado', 42);   // id игры (как data-game) и процент 0–100
+     * Для этого в игре нужен этот же небольшой объект VamoS (см. ниже) или его копия.
+     */
     (function () {
-      var TILT = 14, SCALE = 1.045;
+      var root = document.documentElement;
+      var tg = window.Telegram && window.Telegram.WebApp;
+      var inTelegram = !!(tg && tg.initData);
 
-      function initTilt() {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        if (!window.matchMedia('(hover: hover)').matches) return;
-
-        document.querySelectorAll('.game-card').forEach(function (card) {
-          var glare = document.createElement('div');
-          glare.className = 'card-glare';
-          card.appendChild(glare);
-
-          var fast = false;
-
-          card.addEventListener('mouseenter', function () {
-            fast = true;
-            card.style.transition = 'transform 0.12s ease, box-shadow 0.12s ease';
-            setTimeout(function () { fast = false; }, 140);
-          });
-
-          card.addEventListener('mousemove', function (e) {
-            if (fast || window.deckAnimating) return;
-            var r = card.getBoundingClientRect();
-            var x = e.clientX - r.left, y = e.clientY - r.top;
-            var rx = (r.height / 2 - y) / r.height * TILT;
-            var ry = (x - r.width  / 2) / r.width  * TILT;
-            card.style.transform =
-              'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) scale(' + SCALE + ')';
-            card.style.boxShadow =
-              '0 0 0 1px rgba(0,0,0,0.04),' +
-              '0 8px 20px rgba(0,0,0,0.12),' +
-              '0 24px 48px rgba(0,0,0,0.18)';
-            glare.style.background =
-              'radial-gradient(circle at ' + (x / r.width * 100).toFixed(1) + '% ' +
-              (y / r.height * 100).toFixed(1) + '%, rgba(255,255,255,0.32) 0%, transparent 58%)';
-            glare.style.opacity = '1';
-          });
-
-          card.addEventListener('mouseleave', function () {
-            card.style.transition = 'transform 0.6s cubic-bezier(0.23,1,0.32,1), box-shadow 0.6s ease';
-            card.style.transform  = '';
-            card.style.boxShadow  = '';
-            glare.style.opacity   = '0';
-          });
-        });
+      /* ── Хранилище ── */
+      function read(key, fallback) {
+        try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch (e) { return fallback; }
+      }
+      function write(key, value) {
+        try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initTilt);
-      } else {
-        initTilt();
-      }
-    })();
-    </script>
-    <script>
-    /* ── Deck → Spread entrance animation ── */
-    window.deckAnimating = true;
-    (function () {
-      var FANS          = [-10, -6, -3, 1, 5, 9];
-      var DECK_PAUSE    = 750;
-      var STAGGER       = 260;
-      var DURATION      = '2.3s';
-      var EASING        = 'cubic-bezier(0.34, 1.32, 0.64, 1)';
-
-      function runDeck() {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          document.querySelectorAll('.game-card').forEach(function (c) { c.style.opacity = '1'; });
-          window.deckAnimating = false;
-          return;
+      window.VamoS = {
+        save: function (game, percent) {
+          var all = read('vamos:progress', {});
+          all[game] = Math.max(0, Math.min(100, Math.round(percent)));
+          write('vamos:progress', all);
+          write('vamos:last', game);
         }
+      };
 
-        var cards = Array.from(document.querySelectorAll('.game-card'));
-        if (!cards.length) { window.deckAnimating = false; return; }
+      /* ── Telegram ── */
+      function applyTheme() {
+        if (!inTelegram) return;
+        root.dataset.theme = tg.colorScheme === 'dark' ? 'dark' : 'light';
+        var bg = tg.colorScheme === 'dark' ? '#14110F' : '#FBF6EF';
+        try { tg.setHeaderColor(bg); tg.setBackgroundColor(bg); } catch (e) {}
+      }
 
-        /* Two rAF ticks ensure browser has committed layout */
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            var rects = cards.map(function (c) { return c.getBoundingClientRect(); });
+      if (inTelegram) {
+        tg.ready();
+        tg.expand();
+        try { tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch (e) {}
+        applyTheme();
+        tg.onEvent('themeChanged', applyTheme);
+      }
 
-            /* Deck centre = geometric centre of all card centres */
-            var sumX = 0, sumY = 0;
-            rects.forEach(function (r) {
-              sumX += r.left + r.width  / 2;
-              sumY += r.top  + r.height / 2;
-            });
-            var deckX = sumX / rects.length;
-            var deckY = sumY / rects.length;
+      function haptic() {
+        try { inTelegram && tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
+      }
 
-            /* Snap every card to the deck position with a fan rotation */
-            cards.forEach(function (card, i) {
-              var r  = rects[i];
-              var dx = deckX - (r.left + r.width  / 2);
-              var dy = deckY - (r.top  + r.height / 2);
-              var rot = FANS[i] !== undefined ? FANS[i] : 0;
+      /* ── Приветствие по времени суток ── */
+      var h = new Date().getHours();
+      document.getElementById('greeting').textContent =
+        h < 5 ? '¡Buenas noches!' : h < 12 ? '¡Buenos días!' : h < 20 ? '¡Buenas tardes!' : '¡Buenas noches!';
 
-              card.style.transition = 'none';
-              card.style.transform  = 'translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px) rotate(' + rot + 'deg)';
-              card.style.opacity    = '1';
-              card.style.zIndex     = String(20 - i);
-            });
+      /* ── Серия дней подряд ── */
+      function dayKey(d) { return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+      var today = new Date(), yesterday = new Date(Date.now() - 864e5);
+      var days = read('vamos:streak', { last: null, n: 0 });
+      if (days.last !== dayKey(today)) {
+        days.n = days.last === dayKey(yesterday) ? days.n + 1 : 1;
+        days.last = dayKey(today);
+        write('vamos:streak', days);
+      }
+      if (days.n >= 2) {
+        document.getElementById('streak-count').textContent = days.n;
+        document.getElementById('streak').hidden = false;
+      }
 
-            /* Brief pause so the player sees the deck, then spread */
-            setTimeout(function () {
-              cards.forEach(function (card, i) {
-                setTimeout(function () {
-                  card.style.transition = 'transform ' + DURATION + ' ' + EASING;
-                  card.style.transform  = '';
-                  card.style.zIndex     = '';
+      /* ── Прогресс на карточках и «Продолжить» ── */
+      var progress = read('vamos:progress', {});
+      var cards = document.querySelectorAll('.game-card');
 
-                  if (i === cards.length - 1) {
-                    setTimeout(function () {
-                      window.deckAnimating = false;
-                      cards.forEach(function (c) { c.style.transition = ''; });
-                    }, 1200);
-                  }
-                }, i * STAGGER);
-              });
-            }, DECK_PAUSE);
+      cards.forEach(function (card) {
+        var p = progress[card.dataset.game];
+        if (p > 0) {
+          card.classList.add('has-progress');
+          card.style.setProperty('--p', p + '%');
+        }
+      });
+
+      var last = read('vamos:last', null);
+      var lastCard = last && document.querySelector('.game-card[data-game="' + last + '"]');
+      if (lastCard) {
+        var resume = document.getElementById('resume');
+        resume.href = lastCard.getAttribute('href');
+        resume.style.setProperty('--c', getComputedStyle(lastCard).getPropertyValue('--c'));
+        document.getElementById('resume-title').textContent =
+          lastCard.querySelector('.game-card-title').textContent;
+        if (progress[last] > 0) {
+          document.getElementById('resume-label').textContent = 'Продолжить · ' + progress[last] + '%';
+        }
+        resume.hidden = false;
+      }
+
+      /* ── Клики: haptic и запоминание последней игры ── */
+      cards.forEach(function (card) {
+        card.addEventListener('click', function () {
+          haptic();
+          write('vamos:last', card.dataset.game);
+        });
+      });
+      document.getElementById('resume').addEventListener('click', haptic);
+
+      /* ── Spotlight под курсором (только устройства с мышью) ── */
+      if (window.matchMedia('(hover: hover)').matches) {
+        cards.forEach(function (card) {
+          card.addEventListener('pointermove', function (e) {
+            var r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+            card.style.setProperty('--my', (e.clientY - r.top) + 'px');
           });
         });
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runDeck);
-      } else {
-        runDeck();
+      /* ── Запасной closeApp, если его нет в js/main.js ── */
+      if (typeof window.closeApp !== 'function') {
+        window.closeApp = function () { inTelegram ? tg.close() : history.back(); };
       }
     })();
     </script>

@@ -109,10 +109,7 @@ function closeApp() {
     if (tg) {
         tg.close();
     } else {
-        // Если не в Telegram, пробуем закрыть окно
-        window.close();
-        // Или показываем сообщение
-        alert('Приложение запущено вне Telegram. Закройте вкладку браузера.');
+        history.back();
     }
 }
 
