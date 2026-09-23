@@ -81,7 +81,7 @@ const PasadoUI = {
 
         '<div style="text-align: center; margin-bottom: 20px;">',
           '<h2 style="color: white; font-size: 1.5rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">',
-            '⏪ Прошедшее время',
+            'Прошедшее время',
           '</h2>',
           '<p style="color: rgba(255,255,255,0.8); margin-top: 6px; font-size: 0.9rem;">',
             '4 времени · 16 формул · нажми чтобы изучить',

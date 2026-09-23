@@ -52,7 +52,7 @@ const FormulasUI = {
         // Header
         '<div style="text-align: center; margin-bottom: 24px;">',
           '<h2 style="color: white; font-size: 1.6rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">',
-            '📚 36 Формул Испанского',
+            '36 Формул Испанского',
           '</h2>',
           '<p style="color: rgba(255,255,255,0.85); margin-top: 6px;">',
             'Нажми на формулу, чтобы изучить',
