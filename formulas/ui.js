@@ -20,21 +20,22 @@ const FormulasUI = {
     var cardsHtml = FORMULAS_DATA.map(function(formula, index) {
       return [
         '<div class="formula-card-thumb" onclick="formulaShowCard(' + index + ')" style="',
-          'background: white;',
+          'background: var(--surface);',
           'border-radius: 12px;',
           'padding: 18px 16px;',
           'cursor: pointer;',
           'transition: transform 0.2s, box-shadow 0.2s;',
-          'box-shadow: 0 3px 12px rgba(0,0,0,0.15);',
+          'box-shadow: var(--shadow);',
+          'border: 1px solid var(--border);',
           'display: flex;',
           'flex-direction: column;',
           'gap: 6px;',
         '">',
           '<div style="font-size: 2rem; line-height: 1;">' + formula.emoji + '</div>',
-          '<div style="font-weight: 700; font-size: 0.85rem; color: #2c3e50;">' + formula.shortName + '</div>',
+          '<div style="font-weight: 700; font-size: 0.85rem; color: var(--text);">' + formula.shortName + '</div>',
           '<div style="',
-            'background: #f0ecff;',
-            'color: #5a3fa5;',
+            'background: var(--accent-faint);',
+            'color: var(--accent);',
             'font-size: 0.72rem;',
             'padding: 4px 8px;',
             'border-radius: 6px;',
@@ -51,10 +52,10 @@ const FormulasUI = {
 
         // Header
         '<div style="text-align: center; margin-bottom: 24px;">',
-          '<h2 style="color: white; font-size: 1.6rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">',
+          '<h2 style="color: var(--text); font-size: 1.6rem;">',
             '36 Формул Испанского',
           '</h2>',
-          '<p style="color: rgba(255,255,255,0.85); margin-top: 6px;">',
+          '<p style="color: var(--muted); margin-top: 6px;">',
             'Нажми на формулу, чтобы изучить',
           '</p>',
         '</div>',
@@ -63,24 +64,24 @@ const FormulasUI = {
         '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">',
           '<button onclick="formulaStartAllQuiz()" style="',
             'display:flex;flex-direction:column;align-items:center;gap:4px;',
-            'padding:14px 12px;border:2px solid rgba(255,255,255,0.35);border-radius:14px;',
-            'background:rgba(255,255,255,0.12);color:#fff;cursor:pointer;',
-            'transition:background 0.15s,transform 0.15s;text-align:center;',
-          '" onmouseover="this.style.background=\'rgba(255,255,255,0.22)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.12)\'">',
-            '<span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.2);"><i data-lucide="clipboard-list" style="width:20px;height:20px;stroke:#fff;stroke-width:2;"></i></span>',
+            'padding:14px 12px;border:1.5px solid var(--border);border-radius:14px;',
+            'background:var(--surface);color:var(--text);cursor:pointer;',
+            'transition:background 0.15s,transform 0.15s;text-align:center;box-shadow:var(--shadow);font-family:inherit;',
+          '" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.background=\'var(--accent-faint)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.background=\'var(--surface)\'">',
+            '<span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:var(--faint);"><i data-lucide="clipboard-list" style="width:20px;height:20px;stroke:var(--muted);stroke-width:2;"></i></span>',
             '<span style="font-weight:700;font-size:0.95rem;">Полный тест</span>',
-            '<span style="font-size:0.75rem;opacity:0.75;line-height:1.3;">216 вопросов · ошибки не повторяются</span>',
+            '<span style="font-size:0.75rem;color:var(--muted);line-height:1.3;">216 вопросов · ошибки не повторяются</span>',
           '</button>',
           '<button onclick="formulaStartMarathon()" style="',
             'display:flex;flex-direction:column;align-items:center;gap:4px;',
-            'padding:14px 12px;border:2px solid rgba(239,68,68,0.5);border-radius:14px;',
-            'background:linear-gradient(135deg,rgba(245,158,11,0.25),rgba(239,68,68,0.25));',
-            'color:#fff;cursor:pointer;',
-            'transition:background 0.15s,transform 0.15s;text-align:center;',
+            'padding:14px 12px;border:1.5px solid rgba(239,68,68,0.4);border-radius:14px;',
+            'background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(239,68,68,0.15));',
+            'color:var(--text);cursor:pointer;',
+            'transition:opacity 0.15s,transform 0.15s;text-align:center;font-family:inherit;',
           '" onmouseover="this.style.opacity=\'0.88\'" onmouseout="this.style.opacity=\'1\'">',
-            '<span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:rgba(239,68,68,0.3);"><i data-lucide="flame" style="width:20px;height:20px;stroke:#fff;stroke-width:2;"></i></span>',
+            '<span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:rgba(239,68,68,0.2);"><i data-lucide="flame" style="width:20px;height:20px;stroke:#ef4444;stroke-width:2;"></i></span>',
             '<span style="font-weight:700;font-size:0.95rem;">Марафон</span>',
-            '<span style="font-size:0.75rem;opacity:0.75;line-height:1.3;">ошибки возвращаются · конец = всё верно</span>',
+            '<span style="font-size:0.75rem;color:var(--muted);line-height:1.3;">ошибки возвращаются · конец = всё верно</span>',
           '</button>',
         '</div>',
 
@@ -100,15 +101,17 @@ const FormulasUI = {
 
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
-    // Hover effect via JS (no separate CSS needed)
+    // Hover effect via JS
     root.querySelectorAll('.formula-card-thumb').forEach(function(el) {
       el.addEventListener('mouseenter', function() {
         el.style.transform = 'translateY(-4px)';
-        el.style.boxShadow = '0 8px 24px rgba(102,126,234,0.4)';
+        el.style.borderColor = 'var(--accent)';
+        el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.18)';
       });
       el.addEventListener('mouseleave', function() {
         el.style.transform = '';
-        el.style.boxShadow = '0 3px 12px rgba(0,0,0,0.15)';
+        el.style.borderColor = 'var(--border)';
+        el.style.boxShadow = 'var(--shadow)';
       });
     });
   },
@@ -126,8 +129,8 @@ const FormulasUI = {
       return [
         '<div style="',
           'padding: 10px 14px;',
-          'background: #fafafa;',
-          'border-left: 3px solid #667eea;',
+          'background: var(--faint);',
+          'border-left: 3px solid var(--accent);',
           'border-radius: 0 8px 8px 0;',
           'margin-bottom: 8px;',
           'display: flex;',
@@ -135,8 +138,8 @@ const FormulasUI = {
           'gap: 10px;',
         '">',
           '<div style="flex: 1; min-width: 0;">',
-            '<div style="font-size: 1rem; color: #2c3e50; font-weight: 600;">' + _escHtml(ex.es) + '</div>',
-            '<div style="font-size: 0.85rem; color: #7f8c8d; margin-top: 2px;">' + _escHtml(ex.ru) + '</div>',
+            '<div style="font-size: 1rem; color: var(--text); font-weight: 600;">' + _escHtml(ex.es) + '</div>',
+            '<div style="font-size: 0.85rem; color: var(--muted); margin-top: 2px;">' + _escHtml(ex.ru) + '</div>',
           '</div>',
           '<button class="formula-tts-ex-btn" data-tts="' + _escHtml(ex.es).replace(/"/g, '&quot;') + '" title="Послушать" style="',
             'flex-shrink: 0;',
@@ -144,14 +147,14 @@ const FormulasUI = {
             'height: 32px;',
             'border-radius: 50%;',
             'border: none;',
-            'background: rgba(102,126,234,0.12);',
-            'color: #667eea;',
+            'background: var(--accent-faint);',
+            'color: var(--accent);',
             'cursor: pointer;',
             'display: inline-flex;',
             'align-items: center;',
             'justify-content: center;',
             'transition: background 0.2s, transform 0.15s;',
-          '" onmouseover="this.style.background=\'rgba(102,126,234,0.25)\';this.style.transform=\'scale(1.1)\'" onmouseout="this.style.background=\'rgba(102,126,234,0.12)\';this.style.transform=\'\'">',
+          '" onmouseover="this.style.background=\'var(--accent-mid)\';this.style.transform=\'scale(1.1)\'" onmouseout="this.style.background=\'var(--accent-faint)\';this.style.transform=\'\'">',
             '<i data-lucide="volume-2" style="width:15px;height:15px;stroke:currentColor;stroke-width:2;pointer-events:none"></i>',
           '</button>',
         '</div>',
@@ -172,45 +175,45 @@ const FormulasUI = {
             'margin-bottom: 16px;',
           '">',
             '<span style="',
-              'background: linear-gradient(135deg, #667eea, #764ba2);',
+              'background: var(--accent);',
               'color: white;',
               'padding: 4px 14px;',
               'border-radius: 20px;',
               'font-size: 0.8rem;',
               'font-weight: 700;',
-            '">Формула ' + formula.id + ' / 20</span>',
-            '<span style="color: #aaa; font-size: 0.85rem;">' + formula.emoji + '</span>',
+            '">Формула ' + formula.id + ' / 36</span>',
+            '<span style="color: var(--muted); font-size: 0.85rem;">' + formula.emoji + '</span>',
           '</div>',
 
           // Name
-          '<h2 style="color: #2c3e50; margin-bottom: 6px; font-size: 1.3rem;">' + _escHtml(formula.name) + '</h2>',
-          '<p style="color: #7f8c8d; font-size: 0.9rem; margin-bottom: 16px;">' + _escHtml(formula.description) + '</p>',
+          '<h2 style="color: var(--text); margin-bottom: 6px; font-size: 1.3rem;">' + _escHtml(formula.name) + '</h2>',
+          '<p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 16px;">' + _escHtml(formula.description) + '</p>',
 
           // Rule box
           '<div style="',
-            'background: #f0ecff;',
-            'border: 1.5px solid #c4b5f7;',
+            'background: var(--accent-faint);',
+            'border: 1.5px solid var(--accent-mid);',
             'border-radius: 8px;',
             'padding: 12px 16px;',
             'margin-bottom: 20px;',
           '">',
-            '<div style="font-size: 0.75rem; color: #7c5cbf; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Правило</div>',
-            '<div style="font-family: monospace; font-size: 0.95rem; color: #4a2fa0; font-weight: 600;">' + _escHtml(formula.rule) + '</div>',
+            '<div style="font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Правило</div>',
+            '<div style="font-family: monospace; font-size: 0.95rem; color: var(--text); font-weight: 600;">' + _escHtml(formula.rule) + '</div>',
           '</div>',
 
           // Main example
           '<div style="',
-            'background: linear-gradient(135deg, #667eea12, #764ba212);',
+            'background: var(--faint);',
             'border-radius: 10px;',
             'padding: 16px;',
             'text-align: center;',
             'margin-bottom: 16px;',
             'position: relative;',
           '">',
-            '<div style="font-size: 1.4rem; font-weight: 700; color: #2c3e50; margin-bottom: 4px;">' + _escHtml(formula.example) + '</div>',
-            '<div style="font-size: 0.9rem; color: #7f8c8d; font-style: italic; margin-bottom: 8px;">' + _escHtml(formula.exampleRu) + '</div>',
+            '<div style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 4px;">' + _escHtml(formula.example) + '</div>',
+            '<div style="font-size: 0.9rem; color: var(--muted); font-style: italic; margin-bottom: 8px;">' + _escHtml(formula.exampleRu) + '</div>',
             '<button onclick="window.formulaSpeakExample(\'' + _escHtml(formula.example).replace(/'/g, "\\'") + '\')" title="Озвучить" style="',
-              'background: linear-gradient(135deg, #667eea, #764ba2);',
+              'background: var(--accent);',
               'border: none;',
               'border-radius: 20px;',
               'padding: 5px 14px;',
@@ -229,7 +232,7 @@ const FormulasUI = {
 
           // Extra examples
           '<div style="margin-bottom: 20px;">',
-            '<div style="font-size: 0.78rem; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Ещё примеры</div>',
+            '<div style="font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Ещё примеры</div>',
             extraExamples,
           '</div>',
 
@@ -251,7 +254,7 @@ const FormulasUI = {
                 'padding: 10px 18px;',
                 'font-size: 0.9rem;',
                 'max-width: none;',
-                'background: linear-gradient(135deg, #95a5a6, #7f8c8d);',
+                'background: var(--faint);',
               '">← Пред.</button>',
             ].join('') : ''),
 
@@ -270,7 +273,7 @@ const FormulasUI = {
                 'padding: 10px 18px;',
                 'font-size: 0.9rem;',
                 'max-width: none;',
-                'background: linear-gradient(135deg, #667eea, #764ba2);',
+                'background: var(--accent);',
                 'color: white;',
               '">След. →</button>',
             ].join('') : ''),
@@ -311,15 +314,15 @@ const FormulasUI = {
             'gap: 12px;',
             'width: 100%;',
             'padding: 13px 16px;',
-            'border: 2px solid #e2e8f0;',
+            'border: 2px solid var(--border);',
             'border-radius: 10px;',
-            'background: white;',
+            'background: var(--surface);',
             'cursor: pointer;',
             'transition: border-color 0.2s, background 0.2s;',
             'text-align: left;',
             'font-size: 0.97rem;',
             'font-family: inherit;',
-            'color: #2c3e50;',
+            'color: var(--text);',
           '"',
         '>',
           '<span style="',
@@ -329,8 +332,8 @@ const FormulasUI = {
             'width: 28px;',
             'height: 28px;',
             'border-radius: 50%;',
-            'background: #f0ecff;',
-            'color: #5a3fa5;',
+            'background: var(--accent-faint);',
+            'color: var(--accent);',
             'font-weight: 700;',
             'font-size: 0.8rem;',
             'flex-shrink: 0;',
@@ -352,7 +355,7 @@ const FormulasUI = {
             'margin-bottom: 16px;',
           '">',
             '<span style="',
-              'background: linear-gradient(135deg, #667eea, #764ba2);',
+              'background: var(--accent);',
               'color: white;',
               'padding: 4px 14px;',
               'border-radius: 20px;',
@@ -362,7 +365,7 @@ const FormulasUI = {
             '<button onclick="formulaBackToList()" style="',
               'background: none;',
               'border: none;',
-              'color: #aaa;',
+              'color: var(--muted);',
               'cursor: pointer;',
               'font-size: 1.2rem;',
               'padding: 4px;',
@@ -372,7 +375,7 @@ const FormulasUI = {
           // Progress bar
           '<div style="',
             'height: 5px;',
-            'background: #e2e8f0;',
+            'background: var(--faint);',
             'border-radius: 3px;',
             'margin-bottom: 14px;',
             'overflow: hidden;',
@@ -380,7 +383,7 @@ const FormulasUI = {
             '<div style="',
               'height: 100%;',
               'width: ' + Math.round(((qIndex) / total) * 100) + '%;',
-              'background: linear-gradient(90deg, #667eea, #764ba2);',
+              'background: var(--accent);',
               'border-radius: 3px;',
               'transition: width 0.3s;',
             '"></div>',
@@ -393,7 +396,7 @@ const FormulasUI = {
             'align-items: center;',
             'margin-bottom: 18px;',
             'font-size: 0.85rem;',
-            'color: #7f8c8d;',
+            'color: var(--muted);',
             'flex-wrap: wrap;',
             'gap: 6px;',
           '">',
@@ -409,7 +412,7 @@ const FormulasUI = {
             '<div style="',
               'font-size: 1.25rem;',
               'font-weight: 700;',
-              'color: #2c3e50;',
+              'color: var(--text);',
               'line-height: 1.4;',
             '">' + _escHtml(question.question) + '</div>',
           '</div>',
@@ -443,14 +446,14 @@ const FormulasUI = {
     root.querySelectorAll('[id^="formula-opt-"]').forEach(function(btn) {
       btn.addEventListener('mouseenter', function() {
         if (!btn.disabled) {
-          btn.style.borderColor = '#667eea';
-          btn.style.background = '#f8f6ff';
+          btn.style.borderColor = 'var(--accent)';
+          btn.style.background = 'var(--accent-faint)';
         }
       });
       btn.addEventListener('mouseleave', function() {
         if (!btn.disabled && !btn.classList.contains('correct') && !btn.classList.contains('incorrect')) {
-          btn.style.borderColor = '#e2e8f0';
-          btn.style.background = 'white';
+          btn.style.borderColor = 'var(--border)';
+          btn.style.background = 'var(--surface)';
         }
       });
     });
@@ -501,7 +504,7 @@ const FormulasUI = {
     if (feedbackEl) {
       var ttsBtn = '<button id="formula-feedback-tts" data-tts="' + correctText.replace(/&/g,'&amp;').replace(/"/g,'&quot;') + '" title="Послушать правильный ответ" style="' +
         'flex-shrink:0;width:32px;height:32px;border-radius:50%;border:none;' +
-        'background:rgba(102,126,234,0.15);color:#667eea;cursor:pointer;' +
+        'background:var(--accent-faint);color:var(--accent);cursor:pointer;' +
         'display:inline-flex;align-items:center;justify-content:center;' +
         'margin-left:8px;vertical-align:middle;transition:background 0.2s;">' +
         '<i data-lucide="volume-2" style="width:15px;height:15px;stroke:currentColor;stroke-width:2;pointer-events:none"></i>' +
@@ -574,27 +577,27 @@ const FormulasUI = {
       '<div style="max-width: 500px; margin: 0 auto;">',
         '<div class="game-area" style="text-align: center; padding: 32px 24px;">',
 
-          '<div style="margin-bottom: 12px;"><i data-lucide="' + reactionIcon + '" style="width:56px;height:56px;stroke:#667eea;stroke-width:1.5"></i></div>',
+          '<div style="margin-bottom: 12px;"><i data-lucide="' + reactionIcon + '" style="width:56px;height:56px;stroke:var(--accent);stroke-width:1.5"></i></div>',
 
-          '<h2 style="color: #2c3e50; margin-bottom: 8px; font-size: 1.4rem;">Результат</h2>',
+          '<h2 style="color: var(--text); margin-bottom: 8px; font-size: 1.4rem;">Результат</h2>',
 
           '<div style="',
             'font-size: 3rem;',
             'font-weight: 700;',
-            'color: #667eea;',
+            'color: var(--accent);',
             'margin: 16px 0 8px;',
           '">' + score + ' / ' + total + '</div>',
 
           '<div style="',
             'font-size: 1.1rem;',
-            'color: #7f8c8d;',
+            'color: var(--muted);',
             'margin-bottom: 6px;',
           '">' + pct + '%</div>',
 
           // Progress bar
           '<div style="',
             'height: 8px;',
-            'background: #e2e8f0;',
+            'background: var(--faint);',
             'border-radius: 4px;',
             'margin: 12px auto 20px;',
             'max-width: 280px;',
@@ -603,12 +606,12 @@ const FormulasUI = {
             '<div style="',
               'height: 100%;',
               'width: ' + pct + '%;',
-              'background: linear-gradient(90deg, #667eea, #27ae60);',
+              'background: linear-gradient(90deg, var(--accent), #27ae60);',
               'border-radius: 4px;',
             '"></div>',
           '</div>',
 
-          '<p style="color: #555; font-size: 1rem; margin-bottom: 28px;">' + _escHtml(reactionText) + '</p>',
+          '<p style="color: var(--text); font-size: 1rem; margin-bottom: 28px;">' + _escHtml(reactionText) + '</p>',
 
           '<div class="results-buttons">',
             '<button onclick="' + repeatAction + '" class="restart-button"><i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Повторить</button>',

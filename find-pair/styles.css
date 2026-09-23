@@ -58,41 +58,42 @@ html, body {
     flex: 1;
     overflow-y: auto;
     padding: 10px;
-    background: #f8f9fa;
+    background: var(--faint);
     border-radius: 8px;
 }
 
 .left-column {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    background: color-mix(in srgb, #3B82F6 8%, var(--surface));
 }
 
 .right-column {
-    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    background: color-mix(in srgb, var(--accent) 8%, var(--surface));
 }
 
 /* Слова */
 .word {
     padding: 12px 15px;
     margin: 8px 0;
-    border: 2px solid #e0e0e0;
-    background: white;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
     cursor: pointer;
     text-align: center;
     border-radius: 8px;
-    transition: all 0.3s;
+    transition: all 0.2s;
     font-size: 1rem;
     font-weight: 600;
 }
 
 .word:hover {
-    background: #f0f0f0;
-    border-color: #667eea;
+    background: var(--faint);
+    border-color: var(--accent);
     transform: scale(1.02);
 }
 
 .word.selected {
-    background: #fff59d;
-    border-color: #fbc02d;
+    background: var(--accent-faint);
+    border-color: var(--accent);
 }
 
 .word.blocked {
