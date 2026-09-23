@@ -67,7 +67,7 @@ const FormulasUI = {
             'background:rgba(255,255,255,0.12);color:#fff;cursor:pointer;',
             'transition:background 0.15s,transform 0.15s;text-align:center;',
           '" onmouseover="this.style.background=\'rgba(255,255,255,0.22)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.12)\'">',
-            '<span style="font-size:1.5rem;">🎯</span>',
+            '<span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.2);"><i data-lucide="clipboard-list" style="width:20px;height:20px;stroke:#fff;stroke-width:2;"></i></span>',
             '<span style="font-weight:700;font-size:0.95rem;">Полный тест</span>',
             '<span style="font-size:0.75rem;opacity:0.75;line-height:1.3;">216 вопросов · ошибки не повторяются</span>',
           '</button>',
@@ -78,7 +78,7 @@ const FormulasUI = {
             'color:#fff;cursor:pointer;',
             'transition:background 0.15s,transform 0.15s;text-align:center;',
           '" onmouseover="this.style.opacity=\'0.88\'" onmouseout="this.style.opacity=\'1\'">',
-            '<span style="font-size:1.5rem;">🔥</span>',
+            '<span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:rgba(239,68,68,0.3);"><i data-lucide="flame" style="width:20px;height:20px;stroke:#fff;stroke-width:2;"></i></span>',
             '<span style="font-weight:700;font-size:0.95rem;">Марафон</span>',
             '<span style="font-size:0.75rem;opacity:0.75;line-height:1.3;">ошибки возвращаются · конец = всё верно</span>',
           '</button>',
@@ -97,6 +97,8 @@ const FormulasUI = {
     ].join('');
 
     root.innerHTML = html;
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 
     // Hover effect via JS (no separate CSS needed)
     root.querySelectorAll('.formula-card-thumb').forEach(function(el) {
