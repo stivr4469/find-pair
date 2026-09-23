@@ -208,26 +208,30 @@ h1, h2, h3 {
 }
 
 .option-btn, .button-option {
-    padding: 15px 25px;
-    font-size: 1rem;
+    padding: 14px 22px;
+    font-size: 0.95rem;
     font-weight: 600;
-    border: 2px solid transparent;
-    border-radius: 8px;
+    border: 2px solid rgba(99, 102, 241, 0.35);
+    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    background: #f8f9fa;
-    color: #2c3e50;
+    transition: all 0.2s ease;
+    background: rgba(99, 102, 241, 0.06);
+    color: #4338ca;
     text-align: center;
+    width: 100%;
+    font-family: inherit;
 }
 
-.option-btn:hover, .button-option:hover {
-    background: #e9ecef;
-    transform: scale(1.02);
+.option-btn:hover:not(:disabled), .button-option:hover:not(:disabled) {
+    background: rgba(99, 102, 241, 0.14);
+    border-color: rgba(99, 102, 241, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
 .option-btn:disabled, .button-option:disabled {
     cursor: not-allowed;
-    opacity: 0.7;
+    opacity: 0.65;
 }
 
 /* Цвета для правильных/неправильных ответов */
