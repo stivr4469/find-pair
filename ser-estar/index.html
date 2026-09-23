@@ -33,6 +33,9 @@
         <button class="mode-button" data-mode="rules">
             📚 Правила (DOCTOR/PLACE)
         </button>
+        <button class="mode-button" data-mode="classify">
+            🃏 Классификация
+        </button>
     </nav>
 
     <!-- Счет -->
@@ -66,6 +69,11 @@
         <!-- Контент для страницы правил -->
     </main>
 
+    <!-- Mode Classify: Классификация SER/ESTAR -->
+    <main id="ser-estar-classify-area" class="game-area hidden">
+        <!-- Контент загружается динамически через classify-ui.js -->
+    </main>
+
     <!-- Footer -->
     <footer class="app-footer">
         <p>Ser vs Estar • Тренажёр испанских глаголов</p>
@@ -81,6 +89,9 @@
     <script src="ser-estar-rules-ui.js"></script>
     <script src="ser-estar-rules-mode.js"></script>
     <script src="ser-estar-mode2.js"></script>
+    <script src="classify-data.js"></script>
+    <script src="classify-ui.js"></script>
+    <script src="classify-mode.js"></script>
     <script src="ser-estar-app.js"></script>
     <script>lucide.createIcons();</script>
 </body>

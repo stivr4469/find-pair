@@ -41,6 +41,8 @@ const SerEstarApp = {
                 initContextMode();
             } else if (modeId === 'rules' && typeof initRulesMode === 'function') {
                 initRulesMode();
+            } else if (modeId === 'classify' && typeof initClassifyMode === 'function') {
+                initClassifyMode();
             }
         }
     },

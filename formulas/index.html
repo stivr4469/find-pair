@@ -256,10 +256,58 @@
     </footer>
 
     <!-- Скрипты -->
-    <script src="../js/utils.js?v=12"></script>
-    <script src="data.js?v=12"></script>
-    <script src="ui.js?v=12"></script>
-    <script src="app.js?v=12"></script>
+    <style>
+        /* ── XP Counter ─────────────────────────────────────────────────────── */
+        #xp-counter {
+            position: fixed;
+            top: 14px;
+            right: 14px;
+            z-index: 9999;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.82rem;
+            padding: 6px 14px;
+            border-radius: 999px;
+            box-shadow: 0 3px 12px rgba(124,58,237,0.45);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            user-select: none;
+            transition: transform 0.15s;
+        }
+        #xp-counter.bump {
+            animation: xp-bump 0.3s ease;
+        }
+        @keyframes xp-bump {
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.22); }
+            100% { transform: scale(1); }
+        }
+        .xp-float {
+            position: fixed;
+            z-index: 10000;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #a855f7;
+            pointer-events: none;
+            white-space: nowrap;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.18);
+            animation: xp-float-up 0.9s ease forwards;
+        }
+        @keyframes xp-float-up {
+            0%   { opacity: 1; transform: translateY(0) scale(1); }
+            60%  { opacity: 1; transform: translateY(-28px) scale(1.15); }
+            100% { opacity: 0; transform: translateY(-48px) scale(0.9); }
+        }
+    </style>
+    <!-- XP Counter widget -->
+    <div id="xp-counter">⚡ <span id="xp-value">0</span> XP</div>
+
+    <script src="../js/utils.js?v=13"></script>
+    <script src="data.js?v=13"></script>
+    <script src="ui.js?v=13"></script>
+    <script src="app.js?v=13"></script>
     <script>lucide.createIcons();</script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

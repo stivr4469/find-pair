@@ -207,22 +207,8 @@ body::after {
   cursor: pointer;
   transform-style: preserve-3d;
 
-  /* Entrance: start hidden, animate in */
+  /* Starts invisible — JS deck animation reveals cards */
   opacity: 0;
-  animation: cardReveal 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-/* Staggered delays per card */
-.game-card:nth-child(1) { animation-delay: 0.18s; }
-.game-card:nth-child(2) { animation-delay: 0.30s; }
-.game-card:nth-child(3) { animation-delay: 0.42s; }
-.game-card:nth-child(4) { animation-delay: 0.54s; }
-.game-card:nth-child(5) { animation-delay: 0.66s; }
-.game-card:nth-child(6) { animation-delay: 0.78s; }
-
-@keyframes cardReveal {
-  from { opacity: 0; transform: translateY(36px) scale(0.95); }
-  to   { opacity: 1; transform: translateY(0)   scale(1);    }
 }
 
 /* Shine sweep on hover */

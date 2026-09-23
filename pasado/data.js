@@ -967,3 +967,305 @@ const PASADO_DATA = [
   }
 
 ];
+
+// ══════════════════════════════════════════════════════════════
+//  PASADO_INLINE — 28 предложений для Inline режима (7 × 4 времени)
+// ══════════════════════════════════════════════════════════════
+
+const PASADO_INLINE = [
+
+  // ─── Indefinido (7 предложений) ──────────────────────────────────────────────
+  {
+    before: "Ayer yo",
+    after: "al mercado con mi familia.",
+    options: ["fui", "iba", "he ido", "había ido"],
+    correct: 0,
+    hint: "Indefinido: ayer + конкретное завершённое действие → fui",
+    tts: "Ayer yo fui al mercado con mi familia."
+  },
+  {
+    before: "La semana pasada ella",
+    after: "una carta muy larga.",
+    options: ["escribió", "escribía", "ha escrito", "había escrito"],
+    correct: 0,
+    hint: "Indefinido: la semana pasada + факт → escribió",
+    tts: "La semana pasada ella escribió una carta muy larga."
+  },
+  {
+    before: "Esta mañana nosotros",
+    after: "el desayuno juntos.",
+    options: ["hemos tomado", "tomamos", "tomábamos", "habíamos tomado"],
+    correct: 0,
+    hint: "Perfecto Compuesto: esta mañana (незавершённый период сегодня) → hemos tomado",
+    tts: "Esta mañana nosotros hemos tomado el desayuno juntos."
+  },
+  {
+    before: "El año pasado ellos",
+    after: "a toda la familia.",
+    options: ["visitaron", "visitaban", "han visitado", "habían visitado"],
+    correct: 0,
+    hint: "Indefinido: el año pasado (завершённый год) → visitaron",
+    tts: "El año pasado ellos visitaron a toda la familia."
+  },
+  {
+    before: "Ayer tú",
+    after: "muy cansado después del trabajo.",
+    options: ["estuviste", "estabas", "has estado", "habías estado"],
+    correct: 0,
+    hint: "Indefinido: ayer + конкретный момент → estuviste",
+    tts: "Ayer tú estuviste muy cansado después del trabajo."
+  },
+  {
+    before: "El lunes pasado María",
+    after: "al médico por la mañana.",
+    options: ["fue", "iba", "ha ido", "había ido"],
+    correct: 0,
+    hint: "Indefinido: el lunes pasado + конкретное действие → fue",
+    tts: "El lunes pasado María fue al médico por la mañana."
+  },
+  {
+    before: "Anoche yo no",
+    after: "dormir bien.",
+    options: ["pude", "podía", "he podido", "había podido"],
+    correct: 0,
+    hint: "Indefinido: anoche + конкретный факт → pude",
+    tts: "Anoche yo no pude dormir bien."
+  },
+
+  // ─── Imperfecto (7 предложений) ──────────────────────────────────────────────
+  {
+    before: "Cuando era niño, yo",
+    after: "al fútbol cada tarde.",
+    options: ["jugaba", "jugué", "he jugado", "había jugado"],
+    correct: 0,
+    hint: "Imperfecto: cuando era niño + каждый день → jugaba (привычка)",
+    tts: "Cuando era niño, yo jugaba al fútbol cada tarde."
+  },
+  {
+    before: "De pequeña ella siempre",
+    after: "libros de aventuras.",
+    options: ["leía", "leyó", "ha leído", "había leído"],
+    correct: 0,
+    hint: "Imperfecto: siempre + привычное прошлое → leía",
+    tts: "De pequeña ella siempre leía libros de aventuras."
+  },
+  {
+    before: "Antes nosotros",
+    after: "en una ciudad pequeña.",
+    options: ["vivíamos", "vivimos", "hemos vivido", "habíamos vivido"],
+    correct: 0,
+    hint: "Imperfecto: antes + длительное состояние → vivíamos",
+    tts: "Antes nosotros vivíamos en una ciudad pequeña."
+  },
+  {
+    before: "Cuando llegué, él",
+    after: "música tranquila.",
+    options: ["escuchaba", "escuchó", "ha escuchado", "había escuchado"],
+    correct: 0,
+    hint: "Imperfecto: фоновое длящееся действие (когда я пришёл) → escuchaba",
+    tts: "Cuando llegué, él escuchaba música tranquila."
+  },
+  {
+    before: "Los niños",
+    after: "en el parque todos los sábados.",
+    options: ["jugaban", "jugaron", "han jugado", "habían jugado"],
+    correct: 0,
+    hint: "Imperfecto: todos los sábados + привычка → jugaban",
+    tts: "Los niños jugaban en el parque todos los sábados."
+  },
+  {
+    before: "Aquella noche",
+    after: "mucho frío y llovía sin parar.",
+    options: ["hacía", "hizo", "ha hecho", "había hecho"],
+    correct: 0,
+    hint: "Imperfecto: описание фона, погоды → hacía",
+    tts: "Aquella noche hacía mucho frío y llovía sin parar."
+  },
+  {
+    before: "Cuando era joven, ella",
+    after: "muy bien la guitarra.",
+    options: ["tocaba", "tocó", "ha tocado", "había tocado"],
+    correct: 0,
+    hint: "Imperfecto: cuando era joven + привычный навык → tocaba",
+    tts: "Cuando era joven, ella tocaba muy bien la guitarra."
+  },
+
+  // ─── Perfecto Compuesto (7 предложений) ──────────────────────────────────────
+  {
+    before: "Hoy yo",
+    after: "tres tazas de café.",
+    options: ["he tomado", "tomé", "tomaba", "había tomado"],
+    correct: 0,
+    hint: "Perfecto Compuesto: hoy (незавершённый период) → he tomado",
+    tts: "Hoy yo he tomado tres tazas de café."
+  },
+  {
+    before: "Esta semana nosotros",
+    after: "mucho para el examen.",
+    options: ["hemos estudiado", "estudiamos", "estudiábamos", "habíamos estudiado"],
+    correct: 0,
+    hint: "Perfecto Compuesto: esta semana + незавершённый период → hemos estudiado",
+    tts: "Esta semana nosotros hemos estudiado mucho para el examen."
+  },
+  {
+    before: "¿Alguna vez tú",
+    after: "sushi japonés?",
+    options: ["has probado", "probaste", "probabas", "habías probado"],
+    correct: 0,
+    hint: "Perfecto Compuesto: alguna vez (жизненный опыт) → has probado",
+    tts: "¿Alguna vez tú has probado sushi japonés?"
+  },
+  {
+    before: "Nunca ella",
+    after: "tanto miedo en su vida.",
+    options: ["ha tenido", "tuvo", "tenía", "había tenido"],
+    correct: 0,
+    hint: "Perfecto Compuesto: nunca + жизненный опыт → ha tenido",
+    tts: "Nunca ella ha tenido tanto miedo en su vida."
+  },
+  {
+    before: "Todavía no ellos",
+    after: "la película nueva.",
+    options: ["han visto", "vieron", "veían", "habían visto"],
+    correct: 0,
+    hint: "Perfecto Compuesto: todavía no + незавершённое → han visto",
+    tts: "Todavía no ellos han visto la película nueva."
+  },
+  {
+    before: "Este año yo",
+    after: "a tres países diferentes.",
+    options: ["he viajado", "viajé", "viajaba", "había viajado"],
+    correct: 0,
+    hint: "Perfecto Compuesto: este año (незавершённый период) → he viajado",
+    tts: "Este año yo he viajado a tres países diferentes."
+  },
+  {
+    before: "Ya ella",
+    after: "la tarea antes de las seis.",
+    options: ["ha terminado", "terminó", "terminaba", "había terminado"],
+    correct: 0,
+    hint: "Perfecto Compuesto: ya + актуальность для настоящего → ha terminado",
+    tts: "Ya ella ha terminado la tarea antes de las seis."
+  },
+
+  // ─── Pluscuamperfecto (7 предложений) ────────────────────────────────────────
+  {
+    before: "Cuando llegué a casa, ella ya",
+    after: "la cena.",
+    options: ["había preparado", "preparó", "preparaba", "ha preparado"],
+    correct: 0,
+    hint: "Pluscuamperfecto: ya + действие ДО другого прошлого → había preparado",
+    tts: "Cuando llegué a casa, ella ya había preparado la cena."
+  },
+  {
+    before: "No pude entrar porque",
+    after: "las llaves en la oficina.",
+    options: ["había dejado", "dejé", "dejaba", "he dejado"],
+    correct: 0,
+    hint: "Pluscuamperfecto: причина в прошлом до другого прошлого → había dejado",
+    tts: "No pude entrar porque había dejado las llaves en la oficina."
+  },
+  {
+    before: "Nunca antes yo",
+    after: "una ciudad tan bella.",
+    options: ["había visto", "vi", "veía", "he visto"],
+    correct: 0,
+    hint: "Pluscuamperfecto: nunca antes + до этого момента в прошлом → había visto",
+    tts: "Nunca antes yo había visto una ciudad tan bella."
+  },
+  {
+    before: "Cuando la llamé, ella ya",
+    after: "del trabajo.",
+    options: ["había salido", "salió", "salía", "ha salido"],
+    correct: 0,
+    hint: "Pluscuamperfecto: ya + ДО момента звонка → había salido",
+    tts: "Cuando la llamé, ella ya había salido del trabajo."
+  },
+  {
+    before: "Me dijo que él",
+    after: "ese libro tres veces.",
+    options: ["había leído", "leyó", "leía", "ha leído"],
+    correct: 0,
+    hint: "Pluscuamperfecto: dijo que + действие в прошлом прошлого → había leído",
+    tts: "Me dijo que él había leído ese libro tres veces."
+  },
+  {
+    before: "Cuando llegamos, los niños ya",
+    after: "a dormir.",
+    options: ["se habían ido", "se fueron", "se iban", "se han ido"],
+    correct: 0,
+    hint: "Pluscuamperfecto: ya + ДО нашего прихода → se habían ido",
+    tts: "Cuando llegamos, los niños ya se habían ido a dormir."
+  },
+  {
+    before: "No sabía que tú",
+    after: "en Madrid antes.",
+    options: ["habías vivido", "viviste", "vivías", "has vivido"],
+    correct: 0,
+    hint: "Pluscuamperfecto: no sabía que + факт из прошлого прошлого → habías vivido",
+    tts: "No sabía que tú habías vivido en Madrid antes."
+  }
+];
+
+// ══════════════════════════════════════════════════════════════
+//  PASADO_CLASSIFY — 48 форм/предложений для классификации
+// ══════════════════════════════════════════════════════════════
+
+const PASADO_CLASSIFY = [
+
+  // ─── Indefinido (12) ─────────────────────────────────────────────────────────
+  { text: "fui", answer: "indefinido", hint: "fui = ir/ser, Indefinido 1л. ед.ч. — конкретный факт в прошлом" },
+  { text: "Ayer comí paella", answer: "indefinido", hint: "ayer + конкретное прошлое действие → Indefinido" },
+  { text: "hablé", answer: "indefinido", hint: "habl + é — окончание -é = Indefinido, 1л. ед.ч." },
+  { text: "llegaron tarde", answer: "indefinido", hint: "llegar + aron — окончание -aron = Indefinido, 3л. мн.ч." },
+  { text: "escribió", answer: "indefinido", hint: "escrib + ió — окончание -ió = Indefinido, 3л. ед.ч." },
+  { text: "hice mis deberes", answer: "indefinido", hint: "hice = hacer, нерегулярный Indefinido 1л. ед.ч." },
+  { text: "El lunes pasado salí", answer: "indefinido", hint: "el lunes pasado = сигнал завершённого прошлого → Indefinido" },
+  { text: "tuve que esperar", answer: "indefinido", hint: "tuve = tener, нерегулярный Indefinido" },
+  { text: "vivieron juntos", answer: "indefinido", hint: "viv + ieron = Indefinido, 3л. мн.ч." },
+  { text: "pude terminar", answer: "indefinido", hint: "pude = poder, нерегулярный Indefinido 1л. ед.ч." },
+  { text: "bebiste mucho", answer: "indefinido", hint: "beb + iste = Indefinido tú; -iste — маркёр Indefinido" },
+  { text: "El año pasado viajamos", answer: "indefinido", hint: "el año pasado (завершённый год) → Indefinido" },
+
+  // ─── Imperfecto (12) ─────────────────────────────────────────────────────────
+  { text: "iba", answer: "imperfecto", hint: "ib + a = ir, Imperfecto — ir неправильный (ib-)" },
+  { text: "Antes comía mucho", answer: "imperfecto", hint: "antes + привычка → Imperfecto" },
+  { text: "hablaba", answer: "imperfecto", hint: "habl + aba = Imperfecto; -aba/-abas/-aba = маркёр -AR" },
+  { text: "era feliz", answer: "imperfecto", hint: "era = ser, Imperfecto — один из 3 нерегулярных глаголов" },
+  { text: "Cuando era niño jugaba", answer: "imperfecto", hint: "cuando era niño + jugaba = привычное детское прошлое → Imperfecto" },
+  { text: "vivían en el campo", answer: "imperfecto", hint: "viv + ían = Imperfecto -ER/-IR; -ían маркёр" },
+  { text: "Siempre llegaba tarde", answer: "imperfecto", hint: "siempre + привычка → Imperfecto" },
+  { text: "comía pizza cada semana", answer: "imperfecto", hint: "com + ía = Imperfecto -ER; cada semana = привычка" },
+  { text: "veía la televisión", answer: "imperfecto", hint: "veía = ver, Imperfecto — ve + ía (почти правильный)" },
+  { text: "Llovía y hacía frío", answer: "imperfecto", hint: "описание фона, погоды в прошлом → Imperfecto" },
+  { text: "Tenía 10 años", answer: "imperfecto", hint: "возраст в прошлом: tenía = Imperfecto" },
+  { text: "leíamos todos los días", answer: "imperfecto", hint: "le + íamos = Imperfecto nosotros; todos los días = привычка" },
+
+  // ─── Perfecto Compuesto (12) ─────────────────────────────────────────────────
+  { text: "he ido", answer: "perfecto", hint: "he + participio = Perfecto Compuesto" },
+  { text: "Hoy hemos comido", answer: "perfecto", hint: "hoy = сигнал Perfecto Compuesto" },
+  { text: "ha llegado", answer: "perfecto", hint: "ha + participio = Perfecto Compuesto 3л. ед.ч." },
+  { text: "¿Alguna vez has probado?", answer: "perfecto", hint: "alguna vez = сигнал жизненного опыта → Perfecto Compuesto" },
+  { text: "Nunca he visto eso", answer: "perfecto", hint: "nunca + жизненный опыт → Perfecto Compuesto" },
+  { text: "Esta semana han trabajado", answer: "perfecto", hint: "esta semana = незавершённый период → Perfecto Compuesto" },
+  { text: "Todavía no he terminado", answer: "perfecto", hint: "todavía no = сигнал Perfecto Compuesto" },
+  { text: "han salido ya", answer: "perfecto", hint: "han + participio = Perfecto Compuesto 3л. мн.ч." },
+  { text: "Este año he viajado mucho", answer: "perfecto", hint: "este año (незавершённый год) → Perfecto Compuesto" },
+  { text: "habéis visto eso", answer: "perfecto", hint: "habéis + participio = Perfecto Compuesto vosotros" },
+  { text: "Últimamente he dormido mal", answer: "perfecto", hint: "últimamente = сигнал Perfecto Compuesto" },
+  { text: "hemos hecho todo", answer: "perfecto", hint: "hemos + hecho (нестанд. причастие) = Perfecto Compuesto" },
+
+  // ─── Pluscuamperfecto (12) ───────────────────────────────────────────────────
+  { text: "había ido", answer: "pluscuamperfecto", hint: "había + participio = Pluscuamperfecto" },
+  { text: "Cuando llegué, ya había salido", answer: "pluscuamperfecto", hint: "ya había + preterito = классическая схема Pluscuamperfecto" },
+  { text: "habías comido", answer: "pluscuamperfecto", hint: "habías + participio = Pluscuamperfecto tú" },
+  { text: "Nunca antes había visto", answer: "pluscuamperfecto", hint: "nunca antes + había = Pluscuamperfecto" },
+  { text: "habían terminado", answer: "pluscuamperfecto", hint: "habían + participio = Pluscuamperfecto 3л. мн.ч." },
+  { text: "habíamos llegado", answer: "pluscuamperfecto", hint: "habíamos + participio = Pluscuamperfecto nosotros" },
+  { text: "Me dijo que había hecho", answer: "pluscuamperfecto", hint: "dijo que + había = прошлое внутри прошлого → Pluscuamperfecto" },
+  { text: "ya se habían ido", answer: "pluscuamperfecto", hint: "ya se habían = Pluscuamperfecto, действие завершилось ДО" },
+  { text: "No sabía que habías llamado", answer: "pluscuamperfecto", hint: "no sabía que + habías = Pluscuamperfecto" },
+  { text: "había vivido allí antes", answer: "pluscuamperfecto", hint: "había + vivido = Pluscuamperfecto, prежнее состояние" },
+  { text: "habíais visto esa película", answer: "pluscuamperfecto", hint: "habíais + participio = Pluscuamperfecto vosotros" },
+  { text: "No pude porque había perdido", answer: "pluscuamperfecto", hint: "había perdido = причина в прошлом до другого прошлого → Pluscuamperfecto" }
+];

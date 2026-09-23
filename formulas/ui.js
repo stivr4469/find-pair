@@ -59,15 +59,31 @@ const FormulasUI = {
           '</p>',
         '</div>',
 
-        // "Quiz all" button
-        '<div style="text-align: center; margin-bottom: 20px;">',
+        // "Quiz all" + "Marathon" buttons
+        '<div style="text-align: center; margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">',
           '<button onclick="formulaStartAllQuiz()" class="next-button" style="',
             'display: inline-block;',
             'width: auto;',
-            'padding: 12px 32px;',
+            'padding: 12px 28px;',
             'font-size: 1rem;',
           '">',
-            '🎯 Тест: все 108 вопросов',
+            '🎯 Тест: все 216 вопросов',
+          '</button>',
+          '<button onclick="formulaStartMarathon()" style="',
+            'display: inline-block;',
+            'width: auto;',
+            'padding: 12px 28px;',
+            'font-size: 1rem;',
+            'font-weight: 700;',
+            'border: none;',
+            'border-radius: 8px;',
+            'cursor: pointer;',
+            'background: linear-gradient(135deg, #f59e0b, #ef4444);',
+            'color: white;',
+            'box-shadow: 0 3px 12px rgba(239,68,68,0.35);',
+            'transition: opacity 0.15s;',
+          '" onmouseover="this.style.opacity=\'0.88\'" onmouseout="this.style.opacity=\'1\'">',
+            '🔥 Марафон',
           '</button>',
         '</div>',
 
@@ -169,9 +185,26 @@ const FormulasUI = {
             'padding: 16px;',
             'text-align: center;',
             'margin-bottom: 16px;',
+            'position: relative;',
           '">',
             '<div style="font-size: 1.4rem; font-weight: 700; color: #2c3e50; margin-bottom: 4px;">' + _escHtml(formula.example) + '</div>',
-            '<div style="font-size: 0.9rem; color: #7f8c8d; font-style: italic;">' + _escHtml(formula.exampleRu) + '</div>',
+            '<div style="font-size: 0.9rem; color: #7f8c8d; font-style: italic; margin-bottom: 8px;">' + _escHtml(formula.exampleRu) + '</div>',
+            '<button onclick="window.formulaSpeakExample(\'' + _escHtml(formula.example).replace(/'/g, "\\'") + '\')" title="Озвучить" style="',
+              'background: linear-gradient(135deg, #667eea, #764ba2);',
+              'border: none;',
+              'border-radius: 20px;',
+              'padding: 5px 14px;',
+              'cursor: pointer;',
+              'color: white;',
+              'font-size: 0.82rem;',
+              'display: inline-flex;',
+              'align-items: center;',
+              'gap: 5px;',
+              'opacity: 0.9;',
+              'transition: opacity 0.15s, transform 0.15s;',
+            '" onmouseover="this.style.opacity=\'1\';this.style.transform=\'scale(1.06)\'" onmouseout="this.style.opacity=\'0.9\';this.style.transform=\'\'">',
+              '🔊 Послушать',
+            '</button>',
           '</div>',
 
           // Extra examples
@@ -233,7 +266,7 @@ const FormulasUI = {
 
   // ─── View: quiz question ──────────────────────────────────────────────────────
 
-  renderQuiz: function(question, formulaName, formulaEmoji, qIndex, total, score) {
+  renderQuiz: function(question, formulaName, formulaEmoji, qIndex, total, score, marathonLeft) {
     var root = this._root();
     if (!root) return;
 
@@ -325,15 +358,21 @@ const FormulasUI = {
             '"></div>',
           '</div>',
 
-          // Counter + score
+          // Counter + score (+ marathon remaining)
           '<div style="',
             'display: flex;',
             'justify-content: space-between;',
+            'align-items: center;',
             'margin-bottom: 18px;',
             'font-size: 0.85rem;',
             'color: #7f8c8d;',
+            'flex-wrap: wrap;',
+            'gap: 6px;',
           '">',
-            '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>',
+            (marathonLeft != null
+              ? '<span style="background:#fff3cd;color:#856404;padding:2px 10px;border-radius:20px;font-weight:700;">🔥 Осталось: ' + marathonLeft + '</span>'
+              : '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>'
+            ),
             '<span>✅ ' + score + ' / ' + qIndex + '</span>',
           '</div>',
 
@@ -471,7 +510,9 @@ const FormulasUI = {
 
     var repeatAction = quizMode === 'all'
       ? 'formulaStartAllQuiz()'
-      : 'formulaStartQuiz(' + FormulasApp.state.currentFormulaIndex + ')';
+      : quizMode === 'marathon'
+        ? 'formulaStartMarathon()'
+        : 'formulaStartQuiz(' + FormulasApp.state.currentFormulaIndex + ')';
 
     var html = [
       '<div style="max-width: 500px; margin: 0 auto;">',

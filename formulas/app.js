@@ -1,18 +1,53 @@
 /**
- * Spanish Trainer - 20 Formulas
+ * Spanish Trainer - 36 Formulas
  * App Controller: state management and game logic
  */
+
+// ─── XP System (in-memory, resets on page close) ─────────────────────────────
+
+var _xp = 0;
+
+function _addXP(amount) {
+  _xp += amount;
+  var el = document.getElementById('xp-value');
+  if (el) el.textContent = _xp;
+
+  var counter = document.getElementById('xp-counter');
+  if (counter) {
+    counter.classList.remove('bump');
+    // Force reflow to restart animation
+    void counter.offsetWidth;
+    counter.classList.add('bump');
+    setTimeout(function() { counter.classList.remove('bump'); }, 350);
+  }
+
+  // Float "+10 XP" near the counter
+  var badge = document.getElementById('xp-counter');
+  if (badge) {
+    var rect = badge.getBoundingClientRect();
+    var float = document.createElement('div');
+    float.className = 'xp-float';
+    float.textContent = '+' + amount + ' XP';
+    float.style.left = (rect.left + rect.width / 2 - 24) + 'px';
+    float.style.top  = (rect.bottom + 4) + 'px';
+    document.body.appendChild(float);
+    setTimeout(function() { float.remove(); }, 950);
+  }
+}
 
 const FormulasApp = {
   state: {
     currentView: 'list',       // 'list' | 'card' | 'quiz' | 'results'
     currentFormulaIndex: 0,
-    quizMode: 'single',        // 'single' | 'all'
+    quizMode: 'single',        // 'single' | 'all' | 'marathon'
     quizQuestions: [],          // flattened quiz items with formulaId attached
     currentQuestionIndex: 0,
     score: 0,
     totalAnswered: 0,
     isAnswered: false,
+    // Marathon-specific
+    marathonPool: [],           // remaining questions (answered wrong → pushed back)
+    marathonTotal: 0,           // initial pool size (216)
   },
 
   // ─── Browse: list of all 20 formulas ───────────────────────────────────────
@@ -105,28 +140,90 @@ const FormulasApp = {
     this._renderCurrentQuestion();
   },
 
+  // ─── Quiz: marathon (cyclic) mode — all 36×6 = 216 questions ──────────────
+
+  startMarathon: function() {
+    var allQuestions = [];
+    FORMULAS_DATA.forEach(function(formula) {
+      formula.quiz.forEach(function(q) {
+        allQuestions.push(Object.assign({}, q, {
+          formulaId: formula.id,
+          formulaName: formula.shortName,
+          formulaEmoji: formula.emoji,
+        }));
+      });
+    });
+
+    var shuffled = (typeof shuffleArray === 'function')
+      ? shuffleArray(allQuestions)
+      : allQuestions;
+
+    this.state.quizMode = 'marathon';
+    this.state.marathonPool = shuffled.slice();   // mutable cyclic pool
+    this.state.marathonTotal = shuffled.length;   // 216
+    this.state.quizQuestions = [];
+    this.state.currentQuestionIndex = 0;
+    this.state.score = 0;
+    this.state.totalAnswered = 0;
+    this.state.isAnswered = false;
+    this.state.currentView = 'quiz';
+
+    this._renderMarathonQuestion();
+  },
+
   // ─── Quiz: handle answer ────────────────────────────────────────────────────
 
   handleAnswer: function(selectedIndex) {
     if (this.state.isAnswered) return;
     this.state.isAnswered = true;
 
-    var question = this.state.quizQuestions[this.state.currentQuestionIndex];
+    var question;
+    if (this.state.quizMode === 'marathon') {
+      question = this.state.marathonPool[0];
+    } else {
+      question = this.state.quizQuestions[this.state.currentQuestionIndex];
+    }
+
     var isCorrect = selectedIndex === question.correct;
 
     if (isCorrect) {
       this.state.score += 1;
+      _addXP(10);
+      // Auto-TTS on correct answer
+      if (typeof speakSpanish === 'function' && question.question) {
+        speakSpanish(question.question);
+      }
     }
     this.state.totalAnswered += 1;
 
     if (typeof FormulasUI !== 'undefined') {
       FormulasUI.showAnswerFeedback(selectedIndex, question.correct, question.hint);
     }
+
+    // Marathon: remove correct answers, push wrong to end
+    if (this.state.quizMode === 'marathon') {
+      if (isCorrect) {
+        this.state.marathonPool.shift();
+      } else {
+        var wrong = this.state.marathonPool.shift();
+        this.state.marathonPool.push(wrong);
+      }
+    }
   },
 
   // ─── Quiz: next question ────────────────────────────────────────────────────
 
   nextQuestion: function() {
+    if (this.state.quizMode === 'marathon') {
+      if (this.state.marathonPool.length === 0) {
+        this.showResults();
+      } else {
+        this.state.isAnswered = false;
+        this._renderMarathonQuestion();
+      }
+      return;
+    }
+
     var next = this.state.currentQuestionIndex + 1;
     if (next >= this.state.quizQuestions.length) {
       this.showResults();
@@ -142,9 +239,12 @@ const FormulasApp = {
   showResults: function() {
     this.state.currentView = 'results';
     if (typeof FormulasUI !== 'undefined') {
+      var total = this.state.quizMode === 'marathon'
+        ? this.state.totalAnswered
+        : this.state.quizQuestions.length;
       FormulasUI.renderResults(
         this.state.score,
-        this.state.quizQuestions.length,
+        total,
         this.state.quizMode
       );
     }
@@ -170,7 +270,18 @@ const FormulasApp = {
     var total = this.state.quizQuestions.length;
     var score = this.state.score;
 
-    FormulasUI.renderQuiz(question, question.formulaName, question.formulaEmoji, qIndex, total, score);
+    FormulasUI.renderQuiz(question, question.formulaName, question.formulaEmoji, qIndex, total, score, null);
+  },
+
+  _renderMarathonQuestion: function() {
+    if (typeof FormulasUI === 'undefined') return;
+
+    var question = this.state.marathonPool[0];
+    var remaining = this.state.marathonPool.length;
+    var score = this.state.score;
+    var answered = this.state.totalAnswered;
+
+    FormulasUI.renderQuiz(question, question.formulaName, question.formulaEmoji, answered, this.state.marathonTotal, score, remaining);
   },
 
   // ─── Init ────────────────────────────────────────────────────────────────────
@@ -184,13 +295,17 @@ const FormulasApp = {
 
 if (typeof window !== 'undefined') {
   window.FormulasApp = FormulasApp;
-  window.formulaShowCard    = function(i) { FormulasApp.showCard(i); };
-  window.formulaShowNext    = function()  { FormulasApp.showNextCard(); };
-  window.formulaShowPrev    = function()  { FormulasApp.showPrevCard(); };
-  window.formulaStartQuiz   = function(i) { FormulasApp.startSingleQuiz(i); };
-  window.formulaStartAllQuiz = function() { FormulasApp.startAllQuiz(); };
+  window.formulaShowCard     = function(i) { FormulasApp.showCard(i); };
+  window.formulaShowNext     = function()  { FormulasApp.showNextCard(); };
+  window.formulaShowPrev     = function()  { FormulasApp.showPrevCard(); };
+  window.formulaStartQuiz    = function(i) { FormulasApp.startSingleQuiz(i); };
+  window.formulaStartAllQuiz = function()  { FormulasApp.startAllQuiz(); };
+  window.formulaStartMarathon = function() { FormulasApp.startMarathon(); };
   window.formulaHandleAnswer = function(i) { FormulasApp.handleAnswer(i); };
-  window.formulaNext        = function()  { FormulasApp.nextQuestion(); };
-  window.formulaBackToList  = function()  { FormulasApp.backToList(); };
-  window.formulaBackToCard  = function()  { FormulasApp.backToCard(); };
+  window.formulaNext         = function()  { FormulasApp.nextQuestion(); };
+  window.formulaBackToList   = function()  { FormulasApp.backToList(); };
+  window.formulaBackToCard   = function()  { FormulasApp.backToCard(); };
+  window.formulaSpeakExample = function(text) {
+    if (typeof speakSpanish === 'function') speakSpanish(text);
+  };
 }
