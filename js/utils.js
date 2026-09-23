@@ -24,6 +24,11 @@ function shuffleArray(array) {
  * Запасной вариант: Google TTS
  */
 function speakSpanish(text) {
+    // TTS временно отключён — неправильное произношение слов с -acha/-cha
+    // TODO: вернуться к TTS позже (подобрать голос / скорость / язык)
+    return;
+
+    /* eslint-disable no-unreachable */
     if (!text || !window.speechSynthesis) return;
 
     const cleanText = text.replace(/_+/g, '').trim();
@@ -34,6 +39,7 @@ function speakSpanish(text) {
     utter.rate = 0.85;
 
     window.speechSynthesis.speak(utter);
+    /* eslint-enable no-unreachable */
 }
 
 // Экспорт для глобального доступа

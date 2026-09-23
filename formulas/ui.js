@@ -404,15 +404,15 @@ const FormulasUI = {
             '<span>✅ ' + score + ' / ' + qIndex + '</span>',
           '</div>',
 
-          // Question text
-          '<div style="',
-            'font-size: 1.25rem;',
-            'font-weight: 700;',
-            'color: #2c3e50;',
-            'text-align: center;',
-            'margin-bottom: 22px;',
-            'line-height: 1.4;',
-          '">' + _escHtml(question.question) + '</div>',
+          // Question text (Russian — no TTS)
+          '<div style="text-align: center; margin-bottom: 22px;">',
+            '<div style="',
+              'font-size: 1.25rem;',
+              'font-weight: 700;',
+              'color: #2c3e50;',
+              'line-height: 1.4;',
+            '">' + _escHtml(question.question) + '</div>',
+          '</div>',
 
           // Options
           '<div id="formula-options" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">',
@@ -488,11 +488,28 @@ const FormulasUI = {
       }
     }
 
+    // Get correct Spanish text for TTS (from button span[1])
+    var correctText = '';
+    if (correctBtn) {
+      var spans = correctBtn.querySelectorAll('span');
+      if (spans[1]) correctText = spans[1].textContent;
+    }
+
     // Show feedback box
     var isCorrect = selectedIndex === correctIndex;
     var feedbackEl = root.querySelector('#formula-feedback');
     if (feedbackEl) {
-      feedbackEl.style.display = 'block';
+      var ttsBtn = '<button id="formula-feedback-tts" data-tts="' + correctText.replace(/&/g,'&amp;').replace(/"/g,'&quot;') + '" title="Послушать правильный ответ" style="' +
+        'flex-shrink:0;width:32px;height:32px;border-radius:50%;border:none;' +
+        'background:rgba(102,126,234,0.15);color:#667eea;cursor:pointer;' +
+        'display:inline-flex;align-items:center;justify-content:center;' +
+        'margin-left:8px;vertical-align:middle;transition:background 0.2s;">' +
+        '<i data-lucide="volume-2" style="width:15px;height:15px;stroke:currentColor;stroke-width:2;pointer-events:none"></i>' +
+        '</button>';
+
+      feedbackEl.style.display = 'flex';
+      feedbackEl.style.alignItems = 'flex-start';
+      feedbackEl.style.gap = '8px';
       feedbackEl.style.padding = '12px 16px';
       feedbackEl.style.borderRadius = '8px';
       feedbackEl.style.marginTop = '8px';
@@ -503,12 +520,21 @@ const FormulasUI = {
         feedbackEl.style.background = '#d4edda';
         feedbackEl.style.color = '#155724';
         feedbackEl.style.border = '1px solid #c3e6cb';
-        feedbackEl.innerHTML = '<strong>✅ Верно!</strong> ' + _escHtml(hint);
+        feedbackEl.innerHTML = '<div style="flex:1"><strong>✅ Верно!</strong> ' + _escHtml(hint) + '</div>' + ttsBtn;
       } else {
         feedbackEl.style.background = '#f8d7da';
         feedbackEl.style.color = '#721c24';
         feedbackEl.style.border = '1px solid #f5c6cb';
-        feedbackEl.innerHTML = '<strong>❌ Неверно.</strong> ' + _escHtml(hint);
+        feedbackEl.innerHTML = '<div style="flex:1"><strong>❌ Неверно.</strong> ' + _escHtml(hint) + '</div>' + ttsBtn;
+      }
+
+      // Wire up TTS button
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+      var ttsBtnEl = feedbackEl.querySelector('#formula-feedback-tts');
+      if (ttsBtnEl) {
+        ttsBtnEl.addEventListener('click', function() {
+          if (typeof speakSpanish === 'function') speakSpanish(ttsBtnEl.dataset.tts);
+        });
       }
     }
 
