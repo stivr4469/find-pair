@@ -18,6 +18,27 @@
 
 **Коммит:** `4966b61`
 
+### Адаптация всех модулей под стиль «Валенсия» + тёмная тема
+
+**Задача:** привести все модули к единому стилю главной страницы, добавить переключатель тема день/ночь.
+
+**Что сделано:**
+- `css/unified-styles.css?v=14` — полная перепись:
+  - Добавлен блок CSS-токенов (`--bg`, `--surface`, `--text`, `--muted`, `--faint`, `--border`, `--accent`, `--accent-faint`, `--shadow`, `--radius`, `--font`)
+  - Светлая тема: тёплый песочный фон `#FBF6EF`, белые карточки, оранжевый акцент `#F26B1D`
+  - Тёмная тема `[data-theme="dark"]` + `@media (prefers-color-scheme: dark)`: фон `#14110F`, карточки `#1F1B18`, акцент `#FF7A2E`
+  - Паттерн точек + оранжевое свечение сверху (body::before)
+  - Все жёсткие цвета (#667eea, #764ba2, white) заменены на CSS-переменные
+  - Добавлены стили `#theme-toggle` (иконка из CSS: 🌙/☀️ через `::after`)
+  - `score-area`, `progress` — теперь используют `var(--faint)` и `var(--border)`
+- `js/utils.js?v=18` — добавлена функция `toggleTheme()`: читает/пишет `localStorage('vamos:theme')`, переключает `document.documentElement.dataset.theme`
+- Все 6 модулей (`formulas`, `pasado`, `tren`, `ser-estar`, `mezcla`, `find-pair`):
+  - Добавлена anti-FOUC инлайн-скрипт в `<head>` (читает `localStorage` до загрузки CSS)
+  - Добавлен шрифт Inter (Google Fonts)
+  - Добавлена кнопка `<button id="theme-toggle">` в `.back-button-container`
+  - Версия CSS обновлена до `?v=14`, utils.js до `?v=18`
+- `formulas/index.html` — все инлайн-стили обновлены под CSS-переменные (`.formula-card`, `.formula-detail`, `.quiz-option`, `.btn-primary`, `.btn-secondary`, `.all-quiz-btn`, `#xp-counter`)
+
 ---
 
 ## Сессия: до 2026-09-23 (из SUMMARY предыдущей сессии)

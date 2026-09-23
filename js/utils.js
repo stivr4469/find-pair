@@ -42,8 +42,21 @@ function speakSpanish(text) {
     /* eslint-enable no-unreachable */
 }
 
+/**
+ * Переключение темы (свет/тёмная)
+ * Читает/пишет localStorage('vamos:theme'), устанавливает data-theme на <html>.
+ */
+function toggleTheme() {
+    var html = document.documentElement;
+    var isDark = html.dataset.theme === 'dark' ||
+        (!html.dataset.theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    html.dataset.theme = isDark ? 'light' : 'dark';
+    try { localStorage.setItem('vamos:theme', html.dataset.theme); } catch(e) {}
+}
+
 // Экспорт для глобального доступа
 if (typeof window !== 'undefined') {
     window.shuffleArray = shuffleArray;
     window.speakSpanish = speakSpanish;
+    window.toggleTheme = toggleTheme;
 }

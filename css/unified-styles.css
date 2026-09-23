@@ -1,13 +1,65 @@
 /**
- * Spanish Trainer - Unified Styles
- * Единые стили для всех модулей приложения
- *
- * Цветовая схема:
- * - Основной: #667eea (фиолетовый)
- * - Вторичный: #764ba2 (пурпурный)
- * - Успех: #27ae60 (зеленый)
- * - Ошибка: #e74c3c (красный)
+ * Spanish Trainer - Unified Styles v14
+ * Стиль «Валенсия»: тёплый песочный фон, оранжевый акцент.
+ * Светлая и тёмная темы через [data-theme] + prefers-color-scheme.
  */
+
+/* ============================================
+   ТОКЕНЫ
+   ============================================ */
+:root {
+    --bg:           #FBF6EF;
+    --bg-glow:      rgba(242, 107, 29, 0.14);
+    --dot:          rgba(28, 25, 23, 0.07);
+    --surface:      #FFFFFF;
+    --text:         #1C1917;
+    --muted:        #78716C;
+    --faint:        #EDE8E0;
+    --border:       rgba(28, 25, 23, 0.10);
+    --accent:       #F26B1D;
+    --accent-faint: rgba(242, 107, 29, 0.10);
+    --accent-mid:   rgba(242, 107, 29, 0.22);
+    --success:      #16A34A;
+    --danger:       #DC2626;
+    --shadow:       0 1px 2px rgba(28, 25, 23, 0.04), 0 10px 24px -14px rgba(28, 25, 23, 0.22);
+    --radius:       14px;
+    --font:         'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color-scheme:   light;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg:           #14110F;
+        --bg-glow:      rgba(255, 122, 46, 0.12);
+        --dot:          rgba(255, 255, 255, 0.05);
+        --surface:      #1F1B18;
+        --text:         #F5EFE8;
+        --muted:        #A8A29E;
+        --faint:        #2A2420;
+        --border:       rgba(255, 255, 255, 0.09);
+        --accent:       #FF7A2E;
+        --accent-faint: rgba(255, 122, 46, 0.13);
+        --accent-mid:   rgba(255, 122, 46, 0.24);
+        --shadow:       0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -16px rgba(0,0,0,0.7);
+        color-scheme:   dark;
+    }
+}
+
+:root[data-theme="dark"] {
+    --bg:           #14110F;
+    --bg-glow:      rgba(255, 122, 46, 0.12);
+    --dot:          rgba(255, 255, 255, 0.05);
+    --surface:      #1F1B18;
+    --text:         #F5EFE8;
+    --muted:        #A8A29E;
+    --faint:        #2A2420;
+    --border:       rgba(255, 255, 255, 0.09);
+    --accent:       #FF7A2E;
+    --accent-faint: rgba(255, 122, 46, 0.13);
+    --accent-mid:   rgba(255, 122, 46, 0.24);
+    --shadow:       0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -16px rgba(0,0,0,0.7);
+    color-scheme:   dark;
+}
 
 /* ============================================
    БАЗОВЫЕ СТИЛИ И ШРИФТЫ
@@ -18,15 +70,34 @@
     box-sizing: border-box;
 }
 
+html {
+    background: var(--bg);
+    -webkit-text-size-adjust: 100%;
+}
+
 body, html {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: var(--font);
     min-height: 100vh;
     padding: 80px 20px 20px;
-    color: #2c3e50;
+    color: var(--text);
+    background: var(--bg);
     line-height: 1.6;
     overflow-x: hidden;
     overflow-y: auto;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Subtle dot-grid + warm glow background (same as main page) */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(120% 50% at 50% -5%, var(--bg-glow), transparent 55%),
+        radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 0) 0 0 / 22px 22px;
 }
 
 /* ============================================
@@ -34,19 +105,19 @@ body, html {
    ============================================ */
 .app-header {
     text-align: center;
-    color: white;
+    color: var(--text);
     margin-bottom: 30px;
 }
 
 .app-header h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    font-weight: 700;
 }
 
 .app-header p {
     font-size: 1.1rem;
-    opacity: 0.9;
+    color: var(--muted);
 }
 
 .app-header-icon {
@@ -67,50 +138,85 @@ body, html {
 }
 
 h1, h2, h3 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font);
     font-weight: 600;
 }
 
 /* ============================================
-   КНОПКА НАЗАД
+   КНОПКА НАЗАД + ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ
    ============================================ */
 .back-button-container {
     position: fixed;
     top: 10px;
     left: 10px;
     z-index: 1000;
-    /* Отступ чтобы не перекрывать счёт на мобильных */
-    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .back-button, .back-link {
     display: inline-block;
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
+    padding: 8px 16px;
+    background: var(--accent);
+    color: #fff;
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: 600;
-    font-size: 14px;
-    transition: all 0.3s ease;
+    font-size: 13px;
+    transition: opacity 0.2s, transform 0.2s;
     border: none;
     cursor: pointer;
-    /* Тень для лучшей видимости */
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    white-space: nowrap;
+}
+
+.back-button:hover, .back-link:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+/* Theme toggle button */
+#theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: var(--shadow);
+    flex-shrink: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+#theme-toggle:hover {
+    background: var(--faint);
+    transform: rotate(20deg) scale(1.1);
+}
+
+/* CSS-driven icon: moon in light mode, sun in dark mode */
+#theme-toggle::after { content: '🌙'; }
+
+:root[data-theme="dark"] #theme-toggle::after { content: '☀️'; }
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) #theme-toggle::after { content: '☀️'; }
 }
 
 /* Счёт не должен перекрываться кнопкой */
 .score-display {
     text-align: center;
-    color: white;
+    color: var(--text);
     font-size: 1.5rem;
     margin-bottom: 20px;
-    margin-top: 60px;  /* Отступ чтобы не перекрывался кнопкой */
-}
-
-.back-button:hover, .back-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    margin-top: 60px;
 }
 
 /* ============================================
@@ -126,34 +232,30 @@ h1, h2, h3 {
 
 .mode-button {
     padding: 20px;
-    border: none;
-    border-radius: 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    background: white;
-    color: #2c3e50;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow);
+    font-family: var(--font);
 }
 
 .mode-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    border-color: var(--accent);
 }
 
 /* ============================================
    СЧЁТ И ПРОГРЕСС
    ============================================ */
-.score-display {
-    text-align: center;
-    color: white;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-}
-
 .progress-text {
     text-align: center;
-    color: #7f8c8d;
+    color: var(--muted);
     margin-bottom: 15px;
     font-size: 0.95rem;
 }
@@ -162,16 +264,17 @@ h1, h2, h3 {
    ИГРОВАЯ ЗОНА
    ============================================ */
 .game-area {
-    background: white;
+    background: var(--surface);
     max-width: 600px;
     margin: 0 auto;
     padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
 }
 
 .game-area h2 {
-    color: #2c3e50;
+    color: var(--text);
     margin-bottom: 20px;
     text-align: center;
 }
@@ -187,13 +290,13 @@ h1, h2, h3 {
     font-size: 1.3rem;
     text-align: center;
     margin: 20px 0;
-    color: #2c3e50;
+    color: var(--text);
     font-weight: 600;
 }
 
 .translation-text {
     text-align: center;
-    color: #7f8c8d;
+    color: var(--muted);
     margin-bottom: 20px;
     font-style: italic;
 }
@@ -213,10 +316,10 @@ h1, h2, h3 {
     border-radius: 12px;
     border: 2px solid;
     cursor: pointer;
-    font-family: inherit;
+    font-family: var(--font);
     font-weight: 700;
     font-size: 1rem;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -225,27 +328,27 @@ h1, h2, h3 {
 }
 
 .classify-zone-ser {
-    background: rgba(99, 102, 241, 0.07);
-    border-color: rgba(99, 102, 241, 0.4);
-    color: #4338ca;
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.35);
+    color: #6366F1;
 }
 
 .classify-zone-ser:hover:not(:disabled) {
     background: rgba(99, 102, 241, 0.16);
-    border-color: rgba(99, 102, 241, 0.7);
+    border-color: rgba(99, 102, 241, 0.6);
     transform: translateY(-2px);
     box-shadow: 0 4px 14px rgba(99, 102, 241, 0.2);
 }
 
 .classify-zone-estar {
-    background: rgba(16, 185, 129, 0.07);
-    border-color: rgba(16, 185, 129, 0.4);
-    color: #059669;
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.35);
+    color: #10B981;
 }
 
 .classify-zone-estar:hover:not(:disabled) {
     background: rgba(16, 185, 129, 0.16);
-    border-color: rgba(16, 185, 129, 0.7);
+    border-color: rgba(16, 185, 129, 0.6);
     transform: translateY(-2px);
     box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
 }
@@ -253,15 +356,22 @@ h1, h2, h3 {
 .classify-zone:disabled { cursor: not-allowed; opacity: 0.6; }
 
 .classify-zone.correct {
-    background: rgba(40, 167, 69, 0.2) !important;
-    border-color: #28a745 !important;
-    color: #1a6b2f !important;
+    background: rgba(22, 163, 74, 0.18) !important;
+    border-color: #16A34A !important;
+    color: #15803D !important;
 }
 
 .classify-zone.incorrect {
-    background: rgba(220, 53, 69, 0.2) !important;
-    border-color: #dc3545 !important;
-    color: #9a1525 !important;
+    background: rgba(220, 38, 38, 0.18) !important;
+    border-color: #DC2626 !important;
+    color: #B91C1C !important;
+}
+
+:root[data-theme="dark"] .classify-zone.correct { color: #4ADE80 !important; }
+:root[data-theme="dark"] .classify-zone.incorrect { color: #F87171 !important; }
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .classify-zone.correct { color: #4ADE80 !important; }
+    :root:not([data-theme="light"]) .classify-zone.incorrect { color: #F87171 !important; }
 }
 
 .zone-label {
@@ -290,22 +400,21 @@ h1, h2, h3 {
     padding: 14px 22px;
     font-size: 0.95rem;
     font-weight: 600;
-    border: 2px solid rgba(99, 102, 241, 0.35);
+    border: 1.5px solid var(--border);
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    background: rgba(99, 102, 241, 0.06);
-    color: #4338ca;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    background: var(--surface);
+    color: var(--text);
     text-align: center;
     width: 100%;
-    font-family: inherit;
+    font-family: var(--font);
 }
 
 .option-btn:hover:not(:disabled), .button-option:hover:not(:disabled) {
-    background: rgba(99, 102, 241, 0.14);
-    border-color: rgba(99, 102, 241, 0.6);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    background: var(--accent-faint);
+    border-color: var(--accent);
+    transform: translateY(-1px);
 }
 
 .option-btn:disabled, .button-option:disabled {
@@ -315,13 +424,15 @@ h1, h2, h3 {
 
 /* Цвета для правильных/неправильных ответов */
 .option-btn.correct, .button-option.correct {
-    background: #27ae60 !important;
+    background: var(--success) !important;
+    border-color: var(--success) !important;
     color: white !important;
     animation: pulse 0.5s ease;
 }
 
 .option-btn.incorrect, .button-option.incorrect {
-    background: #e74c3c !important;
+    background: var(--danger) !important;
+    border-color: var(--danger) !important;
     color: white !important;
     animation: shake 0.3s ease;
 }
@@ -341,23 +452,35 @@ h1, h2, h3 {
 
 .feedback.correct {
     display: block;
-    background: #f0fdf4;
+    background: rgba(22, 163, 74, 0.12);
     border-left-color: #22c55e;
-    color: #166534;
+    color: #15803D;
 }
 
 .feedback.wrong, .feedback.incorrect {
     display: block;
-    background: #fef2f2;
+    background: rgba(220, 38, 38, 0.10);
     border-left-color: #ef4444;
-    color: #991b1b;
+    color: #B91C1C;
 }
 
 .feedback.warning {
     display: block;
-    background: #fff3cd;
+    background: rgba(245, 158, 11, 0.12);
     border-left-color: #f59e0b;
-    color: #854d0e;
+    color: #92400E;
+}
+
+:root[data-theme="dark"] .feedback.correct  { color: #4ADE80; background: rgba(74,222,128,0.12); }
+:root[data-theme="dark"] .feedback.wrong,
+:root[data-theme="dark"] .feedback.incorrect { color: #F87171; background: rgba(248,113,113,0.12); }
+:root[data-theme="dark"] .feedback.warning  { color: #FCD34D; background: rgba(252,211,77,0.12); }
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .feedback.correct  { color: #4ADE80; background: rgba(74,222,128,0.12); }
+    :root:not([data-theme="light"]) .feedback.wrong,
+    :root:not([data-theme="light"]) .feedback.incorrect { color: #F87171; background: rgba(248,113,113,0.12); }
+    :root:not([data-theme="light"]) .feedback.warning  { color: #FCD34D; background: rgba(252,211,77,0.12); }
 }
 
 /* ============================================
@@ -374,18 +497,18 @@ h1, h2, h3 {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    transition: opacity 0.2s, transform 0.2s;
+    background: var(--accent);
     color: white;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.35);
-    font-family: inherit;
+    box-shadow: 0 4px 12px rgba(242, 107, 29, 0.30);
+    font-family: var(--font);
     white-space: nowrap;
 }
 
 .next-button:hover, .restart-button:hover, .check-button:hover {
-    background: linear-gradient(135deg, #5568d3, #6355aa);
+    opacity: 0.88;
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(102, 126, 234, 0.5);
+    box-shadow: 0 6px 18px rgba(242, 107, 29, 0.45);
 }
 
 .menu-button {
@@ -394,24 +517,24 @@ h1, h2, h3 {
     justify-content: center;
     gap: 6px;
     padding: 12px 24px;
-    border: 1.5px solid #d1d5db;
+    border: 1.5px solid var(--border);
     border-radius: 10px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    background: #f1f3f4;
-    color: #555;
-    font-family: inherit;
+    transition: background 0.2s, transform 0.2s;
+    background: var(--surface);
+    color: var(--muted);
+    font-family: var(--font);
     white-space: nowrap;
 }
 
 .menu-button:hover {
-    background: #e5e7eb;
+    background: var(--faint);
     transform: translateY(-1px);
 }
 
-/* Container for result/action buttons — centers inline-flex buttons */
+/* Container for result/action buttons */
 .results-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -426,7 +549,7 @@ h1, h2, h3 {
 .final-score {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--text);
     text-align: center;
     margin: 20px 0;
 }
@@ -440,23 +563,23 @@ h1, h2, h3 {
 }
 
 .final-message.excellent {
-    color: #9b59b6;
-    background: #f4ecf7;
+    color: var(--accent);
+    background: var(--accent-faint);
 }
 
 .final-message.good {
-    color: #27ae60;
-    background: #d4edda;
+    color: #16A34A;
+    background: rgba(22,163,74,0.10);
 }
 
 .final-message.average {
-    color: #f39c12;
-    background: #fff3cd;
+    color: #D97706;
+    background: rgba(245,158,11,0.10);
 }
 
 .final-message.poor {
-    color: #e74c3c;
-    background: #f8d7da;
+    color: var(--danger);
+    background: rgba(220,38,38,0.10);
 }
 
 /* ============================================
@@ -476,11 +599,11 @@ h1, h2, h3 {
 }
 
 .ser-card, .rule-card.ser {
-    background: linear-gradient(135deg, #3498db, #2980b9);
+    background: linear-gradient(135deg, #3B82F6, #2563EB);
 }
 
 .estar-card, .rule-card.estar {
-    background: linear-gradient(135deg, #27ae60, #229954);
+    background: linear-gradient(135deg, #16A34A, #15803D);
 }
 
 .rule-card h3 {
@@ -510,17 +633,18 @@ h1, h2, h3 {
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
 }
 
 .container h1 {
-    color: #2c3e50;
+    color: var(--text);
     margin-bottom: 25px;
 }
 
-/* Настройки игры в одной строке */
+/* Настройки игры */
 .game-settings {
     display: flex;
     gap: 20px;
@@ -536,7 +660,7 @@ h1, h2, h3 {
 
 .setting-item label {
     font-weight: 600;
-    color: #2c3e50;
+    color: var(--text);
     margin: 0;
 }
 
@@ -544,23 +668,25 @@ h1, h2, h3 {
     min-width: 200px;
     padding: 10px 15px;
     font-size: 1rem;
-    border: 2px solid #e0e0e0;
+    border: 1.5px solid var(--border);
     border-radius: 8px;
-    background: white;
+    background: var(--surface);
+    color: var(--text);
     cursor: pointer;
-    transition: border-color 0.3s;
+    transition: border-color 0.2s;
+    font-family: var(--font);
 }
 
 .setting-item select:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--accent);
 }
 
 label {
     display: block;
     font-weight: 600;
     margin: 15px 0 8px;
-    color: #2c3e50;
+    color: var(--text);
 }
 
 select {
@@ -568,16 +694,18 @@ select {
     max-width: 300px;
     padding: 10px 15px;
     font-size: 1rem;
-    border: 2px solid #e0e0e0;
+    border: 1.5px solid var(--border);
     border-radius: 8px;
-    background: white;
+    background: var(--surface);
+    color: var(--text);
     cursor: pointer;
-    transition: border-color 0.3s;
+    transition: border-color 0.2s;
+    font-family: var(--font);
 }
 
 select:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--accent);
 }
 
 .columns {
@@ -594,53 +722,53 @@ select:focus {
     flex: 1;
     padding: 15px;
     border-radius: 10px;
-    background: #f8f9fa;
+    background: var(--faint);
     max-height: 100%;
     overflow-y: auto;
 }
 
 .left-column {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    background: color-mix(in srgb, #3B82F6 8%, var(--surface));
 }
 
 .right-column {
-    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    background: color-mix(in srgb, var(--accent) 8%, var(--surface));
 }
 
 .word {
     padding: 12px 15px;
     margin: 8px 0;
-    border: 2px solid #e0e0e0;
-    background: white;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
     cursor: pointer;
     text-align: center;
     border-radius: 8px;
-    transition: all 0.3s;
+    transition: all 0.2s;
     font-size: 1rem;
     font-weight: 600;
 }
 
 .word:hover {
-    background: #f0f0f0;
-    border-color: #667eea;
+    background: var(--faint);
+    border-color: var(--accent);
     transform: scale(1.02);
 }
 
 .word.selected {
-    background: #fff59d;
-    border-color: #fbc02d;
+    background: var(--accent-faint);
+    border-color: var(--accent);
 }
 
-/* Блокировка выбора когда уже выбрано 2 слова */
 .word.blocked {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
 .word.matched {
-    background: #27ae60;
+    background: var(--success);
     color: white;
-    border-color: #1e8449;
+    border-color: var(--success);
     visibility: hidden;
 }
 
@@ -657,17 +785,18 @@ select:focus {
 .conjugation-table td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
 }
 
 .conjugation-table th {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: var(--accent);
     color: white;
     font-weight: 600;
 }
 
-.conjugation-table tr:hover {
-    background: #f8f9fa;
+.conjugation-table tr:hover td {
+    background: var(--faint);
 }
 
 /* ============================================
@@ -675,9 +804,8 @@ select:focus {
    ============================================ */
 .app-footer {
     text-align: center;
-    color: white;
+    color: var(--muted);
     margin-top: 30px;
-    opacity: 0.9;
     font-size: 0.9rem;
 }
 
@@ -685,24 +813,14 @@ select:focus {
    АНИМАЦИИ
    ============================================ */
 @keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
 }
 
 @keyframes shake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-5px);
-    }
-    75% {
-        transform: translateX(5px);
-    }
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
 }
 
 /* ============================================
@@ -721,7 +839,6 @@ select:focus {
         grid-template-columns: 1fr;
     }
 
-    /* Колонки всегда рядом, даже на мобильных */
     .columns {
         flex-direction: row;
         gap: 5px;
@@ -741,29 +858,21 @@ select:focus {
         grid-template-columns: 1fr;
     }
 
-    /* Игровое поле на весь экран с белым фоном */
     .game-area, .container {
         padding: 15px 10px;
         max-width: 100%;
         width: 100%;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        background: white;
-        border-radius: 15px;
     }
 
     .game-area h2, .container h1 {
         font-size: 1.3rem;
         margin-bottom: 15px;
-        color: #2c3e50;
     }
 
-    /* Текст вопросов на мобильных */
     .game-area .question-text,
     .game-area .translation-text,
     .game-area .progress-text {
-        color: #2c3e50;
         font-weight: 600;
-        text-shadow: none;
     }
 
     .game-area .question-text {
@@ -773,13 +882,11 @@ select:focus {
 
     .game-area .translation-text {
         font-size: 1rem;
-        color: #555;
         font-style: italic;
     }
 
     .game-area .progress-text {
         font-size: 0.9rem;
-        color: #666;
         margin-bottom: 10px;
     }
 
@@ -823,7 +930,6 @@ select:focus {
         font-size: 0.85rem;
     }
 
-    /* На очень маленьких экранах колонки всё равно рядом */
     .columns {
         gap: 5px;
     }
@@ -840,25 +946,11 @@ select:focus {
 /* ============================================
    УТИЛИТАРНЫЕ КЛАССЫ
    ============================================ */
-.text-center {
-    text-align: center;
-}
-
-.text-ser {
-    color: #3498db;
-}
-
-.text-estar {
-    color: #27ae60;
-}
-
-.mt-20 {
-    margin-top: 20px;
-}
-
-.mb-20 {
-    margin-bottom: 20px;
-}
+.text-center { text-align: center; }
+.text-ser    { color: #6366F1; }
+.text-estar  { color: #10B981; }
+.mt-20 { margin-top: 20px; }
+.mb-20 { margin-bottom: 20px; }
 
 /* ============================================
    MODE0 - ВЫБОР ГЛАГОЛА
@@ -869,7 +961,7 @@ select:focus {
 }
 
 .verb-selection-container h3 {
-    color: #2c3e50;
+    color: var(--text);
     margin-bottom: 25px;
     font-size: 1.2rem;
 }
@@ -887,35 +979,28 @@ select:focus {
     width: 100%;
     padding: 15px 30px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    transition: opacity 0.2s, transform 0.2s;
+    background: var(--accent);
     color: white;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 15px rgba(242, 107, 29, 0.35);
+    font-family: var(--font);
 }
 
 .verb-btn:hover {
-    background: linear-gradient(135deg, #5568d3, #6355aa);
+    opacity: 0.88;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    box-shadow: 0 6px 20px rgba(242, 107, 29, 0.50);
 }
 
-.verb-btn:active {
-    transform: translateY(0);
-}
+.verb-btn:active { transform: translateY(0); }
 
 @media (max-width: 768px) {
-    .verb-buttons {
-        max-width: 100%;
-    }
-    
-    .verb-btn {
-        padding: 12px 20px;
-        font-size: 1rem;
-    }
+    .verb-buttons { max-width: 100%; }
+    .verb-btn { padding: 12px 20px; font-size: 1rem; }
 }
 
 /* ============================================
@@ -929,21 +1014,22 @@ select:focus {
 }
 
 .settings-container h3 {
-    color: #2c3e50;
+    color: var(--text);
     font-size: 1.5rem;
     margin-bottom: 30px;
 }
 
 .setting-group {
-    background: #f8f9fa;
+    background: var(--faint);
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
     text-align: left;
+    border: 1px solid var(--border);
 }
 
 .setting-group h4 {
-    color: #2c3e50;
+    color: var(--text);
     font-size: 1.2rem;
     margin-bottom: 15px;
 }
@@ -959,21 +1045,22 @@ select:focus {
     align-items: center;
     gap: 10px;
     padding: 10px;
-    background: white;
+    background: var(--surface);
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.2s;
+    color: var(--text);
 }
 
 #verbs-settings label:hover, #tenses-settings label:hover {
-    background: #e9ecef;
+    background: var(--accent-faint);
 }
 
 #verbs-settings input[type="checkbox"], #tenses-settings input[type="checkbox"] {
     width: 20px;
     height: 20px;
     cursor: pointer;
-    accent-color: #667eea;
+    accent-color: var(--accent);
 }
 
 .start-button {
@@ -983,75 +1070,72 @@ select:focus {
     margin: 20px auto;
     padding: 15px 30px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    transition: opacity 0.2s, transform 0.2s;
+    background: var(--accent);
     color: white;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 15px rgba(242, 107, 29, 0.35);
+    font-family: var(--font);
 }
 
 .start-button:hover {
-    background: linear-gradient(135deg, #5568d3, #6355aa);
+    opacity: 0.88;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    box-shadow: 0 6px 20px rgba(242, 107, 29, 0.50);
 }
 
-/* Кнопка "К настройкам" */
 .back-to-settings-button {
     display: block;
     margin: 10px auto;
     padding: 8px 16px;
     background: transparent;
-    border: 2px solid #667eea;
+    border: 2px solid var(--accent);
     border-radius: 6px;
-    color: #667eea;
+    color: var(--accent);
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.2s, color 0.2s;
+    font-family: var(--font);
 }
 
 .back-to-settings-button:hover {
-    background: #667eea;
+    background: var(--accent);
     color: white;
     transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {
-    .settings-container {
-        padding: 15px;
-    }
-
-    .setting-group {
-        padding: 15px;
-    }
-
-    .start-button {
-        max-width: 100%;
-    }
+    .settings-container { padding: 15px; }
+    .setting-group { padding: 15px; }
+    .start-button { max-width: 100%; }
 }
 
 /* ============================================
    MODE5 - КОНТЕКСТ
    ============================================ */
-
-/* Стили для пропуска в предложении */
 .blank {
-    color: #ff9800;
+    color: var(--accent);
     font-weight: bold;
     text-decoration: underline;
 }
 
 @media (max-width: 768px) {
-    .option-btn {
-        padding: 10px 15px;
-        font-size: 1rem;
-    }
+    .option-btn { padding: 10px 15px; font-size: 1rem; }
+    .feedback { font-size: 1rem; }
+}
 
-    .feedback {
-        font-size: 1rem;
-    }
+/* ============================================
+   TREN - INLINE SCORE/PROGRESS BLOCKS
+   ============================================ */
+.score-area, .progress {
+    background: var(--faint);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: inline-block;
+    color: var(--text);
 }

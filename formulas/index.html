@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>36 Формул испанского</title>
-    <link rel="stylesheet" href="../css/unified-styles.css?v=13">
+    <!-- Anti-FOUC: применяем сохранённую тему до загрузки CSS -->
+    <script>(function(){try{var t=localStorage.getItem('vamos:theme');if(t)document.documentElement.dataset.theme=t}catch(e){}}());</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/unified-styles.css?v=14">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         .formulas-main {
@@ -20,17 +25,19 @@
             margin: 16px 0;
         }
         .formula-card {
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.25);
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 14px 10px;
             cursor: pointer;
             text-align: center;
-            transition: transform 0.15s, background 0.15s;
-            color: #fff;
+            transition: transform 0.15s, background 0.15s, border-color 0.15s;
+            color: var(--text);
+            box-shadow: var(--shadow);
         }
         .formula-card:hover {
-            background: rgba(255,255,255,0.22);
+            background: var(--faint);
+            border-color: var(--accent);
             transform: translateY(-2px);
         }
         .formula-card-emoji {
@@ -40,7 +47,7 @@
         }
         .formula-card-num {
             font-size: 0.7rem;
-            opacity: 0.7;
+            opacity: 0.6;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -51,16 +58,18 @@
         }
         .formula-card-rule {
             font-size: 0.72rem;
-            opacity: 0.75;
+            opacity: 0.65;
             font-style: italic;
         }
         /* Detail card */
         .formula-detail {
-            background: rgba(255,255,255,0.1);
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 24px;
             margin: 16px 0;
-            color: #fff;
+            color: var(--text);
+            box-shadow: var(--shadow);
         }
         .formula-detail-header {
             font-size: 1.4rem;
@@ -68,13 +77,14 @@
             margin-bottom: 12px;
         }
         .formula-rule-box {
-            background: rgba(255,255,255,0.15);
-            border-left: 3px solid rgba(255,255,255,0.6);
+            background: var(--faint);
+            border-left: 3px solid var(--accent);
             border-radius: 8px;
             padding: 10px 14px;
             font-family: monospace;
             font-size: 0.95rem;
             margin: 12px 0;
+            color: var(--text);
         }
         .formula-example-main {
             font-size: 1.3rem;
@@ -83,7 +93,7 @@
         }
         .formula-example-ru {
             font-size: 0.9rem;
-            opacity: 0.8;
+            color: var(--muted);
             margin-bottom: 12px;
         }
         .formula-examples-list {
@@ -93,12 +103,12 @@
         }
         .formula-examples-list li {
             padding: 6px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid var(--border);
             font-size: 0.9rem;
         }
         .formula-examples-list li span {
             display: block;
-            opacity: 0.7;
+            color: var(--muted);
             font-size: 0.8rem;
         }
         .formula-nav-btns {
@@ -108,47 +118,51 @@
             margin-top: 16px;
         }
         .btn-secondary {
-            background: rgba(255,255,255,0.15);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.3);
+            background: var(--faint);
+            color: var(--text);
+            border: 1px solid var(--border);
             border-radius: 8px;
             padding: 10px 16px;
             font-size: 0.9rem;
             cursor: pointer;
             transition: background 0.15s;
+            font-family: var(--font);
         }
-        .btn-secondary:hover { background: rgba(255,255,255,0.25); }
+        .btn-secondary:hover { background: var(--accent-faint); border-color: var(--accent); }
         .btn-primary {
-            background: rgba(255,255,255,0.9);
-            color: #5b2d8e;
+            background: var(--accent);
+            color: #fff;
             border: none;
             border-radius: 8px;
             padding: 10px 20px;
             font-size: 0.9rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.15s;
+            transition: opacity 0.15s;
+            font-family: var(--font);
         }
-        .btn-primary:hover { background: #fff; }
+        .btn-primary:hover { opacity: 0.88; }
         /* Quiz */
         .quiz-header {
             margin-bottom: 16px;
-            opacity: 0.8;
+            color: var(--muted);
             font-size: 0.9rem;
         }
         .quiz-formula-badge {
             display: inline-block;
-            background: rgba(255,255,255,0.2);
+            background: var(--accent-faint);
             border-radius: 20px;
             padding: 4px 12px;
             font-size: 0.8rem;
             margin-bottom: 10px;
+            color: var(--accent);
         }
         .quiz-question {
             font-size: 1.3rem;
             font-weight: 700;
             margin: 12px 0 20px;
             line-height: 1.4;
+            color: var(--text);
         }
         .quiz-options {
             display: flex;
@@ -157,73 +171,76 @@
             margin-bottom: 16px;
         }
         .quiz-option {
-            background: rgba(255,255,255,0.12);
-            border: 2px solid rgba(255,255,255,0.25);
+            background: var(--surface);
+            border: 1.5px solid var(--border);
             border-radius: 10px;
             padding: 12px 16px;
             text-align: left;
-            color: #fff;
+            color: var(--text);
             font-size: 0.95rem;
             cursor: pointer;
             transition: background 0.15s, border-color 0.15s;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-family: var(--font);
         }
         .quiz-option:hover:not(:disabled) {
-            background: rgba(255,255,255,0.22);
-            border-color: rgba(255,255,255,0.5);
+            background: var(--accent-faint);
+            border-color: var(--accent);
         }
         .quiz-option:disabled { cursor: default; }
         .quiz-option.correct {
-            background: rgba(40,167,69,0.3);
-            border-color: #28a745;
+            background: rgba(22,163,74,0.15);
+            border-color: #16A34A;
         }
         .quiz-option.wrong {
-            background: rgba(220,53,69,0.3);
-            border-color: #dc3545;
+            background: rgba(220,38,38,0.12);
+            border-color: #DC2626;
         }
         .quiz-option-letter {
             width: 26px;
             height: 26px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.2);
+            background: var(--faint);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
             font-size: 0.8rem;
             flex-shrink: 0;
+            color: var(--muted);
         }
         .quiz-hint {
-            background: rgba(255,255,255,0.1);
+            background: var(--faint);
             border-radius: 8px;
             padding: 10px 14px;
             font-size: 0.85rem;
             margin: 10px 0;
-            opacity: 0.9;
+            color: var(--text);
         }
         .quiz-results {
             text-align: center;
             padding: 32px 16px;
         }
         .quiz-results-emoji { font-size: 3rem; margin-bottom: 12px; }
-        .quiz-results-score { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
-        .quiz-results-pct { font-size: 1rem; opacity: 0.8; margin-bottom: 24px; }
+        .quiz-results-score { font-size: 2rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+        .quiz-results-pct { font-size: 1rem; color: var(--muted); margin-bottom: 24px; }
         .all-quiz-btn {
             width: 100%;
-            background: rgba(255,255,255,0.15);
-            border: 2px dashed rgba(255,255,255,0.4);
+            background: var(--faint);
+            border: 2px dashed var(--border);
             border-radius: 12px;
             padding: 16px;
-            color: #fff;
+            color: var(--text);
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             margin-bottom: 16px;
-            transition: background 0.15s;
+            transition: background 0.15s, border-color 0.15s;
+            font-family: var(--font);
         }
-        .all-quiz-btn:hover { background: rgba(255,255,255,0.25); }
+        .all-quiz-btn:hover { background: var(--accent-faint); border-color: var(--accent); }
         @media (max-width: 480px) {
             .formula-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
             .quiz-question { font-size: 1.1rem; }
@@ -235,6 +252,7 @@
     <div class="back-button-container">
         <a href="../" class="back-button">← Главная</a>
         <button id="btn-back-to-list" class="back-button" style="display:none" onclick="FormulasApp.backToList()">← Список</button>
+        <button id="theme-toggle" onclick="toggleTheme()" title="Сменить тему" aria-label="Сменить тему"></button>
     </div>
 
     <!-- Заголовок приложения -->
@@ -264,13 +282,13 @@
             top: 14px;
             right: 14px;
             z-index: 9999;
-            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            background: var(--accent);
             color: #fff;
             font-weight: 700;
             font-size: 0.82rem;
             padding: 6px 14px;
             border-radius: 999px;
-            box-shadow: 0 3px 12px rgba(124,58,237,0.45);
+            box-shadow: 0 3px 12px rgba(242,107,29,0.45);
             display: flex;
             align-items: center;
             gap: 5px;
@@ -290,7 +308,7 @@
             z-index: 10000;
             font-weight: 700;
             font-size: 0.95rem;
-            color: #a855f7;
+            color: var(--accent);
             pointer-events: none;
             white-space: nowrap;
             text-shadow: 0 1px 4px rgba(0,0,0,0.18);
@@ -305,7 +323,7 @@
     <!-- XP Counter widget -->
     <div id="xp-counter"><i data-lucide="zap" style="width:14px;height:14px;stroke:#fff"></i> <span id="xp-value">0</span> XP</div>
 
-    <script src="../js/utils.js?v=17"></script>
+    <script src="../js/utils.js?v=18"></script>
     <script src="data.js?v=13"></script>
     <script src="ui.js?v=17"></script>
     <script src="app.js?v=14"></script>

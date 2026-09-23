@@ -4,29 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tren Ir/Venir/Llegar</title>
-    <link rel="stylesheet" href="../css/unified-styles.css?v=13">
+    <!-- Anti-FOUC: применяем сохранённую тему до загрузки CSS -->
+    <script>(function(){try{var t=localStorage.getItem('vamos:theme');if(t)document.documentElement.dataset.theme=t}catch(e){}}());</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/unified-styles.css?v=14">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
-        /* Дополнительные стили для специфичных элементов */
-        .score-area {
-            background: rgba(255,255,255,0.1);
-            padding: 10px 20px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-        .progress {
-            background: rgba(255,255,255,0.1);
-            padding: 10px 20px;
-            border-radius: 8px;
-            display: inline-block;
-        }
-        .main-menu {
-            max-width: 700px;
-        }
-        .mode-button {
-            min-height: 80px;
-        }
+        .main-menu { max-width: 700px; }
+        .mode-button { min-height: 80px; }
     </style>
 </head>
 <body>
@@ -34,6 +21,7 @@
     <div class="back-button-container">
         <a href="../" class="back-button">← Главная</a>
         <button id="btn-back-to-modes" class="back-button" style="display:none" onclick="App.showMainMenu()">← Режимы</button>
+        <button id="theme-toggle" onclick="toggleTheme()" title="Сменить тему" aria-label="Сменить тему"></button>
     </div>
 
     <!-- Header con título de la aplicación -->
@@ -158,7 +146,7 @@
     </footer>
 
     <!-- Подключение скриптов -->
-    <script src="../js/utils.js?v=16"></script>
+    <script src="../js/utils.js?v=18"></script>
     <script src="mode2-data.js?v=10"></script>
     <script src="mode1-data.js?v=10"></script>
     <script src="mode3-data.js?v=10"></script>

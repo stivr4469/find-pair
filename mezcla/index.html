@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mezcla — смешанное чтение</title>
-    <link rel="stylesheet" href="../css/unified-styles.css?v=13">
+    <!-- Anti-FOUC: применяем сохранённую тему до загрузки CSS -->
+    <script>(function(){try{var t=localStorage.getItem('vamos:theme');if(t)document.documentElement.dataset.theme=t}catch(e){}}());</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/unified-styles.css?v=14">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         .mezcla-main {
@@ -18,6 +23,7 @@
 <body>
     <div class="back-button-container">
         <a href="../" class="back-button">← Главная</a>
+        <button id="theme-toggle" onclick="toggleTheme()" title="Сменить тему" aria-label="Сменить тему"></button>
     </div>
 
     <header class="app-header">
@@ -30,7 +36,7 @@
         <p>Регулируй процент испанских слов и читай на своём уровне</p>
     </footer>
 
-    <script src="../js/utils.js?v=17"></script>
+    <script src="../js/utils.js?v=18"></script>
     <script src="data.js?v=1"></script>
     <script src="ui.js?v=6"></script>
     <script src="app.js?v=6"></script>

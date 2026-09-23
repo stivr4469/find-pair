@@ -20,10 +20,10 @@
 spanish-trainer-app/
 ├── index.html              ← Main menu (lists all modules as cards)
 ├── css/
-│   ├── unified-styles.css  ← Shared styles for all modules (current: v=13)
+│   ├── unified-styles.css  ← Shared styles for all modules (current: v=14)
 │   └── main.css            ← Styles for root index.html only
 ├── js/
-│   ├── utils.js            ← Shared utilities: shuffleArray, speakSpanish (v=17)
+│   ├── utils.js            ← Shared utilities: shuffleArray, speakSpanish, toggleTheme (v=18)
 │   └── main.js             ← Root page JS (Telegram init, closeApp)
 ├── find-pair/              ← Module 1: Найди пару (vocabulary matching game)
 ├── tren/                   ← Module 2: Глаголы движения (ir/venir/llegar conjugation)
@@ -58,24 +58,51 @@ Each app controller has `_syncBackBtn()` (formulas, pasado) or inline logic (ser
 
 ---
 
-## CSS — unified-styles.css (v=13)
+## Dark / Light theme
 
-Key classes added/updated:
+All modules support dark mode via `[data-theme="dark"]` on `<html>`.
+
+- **Toggle**: `#theme-toggle` button in `.back-button-container` of every module
+- **Persistence**: `localStorage('vamos:theme')` (`'light'` | `'dark'`)
+- **Anti-FOUC**: inline `<script>` in `<head>` reads localStorage before CSS loads
+- **Auto**: `@media (prefers-color-scheme: dark)` activates dark tokens when no manual choice is stored
+- **Toggle function**: `toggleTheme()` in `js/utils.js?v=18`
+- **CSS icon**: `#theme-toggle::after { content: '🌙' }` / `[data-theme="dark"] #theme-toggle::after { content: '☀️' }`
+
+---
+
+## CSS — unified-styles.css (v=14) — Valencia Design System
+
+CSS token block (`:root`):
+```css
+--bg           #FBF6EF (warm sandy)  →  dark: #14110F
+--surface      #FFFFFF               →  dark: #1F1B18
+--text         #1C1917               →  dark: #F5EFE8
+--muted        #78716C               →  dark: #A8A29E
+--faint        #EDE8E0               →  dark: #2A2420
+--border       rgba(28,25,23,0.10)   →  dark: rgba(255,255,255,0.09)
+--accent       #F26B1D               →  dark: #FF7A2E
+--accent-faint rgba(242,107,29,0.10) →  dark: rgba(255,122,46,0.13)
+--shadow       layered box-shadow
+--radius       14px
+--font         'Inter', system-ui
+```
+
+Key classes:
 
 ```css
-/* Option buttons — indigo/purple style */
+/* Option buttons — use tokens */
 .option-btn, .button-option {
-    background: rgba(99,102,241,0.06);
-    border: 2px solid rgba(99,102,241,0.35);
-    color: #4338ca;
-    border-radius: 10px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    color: var(--text);
 }
 
 /* SER/ESTAR classify zones */
 .classify-zones         — flex row, full-width container
 .classify-zone          — base zone style
-.classify-zone-ser      — indigo (SER)
-.classify-zone-estar    — green (ESTAR)
+.classify-zone-ser      — indigo (SER), color: #6366F1 (works both themes)
+.classify-zone-estar    — green (ESTAR), color: #10B981
 .zone-label             — large label inside zone
 .zone-hint              — subtitle inside zone
 ```
