@@ -115,58 +115,67 @@ const PasadoUI = {
     if (!root) return;
 
     var groups = [
-      { label: '🔵 Indefinido', from: 0, to: 3 },
-      { label: '🌊 Imperfecto', from: 4, to: 7 },
-      { label: '📅 Perfecto Compuesto', from: 8, to: 11 },
-      { label: '🏛️ Pluscuamperfecto', from: 12, to: 15 },
+      { label: 'Indefinido',         icon: 'check-circle-2', color: '#e74c3c', bg: 'rgba(231,76,60,0.18)',  from: 0,  to: 3  },
+      { label: 'Imperfecto',          icon: 'repeat-2',       color: '#3498db', bg: 'rgba(52,152,219,0.18)', from: 4,  to: 7  },
+      { label: 'Perfecto Compuesto',  icon: 'calendar-check', color: '#27ae60', bg: 'rgba(39,174,96,0.18)',  from: 8,  to: 11 },
+      { label: 'Pluscuamperfecto',    icon: 'history',        color: '#9b59b6', bg: 'rgba(155,89,182,0.18)', from: 12, to: 15 },
+    ];
+
+    // Lucide icon + color per card (по порядку PASADO_DATA)
+    var ICONS = [
+      { icon: 'list',            color: '#e74c3c', bg: '#fff0f0' },
+      { icon: 'list-plus',       color: '#c0392b', bg: '#fff0f0' },
+      { icon: 'zap',             color: '#e74c3c', bg: '#fff0f0' },
+      { icon: 'git-merge',       color: '#c0392b', bg: '#fff0f0' },
+      { icon: 'repeat-2',        color: '#3498db', bg: '#eff5ff' },
+      { icon: 'droplets',        color: '#1a78c2', bg: '#eff5ff' },
+      { icon: 'eye',             color: '#3498db', bg: '#eff5ff' },
+      { icon: 'help-circle',     color: '#1a78c2', bg: '#eff5ff' },
+      { icon: 'key',             color: '#27ae60', bg: '#f0fff4' },
+      { icon: 'file-text',       color: '#1e8449', bg: '#f0fff4' },
+      { icon: 'alert-circle',    color: '#27ae60', bg: '#f0fff4' },
+      { icon: 'calendar-check',  color: '#1e8449', bg: '#f0fff4' },
+      { icon: 'layers',          color: '#9b59b6', bg: '#f5f0ff' },
+      { icon: 'skip-back',       color: '#7d3c98', bg: '#f5f0ff' },
+      { icon: 'link-2',          color: '#9b59b6', bg: '#f5f0ff' },
+      { icon: 'bar-chart-2',     color: '#7d3c98', bg: '#f5f0ff' },
     ];
 
     var sectionsHtml = groups.map(function(g) {
       var cardsHtml = '';
       for (var i = g.from; i <= g.to; i++) {
         var formula = PASADO_DATA[i];
+        var ico = ICONS[i];
         cardsHtml += [
           '<div class="pasado-card-thumb" onclick="pasadoShowCard(' + i + ')" style="',
-            'background: white;',
-            'border-radius: 12px;',
-            'padding: 16px 14px;',
-            'cursor: pointer;',
-            'box-shadow: 0 3px 12px rgba(0,0,0,0.15);',
-            'display: flex;',
-            'flex-direction: column;',
-            'gap: 6px;',
+            'background:white;border-radius:12px;padding:16px 14px;cursor:pointer;',
+            'box-shadow:0 3px 12px rgba(0,0,0,0.15);',
+            'display:flex;flex-direction:column;gap:6px;',
           '">',
-            '<div style="font-size: 1.8rem; line-height: 1;">' + formula.emoji + '</div>',
-            '<div style="font-weight: 700; font-size: 0.82rem; color: #2c3e50;">' + _escHtmlP(formula.shortName) + '</div>',
-            '<div style="',
-              'background: #e8f4fd;',
-              'color: #1a6ea8;',
-              'font-size: 0.7rem;',
-              'padding: 3px 7px;',
-              'border-radius: 5px;',
-              'font-family: monospace;',
-              'line-height: 1.3;',
-              'word-break: break-word;',
-            '">' + _escHtmlP(formula.rule.split('|')[0].trim()) + '</div>',
+            '<div style="display:inline-flex;align-items:center;justify-content:center;',
+              'width:40px;height:40px;border-radius:10px;background:' + ico.bg + ';margin-bottom:2px;">',
+              '<i data-lucide="' + ico.icon + '" style="width:20px;height:20px;stroke:' + ico.color + ';stroke-width:2;"></i>',
+            '</div>',
+            '<div style="font-weight:700;font-size:0.82rem;color:#2c3e50;">' + _escHtmlP(formula.shortName) + '</div>',
+            '<div style="background:#e8f4fd;color:#1a6ea8;font-size:0.7rem;padding:3px 7px;',
+              'border-radius:5px;font-family:monospace;line-height:1.3;word-break:break-word;">',
+              _escHtmlP(formula.rule.split('|')[0].trim()),
+            '</div>',
           '</div>',
         ].join('');
       }
 
       return [
-        '<div style="margin-bottom: 24px;">',
-          '<div style="',
-            'font-size: 0.8rem;',
-            'font-weight: 700;',
-            'text-transform: uppercase;',
-            'letter-spacing: 0.08em;',
-            'color: rgba(255,255,255,0.75);',
-            'margin-bottom: 10px;',
-          '">' + g.label + '</div>',
-          '<div style="',
-            'display: grid;',
-            'grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));',
-            'gap: 10px;',
-          '">',
+        '<div style="margin-bottom:24px;">',
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">',
+            '<span style="display:inline-flex;align-items:center;justify-content:center;',
+              'width:28px;height:28px;border-radius:8px;background:' + g.bg + ';">',
+              '<i data-lucide="' + g.icon + '" style="width:15px;height:15px;stroke:' + g.color + ';stroke-width:2.5;"></i>',
+            '</span>',
+            '<span style="font-size:0.82rem;font-weight:700;text-transform:uppercase;',
+              'letter-spacing:0.08em;color:rgba(255,255,255,0.92);">' + g.label + '</span>',
+          '</div>',
+          '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;">',
             cardsHtml,
           '</div>',
         '</div>',
@@ -174,34 +183,43 @@ const PasadoUI = {
     }).join('');
 
     var html = [
-      '<div style="max-width: 700px; margin: 0 auto; padding: 0 4px;" class="pasado-anim-in">',
+      '<div style="max-width:700px;margin:0 auto;padding:0 4px;" class="pasado-anim-in">',
 
-        '<div style="text-align: center; margin-bottom: 20px;">',
-          '<h2 style="color: white; font-size: 1.5rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">',
-            'Прошедшее время',
-          '</h2>',
-          '<p style="color: rgba(255,255,255,0.8); margin-top: 6px; font-size: 0.9rem;">',
-            '4 времени · 16 формул · нажми чтобы изучить',
-          '</p>',
+        '<div style="text-align:center;margin-bottom:20px;">',
+          '<h2 style="color:white;font-size:1.5rem;text-shadow:1px 1px 3px rgba(0,0,0,0.4);">Прошедшее время</h2>',
+          '<p style="color:rgba(255,255,255,0.8);margin-top:6px;font-size:0.9rem;">4 времени · 16 формул · нажми чтобы изучить</p>',
         '</div>',
 
-        '<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 24px;">',
-          '<button onclick="pasadoStartAllQuiz()" class="next-button" style="',
-            'display: inline-block; width: auto; padding: 11px 24px; font-size: 0.95rem;',
-          '">',
-            '🎯 Тест: все 96 вопросов',
+        '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:24px;">',
+          '<button onclick="pasadoStartAllQuiz()" style="',
+            'display:flex;flex-direction:column;align-items:center;gap:4px;',
+            'padding:12px 8px;border:2px solid rgba(255,255,255,0.3);border-radius:12px;',
+            'background:rgba(255,255,255,0.12);color:#fff;cursor:pointer;text-align:center;',
+            'transition:background 0.15s;" ',
+            'onmouseover="this.style.background=\'rgba(255,255,255,0.22)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.12)\'">',
+            '<i data-lucide="clipboard-list" style="width:22px;height:22px;stroke:#fff;stroke-width:2;"></i>',
+            '<span style="font-weight:700;font-size:0.82rem;">Полный тест</span>',
+            '<span style="font-size:0.7rem;opacity:0.7;">96 вопросов</span>',
           '</button>',
-          '<button onclick="pasadoStartInline()" class="menu-button" style="',
-            'display: inline-block; width: auto; padding: 11px 24px; font-size: 0.95rem; max-width: none;',
-            'background: linear-gradient(135deg, #9b59b6, #6c3483); color: white;',
-          '">',
-            '✏️ Inline режим',
+          '<button onclick="pasadoStartInline()" style="',
+            'display:flex;flex-direction:column;align-items:center;gap:4px;',
+            'padding:12px 8px;border:2px solid rgba(155,89,182,0.5);border-radius:12px;',
+            'background:linear-gradient(135deg,rgba(155,89,182,0.25),rgba(108,52,131,0.25));',
+            'color:#fff;cursor:pointer;text-align:center;transition:opacity 0.15s;" ',
+            'onmouseover="this.style.opacity=\'0.85\'" onmouseout="this.style.opacity=\'1\'">',
+            '<i data-lucide="pencil-line" style="width:22px;height:22px;stroke:#ce93d8;stroke-width:2;"></i>',
+            '<span style="font-weight:700;font-size:0.82rem;">Inline режим</span>',
+            '<span style="font-size:0.7rem;opacity:0.7;">28 предложений</span>',
           '</button>',
-          '<button onclick="pasadoStartClassify()" class="menu-button" style="',
-            'display: inline-block; width: auto; padding: 11px 24px; font-size: 0.95rem; max-width: none;',
-            'background: linear-gradient(135deg, #e67e22, #d35400); color: white;',
-          '">',
-            '🎨 Классификация',
+          '<button onclick="pasadoStartClassify()" style="',
+            'display:flex;flex-direction:column;align-items:center;gap:4px;',
+            'padding:12px 8px;border:2px solid rgba(230,126,34,0.5);border-radius:12px;',
+            'background:linear-gradient(135deg,rgba(230,126,34,0.25),rgba(211,84,0,0.25));',
+            'color:#fff;cursor:pointer;text-align:center;transition:opacity 0.15s;" ',
+            'onmouseover="this.style.opacity=\'0.85\'" onmouseout="this.style.opacity=\'1\'">',
+            '<i data-lucide="layers" style="width:22px;height:22px;stroke:#ffb74d;stroke-width:2;"></i>',
+            '<span style="font-weight:700;font-size:0.82rem;">Классификация</span>',
+            '<span style="font-size:0.7rem;opacity:0.7;">48 примеров</span>',
           '</button>',
         '</div>',
 
@@ -211,6 +229,8 @@ const PasadoUI = {
     ].join('');
 
     root.innerHTML = html;
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 
     root.querySelectorAll('.pasado-card-thumb').forEach(function(el) {
       el.addEventListener('mouseenter', function() {
