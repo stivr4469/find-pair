@@ -25,7 +25,6 @@ const SerEstarApp = {
         // Hide all areas
         document.querySelectorAll('.game-area').forEach(el => el.classList.add('hidden'));
         document.querySelector('.main-menu').classList.add('hidden');
-        document.querySelector('.score-display').classList.remove('hidden');
         var backBtn = document.getElementById('btn-back-to-modes');
         if (backBtn) backBtn.style.display = 'inline-flex';
 
@@ -52,11 +51,11 @@ const SerEstarApp = {
     showMainMenu: function() {
         document.querySelectorAll('.game-area').forEach(el => el.classList.add('hidden'));
         document.querySelector('.main-menu').classList.remove('hidden');
-        document.querySelector('.score-display').classList.remove('hidden');
         var backBtn = document.getElementById('btn-back-to-modes');
         if (backBtn) backBtn.style.display = 'none';
         this.currentMode = null;
         window.njResetStreak && window.njResetStreak();
+        seSetProgress(0);
     }
 };
 
@@ -79,9 +78,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-window.njCorrect = function(streak) { if (_nj) _nj.correct(streak || _njStreak); };
-window.njWrong = function(ruleEs, ruleRu) { _njStreak = 0; if (_nj) _nj.wrong(ruleEs, ruleRu); };
+function seUpdateStreak(val) {
+    var el = document.getElementById('streak-value');
+    if (el) el.textContent = val;
+}
+function seUpdateScore(val) {
+    var el = document.getElementById('score-value');
+    if (el) el.textContent = val;
+}
+function seSetProgress(pct) {
+    var el = document.getElementById('se-progress-fill');
+    if (el) el.style.width = Math.min(100, Math.max(0, pct)) + '%';
+}
+
+window.njCorrect = function(streak) {
+    if (_nj) _nj.correct(streak || _njStreak);
+    seUpdateStreak(_njStreak);
+};
+window.njWrong = function(ruleEs, ruleRu) {
+    _njStreak = 0;
+    if (_nj) _nj.wrong(ruleEs, ruleRu);
+    seUpdateStreak(0);
+};
 window.njResult = function(pct) { if (_nj) _nj.result(pct); };
 window.njGetStreak = function() { return _njStreak; };
-window.njAddStreak = function() { _njStreak++; return _njStreak; };
-window.njResetStreak = function() { _njStreak = 0; };
+window.njAddStreak = function() { _njStreak++; seUpdateStreak(_njStreak); return _njStreak; };
+window.njResetStreak = function() { _njStreak = 0; seUpdateStreak(0); };
+window.seSetProgress = seSetProgress;
+window.seUpdateScore = seUpdateScore;

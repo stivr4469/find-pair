@@ -8,8 +8,8 @@
     <script>(function(){try{var t=localStorage.getItem('vamos:theme');if(t)document.documentElement.dataset.theme=t}catch(e){}}());</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/unified-styles.css?v=14">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/unified-styles.css?v=15">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         .main-menu { max-width: 700px; }
@@ -24,10 +24,18 @@
         <button id="theme-toggle" onclick="toggleTheme()" title="Сменить тему" aria-label="Сменить тему"></button>
     </div>
 
-    <!-- Header con título de la aplicación -->
-    <header class="app-header">
-        <h1><span class="app-header-icon" style="background:linear-gradient(135deg,#ffe4e6,#fecdd3)"><i data-lucide="compass" style="stroke:#e11d48"></i></span>Tren Ir/Venir/Llegar</h1>
+    <header class="se-topbar">
+        <h1 class="se-topbar-title"><b>Тренажёр</b></h1>
+        <div class="se-topbar-stats">
+            <div class="se-stat-pill">🔥 <span id="streak-value">0</span></div>
+            <div class="se-stat-pill"><span id="score-value">0</span> <span class="se-stat-label">очк.</span></div>
+        </div>
     </header>
+    <div class="se-progress-bar-wrap">
+        <div class="se-progress-bar-track">
+            <div id="se-progress-fill" class="se-progress-fill"></div>
+        </div>
+    </div>
 
     <!-- Mascot Naranjito -->
     <div id="buddy" style="max-width:760px;margin:0 auto;padding:0 16px"></div>
@@ -59,12 +67,6 @@
             Распредели слова
         </button>
     </nav>
-
-    <!-- Область отображения счета -->
-    <section id="score-area" class="score-display">
-        <span id="score-label">Счет:</span>
-        <span id="score-value">0</span>
-    </section>
 
     <!-- Игровая зона для режима 1: Выбор глагола -->
     <main id="mode1-area" class="game-area hidden">

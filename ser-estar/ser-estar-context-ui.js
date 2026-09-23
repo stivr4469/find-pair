@@ -9,6 +9,7 @@ function displayContextQuestionUI(question) {
 
     var qNum = contextModeState.totalAnswered + 1;
     var qTotal = contextModeState.sessionLimit;
+    window.seSetProgress && window.seSetProgress((contextModeState.totalAnswered / qTotal) * 100);
     var blankHtml = question.text
         ? question.text.replace('___', '<span class="ctx-blank">___</span>')
         : '';
@@ -73,10 +74,10 @@ function showContextResultsUI() {
 }
 
 function updateContextScoreUI() {
-    const scoreElement = document.getElementById('score-value');
-    if (scoreElement) {
-        scoreElement.textContent = contextModeState.score;
-    }
+    window.seUpdateScore ? window.seUpdateScore(contextModeState.score) : (function() {
+        var el = document.getElementById('score-value');
+        if (el) el.textContent = contextModeState.score;
+    })();
 }
 
 // Экспорт

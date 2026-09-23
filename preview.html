@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#FBF6EF" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#14110F" media="(prefers-color-scheme: dark)">
-    <title>VamoS</title>
+    <title>VamoS — превью</title>
 
     <!-- Анимация появления: только при первом открытии за сессию -->
     <script>
@@ -18,13 +18,499 @@
     </script>
 
     <!-- Telegram WebApp SDK -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
     <!-- unified-styles.css главной больше не нужен: он перебивал шрифты и отступы -->
-    <link rel="stylesheet" href="css/main.css?v=7">
+    <style>
+/**
+ * VamoS — главное меню
+ * Стиль «Валенсия»: тёплый песочный фон, валенсийский апельсин,
+ * у каждой игры свой цвет. Светлая и тёмная темы (в т.ч. из Telegram).
+ */
+
+/* ============================================
+   ТОКЕНЫ
+   ============================================ */
+:root {
+  --bg: #FBF6EF;
+  --bg-glow: rgba(242, 107, 29, 0.14);
+  --dot: rgba(28, 25, 23, 0.07);
+  --surface: #FFFFFF;
+  --text: #1C1917;
+  --muted: #78716C;
+  --faint: #D6CFC7;
+  --border: rgba(28, 25, 23, 0.08);
+  --accent: #F26B1D;
+  --shadow: 0 1px 2px rgba(28, 25, 23, 0.04), 0 10px 24px -14px rgba(28, 25, 23, 0.22);
+
+  --radius: 20px;
+  --radius-sm: 14px;
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Unbounded', 'Inter', system-ui, sans-serif;
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --lift: 0%;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14110F;
+    --bg-glow: rgba(255, 122, 46, 0.12);
+    --dot: rgba(255, 255, 255, 0.05);
+    --surface: #1F1B18;
+    --text: #F5EFE8;
+    --muted: #A8A29E;
+    --faint: #3A3430;
+    --border: rgba(255, 255, 255, 0.08);
+    --accent: #FF7A2E;
+    --lift: 35%;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 28px -16px rgba(0, 0, 0, 0.7);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #14110F;
+  --bg-glow: rgba(255, 122, 46, 0.12);
+  --dot: rgba(255, 255, 255, 0.05);
+  --surface: #1F1B18;
+  --text: #F5EFE8;
+  --muted: #A8A29E;
+  --faint: #3A3430;
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #FF7A2E;
+  --lift: 35%;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 28px -16px rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
+}
+
+/* Цвет каждой игры: один оттенок для иконки, тега, свечения и прогресса */
+.game-card[data-game="find-pair"] { --c: #16A34A; }
+.game-card[data-game="tren"]      { --c: #EA580C; }
+.game-card[data-game="ser-estar"] { --c: #2563EB; }
+.game-card[data-game="formulas"]  { --c: #7C3AED; }
+.game-card[data-game="mezcla"]    { --c: #DB2777; }
+.game-card[data-game="pasado"]    { --c: #0891B2; }
+
+/* Плавный переход между страницами (та же строка нужна в CSS игр) */
+@view-transition { navigation: auto; }
+
+/* ============================================
+   БАЗА
+   ============================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+[hidden], .hidden { display: none !important; }
+
+html {
+  padding: 0;
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  padding: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3 { font-family: inherit; }
+
+/* Иконки (SVG-спрайт в index.html) */
+svg.i {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Статичный фон: тёплое свечение сверху и мелкая сетка точек */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 60% at 50% -10%, var(--bg-glow), transparent 60%),
+    radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 0) 0 0 / 22px 22px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 90%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 90%);
+}
+
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding:
+    max(16px, env(safe-area-inset-top))
+    max(16px, env(safe-area-inset-right))
+    max(24px, env(safe-area-inset-bottom))
+    max(16px, env(safe-area-inset-left));
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* ============================================
+   ВЕРХНЯЯ ПАНЕЛЬ
+   ============================================ */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0 8px;
+}
+
+.brand { display: flex; align-items: center; gap: 10px; }
+
+/* Знак: полосы испанского флага (вместо эмодзи 🇪🇸, которого нет на Windows) */
+.brand-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: linear-gradient(#C60B1E 0 25%, #FFC400 25% 75%, #C60B1E 75%);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08), 0 4px 10px -4px rgba(198, 11, 30, 0.5);
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.brand-name span { color: var(--accent); }
+
+.streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px 5px 8px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.streak svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--accent);
+  fill: color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* ============================================
+   ПРИВЕТСТВИЕ
+   ============================================ */
+.hero { padding: 28px 2px 22px; }
+
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 7.4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+/* ============================================
+   «ПРОДОЛЖИТЬ»
+   ============================================ */
+.resume {
+  --c: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  border-radius: var(--radius);
+  background: var(--c);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 14px 30px -14px color-mix(in srgb, var(--c) 70%, transparent);
+  transition: transform 0.35s var(--spring), box-shadow 0.25s ease;
+}
+
+.resume-play {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+.resume-play svg { width: 18px; height: 18px; fill: #fff; stroke: #fff; margin-left: 2px; }
+
+.resume-text { flex: 1; min-width: 0; }
+.resume-label { display: block; font-size: 0.75rem; font-weight: 600; opacity: 0.85; }
+.resume-title {
+  display: block;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.resume > svg { width: 20px; height: 20px; opacity: 0.85; flex-shrink: 0; }
+
+@media (hover: hover) {
+  .resume:hover { transform: translateY(-2px); }
+}
+.resume:active { transform: scale(0.98); transition-duration: 0.12s; }
+
+/* ============================================
+   СПИСОК ИГР
+   ============================================ */
+.section-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 0 2px 10px;
+}
+
+.games {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.game-card {
+  --c: var(--accent);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 14px 16px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  text-decoration: none;
+  transition:
+    transform 0.35s var(--spring),
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* Мягкий «прожектор» цвета игры под курсором (координаты задаёт JS) */
+.game-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%),
+              color-mix(in srgb, var(--c) 13%, transparent), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.game-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--c) 13%, var(--surface));
+  flex-shrink: 0;
+}
+/* --ink: цвет игры, в тёмной теме осветлённый для контраста */
+.game-card { --ink: color-mix(in srgb, var(--c), #fff var(--lift)); }
+.game-card-icon svg { width: 24px; height: 24px; stroke: var(--ink); }
+
+.game-card-body { min-width: 0; }
+
+.game-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.game-card-description {
+  margin-top: 2px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.game-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+/* Сложность: три точки */
+.level { display: inline-flex; gap: 3px; }
+.level i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--faint);
+}
+.level[data-level="1"] i:nth-child(-n+1),
+.level[data-level="2"] i:nth-child(-n+2),
+.level[data-level="3"] i:nth-child(-n+3) { background: var(--c); }
+
+.game-card-arrow svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  stroke: var(--faint);
+  transition: transform 0.3s var(--spring), stroke 0.2s ease;
+}
+
+/* Полоска прогресса: видна, когда игра сохранила прогресс */
+.game-card-progress {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: color-mix(in srgb, var(--c) 12%, transparent);
+}
+.game-card-progress::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: var(--p, 0%);
+  background: var(--c);
+  border-radius: 0 3px 3px 0;
+}
+.game-card.has-progress .game-card-progress { display: block; }
+
+@media (hover: hover) {
+  .game-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--c) 30%, var(--border));
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.04),
+      0 18px 34px -18px color-mix(in srgb, var(--c) 55%, transparent);
+  }
+  .game-card:hover::before { opacity: 1; }
+  .game-card:hover .game-card-arrow svg { transform: translateX(3px); stroke: var(--c); }
+}
+
+.game-card:active { transform: scale(0.98); transition-duration: 0.12s; }
+
+.game-card:focus-visible,
+.resume:focus-visible,
+.close-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ============================================
+   ПОЯВЛЕНИЕ (один раз за сессию, ~0.6 с)
+   ============================================ */
+html.intro .hero,
+html.intro .resume,
+html.intro .section-label,
+html.intro .game-card {
+  animation: rise 0.55s var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * 45ms + 60ms);
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+}
+
+/* ============================================
+   НИЗ СТРАНИЦЫ
+   ============================================ */
+.close-section { text-align: center; padding-top: 24px; margin-top: auto; }
+
+.close-button {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.app-footer {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* ============================================
+   ШИРОКИЕ ЭКРАНЫ
+   ============================================ */
+@media (min-width: 640px) {
+  .app { max-width: 760px; padding-top: 32px; }
+  .hero { padding: 40px 2px 28px; }
+  .games { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .game-card { grid-template-columns: auto 1fr; align-items: start; padding: 18px; }
+  .game-card-arrow { display: none; }
+}
+
+@media (max-width: 360px) {
+  .game-card { gap: 12px; padding: 14px 12px; }
+  .game-card-icon { width: 42px; height: 42px; }
+}
+
+/* ============================================
+   ДОСТУПНОСТЬ
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .game-card { border-color: var(--text); }
+}
+
+</style>
 </head>
 <body>
     <!-- Иконки Lucide, встроены спрайтом: без CDN и без мигания при загрузке -->
@@ -166,7 +652,17 @@
         <footer class="app-footer">VamoS · Тренажёр испанского · Valencia 2026</footer>
     </div>
 
-    <script src="js/main.js"></script>
+    <script>
+/* ПРЕВЬЮ: демо-данные, чтобы были видны «Продолжить», прогресс и серия */
+try{
+ localStorage.setItem('vamos:progress',JSON.stringify({pasado:42,'ser-estar':75,'find-pair':20}));
+ localStorage.setItem('vamos:last',JSON.stringify('pasado'));
+ var d=new Date(Date.now()-864e5);
+ localStorage.setItem('vamos:streak',JSON.stringify({last:d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(),n:4}));
+ sessionStorage.removeItem('vamos:intro');
+}catch(e){}
+document.addEventListener('click',function(e){if(e.target.closest('a'))e.preventDefault();});
+</script>
     <script>
     /**
      * Главная VamoS: тема Telegram, haptic, «Продолжить», прогресс, серия дней, spotlight.

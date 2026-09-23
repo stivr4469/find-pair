@@ -8,8 +8,8 @@
     <script>(function(){try{var t=localStorage.getItem('vamos:theme');if(t)document.documentElement.dataset.theme=t}catch(e){}}());</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/unified-styles.css?v=14">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/unified-styles.css?v=15">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         /* ── Naranjito над карточкой ── */
@@ -82,11 +82,19 @@
         <button id="theme-toggle" onclick="toggleTheme()" title="Сменить тему" aria-label="Сменить тему"></button>
     </div>
 
-    <!-- Header -->
-    <header class="app-header">
-        <h1><span class="app-header-icon" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe)"><i data-lucide="git-branch" style="stroke:#2563eb"></i></span>Ser vs Estar</h1>
-        <p>Научись различать два глагола "to be"</p>
+    <!-- Compact top bar -->
+    <header class="se-topbar">
+        <h1 class="se-topbar-title"><b>Ser</b> <span class="se-vs">vs</span> <b>Estar</b></h1>
+        <div class="se-topbar-stats">
+            <div class="se-stat-pill">🔥 <span id="streak-value">0</span></div>
+            <div class="se-stat-pill"><span id="score-value">0</span> <span class="se-stat-label">очк.</span></div>
+        </div>
     </header>
+    <div class="se-progress-bar-wrap">
+        <div class="se-progress-bar-track">
+            <div id="se-progress-fill" class="se-progress-fill"></div>
+        </div>
+    </div>
 
     <!-- Главное меню Ser/Estar - 4 режима -->
     <nav class="main-menu">
@@ -106,12 +114,6 @@
             🃏 Классификация
         </button>
     </nav>
-
-    <!-- Счет -->
-    <section class="score-display">
-        <span>Счет:</span>
-        <span id="score-value">0</span>
-    </section>
 
     <!-- Mascot Naranjito — прямо над карточкой -->
     <div id="buddy" style="max-width:760px;margin:0 auto;padding:0 16px"></div>
@@ -157,7 +159,7 @@
     <script src="ser-estar-data.js"></script>
     <script src="ser-estar-base-ui.js"></script>
     <script src="ser-estar-base-mode.js?v=1"></script>
-    <script src="ser-estar-context-ui.js?v=4"></script>
+    <script src="ser-estar-context-ui.js?v=5"></script>
     <script src="ser-estar-context-mode.js?v=2"></script>
     <script src="ser-estar-rules-ui.js?v=2"></script>
     <script src="ser-estar-rules-mode.js"></script>
@@ -165,7 +167,7 @@
     <script src="classify-data.js"></script>
     <script src="classify-ui.js?v=6"></script>
     <script src="classify-mode.js?v=3"></script>
-    <script src="ser-estar-app.js"></script>
+    <script src="ser-estar-app.js?v=2"></script>
     <script>lucide.createIcons();</script>
 </body>
 </html>
