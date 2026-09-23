@@ -47,26 +47,16 @@ const MezclaApp = {
   // ─── Expand phrase tokens to word-level tokens ──────────────────────────────
 
   _expandTokens: function(phraseTokens) {
-    var result = [];
-    phraseTokens.forEach(function(pt) {
-      var ru = pt.ru || '';
-      var es = pt.es || '';
-      var ruSent = pt.ruSent || ru;
-      var esSent = pt.esSent || es;
-      var ruWords = ru.split(/\s+/).map(_mClean).filter(Boolean);
-      var esWords = es.split(/\s+/).map(_mClean).filter(Boolean);
-      var pairLen = Math.min(ruWords.length, esWords.length);
-      for (var j = 0; j < pairLen; j++) {
-        result.push({ ru: ruWords[j], es: esWords[j], ruSent: ruSent, esSent: esSent });
-      }
-      for (var j = pairLen; j < ruWords.length; j++) {
-        result.push({ ru: ruWords[j], es: ruWords[j], ruSent: ruSent, esSent: esSent });
-      }
-      for (var j = pairLen; j < esWords.length; j++) {
-        result.push({ ru: esWords[j], es: esWords[j], ruSent: ruSent, esSent: esSent });
-      }
+    // Keep phrase-level tokens intact — they are already meaningful 2–4 word chunks.
+    // Only ensure ruSent/esSent are set for tooltip fallback.
+    return phraseTokens.map(function(pt) {
+      return {
+        ru: pt.ru,
+        es: pt.es,
+        ruSent: pt.ruSent || pt.ru,
+        esSent: pt.esSent || pt.es,
+      };
     });
-    return result;
   },
 
   // ─── Navigate to text ───────────────────────────────────────────────────────
