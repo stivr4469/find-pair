@@ -62,7 +62,7 @@ const PasadoApp = {
       return Object.assign({}, q, {
         formulaId: formula.id,
         formulaName: formula.shortName,
-        formulaEmoji: formula.emoji,
+        formulaEmoji: PASADO_ICONS[(formula.id || 1) - 1].icon,
       });
     });
     var shuffled = (typeof shuffleArray === 'function') ? shuffleArray(pool) : pool;
@@ -91,7 +91,7 @@ const PasadoApp = {
         allQuestions.push(Object.assign({}, q, {
           formulaId: formula.id,
           formulaName: formula.shortName,
-          formulaEmoji: formula.emoji,
+          formulaEmoji: PASADO_ICONS[(formula.id || 1) - 1].icon,
         }));
       });
     });

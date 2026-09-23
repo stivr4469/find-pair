@@ -71,13 +71,13 @@ function checkAdvancedAnswer_tren(selected, correct, buttonElement) {
     const isCorrect = selected.toLowerCase() === correct.toLowerCase();
 
     if (isCorrect) {
-        feedback.textContent = '✅ ¡Correcto!';
+        feedback.textContent = '✓ ¡Correcto!';
         feedback.className = 'feedback correct';
         buttonElement.classList.add('correct');
         advancedModeState_tren.score++;
         updateAdvancedScore_tren();
     } else {
-        feedback.textContent = `❌ Incorrecto. Правильно: ${correct}`;
+        feedback.textContent = `✗ Incorrecto. Правильно: ${correct}`;
         feedback.className = 'feedback incorrect';
         buttonElement.classList.add('incorrect');
         allButtons.forEach(btn => {

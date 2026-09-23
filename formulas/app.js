@@ -98,7 +98,7 @@ const FormulasApp = {
       return Object.assign({}, q, {
         formulaId: formula.id,
         formulaName: formula.shortName,
-        formulaEmoji: formula.emoji,
+        formulaEmoji: FORMULA_ICONS[(formula.id || 1) - 1].icon,
       });
     });
     var shuffled = (typeof shuffleArray === 'function') ? shuffleArray(pool) : pool;
@@ -127,7 +127,7 @@ const FormulasApp = {
         allQuestions.push(Object.assign({}, q, {
           formulaId: formula.id,
           formulaName: formula.shortName,
-          formulaEmoji: formula.emoji,
+          formulaEmoji: FORMULA_ICONS[(formula.id || 1) - 1].icon,
         }));
       });
     });
@@ -158,7 +158,7 @@ const FormulasApp = {
         allQuestions.push(Object.assign({}, q, {
           formulaId: formula.id,
           formulaName: formula.shortName,
-          formulaEmoji: formula.emoji,
+          formulaEmoji: FORMULA_ICONS[(formula.id || 1) - 1].icon,
         }));
       });
     });

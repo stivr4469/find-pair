@@ -137,12 +137,12 @@ function checkSerEstarMode3Answer(selected, question) {
     if (normalizedSelected === normalizedCorrect) {
         serEstarMode3State.score++;
         const ruleName = question.verb === 'ser' ? SER_RULES[question.correctRule].name : ESTAR_RULES[question.correctRule].name;
-        feedback.textContent = `✅ ¡Correcto! ${question.verb.toUpperCase()}: ${ruleName}`;
+        feedback.textContent = `✓ ¡Correcto! ${question.verb.toUpperCase()}: ${ruleName}`;
         feedback.className = 'feedback correct';
         updateSerEstarMode3Score();
     } else {
         const correctRuleName = question.verb === 'ser' ? SER_RULES[question.correctRule].name : ESTAR_RULES[question.correctRule].name;
-        feedback.textContent = `❌ Incorrecto. Правильно: ${question.correctRule} - ${correctRuleName}`;
+        feedback.textContent = `✗ Incorrecto. Правильно: ${question.correctRule} - ${correctRuleName}`;
         feedback.className = 'feedback incorrect';
     }
 

@@ -132,11 +132,11 @@ function checkSerEstarMode4Answer(selected, question) {
     // Проверка ответа
     if (selected === question.form) {
         serEstarMode4State.score++;
-        feedback.textContent = `✅ ¡Correcto! ${question.es}`;
+        feedback.textContent = `✓ ¡Correcto! ${question.es}`;
         feedback.className = 'feedback correct';
         updateSerEstarMode4Score();
     } else {
-        feedback.textContent = `❌ Incorrecto. Правильно: ${question.es}`;
+        feedback.textContent = `✗ Incorrecto. Правильно: ${question.es}`;
         feedback.className = 'feedback incorrect';
     }
 

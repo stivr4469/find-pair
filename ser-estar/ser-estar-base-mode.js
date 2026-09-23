@@ -128,13 +128,13 @@ function checkBaseAnswer(selected, correct, buttonElement) {
     const feedback = document.getElementById('ser-estar-base-area').querySelector('.feedback');
     if (feedback) {
         if (isCorrect) {
-            feedback.textContent = '✅ ¡Correcto!';
+            feedback.textContent = '✓ ¡Correcto!';
             feedback.className = 'feedback correct';
             buttonElement.classList.add('correct');
             baseModeState.score++;
             updateBaseScore();
         } else {
-            feedback.textContent = `❌ Incorrecto. La respuesta correcta es: ${correct}`;
+            feedback.textContent = `✗ Incorrecto. La respuesta correcta es: ${correct}`;
             feedback.className = 'feedback wrong';
             buttonElement.classList.add('incorrect');
             

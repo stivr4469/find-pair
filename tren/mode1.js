@@ -63,7 +63,7 @@ function checkMode1Answer(selected, correct, buttonElement, explanation) {
         : '';
 
     if (selected.toLowerCase() === correct.toLowerCase()) {
-        feedback.innerHTML = `<div style="font-weight: bold;">✅ ¡Correcto!</div>${explanationHtml}`;
+        feedback.innerHTML = `<div style="font-weight: bold; color: #22c55e;">✓ ¡Correcto!</div>${explanationHtml}`;
         feedback.className = "feedback correct";
         feedback.style.flexDirection = 'column';
         feedback.style.alignItems = 'center';
@@ -71,7 +71,7 @@ function checkMode1Answer(selected, correct, buttonElement, explanation) {
         mode1State.score++;
         updateMode1ScoreUI();
     } else {
-        feedback.innerHTML = `<div style="font-weight: bold;">❌ Incorrecto. Правильно: ${correct}</div>${explanationHtml}`;
+        feedback.innerHTML = `<div style="font-weight: bold; color: #ef4444;">✗ Incorrecto. Правильно: ${correct}</div>${explanationHtml}`;
         feedback.className = "feedback incorrect";
         feedback.style.flexDirection = 'column';
         feedback.style.alignItems = 'center';

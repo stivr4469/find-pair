@@ -105,8 +105,8 @@ function handleSerEstarOptionClickUI(selected, correct) {
 
     // Отображаем обратную связь
     feedbackEl.textContent = isCorrect
-        ? `✅ ¡Correcto!`
-        : `❌ Incorrecto. La respuesta correcta es: "${correct}"`;
+        ? `✓ ¡Correcto!`
+        : `✗ Incorrecto. La respuesta correcta es: "${correct}"`;
     feedbackEl.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
 
     // Отмечаем кнопки

@@ -250,13 +250,13 @@ function checkAdvancedAnswer(selected, correct, buttonElement) {
     const feedback = document.getElementById('ser-estar-advanced-area').querySelector('.feedback');
     if (feedback) {
         if (isCorrect) {
-            feedback.textContent = '✅ ¡Correcto!';
+            feedback.textContent = '✓ ¡Correcto!';
             feedback.className = 'feedback correct';
             buttonElement.classList.add('correct');
             advancedModeState.score++;
             updateAdvancedScore();
         } else {
-            feedback.textContent = `❌ Incorrecto. La respuesta correcta es: ${correct}`;
+            feedback.textContent = `✗ Incorrecto. La respuesta correcta es: ${correct}`;
             feedback.className = 'feedback wrong';
             buttonElement.classList.add('incorrect');
 

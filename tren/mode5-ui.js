@@ -24,7 +24,7 @@ function displayMode5QuestionUI(question) {
             
             <div class="question-text" style="font-size: 1.4rem; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center;">
                 ${questionText.replace(/_____|___/g, '<span class="blank" id="question-blank" style="color: #f59e0b; text-decoration: underline;">_____</span>')}
-                <button id="speak-btn" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; margin-left: 10px;" title="Озвучить" onclick="playCurrentMode5Phrase()">🔊</button>
+                <button id="speak-btn" style="background: none; border: none; cursor: pointer; margin-left: 10px; display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--faint);color:var(--text);" title="Озвучить" onclick="playCurrentMode5Phrase()"><i data-lucide="volume-2" style="width:18px;height:18px;stroke:currentColor;stroke-width:2;pointer-events:none"></i></button>
             </div>
 
             <div class="options-container" id="mode5-options" style="display: grid; gap: 10px;">
@@ -40,6 +40,8 @@ function displayMode5QuestionUI(question) {
             </button>
         </div>
     `;
+
+    lucide.createIcons();
 
     // Обработчики
     contentArea.querySelectorAll('.option-btn').forEach(button => {

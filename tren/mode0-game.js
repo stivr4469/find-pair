@@ -136,7 +136,7 @@ function checkAnswerMode0(userAnswer, correct) {
   // Возвращаем результат
   return {
     isCorrect: isCorrect,
-    message: isCorrect ? '✅ ¡Correcto!' : `❌ Incorrecto. La respuesta correcta es: "${correct}"`
+    message: isCorrect ? '✓ ¡Correcto!' : `✗ Incorrecto. La respuesta correcta es: "${correct}"`
   };
 }
 

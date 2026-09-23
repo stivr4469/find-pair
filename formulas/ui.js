@@ -3,6 +3,46 @@
  * UI Renderer: all views injected into #formulas-content
  */
 
+// ─── Icon map (indexed by formula.id - 1) ─────────────────────────────────────
+var FORMULA_ICONS = [
+  { icon: 'type',             color: '#3B82F6', bg: 'rgba(59,130,246,0.15)'  }, // 1  Прилагательные
+  { icon: 'zap',              color: '#EAB308', bg: 'rgba(234,179,8,0.15)'   }, // 2  Наречия
+  { icon: 'help-circle',      color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)'  }, // 3  Вопросы
+  { icon: 'file-text',        color: '#10B981', bg: 'rgba(16,185,129,0.15)'  }, // 4  Полные предложения
+  { icon: 'user',             color: '#F59E0B', bg: 'rgba(245,158,11,0.15)'  }, // 5  Личное «a»
+  { icon: 'repeat-2',         color: '#6366F1', bg: 'rgba(99,102,241,0.15)'  }, // 6  Дублирование le
+  { icon: 'refresh-cw',       color: '#14B8A6', bg: 'rgba(20,184,166,0.15)'  }, // 7  Возвратные
+  { icon: 'play',             color: '#F26B1D', bg: 'rgba(242,107,29,0.15)'  }, // 8  Инфинитив
+  { icon: 'list-checks',      color: '#0EA5E9', bg: 'rgba(14,165,233,0.15)'  }, // 9  Hay que
+  { icon: 'check-square',     color: '#22C55E', bg: 'rgba(34,197,94,0.15)'   }, // 10 Tener que
+  { icon: 'clock',            color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)'  }, // 11 Perfecto
+  { icon: 'activity',         color: '#EF4444', bg: 'rgba(239,68,68,0.15)'   }, // 12 Estar+gerundio
+  { icon: 'timer',            color: '#F59E0B', bg: 'rgba(245,158,11,0.15)'  }, // 13 Llevar+gerundio
+  { icon: 'compass',          color: '#0EA5E9', bg: 'rgba(14,165,233,0.15)'  }, // 14 Para/Por
+  { icon: 'scale',            color: '#10B981', bg: 'rgba(16,185,129,0.15)'  }, // 15 Сравнение
+  { icon: 'shuffle',          color: '#6366F1', bg: 'rgba(99,102,241,0.15)'  }, // 16 Местоимения OD
+  { icon: 'chevrons-up',      color: '#F26B1D', bg: 'rgba(242,107,29,0.15)'  }, // 17 -ísimo
+  { icon: 'arrow-left-right', color: '#14B8A6', bg: 'rgba(20,184,166,0.15)'  }, // 18 Замена OD+OI
+  { icon: 'heart',            color: '#EF4444', bg: 'rgba(239,68,68,0.15)'   }, // 19 Gustar
+  { icon: 'moon',             color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)'  }, // 20 Subjuntivo
+  { icon: 'send',             color: '#3B82F6', bg: 'rgba(59,130,246,0.15)'  }, // 21 Будущее
+  { icon: 'git-branch',       color: '#6366F1', bg: 'rgba(99,102,241,0.15)'  }, // 22 Condicional
+  { icon: 'megaphone',        color: '#F26B1D', bg: 'rgba(242,107,29,0.15)'  }, // 23 Императив
+  { icon: 'shield',           color: '#0EA5E9', bg: 'rgba(14,165,233,0.15)'  }, // 24 Poder/Deber
+  { icon: 'clock-4',          color: '#22C55E', bg: 'rgba(34,197,94,0.15)'   }, // 25 Acabar de
+  { icon: 'eye-off',          color: '#6366F1', bg: 'rgba(99,102,241,0.15)'  }, // 26 Пассивная se
+  { icon: 'repeat',           color: '#14B8A6', bg: 'rgba(20,184,166,0.15)'  }, // 27 Перифразы
+  { icon: 'alert-triangle',   color: '#F59E0B', bg: 'rgba(245,158,11,0.15)'  }, // 28 Se me/Se te
+  { icon: 'history',          color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)'  }, // 29 Hace+tiempo
+  { icon: 'ban',              color: '#EF4444', bg: 'rgba(239,68,68,0.15)'   }, // 30 Отрицание
+  { icon: 'toggle-left',      color: '#10B981', bg: 'rgba(16,185,129,0.15)'  }, // 31 Ponerse/Quedarse
+  { icon: 'arrow-right-left', color: '#3B82F6', bg: 'rgba(59,130,246,0.15)'  }, // 32 Si+presente
+  { icon: 'link',             color: '#6366F1', bg: 'rgba(99,102,241,0.15)'  }, // 33 Придаточные
+  { icon: 'lightbulb',        color: '#EAB308', bg: 'rgba(234,179,8,0.15)'   }, // 34 Lo+adj
+  { icon: 'target',           color: '#F26B1D', bg: 'rgba(242,107,29,0.15)'  }, // 35 Para que
+  { icon: 'git-merge',        color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)'  }, // 36 Si+imperfecto
+];
+
 const FormulasUI = {
 
   // ─── Root element ────────────────────────────────────────────────────────────
@@ -31,7 +71,9 @@ const FormulasUI = {
           'flex-direction: column;',
           'gap: 6px;',
         '">',
-          '<div style="font-size: 2rem; line-height: 1;">' + formula.emoji + '</div>',
+          '<div style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;background:' + FORMULA_ICONS[index].bg + ';margin-bottom:4px;">',
+            '<i data-lucide="' + FORMULA_ICONS[index].icon + '" style="width:22px;height:22px;stroke:' + FORMULA_ICONS[index].color + ';stroke-width:2;pointer-events:none"></i>',
+          '</div>',
           '<div style="font-weight: 700; font-size: 0.85rem; color: var(--text);">' + formula.shortName + '</div>',
           '<div style="',
             'background: var(--accent-faint);',
@@ -182,7 +224,9 @@ const FormulasUI = {
               'font-size: 0.8rem;',
               'font-weight: 700;',
             '">Формула ' + formula.id + ' / 36</span>',
-            '<span style="color: var(--muted); font-size: 0.85rem;">' + formula.emoji + '</span>',
+            '<span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:' + FORMULA_ICONS[index].bg + ';">',
+              '<i data-lucide="' + FORMULA_ICONS[index].icon + '" style="width:15px;height:15px;stroke:' + FORMULA_ICONS[index].color + ';stroke-width:2;pointer-events:none"></i>',
+            '</span>',
           '</div>',
 
           // Name
@@ -361,7 +405,7 @@ const FormulasUI = {
               'border-radius: 20px;',
               'font-size: 0.78rem;',
               'font-weight: 700;',
-            '">' + formulaEmoji + ' ' + _escHtml(formulaName) + '</span>',
+            '"><i data-lucide="' + formulaEmoji + '" style="width:14px;height:14px;stroke:#fff;stroke-width:2;vertical-align:middle;margin-right:5px;pointer-events:none"></i>' + _escHtml(formulaName) + '</span>',
             '<button onclick="formulaBackToList()" style="',
               'background: none;',
               'border: none;',
@@ -404,7 +448,7 @@ const FormulasUI = {
               ? '<span style="background:#fff3cd;color:#856404;padding:2px 10px;border-radius:20px;font-weight:700;"><i data-lucide="flame" style="width:14px;height:14px;stroke:#f59e0b;stroke-width:2;vertical-align:middle;margin-right:4px;"></i>Осталось: ' + marathonLeft + '</span>'
               : '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>'
             ),
-            '<span>✅ ' + score + ' / ' + qIndex + '</span>',
+            '<span style="display:flex;align-items:center;gap:4px;"><i data-lucide="check-circle-2" style="width:13px;height:13px;stroke:#22c55e;stroke-width:2.5;flex-shrink:0;"></i>' + score + ' / ' + qIndex + '</span>',
           '</div>',
 
           // Question text (Russian — no TTS)
@@ -523,12 +567,12 @@ const FormulasUI = {
         feedbackEl.style.background = '#d4edda';
         feedbackEl.style.color = '#155724';
         feedbackEl.style.border = '1px solid #c3e6cb';
-        feedbackEl.innerHTML = '<div style="flex:1"><strong>✅ Верно!</strong> ' + _escHtml(hint) + '</div>' + ttsBtn;
+        feedbackEl.innerHTML = '<div style="flex:1"><span style="color:#22c55e;font-weight:700;"><i data-lucide="check-circle-2" style="width:15px;height:15px;stroke:#22c55e;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Верно!</span> ' + _escHtml(hint) + '</div>' + ttsBtn;
       } else {
         feedbackEl.style.background = '#f8d7da';
         feedbackEl.style.color = '#721c24';
         feedbackEl.style.border = '1px solid #f5c6cb';
-        feedbackEl.innerHTML = '<div style="flex:1"><strong>❌ Неверно.</strong> ' + _escHtml(hint) + '</div>' + ttsBtn;
+        feedbackEl.innerHTML = '<div style="flex:1"><span style="color:#ef4444;font-weight:700;"><i data-lucide="x-circle" style="width:15px;height:15px;stroke:#ef4444;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Неверно.</span> ' + _escHtml(hint) + '</div>' + ttsBtn;
       }
 
       // Wire up TTS button

@@ -132,12 +132,12 @@ function checkMode0Answer(selected, correct, buttonElement) {
   // Показываем обратную связь
   const feedback = document.getElementById('mode0-feedback');
   if (isCorrect) {
-    feedback.textContent = '✅ ¡Correcto!';
+    feedback.textContent = '✓ ¡Correcto!';
     feedback.className = 'feedback correct';
     buttonElement.classList.add('correct');  // Подсветка правильной кнопки
     mode0State.score++;
   } else {
-    feedback.textContent = `❌ Incorrecto. La respuesta correcta es: ${correct}`;
+    feedback.textContent = `✗ Incorrecto. La respuesta correcta es: ${correct}`;
     feedback.className = 'feedback wrong';
     buttonElement.classList.add('incorrect');  // Подсветка неправильной кнопки
 

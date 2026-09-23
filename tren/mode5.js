@@ -89,7 +89,7 @@ function checkMode5Answer(selected, correct, buttonElement, explanation) {
 
     if (isCorrect) {
         feedback.innerHTML = `
-            <div style="color: #27ae60; font-weight: bold; margin-bottom: 8px;">✅ ¡Correcto!</div>
+            <div style="color: #27ae60; font-weight: bold; margin-bottom: 8px;">✓ ¡Correcto!</div>
             <div style="color: #444; font-size: 0.95rem; line-height: 1.4;">${explanation}</div>
         `;
         feedback.style.borderLeft = '5px solid #27ae60';
@@ -105,7 +105,7 @@ function checkMode5Answer(selected, correct, buttonElement, explanation) {
         // }
     } else {
         feedback.innerHTML = `
-            <div style="color: #e74c3c; font-weight: bold; margin-bottom: 8px;">❌ Incorrecto. Правильный ответ: ${correct}</div>
+            <div style="color: #e74c3c; font-weight: bold; margin-bottom: 8px;">✗ Incorrecto. Правильный ответ: ${correct}</div>
             <div style="color: #444; font-size: 0.95rem; line-height: 1.4;">${explanation}</div>
         `;
         feedback.style.borderLeft = '5px solid #e74c3c';

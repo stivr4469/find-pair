@@ -39,7 +39,7 @@ function renderClassifyScreen() {
                     <div class="classify-card-inner">
                         <div class="classify-sentence" id="classify-sentence"></div>
                         <button class="classify-tts-btn" id="classify-tts-btn" onclick="classifySpeak()" title="Прослушать" style="display:none">
-                            🔊
+                            <i data-lucide="volume-2" style="width:17px;height:17px;stroke:currentColor;stroke-width:2;pointer-events:none"></i>
                         </button>
                     </div>
                 </div>
@@ -63,6 +63,8 @@ function renderClassifyScreen() {
             </div>
         </div>
     `;
+
+    lucide.createIcons();
 
     // Вешаем обработчики на зоны
     document.getElementById('zone-ser').addEventListener('click', () => handleClassifyChoice('SER'));

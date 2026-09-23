@@ -102,6 +102,25 @@
   document.head.appendChild(style);
 })();
 
+var PASADO_ICONS = [
+  { icon: 'list',            color: '#e74c3c', bg: 'rgba(231,76,60,0.15)'   }, // 1  Indefinido -AR
+  { icon: 'list-plus',       color: '#c0392b', bg: 'rgba(192,57,43,0.15)'   }, // 2  Indefinido -ER/-IR
+  { icon: 'zap',             color: '#e74c3c', bg: 'rgba(231,76,60,0.15)'   }, // 3  Indefinido нерег.
+  { icon: 'git-merge',       color: '#c0392b', bg: 'rgba(192,57,43,0.15)'   }, // 4  Indefinido stem
+  { icon: 'repeat-2',        color: '#3498db', bg: 'rgba(52,152,219,0.15)'  }, // 5  Imperfecto -AR
+  { icon: 'droplets',        color: '#1a78c2', bg: 'rgba(26,120,194,0.15)'  }, // 6  Imperfecto -ER/-IR
+  { icon: 'eye',             color: '#3498db', bg: 'rgba(52,152,219,0.15)'  }, // 7  Imperfecto нерег.
+  { icon: 'help-circle',     color: '#1a78c2', bg: 'rgba(26,120,194,0.15)'  }, // 8  Когда Imperfecto?
+  { icon: 'key',             color: '#27ae60', bg: 'rgba(39,174,96,0.15)'   }, // 9  Perfecto haber
+  { icon: 'file-text',       color: '#1e8449', bg: 'rgba(30,132,73,0.15)'   }, // 10 Perfecto причастия
+  { icon: 'alert-circle',    color: '#27ae60', bg: 'rgba(39,174,96,0.15)'   }, // 11 Perfecto нестанд.
+  { icon: 'calendar-check',  color: '#1e8449', bg: 'rgba(30,132,73,0.15)'   }, // 12 Когда Perfecto?
+  { icon: 'layers',          color: '#9b59b6', bg: 'rgba(155,89,182,0.15)'  }, // 13 Pluscuam. образование
+  { icon: 'skip-back',       color: '#7d3c98', bg: 'rgba(125,60,152,0.15)'  }, // 14 Pluscuam. употребление
+  { icon: 'link-2',          color: '#9b59b6', bg: 'rgba(155,89,182,0.15)'  }, // 15 Pluscuam. нестанд.
+  { icon: 'bar-chart-2',     color: '#7d3c98', bg: 'rgba(125,60,152,0.15)'  }, // 16 Сравнение 4 времён
+];
+
 const PasadoUI = {
 
   _root: function() {
@@ -121,31 +140,11 @@ const PasadoUI = {
       { label: 'Pluscuamperfecto',    icon: 'history',        color: '#9b59b6', bg: 'rgba(155,89,182,0.18)', from: 12, to: 15 },
     ];
 
-    // Lucide icon + color per card (по порядку PASADO_DATA)
-    var ICONS = [
-      { icon: 'list',            color: '#e74c3c', bg: '#fff0f0' },
-      { icon: 'list-plus',       color: '#c0392b', bg: '#fff0f0' },
-      { icon: 'zap',             color: '#e74c3c', bg: '#fff0f0' },
-      { icon: 'git-merge',       color: '#c0392b', bg: '#fff0f0' },
-      { icon: 'repeat-2',        color: '#3498db', bg: '#eff5ff' },
-      { icon: 'droplets',        color: '#1a78c2', bg: '#eff5ff' },
-      { icon: 'eye',             color: '#3498db', bg: '#eff5ff' },
-      { icon: 'help-circle',     color: '#1a78c2', bg: '#eff5ff' },
-      { icon: 'key',             color: '#27ae60', bg: '#f0fff4' },
-      { icon: 'file-text',       color: '#1e8449', bg: '#f0fff4' },
-      { icon: 'alert-circle',    color: '#27ae60', bg: '#f0fff4' },
-      { icon: 'calendar-check',  color: '#1e8449', bg: '#f0fff4' },
-      { icon: 'layers',          color: '#9b59b6', bg: '#f5f0ff' },
-      { icon: 'skip-back',       color: '#7d3c98', bg: '#f5f0ff' },
-      { icon: 'link-2',          color: '#9b59b6', bg: '#f5f0ff' },
-      { icon: 'bar-chart-2',     color: '#7d3c98', bg: '#f5f0ff' },
-    ];
-
     var sectionsHtml = groups.map(function(g) {
       var cardsHtml = '';
       for (var i = g.from; i <= g.to; i++) {
         var formula = PASADO_DATA[i];
-        var ico = ICONS[i];
+        var ico = PASADO_ICONS[i];
         cardsHtml += [
           '<div class="pasado-card-thumb" onclick="pasadoShowCard(' + i + ')" style="',
             'background:var(--surface);border-radius:12px;padding:16px 14px;cursor:pointer;',
@@ -269,7 +268,7 @@ const PasadoUI = {
             '<div style="font-size: 1rem; color: var(--text); font-weight: 600;">' + _escHtmlP(ex.es) + '</div>',
             '<div style="font-size: 0.85rem; color: var(--muted); margin-top: 2px;">' + _escHtmlP(ex.ru) + '</div>',
           '</div>',
-          '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ex.es) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать">🔊</button>',
+          '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ex.es) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать"><i data-lucide="volume-2" style="width:17px;height:17px;stroke:currentColor;stroke-width:2;pointer-events:none"></i></button>',
         '</div>',
       ].join('');
     }).join('');
@@ -284,7 +283,9 @@ const PasadoUI = {
               'color: white; padding: 4px 14px; border-radius: 20px;',
               'font-size: 0.8rem; font-weight: 700;',
             '">Формула ' + formula.id + ' / 16</span>',
-            '<span style="color: var(--muted); font-size: 0.85rem;">' + formula.emoji + '</span>',
+            '<span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:' + PASADO_ICONS[index].bg + ';">',
+              '<i data-lucide="' + PASADO_ICONS[index].icon + '" style="width:15px;height:15px;stroke:' + PASADO_ICONS[index].color + ';stroke-width:2;pointer-events:none"></i>',
+            '</span>',
           '</div>',
 
           '<h2 style="color: var(--text); margin-bottom: 6px; font-size: 1.3rem;">' + _escHtmlP(formula.name) + '</h2>',
@@ -307,7 +308,7 @@ const PasadoUI = {
               '<div style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 4px;">' + _escHtmlP(formula.example) + '</div>',
               '<div style="font-size: 0.9rem; color: var(--muted); font-style: italic;">' + _escHtmlP(formula.exampleRu) + '</div>',
             '</div>',
-            '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(formula.example) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать пример" style="background:rgba(52,152,219,0.18);">🔊</button>',
+            '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(formula.example) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать пример" style="background:rgba(52,152,219,0.18);"><i data-lucide="volume-2" style="width:17px;height:17px;stroke:currentColor;stroke-width:2;pointer-events:none"></i></button>',
           '</div>',
 
           '<div style="margin-bottom: 20px;">',
@@ -346,6 +347,7 @@ const PasadoUI = {
     ].join('');
 
     root.innerHTML = html;
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   },
 
   // ─── View: quiz question ─────────────────────────────────────────────────────
@@ -382,7 +384,7 @@ const PasadoUI = {
       ].join('');
     }).join('');
 
-    var scoreLabel = progressLabel || ('✅ ' + score + ' / ' + qIndex);
+    var scoreLabel = progressLabel || ('<span style="display:inline-flex;align-items:center;gap:3px;"><i data-lucide="check-circle-2" style="width:13px;height:13px;stroke:#22c55e;stroke-width:2.5;flex-shrink:0;"></i>' + score + ' / ' + qIndex + '</span>');
     var ttsSpanish = question.ttsText || '';
 
     var html = [
@@ -393,7 +395,7 @@ const PasadoUI = {
             '<span style="',
               'background: var(--accent);',
               'color: white; padding: 4px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 700;',
-            '">' + formulaEmoji + ' ' + _escHtmlP(formulaName) + '</span>',
+            '"><i data-lucide="' + formulaEmoji + '" style="width:14px;height:14px;stroke:#fff;stroke-width:2;vertical-align:middle;margin-right:5px;pointer-events:none"></i>' + _escHtmlP(formulaName) + '</span>',
             '<button onclick="pasadoBackToList()" style="background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.2rem; padding: 4px;" title="К списку">✕</button>',
           '</div>',
 
@@ -412,7 +414,7 @@ const PasadoUI = {
             'display: flex; align-items: center; justify-content: center; gap: 8px;',
           '">',
             '<span>' + _escHtmlP(question.question) + '</span>',
-            (ttsSpanish ? '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ttsSpanish) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать">🔊</button>' : ''),
+            (ttsSpanish ? '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ttsSpanish) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать"><i data-lucide="volume-2" style="width:17px;height:17px;stroke:currentColor;stroke-width:2;pointer-events:none"></i></button>' : ''),
           '</div>',
 
           '<div id="pasado-options" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">',
@@ -489,14 +491,14 @@ const PasadoUI = {
       feedbackEl.style.lineHeight = '1.5';
 
       var ttsBtn = correctText
-        ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(correctText) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать" style="margin-left:6px;">🔊</button>'
+        ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(correctText) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать" style="margin-left:6px;"><i data-lucide="volume-2" style="width:17px;height:17px;stroke:currentColor;stroke-width:2;pointer-events:none"></i></button>'
         : '';
 
       if (isCorrect) {
         feedbackEl.style.background = '#d4edda';
         feedbackEl.style.color = '#155724';
         feedbackEl.style.border = '1px solid #c3e6cb';
-        feedbackEl.innerHTML = '<strong>✅ Верно!</strong> ' + _escHtmlP(hint) + ttsBtn;
+        feedbackEl.innerHTML = '<span style="color:#22c55e;font-weight:700;"><i data-lucide="check-circle-2" style="width:15px;height:15px;stroke:#22c55e;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Верно!</span> ' + _escHtmlP(hint) + ttsBtn;
         if (correctText && typeof speakSpanish === 'function') {
           speakSpanish(correctText);
         }
@@ -504,7 +506,7 @@ const PasadoUI = {
         feedbackEl.style.background = '#f8d7da';
         feedbackEl.style.color = '#721c24';
         feedbackEl.style.border = '1px solid #f5c6cb';
-        feedbackEl.innerHTML = '<strong>❌ Неверно.</strong> ' + _escHtmlP(hint) + ttsBtn;
+        feedbackEl.innerHTML = '<span style="color:#ef4444;font-weight:700;"><i data-lucide="x-circle" style="width:15px;height:15px;stroke:#ef4444;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Неверно.</span> ' + _escHtmlP(hint) + ttsBtn;
         if (correctText && typeof speakSpanish === 'function') {
           setTimeout(function() { speakSpanish(correctText); }, 600);
         }
@@ -533,7 +535,7 @@ const PasadoUI = {
       _escHtmlP(item.after);
 
     var streakHtml = streak > 1
-      ? '<span class="pasado-streak">🔥 ' + streak + '</span>'
+      ? '<span class="pasado-streak"><i data-lucide="flame" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;vertical-align:middle;margin-right:3px;pointer-events:none"></i>' + streak + '</span>'
       : '';
 
     var html = [
@@ -552,7 +554,7 @@ const PasadoUI = {
 
           '<div style="display:flex;justify-content:space-between;margin-bottom:16px;font-size:0.85rem;color:var(--muted);">',
             '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>',
-            '<span>✅ ' + score + ' / ' + qIndex + '</span>',
+            '<span style="display:inline-flex;align-items:center;gap:3px;"><i data-lucide="check-circle-2" style="width:13px;height:13px;stroke:#22c55e;stroke-width:2.5;flex-shrink:0;"></i>' + score + ' / ' + qIndex + '</span>',
           '</div>',
 
           '<div style="background:var(--faint);border-radius:10px;padding:18px 16px;text-align:center;margin-bottom:18px;">',
@@ -599,19 +601,19 @@ const PasadoUI = {
       feedbackEl.style.fontSize = '0.9rem';
       feedbackEl.style.lineHeight = '1.5';
 
-      var ttsBtn = tts ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(tts) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать">🔊</button>' : '';
+      var ttsBtn = tts ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(tts) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать"><i data-lucide="volume-2" style="width:17px;height:17px;stroke:currentColor;stroke-width:2;pointer-events:none"></i></button>' : '';
 
       if (isCorrect) {
         feedbackEl.style.background = '#d4edda';
         feedbackEl.style.color = '#155724';
         feedbackEl.style.border = '1px solid #c3e6cb';
-        feedbackEl.innerHTML = '<strong>✅ Верно!</strong> ' + _escHtmlP(hint) + ttsBtn;
+        feedbackEl.innerHTML = '<span style="color:#22c55e;font-weight:700;"><i data-lucide="check-circle-2" style="width:15px;height:15px;stroke:#22c55e;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Верно!</span> ' + _escHtmlP(hint) + ttsBtn;
         if (tts && typeof speakSpanish === 'function') speakSpanish(tts);
       } else {
         feedbackEl.style.background = '#f8d7da';
         feedbackEl.style.color = '#721c24';
         feedbackEl.style.border = '1px solid #f5c6cb';
-        feedbackEl.innerHTML = '<strong>❌ Неверно.</strong> Правильно: <strong>' + _escHtmlP(correctVal) + '</strong>. ' + _escHtmlP(hint) + ttsBtn;
+        feedbackEl.innerHTML = '<span style="color:#ef4444;font-weight:700;"><i data-lucide="x-circle" style="width:15px;height:15px;stroke:#ef4444;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Неверно.</span> Правильно: <strong>' + _escHtmlP(correctVal) + '</strong>. ' + _escHtmlP(hint) + ttsBtn;
         if (tts && typeof speakSpanish === 'function') setTimeout(function() { speakSpanish(tts); }, 600);
       }
     }
@@ -627,7 +629,7 @@ const PasadoUI = {
     if (!root) return;
 
     var pct = total > 0 ? Math.round((qIndex / total) * 100) : 0;
-    var streakHtml = streak > 1 ? '<span class="pasado-streak">🔥 ' + streak + '</span>' : '';
+    var streakHtml = streak > 1 ? '<span class="pasado-streak"><i data-lucide="flame" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;vertical-align:middle;margin-right:3px;pointer-events:none"></i>' + streak + '</span>' : '';
 
     var zones = [
       { key: 'indefinido',       label: 'Indefinido',       cls: 'pcz-indefinido',       iconName: 'check-circle-2', iconColor: '#e74c3c', iconBg: '#fff0f0' },
@@ -663,7 +665,7 @@ const PasadoUI = {
 
           '<div style="display:flex;justify-content:space-between;margin-bottom:18px;font-size:0.85rem;color:var(--muted);">',
             '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>',
-            '<span>✅ ' + score + ' / ' + qIndex + '</span>',
+            '<span style="display:inline-flex;align-items:center;gap:3px;"><i data-lucide="check-circle-2" style="width:13px;height:13px;stroke:#22c55e;stroke-width:2.5;flex-shrink:0;"></i>' + score + ' / ' + qIndex + '</span>',
           '</div>',
 
           '<div style="text-align:center;margin-bottom:24px;">',
@@ -736,12 +738,12 @@ const PasadoUI = {
         feedbackEl.style.background = '#d4edda';
         feedbackEl.style.color = '#155724';
         feedbackEl.style.border = '1px solid #c3e6cb';
-        feedbackEl.innerHTML = '<strong>✅ Верно!</strong> ' + _escHtmlP(hint);
+        feedbackEl.innerHTML = '<span style="color:#22c55e;font-weight:700;"><i data-lucide="check-circle-2" style="width:15px;height:15px;stroke:#22c55e;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Верно!</span> ' + _escHtmlP(hint);
       } else {
         feedbackEl.style.background = '#f8d7da';
         feedbackEl.style.color = '#721c24';
         feedbackEl.style.border = '1px solid #f5c6cb';
-        feedbackEl.innerHTML = '<strong>❌ Неверно.</strong> ' + _escHtmlP(hint);
+        feedbackEl.innerHTML = '<span style="color:#ef4444;font-weight:700;"><i data-lucide="x-circle" style="width:15px;height:15px;stroke:#ef4444;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Неверно.</span> ' + _escHtmlP(hint);
       }
     }
 
