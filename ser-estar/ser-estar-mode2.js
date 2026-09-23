@@ -320,13 +320,13 @@ function showAdvancedResults() {
 
     let message = '';
     if (percentage === 100) {
-        message = '🎉 ¡Excelente! Perfecto!';
+        message = '¡Excelente! Perfecto!';
     } else if (percentage >= 80) {
-        message = '👏 ¡Muy bien!';
+        message = '¡Muy bien!';
     } else if (percentage >= 60) {
-        message = '👍 ¡Bien!';
+        message = '¡Bien!';
     } else {
-        message = '📚 Sigue practicando!';
+        message = 'Sigue practicando!';
     }
 
     contentArea.innerHTML = `
@@ -334,12 +334,14 @@ function showAdvancedResults() {
             <h3>Результаты</h3>
             <div class="final-score">${advancedModeState.score} из ${advancedModeState.maxQuestions} (${percentage}%)</div>
             <div class="final-message">${message}</div>
-            <button class="restart-button" onclick="initAdvancedMode()">
-                <i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;display:inline-block;vertical-align:middle"></i> Ещё раз
-            </button>
-            <button class="menu-button" onclick="SerEstarApp.showMainMenu()">
-                <i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;display:inline-block;vertical-align:middle"></i> Меню
-            </button>
+            <div class="results-buttons">
+                <button class="restart-button" onclick="initAdvancedMode()">
+                    <i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Ещё раз
+                </button>
+                <button class="menu-button" onclick="SerEstarApp.showMainMenu()">
+                    <i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Меню
+                </button>
+            </div>
         </div>
     `;
     lucide.createIcons();

@@ -237,11 +237,11 @@ function showClassifyResults(score, total, bestStreak) {
             <div class="results-msg">${msg}</div>
             <div class="results-streak">Лучшая серия: ${bestStreak} <i data-lucide="flame" style="width:16px;height:16px;stroke:#f59e0b;display:inline-block;vertical-align:middle"></i></div>
             <div class="results-buttons">
-                <button class="results-btn results-btn-primary" onclick="initClassifyMode()">
-                    <i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;display:inline-block;vertical-align:middle"></i> Ещё раз
+                <button class="restart-button" onclick="initClassifyMode()">
+                    <i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Ещё раз
                 </button>
-                <button class="results-btn results-btn-secondary" onclick="SerEstarApp.showMainMenu()">
-                    <i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;display:inline-block;vertical-align:middle"></i> В меню
+                <button class="menu-button" onclick="SerEstarApp.showMainMenu()">
+                    <i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> В меню
                 </button>
             </div>
         </div>

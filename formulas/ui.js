@@ -498,15 +498,15 @@ const FormulasUI = {
 
     var pct = total > 0 ? Math.round((score / total) * 100) : 0;
 
-    var reaction;
+    var reactionIcon, reactionText;
     if (pct === 100) {
-      reaction = '🎉 Отлично! Все верно!';
+      reactionIcon = 'trophy';    reactionText = 'Отлично! Все верно!';
     } else if (pct >= 75) {
-      reaction = '👏 Хорошо! Почти все верно!';
+      reactionIcon = 'award';     reactionText = 'Хорошо! Почти все верно!';
     } else if (pct >= 50) {
-      reaction = '👍 Неплохо! Можно лучше';
+      reactionIcon = 'thumbs-up'; reactionText = 'Неплохо! Можно лучше';
     } else {
-      reaction = '📚 Нужно повторить материал';
+      reactionIcon = 'book-open'; reactionText = 'Нужно повторить материал';
     }
 
     var repeatAction = quizMode === 'all'
@@ -519,7 +519,7 @@ const FormulasUI = {
       '<div style="max-width: 500px; margin: 0 auto;">',
         '<div class="game-area" style="text-align: center; padding: 32px 24px;">',
 
-          '<div style="font-size: 3rem; margin-bottom: 12px;">' + reaction.split(' ')[0] + '</div>',
+          '<div style="margin-bottom: 12px;"><i data-lucide="' + reactionIcon + '" style="width:56px;height:56px;stroke:#667eea;stroke-width:1.5"></i></div>',
 
           '<h2 style="color: #2c3e50; margin-bottom: 8px; font-size: 1.4rem;">Результат</h2>',
 
@@ -553,19 +553,11 @@ const FormulasUI = {
             '"></div>',
           '</div>',
 
-          '<p style="color: #555; font-size: 1rem; margin-bottom: 28px;">' + _escHtml(reaction.substring(reaction.indexOf(' ') + 1)) + '</p>',
+          '<p style="color: #555; font-size: 1rem; margin-bottom: 28px;">' + _escHtml(reactionText) + '</p>',
 
-          '<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">',
-            '<button onclick="' + repeatAction + '" class="next-button" style="',
-              'width: auto;',
-              'display: inline-block;',
-              'padding: 12px 28px;',
-            '"><i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2;vertical-align:middle;margin-right:6px;"></i>Повторить</button>',
-            '<button onclick="formulaBackToList()" class="menu-button" style="',
-              'width: auto;',
-              'display: inline-block;',
-              'padding: 12px 28px;',
-            '"><i data-lucide="book-open" style="width:16px;height:16px;stroke:currentColor;stroke-width:2;vertical-align:middle;margin-right:6px;"></i>Все формулы</button>',
+          '<div class="results-buttons">',
+            '<button onclick="' + repeatAction + '" class="restart-button"><i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Повторить</button>',
+            '<button onclick="formulaBackToList()" class="menu-button"><i data-lucide="book-open" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Все формулы</button>',
           '</div>',
 
         '</div>',

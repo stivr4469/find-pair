@@ -63,31 +63,20 @@ function checkContextAnswer(selected, correct, buttonElement, explanation) {
         blank.style.fontWeight = 'bold';
     }
 
-    feedback.style.display = 'block';
-
     if (isCorrect) {
-        feedback.innerHTML = `
-            <div style="color: #27ae60; font-weight: bold; margin-bottom: 5px;">✅ ¡Correcto!</div>
-            <div style="color: #444; font-size: 0.95rem;">${explanation}</div>
-        `;
-        feedback.style.borderLeft = '5px solid #27ae60';
+        feedback.className = 'feedback correct';
+        feedback.innerHTML = `<strong>¡Correcto!</strong><div style="font-size:0.9rem;margin-top:4px;opacity:0.85">${explanation}</div>`;
         buttonElement.classList.add('correct');
-        buttonElement.style.background = '#dcfce7';
         contextModeState.score++;
         updateContextScoreUI();
     } else {
-        feedback.innerHTML = `
-            <div style="color: #e74c3c; font-weight: bold; margin-bottom: 5px;">❌ Incorrecto. Ответ: ${correct}</div>
-            <div style="color: #444; font-size: 0.95rem;">${explanation}</div>
-        `;
-        feedback.style.borderLeft = '5px solid #e74c3c';
+        feedback.className = 'feedback wrong';
+        feedback.innerHTML = `<strong>Ответ: ${correct}</strong><div style="font-size:0.9rem;margin-top:4px;opacity:0.85">${explanation}</div>`;
         buttonElement.classList.add('incorrect');
-        buttonElement.style.background = '#fee2e2';
 
         allButtons.forEach(btn => {
             if (normalize(btn.dataset.answer) === normalize(correct)) {
                 btn.classList.add('correct');
-                btn.style.background = '#dcfce7';
             }
         });
     }

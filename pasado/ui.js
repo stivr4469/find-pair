@@ -755,11 +755,11 @@ const PasadoUI = {
 
     var pct = total > 0 ? Math.round((score / total) * 100) : 0;
 
-    var reaction;
-    if (pct === 100)      { reaction = '🎉 Отлично! Все верно!'; }
-    else if (pct >= 75)   { reaction = '👏 Хорошо! Почти всё верно!'; }
-    else if (pct >= 50)   { reaction = '👍 Неплохо! Можно лучше'; }
-    else                  { reaction = '📚 Нужно повторить материал'; }
+    var reactionIcon, reactionText;
+    if (pct === 100)      { reactionIcon = 'trophy';    reactionText = 'Отлично! Все верно!'; }
+    else if (pct >= 75)   { reactionIcon = 'award';     reactionText = 'Хорошо! Почти всё верно!'; }
+    else if (pct >= 50)   { reactionIcon = 'thumbs-up'; reactionText = 'Неплохо! Можно лучше'; }
+    else                  { reactionIcon = 'book-open';  reactionText = 'Нужно повторить материал'; }
 
     var repeatAction;
     if (quizMode === 'all') {
@@ -776,7 +776,7 @@ const PasadoUI = {
       '<div style="max-width: 500px; margin: 0 auto;" class="pasado-anim-in">',
         '<div class="game-area" style="text-align: center; padding: 32px 24px;">',
 
-          '<div style="font-size: 3rem; margin-bottom: 12px;">' + reaction.split(' ')[0] + '</div>',
+          '<div style="margin-bottom: 12px;"><i data-lucide="' + reactionIcon + '" style="width:56px;height:56px;stroke:#667eea;stroke-width:1.5"></i></div>',
           '<h2 style="color: #2c3e50; margin-bottom: 8px; font-size: 1.4rem;">Результат</h2>',
 
           '<div style="font-size: 3rem; font-weight: 700; color: #3498db; margin: 16px 0 8px;">',
@@ -788,11 +788,11 @@ const PasadoUI = {
             '<div style="height: 100%; width: ' + pct + '%; background: linear-gradient(90deg, #3498db, #27ae60); border-radius: 4px;"></div>',
           '</div>',
 
-          '<p style="color: #555; font-size: 1rem; margin-bottom: 28px;">' + _escHtmlP(reaction.substring(reaction.indexOf(' ') + 1)) + '</p>',
+          '<p style="color: #555; font-size: 1rem; margin-bottom: 28px;">' + _escHtmlP(reactionText) + '</p>',
 
-          '<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">',
-            '<button onclick="' + repeatAction + '" class="next-button" style="width: auto; display: inline-flex; align-items: center; padding: 12px 28px;"><i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2;vertical-align:middle;margin-right:6px;"></i>Ещё раз</button>',
-            '<button onclick="pasadoBackToList()" class="menu-button" style="width: auto; display: inline-flex; align-items: center; padding: 12px 28px;"><i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;stroke-width:2;vertical-align:middle;margin-right:6px;"></i>К темам</button>',
+          '<div class="results-buttons">',
+            '<button onclick="' + repeatAction + '" class="restart-button"><i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Ещё раз</button>',
+            '<button onclick="pasadoBackToList()" class="menu-button"><i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> К темам</button>',
           '</div>',
 
         '</div>',

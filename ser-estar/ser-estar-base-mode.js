@@ -191,10 +191,17 @@ function showBaseResults() {
             <h3>🏁 Результаты</h3>
             <div class="final-score">${baseModeState.score} из ${baseModeState.maxQuestions} (${percentage}%)</div>
             <div class="final-message">${message}</div>
-            <button class="restart-button" onclick="initBaseMode()">🔄 Ещё раз</button>
-            <button class="menu-button" onclick="SerEstarApp.showMainMenu()">📋 Меню</button>
+            <div class="results-buttons">
+                <button class="restart-button" onclick="initBaseMode()">
+                    <i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Ещё раз
+                </button>
+                <button class="menu-button" onclick="SerEstarApp.showMainMenu()">
+                    <i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Меню
+                </button>
+            </div>
         </div>
     `;
+    lucide.createIcons();
 }
 
 // Экспорт
