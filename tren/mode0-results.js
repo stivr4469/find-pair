@@ -22,6 +22,7 @@ function showMode0Results() {
 
   // Вычисляем процент правильных ответов
   const percentage = Math.round((mode0State.score / mode0State.maxQuestions) * 100);
+  window.njResult && window.njResult(percentage);
 
   // Определяем сообщение в зависимости от результата
   let message = '';

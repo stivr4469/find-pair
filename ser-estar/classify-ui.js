@@ -221,6 +221,7 @@ function showClassifyResults(score, total, bestStreak) {
     if (!area) return;
 
     const pct = Math.round((score / total) * 100);
+    window.njResult && window.njResult(pct);
     let medalIcon = 'book-open', medalColor = '#6366f1';
     let msg = 'Продолжай практиковать!';
     if (pct >= 95) { medalIcon = 'trophy'; medalColor = '#f59e0b'; msg = '¡Perfecto! Отличный результат!'; }

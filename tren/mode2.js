@@ -76,10 +76,13 @@ function checkAdvancedAnswer_tren(selected, correct, buttonElement) {
         buttonElement.classList.add('correct');
         advancedModeState_tren.score++;
         updateAdvancedScore_tren();
+        _njStreak++;
+        window.njCorrect && window.njCorrect(_njStreak);
     } else {
         feedback.textContent = `✗ Incorrecto. Правильно: ${correct}`;
         feedback.className = 'feedback incorrect';
         buttonElement.classList.add('incorrect');
+        window.njWrong && window.njWrong(null, null);
         allButtons.forEach(btn => {
             if (btn.dataset.answer.toLowerCase() === correct.toLowerCase()) {
                 btn.classList.add('correct');

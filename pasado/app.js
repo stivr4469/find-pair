@@ -3,6 +3,8 @@
  * App Controller: state management and game logic
  */
 
+var _nj = null;
+
 const PasadoApp = {
   state: {
     currentView: 'list',           // 'list' | 'card' | 'quiz' | 'inline' | 'classify' | 'results'
@@ -126,13 +128,20 @@ const PasadoApp = {
       return;
     }
     var question = pool[0];
-    var progressLabel = '✓ ' + this.state.cyclicCorrectCount + ' / ' + this.state.cyclicTotal;
+    var n = this.state.cyclicCorrectCount + 1;
+    var total = this.state.cyclicTotal;
+    if (_nj) {
+      if (n === Math.floor(total / 2)) _nj.halfway();
+      else if (n === total) _nj.last();
+      else _nj.question(n, total);
+    }
+    var progressLabel = '✓ ' + this.state.cyclicCorrectCount + ' / ' + total;
     PasadoUI.renderQuiz(
       question,
       question.formulaName,
       question.formulaEmoji,
       this.state.totalAnswered,
-      this.state.cyclicTotal,
+      total,
       this.state.score,
       progressLabel
     );
@@ -154,11 +163,13 @@ const PasadoApp = {
       this.state.streak += 1;
       // Remove from pool (correct = done)
       pool.splice(0, 1);
+      if (_nj) _nj.correct(this.state.streak);
     } else {
       this.state.streak = 0;
       // Move to end of pool (wrong = retry)
       var wrongQ = pool.splice(0, 1)[0];
       pool.push(wrongQ);
+      if (_nj) _nj.wrong(question.hint, null);
     }
     this.state.totalAnswered += 1;
 
@@ -194,8 +205,10 @@ const PasadoApp = {
     if (isCorrect) {
       this.state.score += 1;
       this.state.streak += 1;
+      if (_nj) _nj.correct(this.state.streak);
     } else {
       this.state.streak = 0;
+      if (_nj) _nj.wrong(question.hint, null);
     }
     this.state.totalAnswered += 1;
 
@@ -231,6 +244,13 @@ const PasadoApp = {
   showResults: function() {
     this.state.currentView = 'results';
     this._syncBackBtn();
+    if (_nj) {
+      var total = this.state.quizMode === 'all'
+        ? this.state.cyclicTotal
+        : this.state.quizQuestions.length;
+      var pct = total > 0 ? Math.round(this.state.score / total * 100) : 0;
+      _nj.result(pct);
+    }
     if (typeof PasadoUI !== 'undefined') {
       var total = this.state.quizMode === 'all'
         ? this.state.cyclicTotal
@@ -256,12 +276,19 @@ const PasadoApp = {
   _renderCurrentQuestion: function() {
     if (typeof PasadoUI === 'undefined') return;
     var question = this.state.quizQuestions[this.state.currentQuestionIndex];
+    var n = this.state.currentQuestionIndex + 1;
+    var total = this.state.quizQuestions.length;
+    if (_nj) {
+      if (n === Math.floor(total / 2)) _nj.halfway();
+      else if (n === total) _nj.last();
+      else _nj.question(n, total);
+    }
     PasadoUI.renderQuiz(
       question,
       question.formulaName,
       question.formulaEmoji,
       this.state.currentQuestionIndex,
-      this.state.quizQuestions.length,
+      total,
       this.state.score,
       null
     );
@@ -289,10 +316,17 @@ const PasadoApp = {
   _renderCurrentInline: function() {
     if (typeof PasadoUI === 'undefined') return;
     var item = this.state.quizQuestions[this.state.currentQuestionIndex];
+    var n = this.state.currentQuestionIndex + 1;
+    var total = this.state.quizQuestions.length;
+    if (_nj) {
+      if (n === Math.floor(total / 2)) _nj.halfway();
+      else if (n === total) _nj.last();
+      else _nj.question(n, total);
+    }
     PasadoUI.renderInlineQuestion(
       item,
       this.state.currentQuestionIndex,
-      this.state.quizQuestions.length,
+      total,
       this.state.score,
       this.state.streak
     );
@@ -309,8 +343,10 @@ const PasadoApp = {
     if (isCorrect) {
       this.state.score += 1;
       this.state.streak += 1;
+      if (_nj) _nj.correct(this.state.streak);
     } else {
       this.state.streak = 0;
+      if (_nj) _nj.wrong(item.hint, null);
     }
     this.state.totalAnswered += 1;
 
@@ -352,10 +388,17 @@ const PasadoApp = {
   _renderCurrentClassify: function() {
     if (typeof PasadoUI === 'undefined') return;
     var item = this.state.quizQuestions[this.state.currentQuestionIndex];
+    var n = this.state.currentQuestionIndex + 1;
+    var total = this.state.quizQuestions.length;
+    if (_nj) {
+      if (n === Math.floor(total / 2)) _nj.halfway();
+      else if (n === total) _nj.last();
+      else _nj.question(n, total);
+    }
     PasadoUI.renderClassifyQuestion(
       item,
       this.state.currentQuestionIndex,
-      this.state.quizQuestions.length,
+      total,
       this.state.score,
       this.state.streak
     );
@@ -371,8 +414,10 @@ const PasadoApp = {
     if (isCorrect) {
       this.state.score += 1;
       this.state.streak += 1;
+      if (_nj) _nj.correct(this.state.streak);
     } else {
       this.state.streak = 0;
+      if (_nj) _nj.wrong(item.hint, null);
     }
     this.state.totalAnswered += 1;
 
@@ -396,6 +441,16 @@ const PasadoApp = {
     this.showList();
   },
 };
+
+// ─── Naranjito init ───────────────────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', function() {
+  var buddy = document.getElementById('buddy');
+  if (buddy && typeof Naranjito !== 'undefined') {
+    _nj = Naranjito.mount(buddy);
+    _nj.greet();
+  }
+});
 
 // ─── Global exports for HTML onclick handlers ──────────────────────────────────
 

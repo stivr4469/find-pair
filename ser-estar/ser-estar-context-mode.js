@@ -69,10 +69,12 @@ function checkContextAnswer(selected, correct, buttonElement, explanation) {
         buttonElement.classList.add('correct');
         contextModeState.score++;
         updateContextScoreUI();
+        window.njAddStreak && window.njCorrect(window.njAddStreak());
     } else {
         feedback.className = 'feedback wrong';
         feedback.innerHTML = `<strong>Ответ: ${correct}</strong><div style="font-size:0.9rem;margin-top:4px;opacity:0.85">${explanation}</div>`;
         buttonElement.classList.add('incorrect');
+        window.njWrong && window.njWrong(null, explanation || null);
 
         allButtons.forEach(btn => {
             if (normalize(btn.dataset.answer) === normalize(correct)) {

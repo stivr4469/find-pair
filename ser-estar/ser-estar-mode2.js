@@ -255,10 +255,12 @@ function checkAdvancedAnswer(selected, correct, buttonElement) {
             buttonElement.classList.add('correct');
             advancedModeState.score++;
             updateAdvancedScore();
+            window.njAddStreak && window.njCorrect(window.njAddStreak());
         } else {
             feedback.textContent = `✗ Incorrecto. La respuesta correcta es: ${correct}`;
             feedback.className = 'feedback wrong';
             buttonElement.classList.add('incorrect');
+            window.njWrong && window.njWrong(null, null);
 
             allButtons.forEach(btn => {
                 if (normalize(btn.dataset.answer) === normalize(correct)) {
@@ -317,6 +319,7 @@ function showAdvancedResults() {
     if (!contentArea) return;
 
     const percentage = Math.round((advancedModeState.score / advancedModeState.maxQuestions) * 100);
+    window.njResult && window.njResult(percentage);
 
     let message = '';
     if (percentage === 100) {

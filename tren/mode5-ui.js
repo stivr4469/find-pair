@@ -62,6 +62,7 @@ function showMode5ResultsUI() {
     if (!contentArea) return;
 
     const percentage = Math.round((mode5State.score / mode5State.sessionLimit) * 100);
+    window.njResult && window.njResult(percentage);
     
     contentArea.innerHTML = `
         <div class="results-container" style="text-align: center; padding: 20px;">

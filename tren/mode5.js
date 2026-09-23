@@ -97,6 +97,8 @@ function checkMode5Answer(selected, correct, buttonElement, explanation) {
         buttonElement.style.background = '#dcfce7';
         mode5State.score++;
         updateMode5ScoreUI();
+        _njStreak++;
+        window.njCorrect && window.njCorrect(_njStreak);
 
         // АВТО-ОЗВУЧКА ОТКЛЮЧЕНА для Telegram
         // Работает только кнопка 🔊 (прямой клик пользователя)
@@ -111,6 +113,7 @@ function checkMode5Answer(selected, correct, buttonElement, explanation) {
         feedback.style.borderLeft = '5px solid #e74c3c';
         buttonElement.classList.add('incorrect');
         buttonElement.style.background = '#fee2e2';
+        window.njWrong && window.njWrong(null, explanation || null);
 
         allButtons.forEach(btn => {
             if (normalize(btn.dataset.answer) === normalize(correct)) {

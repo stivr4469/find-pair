@@ -56,6 +56,7 @@ const SerEstarApp = {
         var backBtn = document.getElementById('btn-back-to-modes');
         if (backBtn) backBtn.style.display = 'none';
         this.currentMode = null;
+        window.njResetStreak && window.njResetStreak();
     }
 };
 
@@ -64,7 +65,23 @@ function showMainMenu() {
     SerEstarApp.showMainMenu();
 }
 
-// Initialize on load
+// Naranjito mascot
+var _nj = null;
+var _njStreak = 0;
+
 document.addEventListener('DOMContentLoaded', function() {
     SerEstarApp.init();
+
+    var buddy = document.getElementById('buddy');
+    if (buddy && typeof Naranjito !== 'undefined') {
+        _nj = Naranjito.mount(buddy);
+        _nj.greet();
+    }
 });
+
+window.njCorrect = function(streak) { if (_nj) _nj.correct(streak || _njStreak); };
+window.njWrong = function(ruleEs, ruleRu) { _njStreak = 0; if (_nj) _nj.wrong(ruleEs, ruleRu); };
+window.njResult = function(pct) { if (_nj) _nj.result(pct); };
+window.njGetStreak = function() { return _njStreak; };
+window.njAddStreak = function() { _njStreak++; return _njStreak; };
+window.njResetStreak = function() { _njStreak = 0; };

@@ -41,6 +41,7 @@ function showMode4ResultsUI() {
     if (!contentArea) return;
 
     const percentage = Math.round((mode4State.score / mode4State.totalQuestions) * 100);
+    window.njResult && window.njResult(percentage);
     let message = "";
     if (percentage === 100) message = "🎉 ¡Excelente!";
     else if (percentage >= 80) message = "👏 ¡Muy bien!";

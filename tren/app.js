@@ -5,6 +5,10 @@
  * DEBUG VERSION: Enhanced logging for all mode switches
  */
 
+// Naranjito mascot instance and streak counter
+var _nj = null;
+var _njStreak = 0;
+
 const App = {
     // Глобальное состояние
     state: {
@@ -103,6 +107,9 @@ const App = {
         // Сохранение текущего режима
         this.state.currentMode = modeId;
         this.state.modeHistory.push(modeId);
+
+        // Сброс серии Naranjito при смене режима
+        _njStreak = 0;
 
         // Инициализация конкретного режима
         console.log('Switched to mode: ' + modeId);
@@ -346,4 +353,16 @@ function restartMode7() {
 // Автоматическая инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     App.init();
+
+    // Инициализация маскота Naranjito
+    var buddy = document.getElementById('buddy');
+    if (buddy && typeof Naranjito !== 'undefined') {
+        _nj = Naranjito.mount(buddy);
+        _nj.greet();
+    }
 });
+
+// Глобальные хелперы для вызова Naranjito из файлов режимов
+window.njCorrect = function(streak) { if (_nj) _nj.correct(streak || _njStreak); };
+window.njWrong = function(ruleEs, ruleRu) { _njStreak = 0; if (_nj) _nj.wrong(ruleEs, ruleRu); };
+window.njResult = function(pct) { if (_nj) _nj.result(pct); };

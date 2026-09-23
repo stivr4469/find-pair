@@ -69,12 +69,15 @@ function checkMode3Answer(selected, correct, buttonElement, explanation) {
         buttonElement.classList.add('correct');
         mode3State.score++;
         updateMode3ScoreUI();
+        _njStreak++;
+        window.njCorrect && window.njCorrect(_njStreak);
     } else {
         feedback.innerHTML = `<div style="font-weight: bold; color: #ef4444;">✗ Incorrecto. Правильно: ${correct}</div>${explanationHtml}`;
         feedback.className = "feedback incorrect";
         feedback.style.flexDirection = 'column';
         feedback.style.alignItems = 'center';
         buttonElement.classList.add('incorrect');
+        window.njWrong && window.njWrong(null, null);
         allButtons.forEach(btn => {
             if (btn.dataset.answer.toLowerCase() === correct.toLowerCase()) {
                 btn.classList.add('correct');

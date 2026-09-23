@@ -62,6 +62,7 @@ function showAdvancedResults_tren() {
     if (!contentArea) return;
 
     const percentage = Math.round((advancedModeState_tren.score / advancedModeState_tren.maxQuestions) * 100);
+    window.njResult && window.njResult(percentage);
     let message = (percentage === 100) ? "🎉 ¡Excelente!" : (percentage >= 80) ? "👏 ¡Muy bien!" : "📚 Sigue practicando!";
 
     contentArea.innerHTML = `

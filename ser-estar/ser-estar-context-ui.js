@@ -52,6 +52,7 @@ function showContextResultsUI() {
     if (!contentArea) return;
 
     const percentage = Math.round((contextModeState.score / contextModeState.sessionLimit) * 100);
+    window.njResult && window.njResult(percentage);
     
     contentArea.innerHTML = `
         <div class="results-container">

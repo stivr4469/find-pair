@@ -96,6 +96,7 @@ function handleClassifyChoice(choice) {
 
         // Обновляем счётчик в шапке
         updateClassifyGlobalScore();
+        window.njAddStreak && window.njCorrect(window.njAddStreak());
 
         // Анимация: карточка летит к зоне
         animateCardCorrect(choice);
@@ -109,6 +110,7 @@ function handleClassifyChoice(choice) {
 
     } else {
         classifyState.streak = 0;
+        window.njWrong && window.njWrong(null, (classifyState.current && classifyState.current.explanation) || null);
 
         // Анимация: карточка трясётся
         animateCardWrong(choice);

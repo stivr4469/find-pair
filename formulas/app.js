@@ -7,6 +7,11 @@
 
 var _xp = 0;
 
+// ─── Naranjito mascot ─────────────────────────────────────────────────────────
+
+var _nj = null;
+var _njStreak = 0;
+
 function _addXP(amount) {
   _xp += amount;
   var el = document.getElementById('xp-value');
@@ -113,6 +118,7 @@ const FormulasApp = {
     this.state.isAnswered = false;
     this.state.currentView = 'quiz';
     this._syncBackBtn();
+    _njStreak = 0;
 
     this._renderCurrentQuestion();
   },
@@ -145,6 +151,7 @@ const FormulasApp = {
     this.state.isAnswered = false;
     this.state.currentView = 'quiz';
     this._syncBackBtn();
+    _njStreak = 0;
 
     this._renderCurrentQuestion();
   },
@@ -177,6 +184,7 @@ const FormulasApp = {
     this.state.isAnswered = false;
     this.state.currentView = 'quiz';
     this._syncBackBtn();
+    _njStreak = 0;
 
     this._renderMarathonQuestion();
   },
@@ -199,9 +207,19 @@ const FormulasApp = {
     if (isCorrect) {
       this.state.score += 1;
       _addXP(10);
+      _njStreak++;
+      if (_nj) _nj.correct(_njStreak);
       // Auto-TTS on correct answer
       if (typeof speakSpanish === 'function' && question.question) {
         speakSpanish(question.question);
+      }
+    } else {
+      _njStreak = 0;
+      if (_nj) {
+        var formula = FORMULAS_DATA.find(function(f) { return f.id === question.formulaId; });
+        var ruleEs = formula ? formula.rule : '';
+        var ruleRu = formula ? formula.description : '';
+        _nj.wrong(ruleEs, ruleRu);
       }
     }
     this.state.totalAnswered += 1;
@@ -259,6 +277,12 @@ const FormulasApp = {
         this.state.quizMode
       );
     }
+    if (_nj) {
+      var pct = this.state.totalAnswered > 0
+        ? Math.round(this.state.score / this.state.totalAnswered * 100)
+        : 0;
+      _nj.result(pct);
+    }
   },
 
   // ─── Navigation ─────────────────────────────────────────────────────────────
@@ -280,8 +304,19 @@ const FormulasApp = {
     var qIndex = this.state.currentQuestionIndex;
     var total = this.state.quizQuestions.length;
     var score = this.state.score;
+    var n = qIndex + 1;
 
     FormulasUI.renderQuiz(question, question.formulaName, question.formulaEmoji, qIndex, total, score, null);
+
+    if (_nj) {
+      if (n === Math.floor(total / 2)) {
+        _nj.halfway();
+      } else if (n === total) {
+        _nj.last();
+      } else {
+        _nj.question(n, total);
+      }
+    }
   },
 
   _renderMarathonQuestion: function() {
@@ -291,13 +326,30 @@ const FormulasApp = {
     var remaining = this.state.marathonPool.length;
     var score = this.state.score;
     var answered = this.state.totalAnswered;
+    var total = this.state.marathonTotal;
+    var n = answered + 1;
 
-    FormulasUI.renderQuiz(question, question.formulaName, question.formulaEmoji, answered, this.state.marathonTotal, score, remaining);
+    FormulasUI.renderQuiz(question, question.formulaName, question.formulaEmoji, answered, total, score, remaining);
+
+    if (_nj) {
+      if (n === Math.floor(total / 2)) {
+        _nj.halfway();
+      } else if (remaining === 1) {
+        _nj.last();
+      } else {
+        _nj.question(n, total);
+      }
+    }
   },
 
   // ─── Init ────────────────────────────────────────────────────────────────────
 
   init: function() {
+    var buddy = document.getElementById('buddy');
+    if (buddy && typeof Naranjito !== 'undefined') {
+      _nj = Naranjito.mount(buddy);
+      _nj.greet();
+    }
     this.showList();
   },
 };

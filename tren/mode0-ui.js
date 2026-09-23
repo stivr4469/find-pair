@@ -136,10 +136,13 @@ function checkMode0Answer(selected, correct, buttonElement) {
     feedback.className = 'feedback correct';
     buttonElement.classList.add('correct');  // Подсветка правильной кнопки
     mode0State.score++;
+    _njStreak++;
+    window.njCorrect && window.njCorrect(_njStreak);
   } else {
     feedback.textContent = `✗ Incorrecto. La respuesta correcta es: ${correct}`;
     feedback.className = 'feedback wrong';
     buttonElement.classList.add('incorrect');  // Подсветка неправильной кнопки
+    window.njWrong && window.njWrong(null, null);
 
     // Подсветить правильную кнопку
     allButtons.forEach(btn => {

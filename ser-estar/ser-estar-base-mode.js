@@ -133,11 +133,13 @@ function checkBaseAnswer(selected, correct, buttonElement) {
             buttonElement.classList.add('correct');
             baseModeState.score++;
             updateBaseScore();
+            window.njAddStreak && window.njCorrect(window.njAddStreak());
         } else {
             feedback.textContent = `✗ Incorrecto. La respuesta correcta es: ${correct}`;
             feedback.className = 'feedback wrong';
             buttonElement.classList.add('incorrect');
-            
+            window.njWrong && window.njWrong(null, null);
+
             // Подсветить правильную кнопку
             allButtons.forEach(btn => {
                 if (normalize(btn.dataset.answer) === normalize(correct)) {
@@ -174,7 +176,8 @@ function showBaseResults() {
     if (!contentArea) return;
     
     const percentage = Math.round((baseModeState.score / baseModeState.maxQuestions) * 100);
-    
+    window.njResult && window.njResult(percentage);
+
     let message = '';
     if (percentage === 100) {
         message = '🎉 ¡Excelente! Perfecto!';
