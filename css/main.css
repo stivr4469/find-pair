@@ -1,16 +1,12 @@
 /**
  * Spanish Verbs - Main Menu Styles
  * Главное меню приложения VamoS
- * 
- * Поддержка Telegram WebApp темизации
- * Адаптивный дизайн для мобильных устройств
  */
 
 /* ============================================
-   CSS VARIABLES - TELEGRAM THEME SUPPORT
+   CSS VARIABLES
    ============================================ */
 :root {
-  /* Базовые цвета (будут переопределены Telegram) */
   --tg-theme-bg-color: #f5f5f5;
   --tg-theme-text-color: #000000;
   --tg-theme-hint-color: #999999;
@@ -19,25 +15,18 @@
   --tg-theme-button-text-color: #ffffff;
   --tg-theme-secondary-bg-color: #ffffff;
 
-  /* Цвета игры "Найди пару" */
   --find-pair-primary: #4CAF50;
   --find-pair-secondary: #8BC34A;
-  --find-pair-accent: #CDDC39;
-
-  /* Цвета игры "Тренажёр глаголов" */
   --tren-primary: #FF5722;
   --tren-secondary: #FF9800;
-  --tren-accent: #FFC107;
 
-  /* Общие стили */
-  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.1);
-  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.12);
+  --shadow-hover: 0 20px 48px rgba(0,0,0,0.22);
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 20px;
   --radius-xl: 30px;
 
-  /* Отступы */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 1.5rem;
@@ -46,7 +35,7 @@
 }
 
 /* ============================================
-   RESET & BASE STYLES
+   RESET & BASE
    ============================================ */
 * {
   margin: 0;
@@ -60,15 +49,60 @@ html, body {
   overflow-x: hidden;
 }
 
+/* ============================================
+   ANIMATED GRADIENT BACKGROUND
+   ============================================ */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 40%, #9333ea 70%, #6366f1 100%);
+  background-size: 300% 300%;
+  animation: gradientDrift 14s ease infinite;
   min-height: 100vh;
   padding: 80px 20px 20px;
   color: #2c3e50;
   line-height: 1.6;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+@keyframes gradientDrift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Ambient floating orbs */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(139,92,246,0.4) 0%, transparent 65%);
+  top: -200px;
+  right: -120px;
+  animation: orbDrift 12s ease-in-out infinite;
+}
+
+body::after {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(99,102,241,0.32) 0%, transparent 65%);
+  bottom: -160px;
+  left: -120px;
+  animation: orbDrift 16s ease-in-out infinite reverse;
+}
+
+@keyframes orbDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(44px, -44px) scale(1.07); }
+  66%       { transform: translate(-30px, 28px) scale(0.93); }
 }
 
 /* ============================================
@@ -81,47 +115,56 @@ body {
   padding: var(--spacing-md);
   max-width: 600px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 /* ============================================
-   APP HEADER
+   APP HEADER — slide-in entrance
    ============================================ */
 .app-header {
   text-align: center;
   padding: var(--spacing-lg) var(--spacing-sm);
   margin-bottom: var(--spacing-md);
+  animation: headerReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes headerReveal {
+  from { opacity: 0; transform: translateY(-28px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .app-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--tg-theme-text-color);
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: white;
   margin-bottom: var(--spacing-xs);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--spacing-xs);
+  letter-spacing: -0.5px;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.25);
 }
 
 .title-icon {
   font-size: 2.5rem;
-  animation: wave 2s ease-in-out infinite;
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(10deg); }
-  75% { transform: rotate(-10deg); }
+.app-title:hover .title-icon {
+  transform: rotate(14deg) scale(1.2);
 }
 
 .app-subtitle {
   font-size: 1rem;
-  color: var(--tg-theme-hint-color);
+  color: rgba(255,255,255,0.72);
   font-weight: 400;
 }
 
 /* ============================================
-   GAMES MENU - GRID LAYOUT
+   GAMES MENU
    ============================================ */
 .games-menu {
   display: grid;
@@ -132,7 +175,7 @@ body {
 }
 
 /* ============================================
-   GAME CARD
+   GAME CARD — stagger entrance + hover
    ============================================ */
 .game-card {
   display: flex;
@@ -140,129 +183,134 @@ body {
   align-items: center;
   text-align: center;
   padding: var(--spacing-lg);
-  background-color: var(--tg-theme-secondary-bg-color);
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   text-decoration: none;
-  color: var(--tg-theme-text-color);
-  transition: all 0.3s ease;
+  color: #1a1a2e;
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.32s ease;
   position: relative;
   overflow: hidden;
   cursor: pointer;
+
+  /* Entrance: start hidden, animate in */
+  opacity: 0;
+  animation: cardReveal 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+/* Staggered delays per card */
+.game-card:nth-child(1) { animation-delay: 0.18s; }
+.game-card:nth-child(2) { animation-delay: 0.30s; }
+.game-card:nth-child(3) { animation-delay: 0.42s; }
+.game-card:nth-child(4) { animation-delay: 0.54s; }
+.game-card:nth-child(5) { animation-delay: 0.66s; }
+.game-card:nth-child(6) { animation-delay: 0.78s; }
+
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(36px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+/* Shine sweep on hover */
 .game-card::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  height: 6px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255,255,255,0.55) 50%,
+    transparent 80%
+  );
+  transition: left 0.55s ease;
+  pointer-events: none;
+  z-index: 1;
 }
 
-/* Find Pair card colors */
-#find-pair-card::after {
+.game-card:hover::before { left: 160%; }
+
+/* Top accent bar — unique colour per card */
+.game-card::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--find-pair-primary), var(--find-pair-secondary));
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
-/* Tren card colors */
-#tren-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--tren-primary), var(--tren-secondary));
-}
+#find-pair-card::after  { background: linear-gradient(90deg, #43e97b, #38f9d7); }
+#tren-card::after       { background: linear-gradient(90deg, #fa709a, #fee140); }
+#ser-estar-card::after  { background: linear-gradient(90deg, #4facfe, #00f2fe); }
+#formulas-card::after   { background: linear-gradient(90deg, #a18cd1, #fbc2eb); }
+#mezcla-card::after     { background: linear-gradient(90deg, #667eea, #764ba2); }
+#pasado-card::after     { background: linear-gradient(90deg, #f093fb, #f5576c); }
 
 .game-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px) scale(1.015);
   box-shadow: var(--shadow-hover);
 }
 
 .game-card:active {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(0.982);
+  transition-duration: 0.1s;
 }
 
 /* ============================================
-   GAME CARD ICON
+   GAME CARD ICON — hover wiggle only
    ============================================ */
 .game-card-icon {
-  font-size: 4rem;
+  font-size: 3.6rem;
   margin-bottom: var(--spacing-sm);
-  animation: bounce 2s ease-in-out infinite;
+  transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
 }
 
-#find-pair-card .game-card-icon {
-  animation-delay: 0s;
-}
-
-#tren-card .game-card-icon {
-  animation-delay: 0.5s;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.game-card:hover .game-card-icon {
+  transform: scale(1.22) rotate(-5deg);
 }
 
 /* ============================================
-   GAME CARD TITLE
+   GAME CARD TEXT
    ============================================ */
 .game-card-title {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: var(--spacing-xs);
-  color: var(--tg-theme-text-color);
+  color: #1a1a2e;
 }
 
-/* ============================================
-   GAME CARD DESCRIPTION
-   ============================================ */
 .game-card-description {
   font-size: 0.9rem;
-  color: var(--tg-theme-hint-color);
+  color: #6b7280;
   margin-bottom: var(--spacing-sm);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 /* ============================================
    DIFFICULTY BADGE
    ============================================ */
-.game-card-difficulty {
-  margin-top: auto;
-}
+.game-card-difficulty { margin-top: auto; }
 
 .difficulty-badge {
   display: inline-block;
-  padding: var(--spacing-xs) var(--spacing-sm);
+  padding: 5px 14px;
   border-radius: var(--radius-xl);
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.7px;
   color: white;
 }
 
-.difficulty-badge.easy {
-  background: linear-gradient(135deg, var(--find-pair-primary), var(--find-pair-secondary));
-}
-
-.difficulty-badge.medium {
-  background: linear-gradient(135deg, var(--tren-primary), var(--tren-secondary));
-}
-
-.difficulty-badge.hard {
-  background: linear-gradient(135deg, #7c3aed, #5b2d8e);
-}
+.difficulty-badge.easy   { background: linear-gradient(135deg, #43e97b, #38f9d7); color: #065f46; }
+.difficulty-badge.medium { background: linear-gradient(135deg, #fa709a, #fee140); }
+.difficulty-badge.hard   { background: linear-gradient(135deg, #a18cd1, #fbc2eb); color: #3d2068; }
 
 /* ============================================
    CLOSE SECTION
@@ -280,30 +328,26 @@ body {
   padding: var(--spacing-sm) var(--spacing-lg);
   font-size: 1rem;
   font-weight: 600;
-  color: var(--tg-theme-hint-color);
+  color: rgba(255,255,255,0.7);
   background: transparent;
-  border: 2px solid var(--tg-theme-hint-color);
+  border: 2px solid rgba(255,255,255,0.35);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .close-button:hover {
-  background: var(--tg-theme-hint-color);
-  color: var(--tg-theme-secondary-bg-color);
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border-color: rgba(255,255,255,0.6);
 }
 
-.close-button:active {
-  transform: scale(0.95);
-}
+.close-button:active { transform: scale(0.95); }
 
-/* Hidden state */
-.hidden {
-  display: none !important;
-}
+.hidden { display: none !important; }
 
 /* ============================================
-   APP FOOTER
+   FOOTER
    ============================================ */
 .app-footer {
   text-align: center;
@@ -311,171 +355,77 @@ body {
   margin-top: var(--spacing-md);
 }
 
-.footer-text {
-  font-size: 0.8rem;
-  color: var(--tg-theme-hint-color);
-}
+.footer-text { font-size: 0.8rem; color: rgba(255,255,255,0.48); }
 
 .footer-year {
   font-size: 0.75rem;
-  color: var(--tg-theme-hint-color);
-  opacity: 0.8;
+  color: rgba(255,255,255,0.35);
   margin-top: 5px;
   font-weight: 500;
 }
 
 /* ============================================
-   RESPONSIVE DESIGN
+   RESPONSIVE
    ============================================ */
-
-/* Tablet */
 @media (min-width: 600px) {
-  .games-menu {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .game-card {
-    padding: var(--spacing-lg);
-  }
-
-  .game-card-icon {
-    font-size: 3.5rem;
-  }
-
-  .game-card-title {
-    font-size: 1.3rem;
-  }
-
-  .game-card-description {
-    font-size: 0.85rem;
-  }
+  .games-menu { grid-template-columns: repeat(2, 1fr); }
+  .game-card-icon  { font-size: 3.2rem; }
+  .game-card-title { font-size: 1.3rem; }
+  .game-card-description { font-size: 0.85rem; }
 }
 
-/* Mobile */
 @media (max-width: 480px) {
-  .main-container {
-    padding: var(--spacing-sm);
-  }
-
-  .app-header {
-    padding: var(--spacing-md) var(--spacing-xs);
-  }
-
-  .app-title {
-    font-size: 1.5rem;
-  }
-
-  .title-icon {
-    font-size: 2rem;
-  }
-
-  .app-subtitle {
-    font-size: 0.9rem;
-  }
-
-  .game-card {
-    padding: var(--spacing-md);
-  }
-
-  .game-card-icon {
-    font-size: 3rem;
-  }
-
-  .game-card-title {
-    font-size: 1.2rem;
-  }
-
-  .game-card-description {
-    font-size: 0.8rem;
-  }
-
-  .difficulty-badge {
-    font-size: 0.7rem;
-    padding: 4px 8px;
-  }
+  .main-container { padding: var(--spacing-sm); }
+  .app-header     { padding: var(--spacing-md) var(--spacing-xs); }
+  .app-title      { font-size: 2.1rem; }
+  .title-icon     { font-size: 2rem; }
+  .app-subtitle   { font-size: 0.9rem; }
+  .game-card      { padding: var(--spacing-md); }
+  .game-card-icon { font-size: 2.8rem; }
+  .game-card-title { font-size: 1.2rem; }
+  .game-card-description { font-size: 0.8rem; }
+  .difficulty-badge { font-size: 0.7rem; padding: 4px 10px; }
 }
 
-/* Small mobile */
 @media (max-width: 360px) {
-  .app-title {
-    font-size: 1.3rem;
-  }
-
-  .title-icon {
-    font-size: 1.5rem;
-  }
-
-  .game-card-icon {
-    font-size: 2.5rem;
-  }
-
-  .game-card-title {
-    font-size: 1.1rem;
-  }
+  .app-title      { font-size: 1.8rem; }
+  .title-icon     { font-size: 1.8rem; }
+  .game-card-icon { font-size: 2.5rem; }
+  .game-card-title { font-size: 1.1rem; }
 }
 
 /* ============================================
-   DARK MODE SUPPORT (Telegram)
+   DARK MODE
    ============================================ */
 @media (prefers-color-scheme: dark) {
   :root {
-    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
-    --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 4px 24px rgba(0,0,0,0.38);
+    --shadow-hover: 0 20px 48px rgba(0,0,0,0.55);
   }
 }
 
 /* ============================================
    ACCESSIBILITY
    ============================================ */
+.game-card:focus       { outline: 3px solid rgba(255,255,255,0.7); outline-offset: 3px; }
+.close-button:focus    { outline: 3px solid rgba(255,255,255,0.7); outline-offset: 2px; }
 
-/* Focus styles */
-.game-card:focus {
-  outline: 3px solid var(--tg-theme-link-color);
-  outline-offset: 2px;
-}
-
-.close-button:focus {
-  outline: 3px solid var(--tg-theme-link-color);
-  outline-offset: 2px;
-}
-
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .game-card { opacity: 1; }
 }
 
-/* High contrast */
 @media (prefers-contrast: high) {
-  .game-card {
-    border: 2px solid var(--tg-theme-text-color);
-  }
-
-  .close-button {
-    border-width: 3px;
-  }
+  .game-card { border: 2px solid #333; }
+  .close-button { border-width: 3px; }
 }
 
-/* ============================================
-   PRINT STYLES
-   ============================================ */
 @media print {
-  body {
-    background: white;
-    color: black;
-  }
-
-  .game-card {
-    box-shadow: none;
-    border: 1px solid #000;
-  }
-
-  .close-section {
-    display: none;
-  }
+  body { background: white; color: black; }
+  .game-card { box-shadow: none; border: 1px solid #000; }
+  .close-section { display: none; }
 }
