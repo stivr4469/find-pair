@@ -38,7 +38,7 @@ function renderClassifyScreen() {
                 <div class="classify-card" id="classify-card">
                     <div class="classify-card-inner">
                         <div class="classify-sentence" id="classify-sentence"></div>
-                        <button class="classify-tts-btn" id="classify-tts-btn" onclick="classifySpeak()" title="Прослушать">
+                        <button class="classify-tts-btn" id="classify-tts-btn" onclick="classifySpeak()" title="Прослушать" style="display:none">
                             🔊
                         </button>
                     </div>
@@ -114,6 +114,10 @@ function showClassifyCard(item, current, total, score, streak) {
         const inner = document.getElementById('classify-feedback-inner');
         if (inner) inner.innerHTML = '';
     }
+
+    // Скрываем TTS до ответа
+    const ttsBtn = document.getElementById('classify-tts-btn');
+    if (ttsBtn) ttsBtn.style.display = 'none';
 
     // Включаем зоны
     enableClassifyZones();
@@ -240,6 +244,14 @@ function showClassifyResults(score, total, bestStreak) {
 }
 
 /**
+ * Показывает кнопку TTS после ответа
+ */
+function showClassifyTtsButton() {
+    const btn = document.getElementById('classify-tts-btn');
+    if (btn) btn.style.display = 'flex';
+}
+
+/**
  * Блокирует зоны во время анимации / обратной связи
  */
 function disableClassifyZones() {
@@ -269,4 +281,5 @@ if (typeof window !== 'undefined') {
     window.showClassifyResults = showClassifyResults;
     window.disableClassifyZones = disableClassifyZones;
     window.enableClassifyZones = enableClassifyZones;
+    window.showClassifyTtsButton = showClassifyTtsButton;
 }

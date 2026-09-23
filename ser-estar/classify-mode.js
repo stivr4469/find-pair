@@ -71,11 +71,6 @@ function showNextClassifyQuestion() {
         classifyState.score,
         classifyState.streak
     );
-
-    // TTS: озвучиваем полное предложение автоматически
-    if (typeof speakSpanish === 'function') {
-        setTimeout(() => speakSpanish(classifyState.current.full), 300);
-    }
 }
 
 /**
@@ -88,6 +83,7 @@ function handleClassifyChoice(choice) {
 
     classifyState.isAnswered = true;
     disableClassifyZones();
+    showClassifyTtsButton();
 
     const isCorrect = choice === classifyState.current.answer;
 
