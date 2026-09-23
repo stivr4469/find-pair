@@ -122,6 +122,11 @@ function showClassifyCard(item, current, total, score, streak) {
     );
     sentenceEl.innerHTML = formatted;
 
+    // Сбрасываем inline-стили от предыдущей анимации (fly-away)
+    card.style.transform = '';
+    card.style.opacity = '';
+    card.style.transition = '';
+
     // Убираем старые анимации, добавляем slide-in
     card.className = 'classify-card card-enter';
     // Форс-рефлоу для перезапуска анимации
