@@ -139,7 +139,7 @@
           });
 
           card.addEventListener('mousemove', function (e) {
-            if (fast) return;
+            if (fast || window.deckAnimating) return;
             var r = card.getBoundingClientRect();
             var x = e.clientX - r.left, y = e.clientY - r.top;
             var rx = (r.height / 2 - y) / r.height * TILT;
@@ -169,6 +169,81 @@
         document.addEventListener('DOMContentLoaded', initTilt);
       } else {
         initTilt();
+      }
+    })();
+    </script>
+    <script>
+    /* ── Deck → Spread entrance animation ── */
+    window.deckAnimating = true;
+    (function () {
+      var FANS          = [-10, -6, -3, 1, 5, 9];
+      var DECK_PAUSE    = 750;
+      var STAGGER       = 130;
+      var DURATION      = '1.15s';
+      var EASING        = 'cubic-bezier(0.34, 1.32, 0.64, 1)';
+
+      function runDeck() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.querySelectorAll('.game-card').forEach(function (c) { c.style.opacity = '1'; });
+          window.deckAnimating = false;
+          return;
+        }
+
+        var cards = Array.from(document.querySelectorAll('.game-card'));
+        if (!cards.length) { window.deckAnimating = false; return; }
+
+        /* Two rAF ticks ensure browser has committed layout */
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            var rects = cards.map(function (c) { return c.getBoundingClientRect(); });
+
+            /* Deck centre = geometric centre of all card centres */
+            var sumX = 0, sumY = 0;
+            rects.forEach(function (r) {
+              sumX += r.left + r.width  / 2;
+              sumY += r.top  + r.height / 2;
+            });
+            var deckX = sumX / rects.length;
+            var deckY = sumY / rects.length;
+
+            /* Snap every card to the deck position with a fan rotation */
+            cards.forEach(function (card, i) {
+              var r  = rects[i];
+              var dx = deckX - (r.left + r.width  / 2);
+              var dy = deckY - (r.top  + r.height / 2);
+              var rot = FANS[i] !== undefined ? FANS[i] : 0;
+
+              card.style.transition = 'none';
+              card.style.transform  = 'translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px) rotate(' + rot + 'deg)';
+              card.style.opacity    = '1';
+              card.style.zIndex     = String(20 - i);
+            });
+
+            /* Brief pause so the player sees the deck, then spread */
+            setTimeout(function () {
+              cards.forEach(function (card, i) {
+                setTimeout(function () {
+                  card.style.transition = 'transform ' + DURATION + ' ' + EASING;
+                  card.style.transform  = '';
+                  card.style.zIndex     = '';
+
+                  if (i === cards.length - 1) {
+                    setTimeout(function () {
+                      window.deckAnimating = false;
+                      cards.forEach(function (c) { c.style.transition = ''; });
+                    }, 1200);
+                  }
+                }, i * STAGGER);
+              });
+            }, DECK_PAUSE);
+          });
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runDeck);
+      } else {
+        runDeck();
       }
     })();
     </script>
