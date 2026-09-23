@@ -146,7 +146,7 @@ function showClassifyNextButton() {
     if (!feedback) return;
 
     const btn = document.createElement('button');
-    btn.className = 'classify-next-btn';
+    btn.className = 'next-button';
     btn.textContent = 'Дальше →';
     btn.onclick = function() {
         classifyState.totalAnswered++;
