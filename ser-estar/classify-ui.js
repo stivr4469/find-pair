@@ -107,9 +107,12 @@ function showClassifyCard(item, current, total, score, streak) {
         progressFill.style.width = pct + '%';
     }
 
-    // Скрываем feedback
+    // Скрываем feedback и сразу очищаем контент
+    // (max-height переход занимает 350ms — без очистки старый текст виден)
     if (feedback) {
         feedback.classList.remove('visible');
+        const inner = document.getElementById('classify-feedback-inner');
+        if (inner) inner.innerHTML = '';
     }
 
     // Включаем зоны
