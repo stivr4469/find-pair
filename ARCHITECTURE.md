@@ -9,7 +9,7 @@
 
 - **Vanilla JS** — no build step, no framework, no npm
 - **Plain HTML + CSS** — script tags at bottom of `<body>`
-- **Vercel** — auto-deploy on push to `main` (remote: `github.com:stivr4469/find-pair.git`)
+- **Vercel** — auto-deploy on push to `main` (remote: `github.com:stivr4469/find-pair.git`, project: `find-pair-new`)
 - **Telegram WebApp SDK** — loaded in root `index.html` only
 
 ---
@@ -20,230 +20,251 @@
 spanish-trainer-app/
 ├── index.html              ← Main menu (lists all modules as cards)
 ├── css/
-│   ├── unified-styles.css  ← Shared styles for all modules
+│   ├── unified-styles.css  ← Shared styles for all modules (current: v=13)
 │   └── main.css            ← Styles for root index.html only
 ├── js/
-│   ├── utils.js            ← Shared utilities (shuffleArray, speakSpanish)
+│   ├── utils.js            ← Shared utilities: shuffleArray, speakSpanish (v=17)
 │   └── main.js             ← Root page JS (Telegram init, closeApp)
 ├── find-pair/              ← Module 1: Найди пару (vocabulary matching game)
 ├── tren/                   ← Module 2: Глаголы движения (ir/venir/llegar conjugation)
 ├── ser-estar/              ← Module 3: Ser vs Estar
 ├── formulas/               ← Module 4: 36 Формул (grammar formulas + quiz)
-└── pasado/                 ← Module 5: Прошедшее время (PLANNED, not yet created)
+├── mezcla/                 ← Module 5: Mezcla (mixed reading, word-level)
+└── pasado/                 ← Module 6: Прошедшее время (4 past tenses)
 ```
 
 ---
 
-## Module 4 template (formulas/) — canonical pattern for new modules
+## Two-level back navigation (all modules except find-pair)
 
-Every quiz module follows this exact 4-file structure:
+Every module that has sub-views (card/quiz/modes) has **two** back buttons in `back-button-container`:
+
+```html
+<div class="back-button-container">
+    <a href="../" class="back-button">← Главная</a>
+    <button id="btn-back-to-XXX" class="back-button" style="display:none"
+            onclick="ModuleApp.showXxx()">← Список / Режимы</button>
+</div>
+```
+
+| Module | Button label | onclick | Show when |
+|---|---|---|---|
+| ser-estar | ← Режимы | `SerEstarApp.showMainMenu()` | any sub-mode active |
+| formulas | ← Список | `FormulasApp.backToList()` | currentView ≠ 'list' |
+| pasado | ← Список | `PasadoApp.backToList()` | currentView ≠ 'list' |
+| tren | ← Режимы | `App.showMainMenu()` | any mode active |
+
+Each app controller has `_syncBackBtn()` (formulas, pasado) or inline logic (ser-estar, tren) to show/hide the button.
+
+---
+
+## CSS — unified-styles.css (v=13)
+
+Key classes added/updated:
+
+```css
+/* Option buttons — indigo/purple style */
+.option-btn, .button-option {
+    background: rgba(99,102,241,0.06);
+    border: 2px solid rgba(99,102,241,0.35);
+    color: #4338ca;
+    border-radius: 10px;
+}
+
+/* SER/ESTAR classify zones */
+.classify-zones         — flex row, full-width container
+.classify-zone          — base zone style
+.classify-zone-ser      — indigo (SER)
+.classify-zone-estar    — green (ESTAR)
+.zone-label             — large label inside zone
+.zone-hint              — subtitle inside zone
+```
+
+---
+
+## Module structure (canonical 4-file pattern)
+
+Every quiz module follows this structure:
+
+```
+module/
+├── index.html   ← HTML shell, loads scripts with ?v=N
+├── data.js      ← All content data
+├── ui.js        ← Rendering: injects HTML into <main id="module-content">
+└── app.js       ← State machine: handles interaction, game logic
+```
+
+---
+
+## Module 1 — find-pair/
+
+Simple matching game. No sub-modes. Single-level navigation (← Главная only).
+
+```
+find-pair/
+├── index.html   ← loads script.js?v=3, unified-styles.css?v=13
+├── script.js
+├── find-pair.js
+├── styles.css
+└── find-pair.css
+```
+
+---
+
+## Module 2 — tren/ (app.js?v=11)
+
+8 modes (mode0–mode7), each in separate `modeN.js` + `modeN-ui.js` + `modeN-data.js`.
+
+```
+tren/
+├── index.html        ← app.js?v=11, utils.js?v=16
+├── app.js            ← App.switchMode(), App.showMainMenu(), _syncBackBtn inline
+├── mode0–7-data.js
+├── mode0–7-ui.js
+└── mode0–7.js
+```
+
+**Navigation:** `App.switchMode(modeId)` shows `#btn-back-to-modes`; `App.showMainMenu()` hides it.
+
+---
+
+## Module 3 — ser-estar/
+
+5 sub-modes: base, advanced, context, rules, classify.
+
+```
+ser-estar/
+├── index.html              ← ser-estar-app.js (no ?v)
+├── ser-estar-app.js        ← SerEstarApp.switchMode(), .showMainMenu()
+├── ser-estar-data.js
+├── ser-estar-base-ui.js / ser-estar-base-mode.js
+├── ser-estar-mode2.js?v=3  ← advanced mode
+├── ser-estar-context-ui.js?v=3 / ser-estar-context-mode.js?v=2
+├── ser-estar-rules-ui.js?v=2 / ser-estar-rules-mode.js
+├── classify-data.js
+├── classify-ui.js?v=5
+└── classify-mode.js?v=3    ← handleClassifyChoice(), uses 'next-button' CSS class
+```
+
+**Classify mode:** tap SER or ESTAR zone. Wrong answer shows feedback + `next-button` styled "Дальше →". `updateClassifyGlobalScore()` updates `#score-value`.
+
+---
+
+## Module 4 — formulas/ (app.js?v=14)
+
+36 grammar formulas, 6 MCQ questions each, 3 shown per session.
 
 ```
 formulas/
-├── index.html   ← HTML shell, loads 4 scripts, defines layout
-├── data.js      ← All content: formulas array with quiz questions
-├── ui.js        ← All rendering: injects HTML into <main id="formulas-content">
-└── app.js       ← State machine: handles user interaction, game logic
+├── index.html    ← app.js?v=14, data.js?v=13, ui.js?v=17
+├── data.js       ← FORMULAS_DATA (36 items)
+├── ui.js         ← FormulasUI
+└── app.js        ← FormulasApp, has _syncBackBtn()
 ```
 
-### index.html
+**Views:** `'list'` | `'card'` | `'quiz'` | `'results'`
 
-```html
-<link rel="stylesheet" href="../css/unified-styles.css?v=11">
-<!-- module-local styles in <style> block -->
-<div class="back-button-container">
-  <a href="../" class="back-button">← Назад в меню</a>
-</div>
-<header class="app-header"><h1>📚 36 Формул испанского</h1></header>
-<section id="score-area" class="score-display hidden">...</section>
-<main id="formulas-content" class="formulas-main"></main>
-<footer class="app-footer">...</footer>
+**Modes:** `single` (3 random from 1 formula) | `all` (all formulas shuffled) | `marathon` (216 questions, cyclic)
 
-<script src="../js/utils.js?v=12"></script>
-<script src="data.js?v=12"></script>
-<script src="ui.js?v=12"></script>
-<script src="app.js?v=12"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    if (typeof FormulasApp !== 'undefined') { FormulasApp.init(); }
-  });
-</script>
-```
+**XP system:** `_addXP(amount)` — in-memory counter, `#xp-counter` widget in HTML.
 
-**Cache-busting protocol:** when any script changes, bump `?v=N` by 1 in ALL four `<script>` tags in the same module's `index.html`. Current version in formulas: **v=12**.
-
----
-
-## data.js — formula data structure
-
+**State:**
 ```js
-const FORMULAS_DATA = [
-  {
-    id: 1,                         // sequential integer starting at 1
-    name: "Формула 1: Прилагательные",
-    shortName: "Прилагательные",   // used in quiz badge
-    emoji: "🎨",
-    description: "...",
-    rule: "sustantivo + adjetivo", // grammar rule in Spanish notation
-    example: "El coche rojo",      // main example sentence
-    exampleRu: "Красная машина",   // Russian translation of main example
-    examples: [                    // 6–8 additional example pairs
-      { es: "...", ru: "..." },
-    ],
-    quiz: [                        // 6 MCQ questions (3 shown per session, shuffled)
-      {
-        question: "Russian prompt",
-        options: ["A", "B", "C", "D"],  // exactly 4 options
-        correct: 0,                      // index 0–3
-        hint: "Russian explanation"
-      },
-      // × 6 total
-    ]
-  },
-  // × 36 total formulas
-];
-```
-
-**Key rule:** 6 questions per formula, 3 shown per quiz session (randomly shuffled). Gives C(6,3)=20 possible question combinations per retake.
-
----
-
-## app.js — state machine
-
-```js
-const FormulasApp = {
-  state: {
-    currentView: 'list',          // 'list' | 'card' | 'quiz' | 'results'
+state: {
+    currentView: 'list',       // 'list' | 'card' | 'quiz' | 'results'
     currentFormulaIndex: 0,
-    quizMode: 'single',           // 'single' | 'all'
-    quizQuestions: [],            // active question objects (3 for single, all for all-quiz)
+    quizMode: 'single',        // 'single' | 'all' | 'marathon'
+    quizQuestions: [],
     currentQuestionIndex: 0,
-    score: 0,
-    totalAnswered: 0,
-    isAnswered: false,
-  },
-  // methods: init, showList, showCard, showNextCard, showPrevCard,
-  //          startSingleQuiz, startAllQuiz, handleAnswer, nextQuestion, showResults
-};
-
-// Window aliases for HTML onclick handlers:
-window.formulaShowCard    = function(i) { FormulasApp.showCard(i); };
-window.formulaStartQuiz   = function(i) { FormulasApp.startSingleQuiz(i); };
-window.formulaHandleAnswer= function(i) { FormulasApp.handleAnswer(i); };
-window.formulaNext        = function()  { FormulasApp.nextQuestion(); };
-window.formulaBackToList  = function()  { FormulasApp.showList(); };
-window.formulaShowPrev    = function()  { FormulasApp.showPrevCard(); };
-window.formulaShowNext    = function()  { FormulasApp.showNextCard(); };
-window.formulaStartAllQuiz= function()  { FormulasApp.startAllQuiz(); };
+    score: 0, totalAnswered: 0, isAnswered: false,
+    marathonPool: [], marathonTotal: 0,
+}
 ```
 
-**Shuffle logic** (in `startSingleQuiz`):
-```js
-var pool = formula.quiz.map(function(q) {
-  return Object.assign({}, q, { formulaId: formula.id, ... });
-});
-var shuffled = (typeof shuffleArray === 'function') ? shuffleArray(pool) : pool;
-var questions = shuffled.slice(0, 3);
-```
+**Window aliases:** `formulaShowCard(i)`, `formulaStartQuiz(i)`, `formulaStartAllQuiz()`, `formulaStartMarathon()`, `formulaHandleAnswer(i)`, `formulaNext()`, `formulaBackToList()`, `formulaBackToCard()`, `formulaShowPrev()`, `formulaShowNext()`, `formulaSpeakExample(text)`
 
 ---
 
-## ui.js — rendering
+## Module 5 — mezcla/ (app.js?v=6, ui.js?v=6)
 
-- Exports a global `FormulasUI` object
-- All output: HTML strings injected into `document.getElementById('formulas-content').innerHTML`
-- Helper `_escHtml(str)` to escape user-visible strings
-- Renders four views: `renderFormulaList()`, `renderFormulaCard()`, `renderQuizQuestion()`, `renderResults()`
-- Uses `onclick="formulaXxx(...)"` (window aliases) in generated HTML — **never inline `FormulasApp.xxx`**
-
----
-
-## Shared utilities — js/utils.js
-
-Exposed as `window.*` globals:
-
-| Function | Signature | Purpose |
-|---|---|---|
-| `shuffleArray(array)` | `Array → Array` | Fisher-Yates shuffle, returns new array |
-| `speakSpanish(text)` | `string → void` | Google TTS playback via `<Audio>` |
-
----
-
-## Root index.html — module menu
-
-Add new modules here as `<a href="MODULE_DIR/" class="game-card">` blocks inside `<nav class="games-menu">`. Current modules (in menu order):
-
-| # | href | icon | title | difficulty |
-|---|------|------|-------|-----------|
-| 1 | find-pair/ | 🎮 | Найди пару | easy |
-| 2 | tren/ | 🚂 | Глаголы движения | medium |
-| 3 | ser-estar/ | 🎭 | Ser vs Estar | medium |
-| 4 | formulas/ | 📚 | 36 Формул | hard/Грамматика |
-| 5 | mezcla/ | 🌀 | Mezcla | medium/Чтение |
-| 6 | pasado/ | ⏪ | Прошедшее время | hard/Грамматика |
-
----
-
-## Module 5 — mezcla/ (смешанное чтение)
-
-**Идея:** тексты с регулируемой долей испанских слов (0–100%). Каждый токен — смысловая фраза `{ru, es}`.
+Mixed reading: adjustable % of Spanish words. Word-level tokenization.
 
 ```
 mezcla/
-├── index.html    ← <main id="mezcla-content">, scripts with ?v=1
-├── data.js       ← const MEZCLA_DATA = [...]  (6 текстов, ~58–61 токен каждый)
-├── ui.js         ← const MezclaUI = {...}
-└── app.js        ← const MezclaApp = {...}
-                     window aliases prefix: mezclaXxx
+├── index.html    ← data.js?v=1, ui.js?v=6, app.js?v=6
+├── data.js       ← MEZCLA_DATA (built-in texts)
+├── ui.js         ← MezclaUI, tooltip shows full sentence
+└── app.js        ← MezclaApp, word-level tokenizer, Google Translate API
 ```
 
-**Структура токена:**
+**Token structure:**
 ```js
-{ ru: "пошёл в магазин", es: "fui a la tienda" }
+{ ru: "слово", es: "palabra", ruSent: "полное предложение RU", esSent: "oración completa ES" }
 ```
 
-**Тексты:** 🛒 Магазин · 🍽️ Ресторан · ✈️ Аэропорт · 🌳 Парк · 🤝 Знакомство · 🌦️ Погода
+**Word-level tokenization:** input split by `.!?` → sentences → words. `ruSent`/`esSent` stored for tooltip (full sentence shown on tap, not just the word pair).
 
-**Ключевые функции:**
-- `mezclaSetPct(v)` — устанавливает % и пересчитывает `tokenLangs`
-- `mezclaReshuffle()` — тот же %, другие случайные токены
-- `mezclaTapToken(i)` — показать/скрыть перевод токена (tooltip)
-- `MezclaApp._assignTokens(count, pct)` — Fisher-Yates shuffle для выбора токенов
+**Auto-translate:** single textarea for Russian input → Google Translate unofficial API (`translate.googleapis.com`) → ES sentences auto-filled.
 
-**Cache-busting:** текущая версия `data.js`, `ui.js`, `app.js` — `?v=1`
+**`_mClean(w)`:** strips leading/trailing punctuation from words (`«"'¿¡(` and `»"'.,!?;:)`).
+
+**Tooltip:** `white-space: normal; max-width: 260px; line-height: 1.4` — wraps to avoid overflow.
+
+**Window aliases:** `mezclaSetPct(v)`, `mezclaReshuffle()`, `mezclaTapToken(i)`, `mezclaSubmitCustom()`
 
 ---
 
-## Module 6 — pasado/ (Прошедшее время)
+## Module 6 — pasado/ (app.js?v=3)
 
-**Состав:** 16 формул × 6 вопросов = 96 вопросов.
+4 past tenses, 16 formulas × 6 questions = 96 questions total.
 
 ```
 pasado/
-├── index.html    ← <main id="pasado-content">, scripts with ?v=1
-├── data.js       ← const PASADO_DATA = [...]  (16 formula objects)
-├── ui.js         ← const PasadoUI = {...}
-└── app.js        ← const PasadoApp = {...}
-                     window aliases prefix: pasadoXxx
+├── index.html    ← app.js?v=3, data.js?v=2, ui.js?v=5
+├── data.js       ← PASADO_DATA (16 items), PASADO_INLINE, PASADO_CLASSIFY
+├── ui.js         ← PasadoUI
+└── app.js        ← PasadoApp, has _syncBackBtn()
 ```
 
-**Группы формул:**
+**Views:** `'list'` | `'card'` | `'quiz'` | `'inline'` | `'classify'` | `'results'`
 
-| Группа | Время | Формулы |
+**Modes:** `single` | `all` (cyclic — wrong answers go back to queue) | `inline` | `classify`
+
+**State:**
+```js
+state: {
+    currentView: 'list',
+    currentFormulaIndex: 0,
+    quizMode: 'single',        // 'single' | 'all' | 'inline' | 'classify'
+    quizQuestions: [],
+    currentQuestionIndex: 0,
+    score: 0, totalAnswered: 0, isAnswered: false, streak: 0,
+    cyclicPool: [], cyclicCorrectCount: 0, cyclicTotal: 0,
+}
+```
+
+**Timing groups:**
+| Group | Tense | Formulas |
 |---|---|---|
 | F1–F4 | Pretérito Indefinido | -AR, -ER/-IR, ser/ir/hacer/tener, stem-changing |
-| F5–F8 | Pretérito Imperfecto | -AR, -ER/-IR, ser/ir/ver, употребление |
-| F9–F12 | Pretérito Perfecto Compuesto | haber, правильные и нестанд. причастия, употребление |
-| F13–F16 | Pluscuamperfecto | форма, употребление, нестанд. причастия, сравнение 4 времён |
+| F5–F8 | Pretérito Imperfecto | -AR, -ER/-IR, ser/ir/ver, usage |
+| F9–F12 | Pretérito Perfecto Compuesto | haber, regular/irregular participles, usage |
+| F13–F16 | Pluscuamperfecto | form, usage, irregular participles, 4-tense comparison |
 
-**Naming:**
-- Data: `PASADO_DATA` · App: `PasadoApp` · UI: `PasadoUI`
-- Window aliases: `pasadoShowCard(i)`, `pasadoStartQuiz(i)`, `pasadoHandleAnswer(i)`, `pasadoNext()`, `pasadoBackToList()`, `pasadoShowPrev()`, `pasadoShowNext()`, `pasadoStartAllQuiz()`
-- Container id: `pasado-content`
+**Window aliases:** `pasadoShowCard(i)`, `pasadoStartQuiz(i)`, `pasadoStartAllQuiz()`, `pasadoHandleAnswer(i)`, `pasadoNext()`, `pasadoBackToList()`, `pasadoBackToCard()`, `pasadoShowPrev()`, `pasadoShowNext()`, `pasadoStartInline()`, `pasadoInlineAnswer(v)`, `pasadoStartClassify()`, `pasadoClassifyAnswer(k)`
 
 ---
 
-## Naming conventions summary
+## Shared utilities — js/utils.js (v=17)
+
+| Function | Signature | Notes |
+|---|---|---|
+| `shuffleArray(array)` | `Array → Array` | Fisher-Yates, returns new array |
+| `speakSpanish(text)` | `string → void` | **Currently disabled** (returns immediately) |
+
+---
+
+## Naming conventions
 
 | Concern | Pattern | Example |
 |---|---|---|
@@ -252,7 +273,20 @@ pasado/
 | UI global | `ModuleUI` | `FormulasUI`, `PasadoUI`, `MezclaUI` |
 | Window aliases | `moduleFunctionName` | `formulaStartQuiz`, `pasadoStartQuiz`, `mezclaSetPct` |
 | Main container id | `module-content` | `formulas-content`, `pasado-content`, `mezcla-content` |
-| Score area id | `score-area` | same across quiz modules (not used in mezcla) |
+| Score area id | `score-area` or `score-display` | varies by module |
+
+---
+
+## Root index.html — module menu
+
+| # | href | title |
+|---|------|-------|
+| 1 | find-pair/ | Найди пару |
+| 2 | tren/ | Tren Ir/Venir/Llegar |
+| 3 | ser-estar/ | Ser vs Estar |
+| 4 | formulas/ | 36 Формул |
+| 5 | mezcla/ | Mezcla |
+| 6 | pasado/ | Прошедшее время |
 
 ---
 
@@ -260,7 +294,8 @@ pasado/
 
 - Branch: `main`
 - Remote: `git@github.com:stivr4469/find-pair.git`
-- Deploy: `git push origin main` → Vercel auto-deploys within ~30 seconds
+- Vercel project: `find-pair-new` (keep this one; `find-pair-seven` is a duplicate to delete)
+- Deploy: `git push origin main` → auto-deploys in ~30s
 - No CI, no tests, no build step
 
 ---
@@ -269,6 +304,8 @@ pasado/
 
 1. Create `MODULE_DIR/` with `data.js`, `app.js`, `ui.js`, `index.html`
 2. Copy structure from `formulas/` — rename all `Formulas`/`formulas` occurrences
-3. Set script `?v=1` in the new module's `index.html`
-4. Add `<a href="MODULE_DIR/" class="game-card">` to root `index.html`
-5. Push to `main` — Vercel deploys automatically
+3. Add two-level back navigation: `← Главная` + hidden `← Список` button wired to `backToList()`
+4. Add `_syncBackBtn()` to app.js and call it in every view-switching method
+5. Set script `?v=1` in the new module's `index.html`
+6. Add `<a href="MODULE_DIR/" class="game-card">` to root `index.html`
+7. Push to `main` — Vercel deploys automatically
