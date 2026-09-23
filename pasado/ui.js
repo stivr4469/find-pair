@@ -539,7 +539,7 @@ const PasadoUI = {
         '<div class="game-area" style="padding: 22px 20px;">',
 
           '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">',
-            '<span style="background:linear-gradient(135deg,#9b59b6,#6c3483);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;">✏️ Inline режим</span>',
+            '<span style="background:linear-gradient(135deg,#9b59b6,#6c3483);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;display:inline-flex;align-items:center;"><i data-lucide="pencil-line" style="width:14px;height:14px;stroke:#fff;stroke-width:2.5;vertical-align:middle;margin-right:5px;"></i>Inline режим</span>',
             '<div style="display:flex;align-items:center;gap:8px;">',
               streakHtml,
               '<button onclick="pasadoBackToList()" style="background:none;border:none;color:#aaa;cursor:pointer;font-size:1.2rem;padding:4px;" title="К списку">✕</button>',
@@ -569,6 +569,7 @@ const PasadoUI = {
     ].join('');
 
     root.innerHTML = html;
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   },
 
   showInlineFeedback: function(selectedVal, correctVal, hint, tts) {
@@ -627,17 +628,19 @@ const PasadoUI = {
     var streakHtml = streak > 1 ? '<span class="pasado-streak">🔥 ' + streak + '</span>' : '';
 
     var zones = [
-      { key: 'indefinido',       label: 'Indefinido',       cls: 'pcz-indefinido',       icon: '🔵' },
-      { key: 'imperfecto',       label: 'Imperfecto',       cls: 'pcz-imperfecto',       icon: '🌊' },
-      { key: 'perfecto',         label: 'Perfecto Comp.',   cls: 'pcz-perfecto',         icon: '📅' },
-      { key: 'pluscuamperfecto', label: 'Pluscuamperf.',    cls: 'pcz-pluscuamperfecto', icon: '🏛️' },
+      { key: 'indefinido',       label: 'Indefinido',       cls: 'pcz-indefinido',       iconName: 'check-circle-2', iconColor: '#e74c3c', iconBg: '#fff0f0' },
+      { key: 'imperfecto',       label: 'Imperfecto',       cls: 'pcz-imperfecto',       iconName: 'repeat-2',       iconColor: '#3498db', iconBg: '#eff5ff' },
+      { key: 'perfecto',         label: 'Perfecto Comp.',   cls: 'pcz-perfecto',         iconName: 'calendar-check', iconColor: '#27ae60', iconBg: '#f0fff4' },
+      { key: 'pluscuamperfecto', label: 'Pluscuamperf.',    cls: 'pcz-pluscuamperfecto', iconName: 'history',        iconColor: '#9b59b6', iconBg: '#f5f0ff' },
     ];
 
     var zonesHtml = zones.map(function(z) {
       return [
         '<div class="pasado-classify-zone ' + z.cls + '" id="pclz-' + z.key + '" data-key="' + z.key + '"',
         ' onclick="window.pasadoClassifyAnswer(this.dataset.key)">',
-        z.icon + '<br>' + z.label,
+        '<span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:' + z.iconBg + ';margin-bottom:4px;">',
+        '<i data-lucide="' + z.iconName + '" style="width:16px;height:16px;stroke:' + z.iconColor + ';stroke-width:2.5;"></i>',
+        '</span><br>' + z.label,
         '</div>',
       ].join('');
     }).join('');
@@ -647,7 +650,7 @@ const PasadoUI = {
         '<div class="game-area" style="padding: 22px 20px;">',
 
           '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">',
-            '<span style="background:linear-gradient(135deg,#e67e22,#d35400);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;">🎨 Классификация</span>',
+            '<span style="background:linear-gradient(135deg,#e67e22,#d35400);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;display:inline-flex;align-items:center;"><i data-lucide="layers" style="width:14px;height:14px;stroke:#fff;stroke-width:2.5;vertical-align:middle;margin-right:5px;"></i>Классификация</span>',
             '<div style="display:flex;align-items:center;gap:8px;">',
               streakHtml,
               '<button onclick="pasadoBackToList()" style="background:none;border:none;color:#aaa;cursor:pointer;font-size:1.2rem;padding:4px;" title="К списку">✕</button>',
@@ -688,6 +691,7 @@ const PasadoUI = {
     ].join('');
 
     root.innerHTML = html;
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   },
 
   showClassifyFeedback: function(selectedKey, correctKey, hint) {
@@ -787,8 +791,8 @@ const PasadoUI = {
           '<p style="color: #555; font-size: 1rem; margin-bottom: 28px;">' + _escHtmlP(reaction.substring(reaction.indexOf(' ') + 1)) + '</p>',
 
           '<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">',
-            '<button onclick="' + repeatAction + '" class="next-button" style="width: auto; display: inline-block; padding: 12px 28px;">🔁 Повторить</button>',
-            '<button onclick="pasadoBackToList()" class="menu-button" style="width: auto; display: inline-block; padding: 12px 28px;">⏪ Все темы</button>',
+            '<button onclick="' + repeatAction + '" class="next-button" style="width: auto; display: inline-flex; align-items: center; padding: 12px 28px;"><i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2;vertical-align:middle;margin-right:6px;"></i>Ещё раз</button>',
+            '<button onclick="pasadoBackToList()" class="menu-button" style="width: auto; display: inline-flex; align-items: center; padding: 12px 28px;"><i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;stroke-width:2;vertical-align:middle;margin-right:6px;"></i>К темам</button>',
           '</div>',
 
         '</div>',
@@ -796,6 +800,7 @@ const PasadoUI = {
     ].join('');
 
     root.innerHTML = html;
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   },
 };
 

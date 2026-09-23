@@ -35,17 +35,20 @@ function displayRulesUI() {
             </div>
             <div class="rules-cards-container">
                 <div class="rule-card ser-card">
-                    <h3>🟦 SER (DOCTOR)</h3>
+                    <h3><span style="display:inline-block;width:14px;height:14px;background:#2563eb;border-radius:3px;margin-right:6px;vertical-align:middle"></span>SER (DOCTOR)</h3>
                     <ul>${serRulesHtml}</ul>
                 </div>
                 <div class="rule-card estar-card">
-                    <h3>🟩 ESTAR (PLACE)</h3>
+                    <h3><span style="display:inline-block;width:14px;height:14px;background:#16a34a;border-radius:3px;margin-right:6px;vertical-align:middle"></span>ESTAR (PLACE)</h3>
                     <ul>${estarRulesHtml}</ul>
                 </div>
             </div>
-            <button class="menu-button" onclick="showMainMenu()">📋 Вернуться в меню</button>
+            <button class="menu-button" onclick="showMainMenu()">
+                <i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;display:inline-block;vertical-align:middle"></i> Вернуться в меню
+            </button>
         </div>
     `;
+    lucide.createIcons();
 }
 
 // Экспорт для глобального доступа

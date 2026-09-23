@@ -100,7 +100,10 @@ function showClassifyCard(item, current, total, score, streak) {
 
     // Обновляем статистику
     if (scoreDisplay) scoreDisplay.textContent = score;
-    if (streakDisplay) streakDisplay.textContent = streak > 0 ? `${streak} 🔥` : '0';
+    if (streakDisplay) {
+        streakDisplay.innerHTML = streak > 0 ? `${streak} <i data-lucide="flame" style="width:14px;height:14px;stroke:#f59e0b;display:inline-block;vertical-align:middle"></i>` : '0';
+        lucide.createIcons();
+    }
     if (questionDisplay) questionDisplay.textContent = `${current + 1}/${total}`;
     if (progressFill) {
         const pct = total > 0 ? (current / total) * 100 : 0;
@@ -216,31 +219,34 @@ function showClassifyResults(score, total, bestStreak) {
     if (!area) return;
 
     const pct = Math.round((score / total) * 100);
-    let medal = '📚';
+    let medalIcon = 'book-open', medalColor = '#6366f1';
     let msg = 'Продолжай практиковать!';
-    if (pct >= 95) { medal = '🏆'; msg = '¡Perfecto! Отличный результат!'; }
-    else if (pct >= 80) { medal = '🥇'; msg = '¡Muy bien! Почти отлично!'; }
-    else if (pct >= 60) { medal = '🥈'; msg = '¡Bien! Хороший результат!'; }
-    else if (pct >= 40) { medal = '🥉'; msg = 'Неплохо, тренируйся дальше!'; }
+    if (pct >= 95) { medalIcon = 'trophy'; medalColor = '#f59e0b'; msg = '¡Perfecto! Отличный результат!'; }
+    else if (pct >= 80) { medalIcon = 'award'; medalColor = '#f59e0b'; msg = '¡Muy bien! Почти отлично!'; }
+    else if (pct >= 60) { medalIcon = 'award'; medalColor = '#9ca3af'; msg = '¡Bien! Хороший результат!'; }
+    else if (pct >= 40) { medalIcon = 'award'; medalColor = '#cd7c2b'; msg = 'Неплохо, тренируйся дальше!'; }
 
     area.innerHTML = `
         <div class="classify-results">
-            <div class="results-medal">${medal}</div>
+            <div class="results-medal">
+                <i data-lucide="${medalIcon}" style="width:56px;height:56px;stroke:${medalColor}"></i>
+            </div>
             <h2 class="results-title">Сессия завершена!</h2>
             <div class="results-score">${score} / ${total}</div>
             <div class="results-pct">${pct}%</div>
             <div class="results-msg">${msg}</div>
-            <div class="results-streak">Лучшая серия: ${bestStreak} 🔥</div>
+            <div class="results-streak">Лучшая серия: ${bestStreak} <i data-lucide="flame" style="width:16px;height:16px;stroke:#f59e0b;display:inline-block;vertical-align:middle"></i></div>
             <div class="results-buttons">
                 <button class="results-btn results-btn-primary" onclick="initClassifyMode()">
-                    🔄 Ещё раз
+                    <i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;display:inline-block;vertical-align:middle"></i> Ещё раз
                 </button>
                 <button class="results-btn results-btn-secondary" onclick="SerEstarApp.showMainMenu()">
-                    📋 В меню
+                    <i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;display:inline-block;vertical-align:middle"></i> В меню
                 </button>
             </div>
         </div>
     `;
+    lucide.createIcons();
 }
 
 /**

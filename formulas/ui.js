@@ -369,7 +369,7 @@ const FormulasUI = {
             'gap: 6px;',
           '">',
             (marathonLeft != null
-              ? '<span style="background:#fff3cd;color:#856404;padding:2px 10px;border-radius:20px;font-weight:700;">🔥 Осталось: ' + marathonLeft + '</span>'
+              ? '<span style="background:#fff3cd;color:#856404;padding:2px 10px;border-radius:20px;font-weight:700;"><i data-lucide="flame" style="width:14px;height:14px;stroke:#f59e0b;stroke-width:2;vertical-align:middle;margin-right:4px;"></i>Осталось: ' + marathonLeft + '</span>'
               : '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>'
             ),
             '<span>✅ ' + score + ' / ' + qIndex + '</span>',
@@ -407,6 +407,8 @@ const FormulasUI = {
     ].join('');
 
     root.innerHTML = html;
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 
     // Add hover effect on option buttons
     root.querySelectorAll('[id^="formula-opt-"]').forEach(function(btn) {
@@ -558,12 +560,12 @@ const FormulasUI = {
               'width: auto;',
               'display: inline-block;',
               'padding: 12px 28px;',
-            '">🔁 Повторить</button>',
+            '"><i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2;vertical-align:middle;margin-right:6px;"></i>Повторить</button>',
             '<button onclick="formulaBackToList()" class="menu-button" style="',
               'width: auto;',
               'display: inline-block;',
               'padding: 12px 28px;',
-            '">📚 Все формулы</button>',
+            '"><i data-lucide="book-open" style="width:16px;height:16px;stroke:currentColor;stroke-width:2;vertical-align:middle;margin-right:6px;"></i>Все формулы</button>',
           '</div>',
 
         '</div>',
@@ -571,6 +573,8 @@ const FormulasUI = {
     ].join('');
 
     root.innerHTML = html;
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   },
 };
 

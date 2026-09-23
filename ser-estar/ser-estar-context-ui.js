@@ -53,17 +53,18 @@ function showContextResultsUI() {
     
     contentArea.innerHTML = `
         <div class="results-container" style="text-align: center; padding: 20px;">
-            <h2>🏁 Сессия завершена!</h2>
+            <h2>Сессия завершена!</h2>
             <div class="final-score" style="font-size: 3rem; font-weight: bold; margin: 20px 0;">${contextModeState.score} / ${contextModeState.sessionLimit}</div>
             <p style="margin-bottom: 30px; color: #666;">Вы прошли 20 вопросов по Ser и Estar. Вопросы перемещены в конец очереди.</p>
             <button class="restart-button" onclick="restartContextMode()">
-                🔄 Продолжить тренировку
+                <i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;display:inline-block;vertical-align:middle"></i> Продолжить тренировку
             </button>
             <button class="menu-button" onclick="showMainMenu()">
-                📋 В меню
+                <i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;display:inline-block;vertical-align:middle"></i> В меню
             </button>
         </div>
     `;
+    lucide.createIcons();
 }
 
 function updateContextScoreUI() {

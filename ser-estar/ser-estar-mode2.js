@@ -331,13 +331,18 @@ function showAdvancedResults() {
 
     contentArea.innerHTML = `
         <div class="results-container">
-            <h3>🏁 Результаты</h3>
+            <h3>Результаты</h3>
             <div class="final-score">${advancedModeState.score} из ${advancedModeState.maxQuestions} (${percentage}%)</div>
             <div class="final-message">${message}</div>
-            <button class="restart-button" onclick="initAdvancedMode()">🔄 Ещё раз</button>
-            <button class="menu-button" onclick="SerEstarApp.showMainMenu()">📋 Меню</button>
+            <button class="restart-button" onclick="initAdvancedMode()">
+                <i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;display:inline-block;vertical-align:middle"></i> Ещё раз
+            </button>
+            <button class="menu-button" onclick="SerEstarApp.showMainMenu()">
+                <i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;display:inline-block;vertical-align:middle"></i> Меню
+            </button>
         </div>
     `;
+    lucide.createIcons();
 }
 
 // Экспорт
