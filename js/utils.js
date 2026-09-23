@@ -24,36 +24,16 @@ function shuffleArray(array) {
  * Запасной вариант: Google TTS
  */
 function speakSpanish(text) {
-    if (!text) return;
+    if (!text || !window.speechSynthesis) return;
 
     const cleanText = text.replace(/_+/g, '').trim();
+    window.speechSynthesis.cancel();
 
-    if (!window.speechSynthesis) return;
+    const utter = new SpeechSynthesisUtterance(cleanText);
+    utter.lang = 'es-ES';
+    utter.rate = 0.85;
 
-    const ss = window.speechSynthesis;
-
-    function _doSpeak() {
-        const utter = new SpeechSynthesisUtterance(cleanText);
-        utter.lang = 'es-ES';
-        utter.rate = 0.88;
-
-        // Ищем испанский голос
-        const voices = ss.getVoices();
-        const esVoice = voices.find(v => v.lang.startsWith('es'));
-        if (esVoice) utter.voice = esVoice;
-
-        // Chrome Android: cancel() + немедленный speak() теряется — нужна пауза
-        ss.cancel();
-        setTimeout(() => ss.speak(utter), 50);
-    }
-
-    // Если голоса ещё не загружены — ждём voiceschanged (первая загрузка)
-    const voices = ss.getVoices();
-    if (voices.length === 0) {
-        ss.addEventListener('voiceschanged', _doSpeak, { once: true });
-    } else {
-        _doSpeak();
-    }
+    window.speechSynthesis.speak(utter);
 }
 
 // Экспорт для глобального доступа
