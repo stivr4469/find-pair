@@ -503,7 +503,7 @@ const PasadoUI = {
     var pct = total > 0 ? Math.round((qIndex / total) * 100) : 0;
 
     var optBtnsHtml = shuffled.map(function(opt) {
-      return '<button class="pasado-inline-btn" data-val="' + _escHtmlP(opt) + '" onclick="pasadoInlineAnswer(' + JSON.stringify(opt) + ')">' + _escHtmlP(opt) + '</button>';
+      return '<button class="pasado-inline-btn" data-val="' + _escHtmlP(opt) + '" onclick="window.pasadoInlineAnswer(this.dataset.val)">' + _escHtmlP(opt) + '</button>';
     }).join('');
 
     var sentenceHtml = _escHtmlP(item.before) +
@@ -616,8 +616,8 @@ const PasadoUI = {
 
     var zonesHtml = zones.map(function(z) {
       return [
-        '<div class="pasado-classify-zone ' + z.cls + '" id="pclz-' + z.key + '"',
-        ' onclick="pasadoClassifyAnswer(' + JSON.stringify(z.key) + ')">',
+        '<div class="pasado-classify-zone ' + z.cls + '" id="pclz-' + z.key + '" data-key="' + z.key + '"',
+        ' onclick="window.pasadoClassifyAnswer(this.dataset.key)">',
         z.icon + '<br>' + z.label,
         '</div>',
       ].join('');
