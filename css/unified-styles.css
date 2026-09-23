@@ -199,6 +199,85 @@ h1, h2, h3 {
 }
 
 /* ============================================
+   CLASSIFY ZONES (SER / ESTAR)
+   ============================================ */
+.classify-zones {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.classify-zone {
+    flex: 1;
+    padding: 18px 12px;
+    border-radius: 12px;
+    border: 2px solid;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: none;
+}
+
+.classify-zone-ser {
+    background: rgba(99, 102, 241, 0.07);
+    border-color: rgba(99, 102, 241, 0.4);
+    color: #4338ca;
+}
+
+.classify-zone-ser:hover:not(:disabled) {
+    background: rgba(99, 102, 241, 0.16);
+    border-color: rgba(99, 102, 241, 0.7);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.2);
+}
+
+.classify-zone-estar {
+    background: rgba(16, 185, 129, 0.07);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #059669;
+}
+
+.classify-zone-estar:hover:not(:disabled) {
+    background: rgba(16, 185, 129, 0.16);
+    border-color: rgba(16, 185, 129, 0.7);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
+}
+
+.classify-zone:disabled { cursor: not-allowed; opacity: 0.6; }
+
+.classify-zone.correct {
+    background: rgba(40, 167, 69, 0.2) !important;
+    border-color: #28a745 !important;
+    color: #1a6b2f !important;
+}
+
+.classify-zone.incorrect {
+    background: rgba(220, 53, 69, 0.2) !important;
+    border-color: #dc3545 !important;
+    color: #9a1525 !important;
+}
+
+.zone-label {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+}
+
+.zone-hint {
+    font-size: 0.75rem;
+    font-weight: 500;
+    opacity: 0.75;
+    text-transform: lowercase;
+}
+
+/* ============================================
    КНОПКИ С ВАРИАНТАМИ ОТВЕТОВ
    ============================================ */
 .options-container {
