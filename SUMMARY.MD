@@ -2,6 +2,31 @@
 
 ---
 
+## Сессия: 2026-09-23 (продолжение)
+
+### Финальная правка цветов: formulas/ui.js и pasado/ui.js
+
+**Задача:** убрать все оставшиеся жёсткие цвета (`#667eea`, `#2c3e50`, `white` и т.д.) из JS-генерируемого HTML в обоих модулях — чтобы тёмная тема работала везде без исключений.
+
+**Что сделано:**
+- `formulas/ui.js?v=17→v18`:
+  - `renderFormulaCard` — badge, rule box, main example, Послушать кнопка, "Ещё примеры" label, Пред./След. кнопки
+  - `renderQuiz` — option buttons, option letter badges, formula badge, progress bar, counter text, вопрос
+  - `showAnswerFeedback` — TTS кнопка в feedback box
+  - `renderResults` — иконка, h2, score, pct, progress bar, текст
+- `pasado/ui.js?v=5→v6`:
+  - Инжектируемые CSS стили (`pasado-tts-btn`, `pasado-inline-btn`, `inline-question-text`, `pasado-prog-bar/fill`)
+  - `renderFormulaList` — card thumbs, секционные лейблы, кнопки режимов (Полный тест / Inline / Классификация), заголовок
+  - `renderFormulaCard` — badge, h2/p, rule box, main example, extra examples, Пред./След. кнопки
+  - `renderQuiz` — options, option letters, badge, close btn, counter, question text, hover handlers
+  - `renderInlineQuestion` — badge, close btn, counter, sentence box, label
+  - `renderClassifyQuestion` — badge, close btn, counter, classify card
+  - `renderResults` — иконка, h2, score, pct, progress bar, текст
+
+**Коммит:** `9052f27`
+
+---
+
 ## Сессия: 2026-09-23
 
 ### Двухуровневая навигация (formulas, pasado, tren)

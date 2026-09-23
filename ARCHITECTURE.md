@@ -183,7 +183,7 @@ ser-estar/
 
 ```
 formulas/
-├── index.html    ← app.js?v=14, data.js?v=13, ui.js?v=17
+├── index.html    ← app.js?v=14, data.js?v=13, ui.js?v=18
 ├── data.js       ← FORMULAS_DATA (36 items)
 ├── ui.js         ← FormulasUI
 └── app.js        ← FormulasApp, has _syncBackBtn()
@@ -247,7 +247,7 @@ mezcla/
 
 ```
 pasado/
-├── index.html    ← app.js?v=3, data.js?v=2, ui.js?v=5
+├── index.html    ← app.js?v=3, data.js?v=2, ui.js?v=6
 ├── data.js       ← PASADO_DATA (16 items), PASADO_INLINE, PASADO_CLASSIFY
 ├── ui.js         ← PasadoUI
 └── app.js        ← PasadoApp, has _syncBackBtn()
