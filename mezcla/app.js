@@ -209,15 +209,16 @@ const MezclaApp = {
       var esWords = esLines[i].split(/\s+/).map(_mClean).filter(Boolean);
       var pairLen = Math.min(ruWords.length, esWords.length);
 
+      var ruSent = ruLines[i];
+      var esSent = esLines[i];
       for (var j = 0; j < pairLen; j++) {
-        tokens.push({ ru: ruWords[j], es: esWords[j] });
+        tokens.push({ ru: ruWords[j], es: esWords[j], ruSent: ruSent, esSent: esSent });
       }
-      // Extra words from longer language paired with last matched word of shorter
       for (var j = pairLen; j < ruWords.length; j++) {
-        tokens.push({ ru: ruWords[j], es: esWords[pairLen - 1] || ruWords[j] });
+        tokens.push({ ru: ruWords[j], es: esSent, ruSent: ruSent, esSent: esSent });
       }
       for (var j = pairLen; j < esWords.length; j++) {
-        tokens.push({ ru: ruWords[pairLen - 1] || esWords[j], es: esWords[j] });
+        tokens.push({ ru: ruSent, es: esWords[j], ruSent: ruSent, esSent: esSent });
       }
     }
 

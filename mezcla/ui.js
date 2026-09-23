@@ -332,7 +332,7 @@ const MezclaUI = {
       var isEs = lang === 'es';
       var displayText = token[lang];
       var otherLang = isEs ? 'ru' : 'es';
-      var tooltipText = token[otherLang];
+      var tooltipText = (isEs ? token.ruSent : token.esSent) || token[otherLang];
       var showTooltip = activeTooltip === i;
 
       var tokenStyle = [
