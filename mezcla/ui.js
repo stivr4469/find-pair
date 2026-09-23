@@ -115,9 +115,8 @@ const MezclaUI = {
     if (!root) return;
 
     var html = [
-      '<div style="max-width: 640px; margin: 0 auto;">',
+      '<div style="max-width: 600px; margin: 0 auto;">',
 
-        // Header
         '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">',
           '<button data-mezcla-back style="',
             'background: rgba(255,255,255,0.15); border: none; color: white;',
@@ -128,109 +127,68 @@ const MezclaUI = {
 
         '<div class="game-area" style="padding: 20px 22px;">',
 
-          // Title input
           '<div style="margin-bottom: 16px;">',
             '<input id="mezcla-custom-title" type="text"',
               ' placeholder="Название (необязательно)"',
-              ' style="',
-                'width: 100%; box-sizing: border-box;',
-                'padding: 10px 14px; border-radius: 8px;',
-                'border: 1px solid #dde3ea; font-size: 0.95rem;',
-                'outline: none; color: #2c3e50;',
-                'font-family: inherit;',
-              '"',
+              ' style="width:100%;box-sizing:border-box;padding:10px 14px;border-radius:8px;',
+                'border:1px solid #dde3ea;font-size:0.95rem;outline:none;',
+                'color:#2c3e50;font-family:inherit;"',
             '>',
           '</div>',
 
-          // Two textareas
-          '<div style="display: flex; gap: 14px; margin-bottom: 10px;" id="mezcla-custom-areas">',
-
-            '<div style="flex: 1; min-width: 0;">',
-              '<label style="display: block; font-size: 0.82rem; font-weight: 600; color: #5a7fa8; margin-bottom: 6px;">Русский</label>',
-              '<textarea id="mezcla-custom-ru"',
-                ' placeholder="Каждая строка — один блок&#10;Пример:&#10;Сегодня утром&#10;я проснулся рано&#10;и вспомнил..."',
-                ' rows="10"',
-                ' style="',
-                  'width: 100%; box-sizing: border-box;',
-                  'padding: 10px 12px; border-radius: 8px;',
-                  'border: 1px solid #dde3ea; font-size: 0.88rem;',
-                  'resize: vertical; outline: none;',
-                  'font-family: inherit; color: #2c3e50; line-height: 1.6;',
-                '"',
-              '></textarea>',
-            '</div>',
-
-            '<div style="flex: 1; min-width: 0;">',
-              '<label style="display: block; font-size: 0.82rem; font-weight: 600; color: #27ae60; margin-bottom: 6px;">Испанский</label>',
-              '<textarea id="mezcla-custom-es"',
-                ' placeholder="Esta mañana&#10;me desperté pronto&#10;y recordé..."',
-                ' rows="10"',
-                ' style="',
-                  'width: 100%; box-sizing: border-box;',
-                  'padding: 10px 12px; border-radius: 8px;',
-                  'border: 1px solid #dde3ea; font-size: 0.88rem;',
-                  'resize: vertical; outline: none;',
-                  'font-family: inherit; color: #2c3e50; line-height: 1.6;',
-                '"',
-              '></textarea>',
-            '</div>',
-
+          '<div style="margin-bottom: 6px; font-size: 0.82rem; color: #7f8c8d;">',
+            'Вставь текст на русском <em>или</em> испанском — переведём автоматически',
           '</div>',
 
-          // Note
-          '<div style="font-size: 0.78rem; color: #aaa; margin-bottom: 16px;">',
-            'Строк должно быть поровну. Каждая строка = один блок.',
-          '</div>',
+          '<textarea id="mezcla-custom-text"',
+            ' placeholder="Вставь текст сюда...\n\nКаждый абзац или предложение на новой строке — это один блок."',
+            ' rows="12"',
+            ' style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:8px;',
+              'border:1px solid #dde3ea;font-size:0.92rem;resize:vertical;outline:none;',
+              'font-family:inherit;color:#2c3e50;line-height:1.7;margin-bottom:14px;"',
+          '></textarea>',
 
-          // Error message (hidden by default)
           '<div id="mezcla-custom-error" style="',
-            'display: none;',
-            'font-size: 0.85rem; color: #e74c3c;',
-            'background: #fff0f0; border: 1px solid #f5c6cb;',
-            'border-radius: 8px; padding: 10px 14px;',
-            'margin-bottom: 14px;',
+            'display:none;font-size:0.85rem;color:#e74c3c;',
+            'background:#fff0f0;border:1px solid #f5c6cb;',
+            'border-radius:8px;padding:10px 14px;margin-bottom:14px;',
           '"></div>',
 
-          // Buttons row
-          '<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">',
+          '<div id="mezcla-translate-progress" style="',
+            'display:none;font-size:0.88rem;color:#667eea;',
+            'padding:10px 0;text-align:center;margin-bottom:10px;',
+          '">Переводим... ⏳</div>',
+
+          '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">',
             '<button data-mezcla-back style="',
-              'background: #f0f0f0; border: none; color: #666;',
-              'font-size: 0.95rem; cursor: pointer; padding: 10px 20px;',
-              'border-radius: 10px; font-family: inherit; font-weight: 600;',
+              'background:#f0f0f0;border:none;color:#666;',
+              'font-size:0.95rem;cursor:pointer;padding:10px 20px;',
+              'border-radius:10px;font-family:inherit;font-weight:600;',
             '">← Назад</button>',
-            '<button data-mezcla-save style="',
-              'border: none; color: white; cursor: pointer;',
-              'padding: 10px 22px; border-radius: 10px;',
-              'font-size: 0.95rem; font-family: inherit; font-weight: 600;',
-              'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);',
-              'box-shadow: 0 3px 12px rgba(102,126,234,0.4);',
-            '" class="next-button">Создать текст →</button>',
+            '<button id="mezcla-translate-btn" style="',
+              'border:none;color:white;cursor:pointer;',
+              'padding:10px 22px;border-radius:10px;',
+              'font-size:0.95rem;font-family:inherit;font-weight:600;',
+              'background:linear-gradient(135deg,#667eea,#764ba2);',
+              'box-shadow:0 3px 12px rgba(102,126,234,0.4);',
+            '">Перевести и создать →</button>',
           '</div>',
 
         '</div>',
-
       '</div>',
     ].join('');
 
     root.innerHTML = html;
     lucide.createIcons();
 
-    // Responsive: stack textareas vertically on narrow screens
-    var areasEl = document.getElementById('mezcla-custom-areas');
-    if (areasEl && window.innerWidth < 500) {
-      areasEl.style.flexDirection = 'column';
-    }
-
     root.querySelectorAll('[data-mezcla-back]').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        MezclaApp.backToList();
-      });
+      btn.addEventListener('click', function() { MezclaApp.backToList(); });
     });
 
-    var saveBtn = root.querySelector('[data-mezcla-save]');
-    if (saveBtn) {
-      saveBtn.addEventListener('click', function() {
-        MezclaApp.saveCustomTextFromForm();
+    var translateBtn = root.querySelector('#mezcla-translate-btn');
+    if (translateBtn) {
+      translateBtn.addEventListener('click', function() {
+        MezclaApp.translateAndCreate();
       });
     }
   },

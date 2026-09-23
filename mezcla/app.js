@@ -109,7 +109,7 @@ const MezclaApp = {
     MezclaUI.renderCustomInput();
   },
 
-  // ─── Language detection helper ───────────────────────────────────────────────
+  // ─── Language detection ──────────────────────────────────────────────────────
 
   _detectLang: function(text) {
     var cyrillicCount = (text.match(/[а-яёА-ЯЁ]/g) || []).length;
@@ -117,89 +117,82 @@ const MezclaApp = {
     return cyrillicCount >= latinCount ? 'ru' : 'es';
   },
 
-  // ─── Read form, validate, save ───────────────────────────────────────────────
+  // ─── Translate lines via Google Translate (unofficial, no key) ───────────────
 
-  saveCustomTextFromForm: function() {
+  _translateLines: function(lines, fromLang, toLang) {
+    // Join with a rare delimiter preserved by GT, translate in one request
+    var DELIM = ' \n ';
+    var joined = lines.join(DELIM);
+    var url = 'https://translate.googleapis.com/translate_a/single'
+      + '?client=gtx&sl=' + fromLang + '&tl=' + toLang + '&dt=t'
+      + '&q=' + encodeURIComponent(joined);
+
+    return fetch(url)
+      .then(function(r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function(data) {
+        // data[0] = array of [translatedChunk, originalChunk, ...]
+        var translated = data[0].map(function(item) { return item[0]; }).join('');
+        var result = translated.split(DELIM.trim()).map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });
+        // fallback: if split didn't produce same count, split by newline
+        if (result.length !== lines.length) {
+          result = translated.split('\n').map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });
+        }
+        return result;
+      });
+  },
+
+  // ─── Read form, translate, save ──────────────────────────────────────────────
+
+  translateAndCreate: function() {
+    var self = this;
     var titleInput = document.getElementById('mezcla-custom-title');
-    var ruTextarea = document.getElementById('mezcla-custom-ru');
-    var esTextarea = document.getElementById('mezcla-custom-es');
+    var textArea   = document.getElementById('mezcla-custom-text');
     var errorEl    = document.getElementById('mezcla-custom-error');
+    var progressEl = document.getElementById('mezcla-translate-progress');
+    var btn        = document.getElementById('mezcla-translate-btn');
 
-    if (!ruTextarea || !esTextarea) return;
+    if (!textArea) return;
 
     var titleVal = titleInput ? titleInput.value.trim() : '';
-
-    var rawRu = ruTextarea.value;
-    var rawEs = esTextarea.value;
-
-    // Split and filter empty lines
-    var ruLines = rawRu.split('\n').map(function(l) { return l.trim(); }).filter(function(l) { return l.length > 0; });
-    var esLines = rawEs.split('\n').map(function(l) { return l.trim(); }).filter(function(l) { return l.length > 0; });
+    var raw = textArea.value;
+    var lines = raw.split('\n').map(function(l) { return l.trim(); }).filter(function(l) { return l.length > 0; });
 
     function showError(msg) {
-      if (errorEl) {
-        errorEl.textContent = msg;
-        errorEl.style.display = 'block';
-      }
+      if (errorEl) { errorEl.textContent = msg; errorEl.style.display = 'block'; }
     }
-
     function hideError() {
-      if (errorEl) {
-        errorEl.style.display = 'none';
-        errorEl.textContent = '';
-      }
+      if (errorEl) { errorEl.style.display = 'none'; errorEl.textContent = ''; }
     }
 
     hideError();
 
-    if (ruLines.length === 0 && esLines.length === 0) {
-      showError('Оба поля пустые. Введи текст.');
+    if (lines.length === 0) {
+      showError('Поле пустое. Вставь текст.');
       return;
     }
 
-    if (ruLines.length === 0) {
-      showError('Первое поле пустое. Введи текст.');
-      return;
-    }
+    var srcLang = this._detectLang(raw);
+    var tgtLang = srcLang === 'ru' ? 'es' : 'ru';
 
-    if (esLines.length === 0) {
-      showError('Второе поле пустое. Введи текст.');
-      return;
-    }
+    // Show loading
+    if (progressEl) progressEl.style.display = 'block';
+    if (btn) { btn.disabled = true; btn.textContent = 'Переводим...'; }
 
-    // Auto-detect languages
-    var leftLang  = this._detectLang(rawRu);
-    var rightLang = this._detectLang(rawEs);
-
-    // Both same language?
-    if (leftLang === rightLang) {
-      showError('Похоже, в обоих полях один язык. Проверь текст.');
-      return;
-    }
-
-    // Auto-swap if needed: left field should be Russian, right should be Spanish
-    var finalRu, finalEs;
-    if (leftLang === 'ru' && rightLang === 'es') {
-      finalRu = ruLines;
-      finalEs = esLines;
-    } else {
-      // Silently swap
-      finalRu = esLines;
-      finalEs = ruLines;
-    }
-
-    // Line count mismatch: warn but proceed with min
-    var minLen = Math.min(finalRu.length, finalEs.length);
-    if (finalRu.length !== finalEs.length) {
-      // We show a temporary warning but proceed
-      showError(
-        'Количество строк не совпадает (' + finalRu.length + ' рус. / ' + finalEs.length + ' исп.). ' +
-        'Берём первые ' + minLen + ' пар.'
-      );
-      // Don't return — proceed anyway
-    }
-
-    this.saveCustomText(titleVal, finalRu.slice(0, minLen), finalEs.slice(0, minLen));
+    this._translateLines(lines, srcLang, tgtLang)
+      .then(function(translated) {
+        var minLen = Math.min(lines.length, translated.length);
+        var ruLines = srcLang === 'ru' ? lines.slice(0, minLen) : translated.slice(0, minLen);
+        var esLines = srcLang === 'es' ? lines.slice(0, minLen) : translated.slice(0, minLen);
+        self.saveCustomText(titleVal, ruLines, esLines);
+      })
+      .catch(function(err) {
+        if (progressEl) progressEl.style.display = 'none';
+        if (btn) { btn.disabled = false; btn.textContent = 'Перевести и создать →'; }
+        showError('Ошибка перевода. Проверь интернет и попробуй снова. (' + err.message + ')');
+      });
   },
 
   saveCustomText: function(titleVal, ruLines, esLines) {
