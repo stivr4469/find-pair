@@ -19,26 +19,43 @@ function shuffleArray(array) {
 }
 
 /**
- * Озвучка через Google TTS (Cloud-based)
- * Самый стабильный вариант для Telegram WebApp
+ * Озвучка испанского текста.
+ * Приоритет: Web Speech API (встроен в браузер, без внешних запросов)
+ * Запасной вариант: Google TTS
  */
 function speakSpanish(text) {
     if (!text) return;
 
-    // Очищаем текст от прочерков
-    const cleanText = text.replace(/_+/g, '...').trim();
+    const cleanText = text.replace(/_+/g, '').trim();
 
-    // Формируем URL для Google TTS (Испанский язык)
-    // tl=es (испанский), client=tw-ob (публичный клиент)
+    // Web Speech API — работает без сети, без блокировок
+    if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(cleanText);
+        utter.lang = 'es-ES';
+        utter.rate = 0.88;
+        utter.pitch = 1;
+
+        // Предпочитаем испанский голос если доступен
+        const voices = window.speechSynthesis.getVoices();
+        const esVoice = voices.find(v => v.lang.startsWith('es'));
+        if (esVoice) utter.voice = esVoice;
+
+        window.speechSynthesis.speak(utter);
+        return;
+    }
+
+    // Запасной вариант: Google TTS
     const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(cleanText)}&tl=es&client=tw-ob`;
-
-    // Создаем аудио-объект
     const audio = new Audio(url);
+    audio.play().catch(err => console.error('TTS fallback failed:', err));
+}
 
-    // Пытаемся воспроизвести
-    audio.play().catch(error => {
-        console.error("TTS Playback failed:", error);
-        // Если заблокировано политикой браузера, звук сработает только по ПРЯМОМУ клику (кнопка 🔊)
+// Прогреваем список голосов заранее (асинхронная загрузка в Chrome)
+if (typeof window !== 'undefined' && window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.addEventListener('voiceschanged', () => {
+        window.speechSynthesis.getVoices();
     });
 }
 
