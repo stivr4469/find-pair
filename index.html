@@ -6,8 +6,11 @@
     <title>VamoS</title>
     <!-- Telegram WebApp SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/unified-styles.css?v=9">
-    <link rel="stylesheet" href="css/main.css?v=5">
+    <link rel="stylesheet" href="css/main.css?v=6">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
@@ -114,5 +117,60 @@
     <!-- Скрипт приложения -->
     <script src="js/main.js"></script>
     <script>lucide.createIcons();</script>
+    <script>
+    (function () {
+      var TILT = 14, SCALE = 1.045;
+
+      function initTilt() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (!window.matchMedia('(hover: hover)').matches) return;
+
+        document.querySelectorAll('.game-card').forEach(function (card) {
+          var glare = document.createElement('div');
+          glare.className = 'card-glare';
+          card.appendChild(glare);
+
+          var fast = false;
+
+          card.addEventListener('mouseenter', function () {
+            fast = true;
+            card.style.transition = 'transform 0.12s ease, box-shadow 0.12s ease';
+            setTimeout(function () { fast = false; }, 140);
+          });
+
+          card.addEventListener('mousemove', function (e) {
+            if (fast) return;
+            var r = card.getBoundingClientRect();
+            var x = e.clientX - r.left, y = e.clientY - r.top;
+            var rx = (r.height / 2 - y) / r.height * TILT;
+            var ry = (x - r.width  / 2) / r.width  * TILT;
+            card.style.transform =
+              'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) scale(' + SCALE + ')';
+            card.style.boxShadow =
+              '0 0 0 1px rgba(0,0,0,0.04),' +
+              '0 8px 20px rgba(0,0,0,0.12),' +
+              '0 24px 48px rgba(0,0,0,0.18)';
+            glare.style.background =
+              'radial-gradient(circle at ' + (x / r.width * 100).toFixed(1) + '% ' +
+              (y / r.height * 100).toFixed(1) + '%, rgba(255,255,255,0.32) 0%, transparent 58%)';
+            glare.style.opacity = '1';
+          });
+
+          card.addEventListener('mouseleave', function () {
+            card.style.transition = 'transform 0.6s cubic-bezier(0.23,1,0.32,1), box-shadow 0.6s ease';
+            card.style.transform  = '';
+            card.style.boxShadow  = '';
+            glare.style.opacity   = '0';
+          });
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTilt);
+      } else {
+        initTilt();
+      }
+    })();
+    </script>
 </body>
 </html>
