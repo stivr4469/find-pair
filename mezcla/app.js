@@ -11,6 +11,7 @@ const MezclaApp = {
     tokenLangs: [],         // array of 'ru' | 'es' for each token position
     activeTooltip: -1,      // index of token showing tooltip (-1 = none)
     customTexts: [],        // array of user-created text objects
+    expandedTokens: [],     // word-level tokens (phrase tokens split by space)
   },
 
   // ─── Get current text (built-in or custom) ───────────────────────────────────
@@ -43,6 +44,31 @@ const MezclaApp = {
     return langs;
   },
 
+  // ─── Expand phrase tokens to word-level tokens ──────────────────────────────
+
+  _expandTokens: function(phraseTokens) {
+    var result = [];
+    phraseTokens.forEach(function(pt) {
+      var ru = pt.ru || '';
+      var es = pt.es || '';
+      var ruSent = pt.ruSent || ru;
+      var esSent = pt.esSent || es;
+      var ruWords = ru.split(/\s+/).map(_mClean).filter(Boolean);
+      var esWords = es.split(/\s+/).map(_mClean).filter(Boolean);
+      var pairLen = Math.min(ruWords.length, esWords.length);
+      for (var j = 0; j < pairLen; j++) {
+        result.push({ ru: ruWords[j], es: esWords[j], ruSent: ruSent, esSent: esSent });
+      }
+      for (var j = pairLen; j < ruWords.length; j++) {
+        result.push({ ru: ruWords[j], es: ruWords[j], ruSent: ruSent, esSent: esSent });
+      }
+      for (var j = pairLen; j < esWords.length; j++) {
+        result.push({ ru: esWords[j], es: esWords[j], ruSent: ruSent, esSent: esSent });
+      }
+    });
+    return result;
+  },
+
   // ─── Navigate to text ───────────────────────────────────────────────────────
 
   openText: function(index) {
@@ -56,7 +82,8 @@ const MezclaApp = {
     this.state.currentTextIndex = index;
     this.state.view = 'text';
     this.state.activeTooltip = -1;
-    this.state.tokenLangs = this._assignTokens(text.tokens.length, this.state.percentage);
+    this.state.expandedTokens = this._expandTokens(text.tokens);
+    this.state.tokenLangs = this._assignTokens(this.state.expandedTokens.length, this.state.percentage);
     MezclaUI.renderText();
     MezclaUI._attachTokenListeners();
   },
@@ -71,9 +98,8 @@ const MezclaApp = {
 
   setPercentage: function(pct) {
     this.state.percentage = Math.max(0, Math.min(100, parseInt(pct, 10)));
-    var text = this._getCurrentText();
-    if (text) {
-      this.state.tokenLangs = this._assignTokens(text.tokens.length, this.state.percentage);
+    if (this.state.expandedTokens.length > 0) {
+      this.state.tokenLangs = this._assignTokens(this.state.expandedTokens.length, this.state.percentage);
     }
     this.state.activeTooltip = -1;
     MezclaUI.renderText();
@@ -83,9 +109,8 @@ const MezclaApp = {
   // ─── Re-shuffle (same %, different random distribution) ─────────────────────
 
   reshuffle: function() {
-    var text = this._getCurrentText();
-    if (!text) return;
-    this.state.tokenLangs = this._assignTokens(text.tokens.length, this.state.percentage);
+    if (this.state.expandedTokens.length === 0) return;
+    this.state.tokenLangs = this._assignTokens(this.state.expandedTokens.length, this.state.percentage);
     this.state.activeTooltip = -1;
     MezclaUI.renderText();
     MezclaUI._attachTokenListeners();

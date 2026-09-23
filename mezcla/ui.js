@@ -20,18 +20,19 @@ const MezclaUI = {
     var cardsHtml = allTexts.map(function(text, i) {
       return [
         '<div data-mezcla-open="' + i + '" style="',
-          'background: white; border-radius: 14px; padding: 20px 18px;',
+          'background: var(--surface); border-radius: 14px; padding: 20px 18px;',
           'cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;',
-          'box-shadow: 0 3px 14px rgba(0,0,0,0.13);',
+          'box-shadow: var(--shadow);',
           'display: flex; align-items: center; gap: 16px;',
+          'border: 1px solid var(--border);',
         '" class="mezcla-card">',
           '<div style="font-size: 2.2rem; flex-shrink: 0;">' + text.emoji + '</div>',
           '<div style="flex: 1; min-width: 0;">',
-            '<div style="font-weight: 700; font-size: 1rem; color: #2c3e50;">' + _escHtmlM(text.title) + '</div>',
-            '<div style="font-size: 0.82rem; color: #999; margin-top: 2px; font-style: italic;">' + _escHtmlM(text.titleEs) + '</div>',
-            '<div style="font-size: 0.78rem; color: #aaa; margin-top: 4px;">' + text.tokens.length + ' блоков</div>',
+            '<div style="font-weight: 700; font-size: 1rem; color: var(--text);">' + _escHtmlM(text.title) + '</div>',
+            '<div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px; font-style: italic;">' + _escHtmlM(text.titleEs) + '</div>',
+            '<div style="font-size: 0.78rem; color: var(--muted); margin-top: 4px;">' + text.tokens.length + ' слов</div>',
           '</div>',
-          '<div style="color: #3498db; font-size: 1.3rem; flex-shrink: 0;">›</div>',
+          '<div style="color: var(--accent); font-size: 1.3rem; flex-shrink: 0;">›</div>',
         '</div>',
       ].join('');
     }).join('');
@@ -39,32 +40,23 @@ const MezclaUI = {
     // "+" card for custom text input
     var addCardHtml = [
       '<div data-mezcla-add-custom style="',
-        'background: white; border-radius: 14px; padding: 20px 18px;',
+        'background: var(--surface); border-radius: 14px; padding: 20px 18px;',
         'cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;',
-        'box-shadow: 0 3px 14px rgba(0,0,0,0.08);',
+        'box-shadow: var(--shadow);',
         'display: flex; align-items: center; gap: 16px;',
-        'border: 2px dashed #b0c4de;',
+        'border: 2px dashed var(--border);',
       '" class="mezcla-card mezcla-card-add">',
-        '<div style="font-size: 2.2rem; flex-shrink: 0;">📝</div>',
+        '<div style="font-size: 2rem; flex-shrink: 0;"><i data-lucide="file-plus-2" style="stroke:var(--accent);width:32px;height:32px;"></i></div>',
         '<div style="flex: 1; min-width: 0;">',
-          '<div style="font-weight: 700; font-size: 1rem; color: #5a7fa8;">+ Добавить свой текст</div>',
-          '<div style="font-size: 0.82rem; color: #aaa; margin-top: 2px;">Вставь свой параллельный текст</div>',
+          '<div style="font-weight: 700; font-size: 1rem; color: var(--accent);">+ Добавить свой текст</div>',
+          '<div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">Вставь свой параллельный текст</div>',
         '</div>',
-        '<div style="color: #5a7fa8; font-size: 1.3rem; flex-shrink: 0;">›</div>',
+        '<div style="color: var(--accent); font-size: 1.3rem; flex-shrink: 0;">›</div>',
       '</div>',
     ].join('');
 
     var html = [
       '<div style="max-width: 600px; margin: 0 auto; padding: 0 4px;">',
-
-        '<div style="text-align: center; margin-bottom: 24px;">',
-          '<h2 style="color: white; font-size: 1.5rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">',
-            'Mezcla — смешанное чтение',
-          '</h2>',
-          '<p style="color: rgba(255,255,255,0.8); margin-top: 6px; font-size: 0.9rem;">',
-            'Читай текст с русско-испанской смесью. Регулируй процент сам.',
-          '</p>',
-        '</div>',
 
         '<div style="display: flex; flex-direction: column; gap: 12px;">',
           cardsHtml,
@@ -119,10 +111,10 @@ const MezclaUI = {
 
         '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">',
           '<button data-mezcla-back style="',
-            'background: rgba(255,255,255,0.15); border: none; color: white;',
+            'background: var(--faint); border: 1px solid var(--border); color: var(--text);',
             'font-size: 1rem; cursor: pointer; padding: 8px 12px; border-radius: 8px;',
           '">← Назад</button>',
-          '<div style="color: white; font-weight: 700; font-size: 1.1rem;">📝 Свой текст</div>',
+          '<div style="color: var(--text); font-weight: 700; font-size: 1.1rem;"><i data-lucide="file-plus-2" style="width:18px;height:18px;vertical-align:middle;stroke:var(--accent);margin-right:6px;"></i>Свой текст</div>',
         '</div>',
 
         '<div class="game-area" style="padding: 20px 22px;">',
@@ -131,12 +123,12 @@ const MezclaUI = {
             '<input id="mezcla-custom-title" type="text"',
               ' placeholder="Название (необязательно)"',
               ' style="width:100%;box-sizing:border-box;padding:10px 14px;border-radius:8px;',
-                'border:1px solid #dde3ea;font-size:0.95rem;outline:none;',
-                'color:#2c3e50;font-family:inherit;"',
+                'border:1px solid var(--border);font-size:0.95rem;outline:none;',
+                'background:var(--surface);color:var(--text);font-family:inherit;"',
             '>',
           '</div>',
 
-          '<div style="margin-bottom: 6px; font-size: 0.82rem; color: #7f8c8d;">',
+          '<div style="margin-bottom: 6px; font-size: 0.82rem; color: var(--muted);">',
             'Вставь текст на русском <em>или</em> испанском — переведём автоматически',
           '</div>',
 
@@ -144,8 +136,8 @@ const MezclaUI = {
             ' placeholder="Вставь текст сюда...\n\nКаждый абзац или предложение на новой строке — это один блок."',
             ' rows="12"',
             ' style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:8px;',
-              'border:1px solid #dde3ea;font-size:0.92rem;resize:vertical;outline:none;',
-              'font-family:inherit;color:#2c3e50;line-height:1.7;margin-bottom:14px;"',
+              'border:1px solid var(--border);font-size:0.92rem;resize:vertical;outline:none;',
+              'background:var(--surface);font-family:inherit;color:var(--text);line-height:1.7;margin-bottom:14px;"',
           '></textarea>',
 
           '<div id="mezcla-custom-error" style="',
@@ -155,13 +147,13 @@ const MezclaUI = {
           '"></div>',
 
           '<div id="mezcla-translate-progress" style="',
-            'display:none;font-size:0.88rem;color:#667eea;',
+            'display:none;font-size:0.88rem;color:var(--accent);',
             'padding:10px 0;text-align:center;margin-bottom:10px;',
           '">Переводим... ⏳</div>',
 
           '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">',
             '<button data-mezcla-back style="',
-              'background:#f0f0f0;border:none;color:#666;',
+              'background:var(--faint);border:1px solid var(--border);color:var(--text);',
               'font-size:0.95rem;cursor:pointer;padding:10px 20px;',
               'border-radius:10px;font-family:inherit;font-weight:600;',
             '">← Назад</button>',
@@ -169,8 +161,8 @@ const MezclaUI = {
               'border:none;color:white;cursor:pointer;',
               'padding:10px 22px;border-radius:10px;',
               'font-size:0.95rem;font-family:inherit;font-weight:600;',
-              'background:linear-gradient(135deg,#667eea,#764ba2);',
-              'box-shadow:0 3px 12px rgba(102,126,234,0.4);',
+              'background:var(--accent);',
+              'box-shadow:0 3px 12px var(--accent-faint);',
             '">Перевести и создать →</button>',
           '</div>',
 
@@ -204,6 +196,7 @@ const MezclaUI = {
     if (!text) return;
 
     var pct = state.percentage;
+    var tokens = state.expandedTokens;
     var esCount = state.tokenLangs.filter(function(l) { return l === 'es'; }).length;
 
     var html = [
@@ -212,12 +205,12 @@ const MezclaUI = {
         // ── Header
         '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">',
           '<button data-mezcla-back style="',
-            'background: rgba(255,255,255,0.15); border: none; color: white;',
+            'background: var(--faint); border: 1px solid var(--border); color: var(--text);',
             'font-size: 1rem; cursor: pointer; padding: 8px 12px; border-radius: 8px;',
           '">← Назад</button>',
           '<div>',
-            '<div style="color: white; font-weight: 700; font-size: 1.1rem;">' + text.emoji + ' ' + _escHtmlM(text.title) + '</div>',
-            '<div style="color: rgba(255,255,255,0.65); font-size: 0.8rem; font-style: italic;">' + _escHtmlM(text.titleEs) + '</div>',
+            '<div style="color: var(--text); font-weight: 700; font-size: 1.1rem;">' + text.emoji + ' ' + _escHtmlM(text.title) + '</div>',
+            '<div style="color: var(--muted); font-size: 0.8rem; font-style: italic;">' + _escHtmlM(text.titleEs) + '</div>',
           '</div>',
         '</div>',
 
@@ -225,10 +218,10 @@ const MezclaUI = {
         '<div class="game-area" style="padding: 18px 20px; margin-bottom: 16px;">',
 
           '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">',
-            '<span style="font-size: 0.85rem; color: #7f8c8d;">Испанских слов:</span>',
+            '<span style="font-size: 0.85rem; color: var(--muted);">Испанских слов:</span>',
             '<span id="mezcla-pct-label" style="',
               'font-size: 1.3rem; font-weight: 700;',
-              'color: ' + (pct === 0 ? '#95a5a6' : pct === 100 ? '#27ae60' : '#3498db') + ';',
+              'color: ' + (pct === 0 ? 'var(--muted)' : pct === 100 ? '#27ae60' : 'var(--accent)') + ';',
             '">' + pct + '%</span>',
           '</div>',
 
@@ -237,7 +230,7 @@ const MezclaUI = {
             ' min="0" max="100" step="5" value="' + pct + '"',
             ' style="',
               'width: 100%; -webkit-appearance: none; height: 6px;',
-              'background: linear-gradient(90deg, #3498db ' + pct + '%, #e2e8f0 ' + pct + '%);',
+              'background: linear-gradient(90deg, var(--accent) ' + pct + '%, var(--faint) ' + pct + '%);',
               'border-radius: 3px; outline: none; cursor: pointer;',
               'margin-bottom: 12px;',
             '"',
@@ -250,9 +243,9 @@ const MezclaUI = {
               return [
                 '<button data-mezcla-pct="' + v + '" style="',
                   'padding: 5px 12px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; cursor: pointer;',
-                  'border: 2px solid ' + (isActive ? '#3498db' : '#e2e8f0') + ';',
-                  'background: ' + (isActive ? '#3498db' : 'white') + ';',
-                  'color: ' + (isActive ? 'white' : '#7f8c8d') + ';',
+                  'border: 2px solid ' + (isActive ? 'var(--accent)' : 'var(--border)') + ';',
+                  'background: ' + (isActive ? 'var(--accent)' : 'var(--surface)') + ';',
+                  'color: ' + (isActive ? 'white' : 'var(--muted)') + ';',
                   'transition: all 0.15s;',
                 '">' + v + '%</button>',
               ].join('');
@@ -260,14 +253,14 @@ const MezclaUI = {
           '</div>',
 
           '<div style="display: flex; justify-content: space-between; align-items: center;">',
-            '<span style="font-size: 0.78rem; color: #aaa;">',
-              esCount + ' исп. · ' + (text.tokens.length - esCount) + ' рус. · ' + text.tokens.length + ' всего',
+            '<span style="font-size: 0.78rem; color: var(--muted);">',
+              esCount + ' исп. · ' + (tokens.length - esCount) + ' рус. · ' + tokens.length + ' всего',
             '</span>',
             '<button data-mezcla-reshuffle style="',
-              'background: #f0f7ff; border: 1px solid #a8d4f0; color: #3498db;',
+              'background: var(--accent-faint); border: 1px solid var(--border); color: var(--accent);',
               'border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; cursor: pointer;',
               'font-weight: 600;',
-            '">🔀 Перемешать</button>',
+            '"><i data-lucide="shuffle" style="width:13px;height:13px;vertical-align:middle;stroke:var(--accent);margin-right:4px;"></i>Перемешать</button>',
           '</div>',
 
         '</div>',
@@ -275,21 +268,21 @@ const MezclaUI = {
         // ── Text body
         '<div class="game-area" style="padding: 20px 22px; line-height: 2.2; font-size: 1.05rem;">',
           '<div id="mezcla-tokens">',
-            this._buildTokensHtml(text, state.tokenLangs, state.activeTooltip),
+            this._buildTokensHtml(tokens, state.tokenLangs, state.activeTooltip),
           '</div>',
         '</div>',
 
         // ── Legend
         '<div style="',
           'display: flex; gap: 16px; justify-content: center; margin-top: 12px;',
-          'font-size: 0.8rem; color: rgba(255,255,255,0.7);',
+          'font-size: 0.8rem; color: var(--muted);',
         '">',
           '<span>',
             '<span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#3498db;vertical-align:middle;margin-right:4px;"></span>',
             'Испанский',
           '</span>',
           '<span>',
-            '<span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#e8e8e8;vertical-align:middle;margin-right:4px;"></span>',
+            '<span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:var(--faint);vertical-align:middle;margin-right:4px;"></span>',
             'Русский',
           '</span>',
           '<span style="opacity:0.6;">· нажми чтобы увидеть перевод</span>',
@@ -326,8 +319,8 @@ const MezclaUI = {
 
   // ─── Build token HTML ────────────────────────────────────────────────────────
 
-  _buildTokensHtml: function(text, tokenLangs, activeTooltip) {
-    return text.tokens.map(function(token, i) {
+  _buildTokensHtml: function(tokens, tokenLangs, activeTooltip) {
+    return tokens.map(function(token, i) {
       var lang = tokenLangs[i];
       var isEs = lang === 'es';
       var displayText = token[lang];
@@ -344,8 +337,8 @@ const MezclaUI = {
         'transition: background 0.15s;',
         'margin: 1px 0;',
         isEs
-          ? 'background: #dbeeff; color: #0d4d80; font-weight: 600; border-bottom: 2px solid #3498db;'
-          : 'background: #f2f2f2; color: #444; border-bottom: 2px solid transparent;',
+          ? 'background: var(--accent-faint); color: var(--accent); font-weight: 600; border-bottom: 2px solid var(--accent);'
+          : 'background: var(--faint); color: var(--text); border-bottom: 2px solid transparent;',
       ].join(' ');
 
       var tooltipHtml = showTooltip ? [
@@ -353,8 +346,8 @@ const MezclaUI = {
           'position: absolute;',
           'bottom: calc(100% + 6px);',
           'left: 50%; transform: translateX(-50%);',
-          'background: #2c3e50;',
-          'color: white;',
+          'background: var(--text);',
+          'color: var(--bg);',
           'font-size: 0.78rem;',
           'padding: 6px 10px;',
           'border-radius: 6px;',
@@ -389,13 +382,13 @@ const MezclaUI = {
 
   updateTokens: function() {
     var state = MezclaApp.state;
-    var text = MezclaApp._getCurrentText();
-    if (!text) return;
+    var tokens = state.expandedTokens;
+    if (!tokens || tokens.length === 0) return;
 
     var container = document.getElementById('mezcla-tokens');
     if (!container) return;
 
-    container.innerHTML = this._buildTokensHtml(text, state.tokenLangs, state.activeTooltip);
+    container.innerHTML = this._buildTokensHtml(tokens, state.tokenLangs, state.activeTooltip);
 
     // Re-attach token click listeners
     container.querySelectorAll('[data-mezcla-token]').forEach(function(el) {
