@@ -7,7 +7,8 @@
     <!-- Telegram WebApp SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="css/unified-styles.css?v=9">
-    <link rel="stylesheet" href="css/main.css?v=4">
+    <link rel="stylesheet" href="css/main.css?v=5">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
     <!-- Основной контейнер -->
@@ -25,7 +26,7 @@
         <nav class="games-menu">
             <!-- Кнопка игры "Найди пару" -->
             <a href="find-pair/" class="game-card" id="find-pair-card">
-                <div class="game-card-icon">🎮</div>
+                <div class="game-card-icon"><i data-lucide="layers"></i></div>
                 <h2 class="game-card-title">Найди пару</h2>
                 <p class="game-card-description">
                     Сопоставь слова с переводом: глаголы, существительные, прилагательные, наречия
@@ -37,7 +38,7 @@
 
             <!-- Кнопка игры "Глаголы движения" -->
             <a href="tren/" class="game-card" id="tren-card">
-                <div class="game-card-icon">🚂</div>
+                <div class="game-card-icon"><i data-lucide="compass"></i></div>
                 <h2 class="game-card-title">Глаголы движения</h2>
                 <p class="game-card-description">
                     Изучай спряжение глаголов ir, venir, llegar
@@ -49,7 +50,7 @@
 
             <!-- Кнопка игры "Ser vs Estar" -->
             <a href="ser-estar/" class="game-card" id="ser-estar-card">
-                <div class="game-card-icon">🎭</div>
+                <div class="game-card-icon"><i data-lucide="git-branch"></i></div>
                 <h2 class="game-card-title">Ser vs Estar</h2>
                 <p class="game-card-description">
                     Научись различать глаголы SER и ESTAR
@@ -61,7 +62,7 @@
 
             <!-- Кнопка "20 Формул" -->
             <a href="formulas/" class="game-card" id="formulas-card">
-                <div class="game-card-icon">📚</div>
+                <div class="game-card-icon"><i data-lucide="book-open"></i></div>
                 <h2 class="game-card-title">36 Формул</h2>
                 <p class="game-card-description">
                     Изучи 36 грамматических формул испанского и проверь себя
@@ -73,7 +74,7 @@
 
             <!-- Кнопка "Mezcla" -->
             <a href="mezcla/" class="game-card" id="mezcla-card">
-                <div class="game-card-icon">🌀</div>
+                <div class="game-card-icon"><i data-lucide="shuffle"></i></div>
                 <h2 class="game-card-title">Mezcla</h2>
                 <p class="game-card-description">
                     Читай тексты с регулируемой смесью русских и испанских слов
@@ -85,7 +86,7 @@
 
             <!-- Кнопка "Прошедшее время" -->
             <a href="pasado/" class="game-card" id="pasado-card">
-                <div class="game-card-icon">⏪</div>
+                <div class="game-card-icon"><i data-lucide="clock"></i></div>
                 <h2 class="game-card-title">Прошедшее время</h2>
                 <p class="game-card-description">
                     Indefinido, Imperfecto, Perfecto Compuesto, Pluscuamperfecto — 16 формул и 96 вопросов
@@ -112,5 +113,6 @@
 
     <!-- Скрипт приложения -->
     <script src="js/main.js"></script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
