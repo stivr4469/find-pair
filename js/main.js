@@ -182,39 +182,16 @@ function handleGameCardClick(e, gameType) {
  * Анимация появления элементов
  */
 function animateEntrance() {
-    const header = document.querySelector('.app-header');
-    const cards = document.querySelectorAll('.game-card');
+    /* Cards are handled by the deck→spread animation in index.html.
+       Header entrance uses CSS @keyframes headerReveal. */
     const footer = document.querySelector('.app-footer');
-    
-    // Начальные стили для анимации
-    header.style.opacity = '0';
-    header.style.transform = 'translateY(-20px)';
-    
-    cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transitionDelay = (index * 0.1) + 's';
-    });
-    
-    footer.style.opacity = '0';
-    footer.style.transform = 'translateY(20px)';
-    
-    // Запуск анимации
-    requestAnimationFrame(() => {
-        header.style.transition = 'all 0.5s ease';
-        header.style.opacity = '1';
-        header.style.transform = 'translateY(0)';
-        
-        cards.forEach(card => {
-            card.style.transition = 'all 0.5s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
+    if (footer) {
+        footer.style.opacity = '0';
+        requestAnimationFrame(function () {
+            footer.style.transition = 'opacity 0.5s ease 1.8s';
+            footer.style.opacity = '1';
         });
-        
-        footer.style.transition = 'all 0.5s ease 0.3s';
-        footer.style.opacity = '1';
-        footer.style.transform = 'translateY(0)';
-    });
+    }
 }
 
 /**
