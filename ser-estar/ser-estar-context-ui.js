@@ -7,17 +7,19 @@ function displayContextQuestionUI(question) {
     const contentArea = document.getElementById('ser-estar-context-area');
     if (!contentArea) return;
 
-    contentArea.innerHTML = `
-        <div class="question-container">
-            <div class="progress-text">Выполнено ${contextModeState.totalAnswered} из ${contextModeState.sessionLimit}</div>
-            
-            <div class="translation-text">
-                ${question.translation}
-            </div>
+    var qNum = contextModeState.totalAnswered + 1;
+    var qTotal = contextModeState.sessionLimit;
+    var blankHtml = question.text
+        ? question.text.replace('___', '<span class="ctx-blank">___</span>')
+        : '';
 
-            <div class="question-text">
-                ${question.text ? question.text.replace('___', '<span class="blank" id="question-blank" style="color: #f59e0b;">___</span>') : ''}
-            </div>
+    contentArea.innerHTML = `
+        <div class="ctx-question-card">
+            <div class="ctx-progress-label">ВОПРОС ${qNum} ИЗ ${qTotal} &middot; ВСТАВЬ SER ИЛИ ESTAR</div>
+
+            <div class="ctx-question-text">${blankHtml}</div>
+
+            <div class="ctx-translation">${question.translation}</div>
 
             <div class="options-container" id="context-options">
                 ${question.options.map(option => `

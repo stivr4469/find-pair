@@ -11,6 +11,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/unified-styles.css?v=14">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+        /* ── Context mode question card ── */
+        .ctx-question-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 28px 24px 24px;
+            max-width: 560px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .ctx-progress-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-align: center;
+        }
+        .ctx-question-text {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--text);
+            text-align: center;
+        }
+        .ctx-blank {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-thickness: 2px;
+            letter-spacing: 0.05em;
+        }
+        .ctx-translation {
+            font-size: 0.95rem;
+            color: var(--muted);
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
     <!-- Кнопка назад -->
@@ -91,7 +134,7 @@
     <script src="ser-estar-data.js"></script>
     <script src="ser-estar-base-ui.js"></script>
     <script src="ser-estar-base-mode.js?v=1"></script>
-    <script src="ser-estar-context-ui.js?v=3"></script>
+    <script src="ser-estar-context-ui.js?v=4"></script>
     <script src="ser-estar-context-mode.js?v=2"></script>
     <script src="ser-estar-rules-ui.js?v=2"></script>
     <script src="ser-estar-rules-mode.js"></script>

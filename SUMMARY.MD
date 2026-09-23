@@ -2,6 +2,25 @@
 
 ---
 
+## Сессия: 2026-09-23 (продолжение 3)
+
+### ser-estar / Context mode — улучшение отображения вопроса
+
+**Задача:** вопросная карточка выглядела скромно (мелкий текст 1.3rem, прочерк просто `___`, перевод сверху). Привести к стилю демо-скриншота.
+
+**Что сделано:**
+- `ser-estar/ser-estar-context-ui.js?v=3→v4`:
+  - Порядок элементов: счётчик → вопрос → перевод → кнопки (был: счётчик → перевод → вопрос)
+  - Счётчик: "ВОПРОС N ИЗ M · ВСТАВЬ SER ИЛИ ESTAR" в uppercase с letter-spacing
+  - Новые CSS-классы: `.ctx-question-card`, `.ctx-progress-label`, `.ctx-question-text`, `.ctx-blank`, `.ctx-translation`
+- `ser-estar/index.html`:
+  - Добавлен `<style>` блок: `.ctx-question-card` (surface card, `var(--shadow)`), `.ctx-question-text` (2rem, 700), `.ctx-blank` (var(--accent) + underline), `.ctx-translation` (var(--muted), italic)
+  - Версия bumped: `ser-estar-context-ui.js?v=4`
+
+**Коммит:** (текущий)
+
+---
+
 ## Сессия: 2026-09-23 (продолжение 2)
 
 ### Замена всех emoji на Lucide SVG иконки
