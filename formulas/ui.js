@@ -130,9 +130,30 @@ const FormulasUI = {
           'border-left: 3px solid #667eea;',
           'border-radius: 0 8px 8px 0;',
           'margin-bottom: 8px;',
+          'display: flex;',
+          'align-items: center;',
+          'gap: 10px;',
         '">',
-          '<div style="font-size: 1rem; color: #2c3e50; font-weight: 600;">' + _escHtml(ex.es) + '</div>',
-          '<div style="font-size: 0.85rem; color: #7f8c8d; margin-top: 2px;">' + _escHtml(ex.ru) + '</div>',
+          '<div style="flex: 1; min-width: 0;">',
+            '<div style="font-size: 1rem; color: #2c3e50; font-weight: 600;">' + _escHtml(ex.es) + '</div>',
+            '<div style="font-size: 0.85rem; color: #7f8c8d; margin-top: 2px;">' + _escHtml(ex.ru) + '</div>',
+          '</div>',
+          '<button class="formula-tts-ex-btn" data-tts="' + _escHtml(ex.es).replace(/"/g, '&quot;') + '" title="Послушать" style="',
+            'flex-shrink: 0;',
+            'width: 32px;',
+            'height: 32px;',
+            'border-radius: 50%;',
+            'border: none;',
+            'background: rgba(102,126,234,0.12);',
+            'color: #667eea;',
+            'cursor: pointer;',
+            'display: inline-flex;',
+            'align-items: center;',
+            'justify-content: center;',
+            'transition: background 0.2s, transform 0.15s;',
+          '" onmouseover="this.style.background=\'rgba(102,126,234,0.25)\';this.style.transform=\'scale(1.1)\'" onmouseout="this.style.background=\'rgba(102,126,234,0.12)\';this.style.transform=\'\'">',
+            '<i data-lucide="volume-2" style="width:15px;height:15px;stroke:currentColor;stroke-width:2;pointer-events:none"></i>',
+          '</button>',
         '</div>',
       ].join('');
     }).join('');
@@ -202,7 +223,7 @@ const FormulasUI = {
               'opacity: 0.9;',
               'transition: opacity 0.15s, transform 0.15s;',
             '" onmouseover="this.style.opacity=\'1\';this.style.transform=\'scale(1.06)\'" onmouseout="this.style.opacity=\'0.9\';this.style.transform=\'\'">',
-              '🔊 Послушать',
+              '<i data-lucide="volume-2" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;pointer-events:none"></i> Послушать',
             '</button>',
           '</div>',
 
@@ -261,6 +282,14 @@ const FormulasUI = {
     ].join('');
 
     root.innerHTML = html;
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    root.querySelectorAll('.formula-tts-ex-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        if (typeof speakSpanish === 'function') speakSpanish(btn.dataset.tts);
+      });
+    });
   },
 
   // ─── View: quiz question ──────────────────────────────────────────────────────
