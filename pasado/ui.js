@@ -247,7 +247,7 @@ const PasadoUI = {
             '<div style="font-size: 1rem; color: #2c3e50; font-weight: 600;">' + _escHtmlP(ex.es) + '</div>',
             '<div style="font-size: 0.85rem; color: #7f8c8d; margin-top: 2px;">' + _escHtmlP(ex.ru) + '</div>',
           '</div>',
-          '<button class="pasado-tts-btn" onclick="speakSpanish(' + JSON.stringify(ex.es) + ')" title="Прослушать">🔊</button>',
+          '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ex.es) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать">🔊</button>',
         '</div>',
       ].join('');
     }).join('');
@@ -285,7 +285,7 @@ const PasadoUI = {
               '<div style="font-size: 1.4rem; font-weight: 700; color: #2c3e50; margin-bottom: 4px;">' + _escHtmlP(formula.example) + '</div>',
               '<div style="font-size: 0.9rem; color: #7f8c8d; font-style: italic;">' + _escHtmlP(formula.exampleRu) + '</div>',
             '</div>',
-            '<button class="pasado-tts-btn" onclick="speakSpanish(' + JSON.stringify(formula.example) + ')" title="Прослушать пример" style="background:rgba(52,152,219,0.18);">🔊</button>',
+            '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(formula.example) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать пример" style="background:rgba(52,152,219,0.18);">🔊</button>',
           '</div>',
 
           '<div style="margin-bottom: 20px;">',
@@ -390,7 +390,7 @@ const PasadoUI = {
             'display: flex; align-items: center; justify-content: center; gap: 8px;',
           '">',
             '<span>' + _escHtmlP(question.question) + '</span>',
-            (ttsSpanish ? '<button class="pasado-tts-btn" onclick="speakSpanish(' + JSON.stringify(ttsSpanish) + ')" title="Прослушать">🔊</button>' : ''),
+            (ttsSpanish ? '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ttsSpanish) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать">🔊</button>' : ''),
           '</div>',
 
           '<div id="pasado-options" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">',
@@ -467,7 +467,7 @@ const PasadoUI = {
       feedbackEl.style.lineHeight = '1.5';
 
       var ttsBtn = correctText
-        ? ' <button class="pasado-tts-btn" onclick="speakSpanish(' + JSON.stringify(correctText) + ')" title="Прослушать" style="margin-left:6px;">🔊</button>'
+        ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(correctText) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать" style="margin-left:6px;">🔊</button>'
         : '';
 
       if (isCorrect) {
@@ -536,7 +536,6 @@ const PasadoUI = {
           '<div style="background:#f7f8fc;border-radius:10px;padding:18px 16px;text-align:center;margin-bottom:18px;">',
             '<div style="font-size:0.82rem;color:#9b59b6;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Выбери правильную форму</div>',
             '<div class="inline-question-text">' + sentenceHtml + '</div>',
-            '<div style="font-size:0.85rem;color:#7f8c8d;margin-top:10px;font-style:italic;">' + _escHtmlP(item.hint) + '</div>',
           '</div>',
 
           '<div id="pasado-inline-feedback" style="display:none;"></div>',
@@ -577,7 +576,7 @@ const PasadoUI = {
       feedbackEl.style.fontSize = '0.9rem';
       feedbackEl.style.lineHeight = '1.5';
 
-      var ttsBtn = tts ? ' <button class="pasado-tts-btn" onclick="speakSpanish(' + JSON.stringify(tts) + ')" title="Прослушать">🔊</button>' : '';
+      var ttsBtn = tts ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(tts) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать">🔊</button>' : '';
 
       if (isCorrect) {
         feedbackEl.style.background = '#d4edda';
