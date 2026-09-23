@@ -15,9 +15,11 @@ const MezclaUI = {
     var root = this._root();
     if (!root) return;
 
-    var cardsHtml = MEZCLA_DATA.map(function(text, i) {
+    var allTexts = MEZCLA_DATA.concat(MezclaApp.state.customTexts);
+
+    var cardsHtml = allTexts.map(function(text, i) {
       return [
-        '<div onclick="mezclaOpenText(' + i + ')" style="',
+        '<div data-mezcla-open="' + i + '" style="',
           'background: white; border-radius: 14px; padding: 20px 18px;',
           'cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;',
           'box-shadow: 0 3px 14px rgba(0,0,0,0.13);',
@@ -34,6 +36,24 @@ const MezclaUI = {
       ].join('');
     }).join('');
 
+    // "+" card for custom text input
+    var addCardHtml = [
+      '<div data-mezcla-add-custom style="',
+        'background: white; border-radius: 14px; padding: 20px 18px;',
+        'cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;',
+        'box-shadow: 0 3px 14px rgba(0,0,0,0.08);',
+        'display: flex; align-items: center; gap: 16px;',
+        'border: 2px dashed #b0c4de;',
+      '" class="mezcla-card mezcla-card-add">',
+        '<div style="font-size: 2.2rem; flex-shrink: 0;">📝</div>',
+        '<div style="flex: 1; min-width: 0;">',
+          '<div style="font-weight: 700; font-size: 1rem; color: #5a7fa8;">+ Добавить свой текст</div>',
+          '<div style="font-size: 0.82rem; color: #aaa; margin-top: 2px;">Вставь свой параллельный текст</div>',
+        '</div>',
+        '<div style="color: #5a7fa8; font-size: 1.3rem; flex-shrink: 0;">›</div>',
+      '</div>',
+    ].join('');
+
     var html = [
       '<div style="max-width: 600px; margin: 0 auto; padding: 0 4px;">',
 
@@ -48,23 +68,171 @@ const MezclaUI = {
 
         '<div style="display: flex; flex-direction: column; gap: 12px;">',
           cardsHtml,
+          addCardHtml,
         '</div>',
 
       '</div>',
     ].join('');
 
     root.innerHTML = html;
+    lucide.createIcons();
 
     root.querySelectorAll('.mezcla-card').forEach(function(el) {
       el.addEventListener('mouseenter', function() {
         el.style.transform = 'translateY(-3px)';
-        el.style.boxShadow = '0 8px 24px rgba(52,152,219,0.3)';
+        if (el.classList.contains('mezcla-card-add')) {
+          el.style.boxShadow = '0 8px 24px rgba(90,127,168,0.25)';
+        } else {
+          el.style.boxShadow = '0 8px 24px rgba(52,152,219,0.3)';
+        }
       });
       el.addEventListener('mouseleave', function() {
         el.style.transform = '';
-        el.style.boxShadow = '0 3px 14px rgba(0,0,0,0.13)';
+        el.style.boxShadow = el.classList.contains('mezcla-card-add')
+          ? '0 3px 14px rgba(0,0,0,0.08)'
+          : '0 3px 14px rgba(0,0,0,0.13)';
+      });
+
+      if (el.hasAttribute('data-mezcla-open')) {
+        var idx = parseInt(el.getAttribute('data-mezcla-open'), 10);
+        el.addEventListener('click', function() {
+          MezclaApp.openText(idx);
+        });
+      }
+
+      if (el.hasAttribute('data-mezcla-add-custom')) {
+        el.addEventListener('click', function() {
+          MezclaApp.openCustomInput();
+        });
+      }
+    });
+  },
+
+  // ─── View: custom text input form ────────────────────────────────────────────
+
+  renderCustomInput: function() {
+    var root = this._root();
+    if (!root) return;
+
+    var html = [
+      '<div style="max-width: 640px; margin: 0 auto;">',
+
+        // Header
+        '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">',
+          '<button data-mezcla-back style="',
+            'background: rgba(255,255,255,0.15); border: none; color: white;',
+            'font-size: 1rem; cursor: pointer; padding: 8px 12px; border-radius: 8px;',
+          '">← Назад</button>',
+          '<div style="color: white; font-weight: 700; font-size: 1.1rem;">📝 Свой текст</div>',
+        '</div>',
+
+        '<div class="game-area" style="padding: 20px 22px;">',
+
+          // Title input
+          '<div style="margin-bottom: 16px;">',
+            '<input id="mezcla-custom-title" type="text"',
+              ' placeholder="Название (необязательно)"',
+              ' style="',
+                'width: 100%; box-sizing: border-box;',
+                'padding: 10px 14px; border-radius: 8px;',
+                'border: 1px solid #dde3ea; font-size: 0.95rem;',
+                'outline: none; color: #2c3e50;',
+                'font-family: inherit;',
+              '"',
+            '>',
+          '</div>',
+
+          // Two textareas
+          '<div style="display: flex; gap: 14px; margin-bottom: 10px;" id="mezcla-custom-areas">',
+
+            '<div style="flex: 1; min-width: 0;">',
+              '<label style="display: block; font-size: 0.82rem; font-weight: 600; color: #5a7fa8; margin-bottom: 6px;">Русский</label>',
+              '<textarea id="mezcla-custom-ru"',
+                ' placeholder="Каждая строка — один блок&#10;Пример:&#10;Сегодня утром&#10;я проснулся рано&#10;и вспомнил..."',
+                ' rows="10"',
+                ' style="',
+                  'width: 100%; box-sizing: border-box;',
+                  'padding: 10px 12px; border-radius: 8px;',
+                  'border: 1px solid #dde3ea; font-size: 0.88rem;',
+                  'resize: vertical; outline: none;',
+                  'font-family: inherit; color: #2c3e50; line-height: 1.6;',
+                '"',
+              '></textarea>',
+            '</div>',
+
+            '<div style="flex: 1; min-width: 0;">',
+              '<label style="display: block; font-size: 0.82rem; font-weight: 600; color: #27ae60; margin-bottom: 6px;">Испанский</label>',
+              '<textarea id="mezcla-custom-es"',
+                ' placeholder="Esta mañana&#10;me desperté pronto&#10;y recordé..."',
+                ' rows="10"',
+                ' style="',
+                  'width: 100%; box-sizing: border-box;',
+                  'padding: 10px 12px; border-radius: 8px;',
+                  'border: 1px solid #dde3ea; font-size: 0.88rem;',
+                  'resize: vertical; outline: none;',
+                  'font-family: inherit; color: #2c3e50; line-height: 1.6;',
+                '"',
+              '></textarea>',
+            '</div>',
+
+          '</div>',
+
+          // Note
+          '<div style="font-size: 0.78rem; color: #aaa; margin-bottom: 16px;">',
+            'Строк должно быть поровну. Каждая строка = один блок.',
+          '</div>',
+
+          // Error message (hidden by default)
+          '<div id="mezcla-custom-error" style="',
+            'display: none;',
+            'font-size: 0.85rem; color: #e74c3c;',
+            'background: #fff0f0; border: 1px solid #f5c6cb;',
+            'border-radius: 8px; padding: 10px 14px;',
+            'margin-bottom: 14px;',
+          '"></div>',
+
+          // Buttons row
+          '<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">',
+            '<button data-mezcla-back style="',
+              'background: #f0f0f0; border: none; color: #666;',
+              'font-size: 0.95rem; cursor: pointer; padding: 10px 20px;',
+              'border-radius: 10px; font-family: inherit; font-weight: 600;',
+            '">← Назад</button>',
+            '<button data-mezcla-save style="',
+              'border: none; color: white; cursor: pointer;',
+              'padding: 10px 22px; border-radius: 10px;',
+              'font-size: 0.95rem; font-family: inherit; font-weight: 600;',
+              'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);',
+              'box-shadow: 0 3px 12px rgba(102,126,234,0.4);',
+            '" class="next-button">Создать текст →</button>',
+          '</div>',
+
+        '</div>',
+
+      '</div>',
+    ].join('');
+
+    root.innerHTML = html;
+    lucide.createIcons();
+
+    // Responsive: stack textareas vertically on narrow screens
+    var areasEl = document.getElementById('mezcla-custom-areas');
+    if (areasEl && window.innerWidth < 500) {
+      areasEl.style.flexDirection = 'column';
+    }
+
+    root.querySelectorAll('[data-mezcla-back]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        MezclaApp.backToList();
       });
     });
+
+    var saveBtn = root.querySelector('[data-mezcla-save]');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function() {
+        MezclaApp.saveCustomTextFromForm();
+      });
+    }
   },
 
   // ─── View: text reading ──────────────────────────────────────────────────────
@@ -74,7 +242,7 @@ const MezclaUI = {
     if (!root) return;
 
     var state = MezclaApp.state;
-    var text = MEZCLA_DATA[state.currentTextIndex];
+    var text = MezclaApp._getCurrentText();
     if (!text) return;
 
     var pct = state.percentage;
@@ -85,7 +253,7 @@ const MezclaUI = {
 
         // ── Header
         '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">',
-          '<button onclick="mezclaBackToList()" style="',
+          '<button data-mezcla-back style="',
             'background: rgba(255,255,255,0.15); border: none; color: white;',
             'font-size: 1rem; cursor: pointer; padding: 8px 12px; border-radius: 8px;',
           '">← Назад</button>',
@@ -109,7 +277,6 @@ const MezclaUI = {
           // Slider
           '<input type="range" id="mezcla-slider"',
             ' min="0" max="100" step="5" value="' + pct + '"',
-            ' oninput="mezclaSetPct(this.value)"',
             ' style="',
               'width: 100%; -webkit-appearance: none; height: 6px;',
               'background: linear-gradient(90deg, #3498db ' + pct + '%, #e2e8f0 ' + pct + '%);',
@@ -123,7 +290,7 @@ const MezclaUI = {
             [0, 25, 50, 75, 100].map(function(v) {
               var isActive = pct === v;
               return [
-                '<button onclick="mezclaSetPct(' + v + ')" style="',
+                '<button data-mezcla-pct="' + v + '" style="',
                   'padding: 5px 12px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; cursor: pointer;',
                   'border: 2px solid ' + (isActive ? '#3498db' : '#e2e8f0') + ';',
                   'background: ' + (isActive ? '#3498db' : 'white') + ';',
@@ -138,7 +305,7 @@ const MezclaUI = {
             '<span style="font-size: 0.78rem; color: #aaa;">',
               esCount + ' исп. · ' + (text.tokens.length - esCount) + ' рус. · ' + text.tokens.length + ' всего',
             '</span>',
-            '<button onclick="mezclaReshuffle()" style="',
+            '<button data-mezcla-reshuffle style="',
               'background: #f0f7ff; border: 1px solid #a8d4f0; color: #3498db;',
               'border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; cursor: pointer;',
               'font-weight: 600;',
@@ -174,7 +341,29 @@ const MezclaUI = {
     ].join('');
 
     root.innerHTML = html;
+    lucide.createIcons();
     this._attachSliderStyle();
+
+    // Attach event listeners (no inline onclick)
+    var backBtn = root.querySelector('[data-mezcla-back]');
+    if (backBtn) {
+      backBtn.addEventListener('click', function() { MezclaApp.backToList(); });
+    }
+
+    var reshuffleBtn = root.querySelector('[data-mezcla-reshuffle]');
+    if (reshuffleBtn) {
+      reshuffleBtn.addEventListener('click', function() { MezclaApp.reshuffle(); });
+    }
+
+    root.querySelectorAll('[data-mezcla-pct]').forEach(function(btn) {
+      var val = parseInt(btn.getAttribute('data-mezcla-pct'), 10);
+      btn.addEventListener('click', function() { MezclaApp.setPercentage(val); });
+    });
+
+    var slider = document.getElementById('mezcla-slider');
+    if (slider) {
+      slider.addEventListener('input', function() { MezclaApp.setPercentage(this.value); });
+    }
   },
 
   // ─── Build token HTML ────────────────────────────────────────────────────────
@@ -223,7 +412,7 @@ const MezclaUI = {
 
       return [
         '<span',
-          ' onclick="mezclaTapToken(' + i + ')"',
+          ' data-mezcla-token="' + i + '"',
           ' style="' + tokenStyle + '"',
         '>',
           tooltipHtml,
@@ -238,13 +427,30 @@ const MezclaUI = {
 
   updateTokens: function() {
     var state = MezclaApp.state;
-    var text = MEZCLA_DATA[state.currentTextIndex];
+    var text = MezclaApp._getCurrentText();
     if (!text) return;
 
     var container = document.getElementById('mezcla-tokens');
     if (!container) return;
 
     container.innerHTML = this._buildTokensHtml(text, state.tokenLangs, state.activeTooltip);
+
+    // Re-attach token click listeners
+    container.querySelectorAll('[data-mezcla-token]').forEach(function(el) {
+      var idx = parseInt(el.getAttribute('data-mezcla-token'), 10);
+      el.addEventListener('click', function() { MezclaApp.tapToken(idx); });
+    });
+  },
+
+  // ─── Attach token listeners (called after renderText) ───────────────────────
+
+  _attachTokenListeners: function() {
+    var container = document.getElementById('mezcla-tokens');
+    if (!container) return;
+    container.querySelectorAll('[data-mezcla-token]').forEach(function(el) {
+      var idx = parseInt(el.getAttribute('data-mezcla-token'), 10);
+      el.addEventListener('click', function() { MezclaApp.tapToken(idx); });
+    });
   },
 
   // ─── Slider background gradient fix ─────────────────────────────────────────
@@ -262,6 +468,10 @@ const MezclaUI = {
       '#mezcla-slider::-moz-range-thumb{',
         'width:20px;height:20px;border-radius:50%;',
         'background:#3498db;cursor:pointer;border:none;',
+      '}',
+      // Responsive: stack textareas on small screens
+      '@media (max-width: 499px) {',
+        '#mezcla-custom-areas { flex-direction: column !important; }',
       '}',
     ].join('');
     document.head.appendChild(style);
