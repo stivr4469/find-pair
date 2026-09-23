@@ -215,10 +215,10 @@ const MezclaApp = {
         tokens.push({ ru: ruWords[j], es: esWords[j], ruSent: ruSent, esSent: esSent });
       }
       for (var j = pairLen; j < ruWords.length; j++) {
-        tokens.push({ ru: ruWords[j], es: esSent, ruSent: ruSent, esSent: esSent });
+        tokens.push({ ru: ruWords[j], es: ruWords[j], ruSent: ruSent, esSent: esSent });
       }
       for (var j = pairLen; j < esWords.length; j++) {
-        tokens.push({ ru: ruSent, es: esWords[j], ruSent: ruSent, esSent: esSent });
+        tokens.push({ ru: esWords[j], es: esWords[j], ruSent: ruSent, esSent: esSent });
       }
     }
 
