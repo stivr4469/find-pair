@@ -183,9 +183,9 @@ ser-estar/
 
 ```
 formulas/
-├── index.html    ← app.js?v=14, data.js?v=13, ui.js?v=18
+├── index.html    ← app.js?v=15, data.js?v=13, ui.js?v=18
 ├── data.js       ← FORMULAS_DATA (36 items)
-├── ui.js         ← FormulasUI
+├── ui.js         ← FormulasUI + FORMULA_ICONS[36] (Lucide icon map)
 └── app.js        ← FormulasApp, has _syncBackBtn()
 ```
 
@@ -241,15 +241,15 @@ mezcla/
 
 ---
 
-## Module 6 — pasado/ (app.js?v=3)
+## Module 6 — pasado/ (app.js?v=4)
 
 4 past tenses, 16 formulas × 6 questions = 96 questions total.
 
 ```
 pasado/
-├── index.html    ← app.js?v=3, data.js?v=2, ui.js?v=6
+├── index.html    ← app.js?v=4, data.js?v=2, ui.js?v=6
 ├── data.js       ← PASADO_DATA (16 items), PASADO_INLINE, PASADO_CLASSIFY
-├── ui.js         ← PasadoUI
+├── ui.js         ← PasadoUI + PASADO_ICONS[16] (Lucide icon map)
 └── app.js        ← PasadoApp, has _syncBackBtn()
 ```
 

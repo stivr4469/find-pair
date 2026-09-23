@@ -2,6 +2,27 @@
 
 ---
 
+## Сессия: 2026-09-23 (продолжение 2)
+
+### Замена всех emoji на Lucide SVG иконки
+
+**Задача:** убрать все emoji (🎨⚡❓✅❌🔊🔥) из всего приложения — заменить на Lucide SVG иконки.
+
+**Что сделано:**
+- `formulas/ui.js?v=18`: добавлен `FORMULA_ICONS[36]` (module-level array: icon name + color + bg); `renderFormulaList`, `renderFormulaCard`, `renderQuiz`, `showAnswerFeedback`, `renderResults` — все emoji → `<i data-lucide="...">` Lucide-иконки
+- `formulas/app.js?v=14→v15`: `formulaEmoji: formula.emoji` → `formulaEmoji: FORMULA_ICONS[(formula.id||1)-1].icon` (3 места)
+- `pasado/ui.js?v=6`: добавлен `PASADO_ICONS[16]` (module-level); все виды — 🔊→`volume-2`, 🔥→`flame`, ✅→`check-circle-2`, ❌→`x-circle`; `lucide.createIcons()` вызывается после каждого `innerHTML`
+- `pasado/app.js?v=3→v4`: то же что formulas — `formulaEmoji` передаёт имя иконки
+- `tren/mode0-6*.js?v=10→v11`: ✅/❌ → `✓`/`✗` (textContent-места); 🔊 → Lucide `volume-2` в `mode5-ui.js`
+- `ser-estar/ser-estar-base-mode.js?→v1`, `ser-estar-mode2.js?v=3→v4`, `ser-estar-mode3.js`, `ser-estar-mode4.js`: ✅/❌ → `✓`/`✗`
+- `ser-estar/classify-ui.js?v=5→v6`: 🔊 → Lucide `volume-2`; добавлен `lucide.createIcons()`
+
+**Версии в index.html обновлены:** formulas/app.js v15, pasado/app.js v4, tren modes v11, classify-ui.js v6, ser-estar-base-mode.js v1, ser-estar-mode2.js v4
+
+**Коммит:** `9e4ed1d`
+
+---
+
 ## Сессия: 2026-09-23 (продолжение)
 
 ### Финальная правка цветов: formulas/ui.js и pasado/ui.js
