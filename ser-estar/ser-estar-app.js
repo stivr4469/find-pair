@@ -26,6 +26,8 @@ const SerEstarApp = {
         document.querySelectorAll('.game-area').forEach(el => el.classList.add('hidden'));
         document.querySelector('.main-menu').classList.add('hidden');
         document.querySelector('.score-display').classList.remove('hidden');
+        var backBtn = document.getElementById('btn-back-to-modes');
+        if (backBtn) backBtn.style.display = 'inline-flex';
 
         const modeArea = document.getElementById('ser-estar-' + modeId + '-area');
         if (modeArea) {
@@ -51,6 +53,8 @@ const SerEstarApp = {
         document.querySelectorAll('.game-area').forEach(el => el.classList.add('hidden'));
         document.querySelector('.main-menu').classList.remove('hidden');
         document.querySelector('.score-display').classList.remove('hidden');
+        var backBtn = document.getElementById('btn-back-to-modes');
+        if (backBtn) backBtn.style.display = 'none';
         this.currentMode = null;
     }
 };
