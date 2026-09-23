@@ -18,6 +18,7 @@
 <body>
     <div class="back-button-container">
         <a href="../" class="back-button">← Главная</a>
+        <button id="btn-back-to-list" class="back-button" style="display:none" onclick="PasadoApp.backToList()">← Список</button>
     </div>
 
     <header class="app-header">
@@ -38,7 +39,7 @@
     <script src="../js/utils.js?v=17"></script>
     <script src="data.js?v=2"></script>
     <script src="ui.js?v=5"></script>
-    <script src="app.js?v=2"></script>
+    <script src="app.js?v=3"></script>
     <script>lucide.createIcons();</script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

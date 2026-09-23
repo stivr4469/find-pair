@@ -21,8 +21,14 @@ const PasadoApp = {
     cyclicTotal: 0,                // total unique questions (96)
   },
 
+  _syncBackBtn: function() {
+    var btn = document.getElementById('btn-back-to-list');
+    if (btn) btn.style.display = (this.state.currentView === 'list') ? 'none' : 'inline-flex';
+  },
+
   showList: function() {
     this.state.currentView = 'list';
+    this._syncBackBtn();
     if (typeof PasadoUI !== 'undefined') {
       PasadoUI.renderFormulaList();
     }
@@ -32,6 +38,7 @@ const PasadoApp = {
     var safeIndex = Math.max(0, Math.min(index, PASADO_DATA.length - 1));
     this.state.currentFormulaIndex = safeIndex;
     this.state.currentView = 'card';
+    this._syncBackBtn();
     if (typeof PasadoUI !== 'undefined') {
       PasadoUI.renderFormulaCard(PASADO_DATA[safeIndex], safeIndex);
     }
@@ -70,6 +77,7 @@ const PasadoApp = {
     this.state.isAnswered = false;
     this.state.streak = 0;
     this.state.currentView = 'quiz';
+    this._syncBackBtn();
 
     this._renderCurrentQuestion();
   },
@@ -102,6 +110,7 @@ const PasadoApp = {
     this.state.isAnswered = false;
     this.state.streak = 0;
     this.state.currentView = 'quiz';
+    this._syncBackBtn();
 
     // Also keep quizQuestions pointing to cyclicPool for compatibility
     this.state.quizQuestions = this.state.cyclicPool;
@@ -221,6 +230,7 @@ const PasadoApp = {
 
   showResults: function() {
     this.state.currentView = 'results';
+    this._syncBackBtn();
     if (typeof PasadoUI !== 'undefined') {
       var total = this.state.quizMode === 'all'
         ? this.state.cyclicTotal
@@ -271,6 +281,7 @@ const PasadoApp = {
     this.state.isAnswered = false;
     this.state.streak = 0;
     this.state.currentView = 'inline';
+    this._syncBackBtn();
 
     this._renderCurrentInline();
   },
@@ -333,6 +344,7 @@ const PasadoApp = {
     this.state.isAnswered = false;
     this.state.streak = 0;
     this.state.currentView = 'classify';
+    this._syncBackBtn();
 
     this._renderCurrentClassify();
   },

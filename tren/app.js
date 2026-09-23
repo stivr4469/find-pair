@@ -86,6 +86,9 @@ const App = {
         // Скрытие главного меню
         document.querySelector('.main-menu').classList.add('hidden');
 
+        var backBtn = document.getElementById('btn-back-to-modes');
+        if (backBtn) backBtn.style.display = 'inline-flex';
+
         this.debug('All game areas and main menu hidden');
 
         // Показать выбранную игровую зону
@@ -282,6 +285,9 @@ const App = {
 
         // Показ главного меню
         document.querySelector('.main-menu').classList.remove('hidden');
+
+        var backBtn = document.getElementById('btn-back-to-modes');
+        if (backBtn) backBtn.style.display = 'none';
 
         // Сброс текущего режима
         this.state.currentMode = null;

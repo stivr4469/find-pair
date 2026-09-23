@@ -52,8 +52,14 @@ const FormulasApp = {
 
   // ─── Browse: list of all 20 formulas ───────────────────────────────────────
 
+  _syncBackBtn: function() {
+    var btn = document.getElementById('btn-back-to-list');
+    if (btn) btn.style.display = (this.state.currentView === 'list') ? 'none' : 'inline-flex';
+  },
+
   showList: function() {
     this.state.currentView = 'list';
+    this._syncBackBtn();
     if (typeof FormulasUI !== 'undefined') {
       FormulasUI.renderFormulaList();
     }
@@ -65,6 +71,7 @@ const FormulasApp = {
     const safeIndex = Math.max(0, Math.min(index, FORMULAS_DATA.length - 1));
     this.state.currentFormulaIndex = safeIndex;
     this.state.currentView = 'card';
+    this._syncBackBtn();
     if (typeof FormulasUI !== 'undefined') {
       FormulasUI.renderFormulaCard(FORMULAS_DATA[safeIndex], safeIndex);
     }
@@ -105,6 +112,7 @@ const FormulasApp = {
     this.state.totalAnswered = 0;
     this.state.isAnswered = false;
     this.state.currentView = 'quiz';
+    this._syncBackBtn();
 
     this._renderCurrentQuestion();
   },
@@ -136,6 +144,7 @@ const FormulasApp = {
     this.state.totalAnswered = 0;
     this.state.isAnswered = false;
     this.state.currentView = 'quiz';
+    this._syncBackBtn();
 
     this._renderCurrentQuestion();
   },
@@ -167,6 +176,7 @@ const FormulasApp = {
     this.state.totalAnswered = 0;
     this.state.isAnswered = false;
     this.state.currentView = 'quiz';
+    this._syncBackBtn();
 
     this._renderMarathonQuestion();
   },
@@ -238,6 +248,7 @@ const FormulasApp = {
 
   showResults: function() {
     this.state.currentView = 'results';
+    this._syncBackBtn();
     if (typeof FormulasUI !== 'undefined') {
       var total = this.state.quizMode === 'marathon'
         ? this.state.totalAnswered
