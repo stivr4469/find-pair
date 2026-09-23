@@ -158,7 +158,12 @@ const MezclaApp = {
 
     var titleVal = titleInput ? titleInput.value.trim() : '';
     var raw = textArea.value;
-    var lines = raw.split('\n').map(function(l) { return l.trim(); }).filter(function(l) { return l.length > 0; });
+    // Split into sentences (by .!? and newlines)
+    var lines = raw
+      .replace(/([.!?])\s+/g, '$1\n')
+      .split('\n')
+      .map(function(l) { return l.trim(); })
+      .filter(function(l) { return l.length > 0; });
 
     function showError(msg) {
       if (errorEl) { errorEl.textContent = msg; errorEl.style.display = 'block'; }
@@ -196,9 +201,25 @@ const MezclaApp = {
   },
 
   saveCustomText: function(titleVal, ruLines, esLines) {
-    var tokens = ruLines.map(function(ru, i) {
-      return { ru: ru, es: esLines[i] };
-    });
+    var tokens = [];
+    var sentLen = Math.min(ruLines.length, esLines.length);
+
+    for (var i = 0; i < sentLen; i++) {
+      var ruWords = ruLines[i].split(/\s+/).map(_mClean).filter(Boolean);
+      var esWords = esLines[i].split(/\s+/).map(_mClean).filter(Boolean);
+      var pairLen = Math.min(ruWords.length, esWords.length);
+
+      for (var j = 0; j < pairLen; j++) {
+        tokens.push({ ru: ruWords[j], es: esWords[j] });
+      }
+      // Extra words from longer language paired with last matched word of shorter
+      for (var j = pairLen; j < ruWords.length; j++) {
+        tokens.push({ ru: ruWords[j], es: esWords[pairLen - 1] || ruWords[j] });
+      }
+      for (var j = pairLen; j < esWords.length; j++) {
+        tokens.push({ ru: ruWords[pairLen - 1] || esWords[j], es: esWords[j] });
+      }
+    }
 
     var textObj = {
       id: 'custom-' + Date.now(),
@@ -220,6 +241,12 @@ const MezclaApp = {
     MezclaUI.renderList();
   },
 };
+
+// ─── Helper: strip punctuation from word edges ───────────────────────────────
+
+function _mClean(w) {
+  return w.replace(/^[«"'¿¡(„\-]+|[»"'.,!?;:)„\-]+$/g, '').trim();
+}
 
 // ─── Global exports ───────────────────────────────────────────────────────────
 
