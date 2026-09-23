@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>⏪ Прошедшее время</title>
-    <link rel="stylesheet" href="../css/unified-styles.css?v=11">
+    <title>Прошедшее время</title>
+    <link rel="stylesheet" href="../css/unified-styles.css?v=10">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         .pasado-main {
             width: 100%;
@@ -20,7 +21,7 @@
     </div>
 
     <header class="app-header">
-        <h1>⏪ Прошедшее время</h1>
+        <h1><span class="app-header-icon" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8)"><i data-lucide="clock" style="stroke:#db2777"></i></span>Прошедшее время</h1>
     </header>
 
     <section id="score-area" class="score-display hidden">
@@ -38,6 +39,7 @@
     <script src="data.js?v=1"></script>
     <script src="ui.js?v=1"></script>
     <script src="app.js?v=1"></script>
+    <script>lucide.createIcons();</script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof PasadoApp !== 'undefined') {

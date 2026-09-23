@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🌀 Mezcla — смешанное чтение</title>
-    <link rel="stylesheet" href="../css/unified-styles.css?v=11">
+    <title>Mezcla — смешанное чтение</title>
+    <link rel="stylesheet" href="../css/unified-styles.css?v=10">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         .mezcla-main {
             width: 100%;
@@ -20,7 +21,7 @@
     </div>
 
     <header class="app-header">
-        <h1>🌀 Mezcla</h1>
+        <h1><span class="app-header-icon" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe)"><i data-lucide="shuffle" style="stroke:#4f46e5"></i></span>Mezcla</h1>
     </header>
 
     <main id="mezcla-content" class="mezcla-main"></main>
@@ -33,6 +34,7 @@
     <script src="data.js?v=1"></script>
     <script src="ui.js?v=2"></script>
     <script src="app.js?v=1"></script>
+    <script>lucide.createIcons();</script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof MezclaApp !== 'undefined') {

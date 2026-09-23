@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🚂 Tren Ir/Venir/Llegar</title>
-    <link rel="stylesheet" href="../css/unified-styles.css?v=9">
+    <title>Tren Ir/Venir/Llegar</title>
+    <link rel="stylesheet" href="../css/unified-styles.css?v=10">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         /* Дополнительные стили для специфичных элементов */
         .score-area {
@@ -36,7 +37,7 @@
 
     <!-- Header con título de la aplicación -->
     <header class="app-header">
-        <h1>🚂 Tren Ir/Venir/Llegar</h1>
+        <h1><span class="app-header-icon" style="background:linear-gradient(135deg,#ffe4e6,#fecdd3)"><i data-lucide="compass" style="stroke:#e11d48"></i></span>Tren Ir/Venir/Llegar</h1>
     </header>
 
     <!-- Меню principal con 5 botones de mode -->
@@ -184,5 +185,6 @@
     <script src="mode6.js?v=10"></script>
     <script src="mode7.js?v=10"></script>
     <script src="app.js?v=10"></script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>

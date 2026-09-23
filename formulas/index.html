@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>📚 36 Формул испанского</title>
-    <link rel="stylesheet" href="../css/unified-styles.css?v=11">
+    <title>36 Формул испанского</title>
+    <link rel="stylesheet" href="../css/unified-styles.css?v=10">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         .formulas-main {
             width: 100%;
@@ -237,7 +238,7 @@
 
     <!-- Заголовок приложения -->
     <header class="app-header">
-        <h1>📚 36 Формул испанского</h1>
+        <h1><span class="app-header-icon" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe)"><i data-lucide="book-open" style="stroke:#7c3aed"></i></span>36 Формул испанского</h1>
     </header>
 
     <!-- Область отображения счёта -->
@@ -259,6 +260,7 @@
     <script src="data.js?v=12"></script>
     <script src="ui.js?v=12"></script>
     <script src="app.js?v=12"></script>
+    <script>lucide.createIcons();</script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof FormulasApp !== 'undefined') {
