@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="../css/unified-styles.css?v=14">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
-        /* ── Naranjito compact during quiz ── */
-        #buddy { --nj-h: 110px; }
+        /* ── Naranjito над карточкой ── */
+        #buddy { --nj-h: 150px; }
 
         /* ── Кнопка "Дальше" фиксирована внизу ── */
         #context-next-btn {
@@ -88,9 +88,6 @@
         <p>Научись различать два глагола "to be"</p>
     </header>
 
-    <!-- Mascot Naranjito -->
-    <div id="buddy" style="max-width:760px;margin:0 auto;padding:0 16px"></div>
-
     <!-- Главное меню Ser/Estar - 4 режима -->
     <nav class="main-menu">
         <button class="mode-button" data-mode="base">
@@ -115,6 +112,9 @@
         <span>Счет:</span>
         <span id="score-value">0</span>
     </section>
+
+    <!-- Mascot Naranjito — прямо над карточкой -->
+    <div id="buddy" style="max-width:760px;margin:0 auto;padding:0 16px"></div>
 
     <!-- Mode Base (A1): Базовое спряжение -->
     <main id="ser-estar-base-area" class="game-area hidden">
