@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function initTelegram() {
     // Проверяем наличие Telegram WebApp
-    if (window.Telegram && window.Telegram.WebApp) {
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) {
         tg = window.Telegram.WebApp;
         console.log('[TELEGRAM] WebApp SDK найден');
         
