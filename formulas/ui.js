@@ -429,7 +429,7 @@ const FormulasUI = {
             'display: flex;',
             'justify-content: space-between;',
             'align-items: center;',
-            'margin-bottom: 18px;',
+            'margin-bottom: 4px;',
             'font-size: 0.85rem;',
             'color: var(--muted);',
             'flex-wrap: wrap;',
@@ -443,7 +443,7 @@ const FormulasUI = {
           '</div>',
 
           // Question text (Russian — no TTS)
-          '<div style="text-align: center; margin-bottom: 22px;">',
+          '<div style="text-align: center; margin-bottom: 8px;">',
             '<div style="',
               'font-size: 1.25rem;',
               'font-weight: 700;',

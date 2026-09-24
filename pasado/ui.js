@@ -399,14 +399,14 @@ const PasadoUI = {
             '<div class="pasado-prog-fill" style="width:' + pct + '%"></div>',
           '</div>',
 
-          '<div style="display: flex; justify-content: space-between; margin-bottom: 16px; font-size: 0.85rem; color: var(--muted);">',
+          '<div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.85rem; color: var(--muted);">',
             '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>',
             '<span>' + scoreLabel + '</span>',
           '</div>',
 
           '<div style="',
             'font-size: 1.15rem; font-weight: 700; color: var(--text);',
-            'text-align: center; margin-bottom: 22px; line-height: 1.5;',
+            'text-align: center; margin-bottom: 8px; line-height: 1.5;',
             'display: flex; align-items: center; justify-content: center; gap: 8px;',
           '">',
             '<span>' + _escHtmlP(question.question) + '</span>',
@@ -548,7 +548,7 @@ const PasadoUI = {
 
           '<div class="pasado-prog-bar"><div class="pasado-prog-fill" style="width:' + pct + '%"></div></div>',
 
-          '<div style="display:flex;justify-content:space-between;margin-bottom:16px;font-size:0.85rem;color:var(--muted);">',
+          '<div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:0.85rem;color:var(--muted);">',
             '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>',
             '<span style="display:inline-flex;align-items:center;gap:3px;"><i data-lucide="check-circle-2" style="width:13px;height:13px;stroke:#22c55e;stroke-width:2.5;flex-shrink:0;"></i>' + score + ' / ' + qIndex + '</span>',
           '</div>',
@@ -659,7 +659,7 @@ const PasadoUI = {
 
           '<div class="pasado-prog-bar"><div class="pasado-prog-fill" style="width:' + pct + '%"></div></div>',
 
-          '<div style="display:flex;justify-content:space-between;margin-bottom:18px;font-size:0.85rem;color:var(--muted);">',
+          '<div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:0.85rem;color:var(--muted);">',
             '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>',
             '<span style="display:inline-flex;align-items:center;gap:3px;"><i data-lucide="check-circle-2" style="width:13px;height:13px;stroke:#22c55e;stroke-width:2.5;flex-shrink:0;"></i>' + score + ' / ' + qIndex + '</span>',
           '</div>',
