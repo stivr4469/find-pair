@@ -25,21 +25,21 @@
             margin: 0 3px;
             padding: 4px 12px;
             border-radius: 16px;
-            border: 2px solid #6c757d;
-            background: white;
+            border: 2px solid var(--border);
+            background: var(--surface);
             cursor: pointer;
             font-size: 1rem;
             font-weight: 600;
             vertical-align: middle;
             transition: all 0.2s ease;
-            color: #2c3e50;
+            color: var(--text);
             line-height: 1.4;
         }
 
         .inline-option:hover:not(:disabled) {
-            background: #e9ecef;
-            border-color: #667eea;
-            color: #667eea;
+            background: var(--accent-faint);
+            border-color: var(--accent);
+            color: var(--accent);
             transform: scale(1.05);
         }
 

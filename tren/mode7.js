@@ -152,7 +152,7 @@ function refreshMode7WordBank() {
     }).join('');
 
     if (remaining.length === 0) {
-        bank.innerHTML = '<span style="color:#aaa; font-style:italic; font-size:0.85rem;">Все слова распределены</span>';
+        bank.innerHTML = '<span style="color:var(--muted); font-style:italic; font-size:0.85rem;">Все слова распределены</span>';
     }
 }
 
@@ -174,19 +174,19 @@ function refreshMode7Columns() {
             const isChecked = mode7State.results[item.word] !== undefined;
             const isCorrect = mode7State.results[item.word];
 
-            let chipStyle = 'background:#e9ecef; color:#333;';
+            let chipClass = 'placed-word-chip';
             let hint = '';
 
             if (isChecked) {
                 if (isCorrect) {
-                    chipStyle = 'background:#d4edda; color:#155724; border-color:#c3e6cb;';
+                    chipClass += ' chip-correct';
                 } else {
-                    chipStyle = 'background:#f8d7da; color:#721c24; border-color:#f5c6cb;';
+                    chipClass += ' chip-incorrect';
                     hint = ` <span style="font-size:0.75rem; font-weight:normal;">(→ ${item.correctColumn.toUpperCase()})</span>`;
                 }
             }
 
-            return `<div class="placed-word-chip" style="${chipStyle}">
+            return `<div class="${chipClass}">
                 ${escapeHtml(item.word)}${hint}
             </div>`;
         }).join('');

@@ -89,12 +89,11 @@ function checkMode5Answer(selected, correct, buttonElement, explanation) {
 
     if (isCorrect) {
         feedback.innerHTML = `
-            <div style="color: #27ae60; font-weight: bold; margin-bottom: 8px;">✓ ¡Correcto!</div>
-            <div style="color: #444; font-size: 0.95rem; line-height: 1.4;">${explanation}</div>
+            <div style="color: var(--success, #27ae60); font-weight: bold; margin-bottom: 8px;">✓ ¡Correcto!</div>
+            <div style="color: var(--text); font-size: 0.95rem; line-height: 1.4;">${explanation}</div>
         `;
-        feedback.style.borderLeft = '5px solid #27ae60';
+        feedback.style.borderLeft = '5px solid var(--success, #27ae60)';
         buttonElement.classList.add('correct');
-        buttonElement.style.background = '#dcfce7';
         mode5State.score++;
         updateMode5ScoreUI();
         _njStreak++;
@@ -107,18 +106,16 @@ function checkMode5Answer(selected, correct, buttonElement, explanation) {
         // }
     } else {
         feedback.innerHTML = `
-            <div style="color: #e74c3c; font-weight: bold; margin-bottom: 8px;">✗ Incorrecto. Правильный ответ: ${correct}</div>
-            <div style="color: #444; font-size: 0.95rem; line-height: 1.4;">${explanation}</div>
+            <div style="color: var(--danger, #e74c3c); font-weight: bold; margin-bottom: 8px;">✗ Incorrecto. Правильный ответ: ${correct}</div>
+            <div style="color: var(--text); font-size: 0.95rem; line-height: 1.4;">${explanation}</div>
         `;
-        feedback.style.borderLeft = '5px solid #e74c3c';
+        feedback.style.borderLeft = '5px solid var(--danger, #e74c3c)';
         buttonElement.classList.add('incorrect');
-        buttonElement.style.background = '#fee2e2';
         window.njWrong && window.njWrong(null, explanation || null);
 
         allButtons.forEach(btn => {
             if (normalize(btn.dataset.answer) === normalize(correct)) {
                 btn.classList.add('correct');
-                btn.style.background = '#dcfce7';
             }
         });
     }

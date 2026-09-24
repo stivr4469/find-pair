@@ -63,7 +63,7 @@ function checkMode1Answer(selected, correct, buttonElement, explanation) {
         : '';
 
     if (selected.toLowerCase() === correct.toLowerCase()) {
-        feedback.innerHTML = `<div style="font-weight: bold; color: #22c55e;">✓ ¡Correcto!</div>${explanationHtml}`;
+        feedback.innerHTML = `<div style="font-weight: bold; color: var(--success, #22c55e);">✓ ¡Correcto!</div>${explanationHtml}`;
         feedback.className = "feedback correct";
         feedback.style.flexDirection = 'column';
         feedback.style.alignItems = 'center';
@@ -73,7 +73,7 @@ function checkMode1Answer(selected, correct, buttonElement, explanation) {
         _njStreak++;
         window.njCorrect && window.njCorrect(_njStreak);
     } else {
-        feedback.innerHTML = `<div style="font-weight: bold; color: #ef4444;">✗ Incorrecto. Правильно: ${correct}</div>${explanationHtml}`;
+        feedback.innerHTML = `<div style="font-weight: bold; color: var(--danger, #ef4444);">✗ Incorrecto. Правильно: ${correct}</div>${explanationHtml}`;
         feedback.className = "feedback incorrect";
         feedback.style.flexDirection = 'column';
         feedback.style.alignItems = 'center';

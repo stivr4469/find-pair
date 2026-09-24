@@ -141,8 +141,8 @@ const MezclaUI = {
           '></textarea>',
 
           '<div id="mezcla-custom-error" style="',
-            'display:none;font-size:0.85rem;color:#e74c3c;',
-            'background:#fff0f0;border:1px solid #f5c6cb;',
+            'display:none;font-size:0.85rem;color:var(--danger,#e74c3c);',
+            'background:rgba(220,38,38,0.1);border:1px solid var(--danger,#e74c3c);',
             'border-radius:8px;padding:10px 14px;margin-bottom:14px;',
           '"></div>',
 

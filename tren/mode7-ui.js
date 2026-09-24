@@ -18,39 +18,39 @@ function injectMode7Styles() {
     flex-wrap: wrap;
     gap: 8px;
     min-height: 52px;
-    border: 1.5px dashed #bbb;
+    border: 1.5px dashed var(--border);
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 16px;
-    background: #fafafa;
+    background: var(--faint);
     align-items: center;
 }
 
 .word-chip {
     padding: 6px 16px;
     border-radius: 20px;
-    border: 2px solid #6c757d;
-    background: white;
+    border: 2px solid var(--border);
+    background: var(--surface);
     cursor: pointer;
     font-size: 0.95rem;
     font-weight: 600;
-    color: #2c3e50;
+    color: var(--text);
     transition: all 0.15s ease;
     user-select: none;
     line-height: 1.4;
 }
 
 .word-chip:hover {
-    border-color: #667eea;
-    background: #f0f2ff;
+    border-color: var(--accent);
+    background: var(--accent-faint);
     transform: translateY(-1px);
 }
 
 .word-chip.selected {
-    border-color: #007bff;
-    background: #e7f1ff;
-    color: #004085;
-    box-shadow: 0 0 0 3px rgba(0,123,255,0.15);
+    border-color: var(--accent);
+    background: var(--accent-mid);
+    color: var(--text);
+    box-shadow: 0 0 0 3px var(--accent-faint);
 }
 
 .mode7-columns-grid {
@@ -61,25 +61,25 @@ function injectMode7Styles() {
 }
 
 .classify-column {
-    border: 2px dashed #ccc;
+    border: 2px dashed var(--border);
     border-radius: 10px;
     padding: 10px;
     min-height: 130px;
     cursor: pointer;
-    background: #fafafa;
+    background: var(--faint);
     transition: border-color 0.15s, background 0.15s;
     display: flex;
     flex-direction: column;
 }
 
 .classify-column:hover {
-    border-color: #aaa;
-    background: #f4f4f4;
+    border-color: var(--muted);
+    background: var(--surface);
 }
 
 .classify-column.has-selection {
-    border-color: #007bff;
-    background: #f0f6ff;
+    border-color: var(--accent);
+    background: var(--accent-faint);
 }
 
 .classify-column-header {
@@ -107,14 +107,28 @@ function injectMode7Styles() {
     border-radius: 6px;
     font-size: 0.88rem;
     font-weight: 600;
-    border: 1.5px solid transparent;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
     text-align: center;
     word-break: break-word;
 }
 
+.placed-word-chip.chip-correct {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border-color: rgba(34, 197, 94, 0.4);
+}
+
+.placed-word-chip.chip-incorrect {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
 .mode7-instruction {
     font-size: 0.83rem;
-    color: #888;
+    color: var(--muted);
     text-align: center;
     margin-bottom: 14px;
     font-style: italic;
@@ -161,7 +175,7 @@ function displayMode7RoundUI(round, roundIndex, totalRounds) {
     contentArea.innerHTML = `
         <div class="question-container" style="padding-bottom: 80px;">
             <div class="progress-text">Раунд ${roundIndex + 1} из ${totalRounds}</div>
-            <h3 id="mode7-title" style="text-align:center; margin-bottom:6px; font-size:1.05rem; color:#2c3e50;">${escapeHtml(round.title)}</h3>
+            <h3 id="mode7-title" style="text-align:center; margin-bottom:6px; font-size:1.05rem; color:var(--text);">${escapeHtml(round.title)}</h3>
             <p class="mode7-instruction" id="mode7-instruction">${escapeHtml(round.instruction || 'Нажми слово → нажми колонку')}</p>
 
             <!-- Банк слов -->
