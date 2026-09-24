@@ -184,10 +184,6 @@ const PasadoUI = {
     var html = [
       '<div style="max-width:700px;margin:0 auto;padding:0 4px;" class="pasado-anim-in">',
 
-        '<div style="text-align:center;margin-bottom:20px;">',
-          '<h2 style="color:var(--text);font-size:1.5rem;">Прошедшее время</h2>',
-          '<p style="color:var(--muted);margin-top:6px;font-size:0.9rem;">4 времени · 16 формул · нажми чтобы изучить</p>',
-        '</div>',
 
         '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:24px;">',
           '<button onclick="pasadoStartAllQuiz()" style="',

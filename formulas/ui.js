@@ -92,15 +92,6 @@ const FormulasUI = {
     var html = [
       '<div style="max-width: 700px; margin: 0 auto; padding: 0 4px;">',
 
-        // Header
-        '<div style="text-align: center; margin-bottom: 24px;">',
-          '<h2 style="color: var(--text); font-size: 1.6rem;">',
-            '36 Формул Испанского',
-          '</h2>',
-          '<p style="color: var(--muted); margin-top: 6px;">',
-            'Нажми на формулу, чтобы изучить',
-          '</p>',
-        '</div>',
 
         // "Quiz all" + "Marathon" buttons
         '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">',
