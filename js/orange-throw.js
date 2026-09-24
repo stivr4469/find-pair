@@ -138,6 +138,7 @@
         anim.finished.then(function () {
             orange.remove();
             throwing = false;
+            window.dispatchEvent(new CustomEvent('vamos:scored'));
             if (basket) {
                 basket.classList.add('basket-catch');
                 setTimeout(function () {

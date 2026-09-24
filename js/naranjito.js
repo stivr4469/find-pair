@@ -668,6 +668,21 @@
 
     api.isBig = function () { return big; };
 
+    /* Вызывается из orange-throw.js когда апельсин попал в корзинку */
+    api.wave = async function () {
+      var live = begin();
+      setFace('happy', 'grin'); S.brow.t = .7; S.blush.t = .9;
+      S.sq.x = 1.2; S.sq.v = 0;
+      await run(280, function (k) { R.y = 28 * 4 * k * (1 - k); }); if (!live()) return;
+      R.y = 0; S.sq.x = .78; S.sq.v = 0;
+      F.wave = true; burst(8, 'mini');
+      tone(660, 0, .1); tone(784, .07, .18);
+      await wait(1700); if (!live()) return;
+      F.wave = false; calm();
+    };
+
+    window.addEventListener('vamos:scored', function () { api.wave(); });
+
     calm(); settle();
     if (reduce) { /* без движения: персонаж просто стоит */ }
     return api;
