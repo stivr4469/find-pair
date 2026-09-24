@@ -65,6 +65,7 @@ const FormulasApp = {
   showList: function() {
     this.state.currentView = 'list';
     this._syncBackBtn();
+    if (_nj) _nj.reset();
     if (typeof FormulasUI !== 'undefined') {
       FormulasUI.renderFormulaList();
     }
@@ -77,6 +78,7 @@ const FormulasApp = {
     this.state.currentFormulaIndex = safeIndex;
     this.state.currentView = 'card';
     this._syncBackBtn();
+    if (_nj) _nj.reset();
     if (typeof FormulasUI !== 'undefined') {
       FormulasUI.renderFormulaCard(FORMULAS_DATA[safeIndex], safeIndex);
     }
@@ -119,6 +121,7 @@ const FormulasApp = {
     this.state.currentView = 'quiz';
     this._syncBackBtn();
     _njStreak = 0;
+    if (_nj) _nj.reset();
     if (typeof resetTopbar === 'function') resetTopbar();
 
     this._renderCurrentQuestion();
@@ -153,6 +156,7 @@ const FormulasApp = {
     this.state.currentView = 'quiz';
     this._syncBackBtn();
     _njStreak = 0;
+    if (_nj) _nj.reset();
     if (typeof resetTopbar === 'function') resetTopbar();
 
     this._renderCurrentQuestion();
@@ -187,6 +191,7 @@ const FormulasApp = {
     this.state.currentView = 'quiz';
     this._syncBackBtn();
     _njStreak = 0;
+    if (_nj) _nj.reset();
     if (typeof resetTopbar === 'function') resetTopbar();
 
     this._renderMarathonQuestion();
