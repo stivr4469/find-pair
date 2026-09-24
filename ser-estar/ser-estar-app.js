@@ -106,5 +106,6 @@ window.njResult = function(pct) { if (_nj) _nj.result(pct); };
 window.njGetStreak = function() { return _njStreak; };
 window.njAddStreak = function() { _njStreak++; seUpdateStreak(_njStreak); return _njStreak; };
 window.njResetStreak = function() { _njStreak = 0; seUpdateStreak(0); };
+window.njReset = function() { if (_nj) _nj.reset(); };
 window.seSetProgress = seSetProgress;
 window.seUpdateScore = seUpdateScore;

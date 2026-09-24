@@ -11,42 +11,7 @@ function renderClassifyScreen() {
     if (!area) return;
 
     area.innerHTML = `
-        <div class="classify-wrapper">
-            <!-- Позиция вопроса -->
-            <div class="classify-header">
-                <div class="classify-question-label" id="classify-question-display">1/20</div>
-            </div>
-
-            <!-- Зона карточки -->
-            <div class="classify-card-zone" id="classify-card-zone">
-                <div class="classify-card" id="classify-card">
-                    <div class="classify-card-inner">
-                        <div class="classify-sentence" id="classify-sentence"></div>
-                        <button class="classify-tts-btn" id="classify-tts-btn" onclick="classifySpeak()" title="Прослушать" style="display:none">
-                            <i data-lucide="volume-2" style="width:17px;height:17px;stroke:currentColor;stroke-width:2;pointer-events:none"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Блок обратной связи (правило) -->
-            <div class="classify-feedback" id="classify-feedback">
-                <div class="classify-feedback-inner" id="classify-feedback-inner"></div>
-            </div>
-
-            <!-- Зоны классификации -->
-            <div class="classify-zones">
-                <button class="classify-zone classify-zone-ser" id="zone-ser" data-choice="SER">
-                    <span class="zone-label">SER</span>
-                    <span class="zone-hint">постоянное</span>
-                </button>
-                <button class="classify-zone classify-zone-estar" id="zone-estar" data-choice="ESTAR">
-                    <span class="zone-label">ESTAR</span>
-                    <span class="zone-hint">временное</span>
-                </button>
-            </div>
-        </div>
-    `;
+        <div class="classify-wrapper"> <!-- Позиция вопроса --> <div class="classify-header"> <div class="classify-question-label" id="classify-question-display">1/20</div> </div> <!-- Зона карточки --> <div class="classify-card-zone" id="classify-card-zone"> <div class="classify-card" id="classify-card"> <div class="classify-card-inner"> <div class="classify-sentence" id="classify-sentence"></div> <button class="classify-tts-btn" id="classify-tts-btn" onclick="classifySpeak()" title="Прослушать" style="display:none"> </button> </div> </div> </div> <!-- Блок обратной связи (правило) --> <div class="classify-feedback" id="classify-feedback"> <div class="classify-feedback-inner" id="classify-feedback-inner"></div> </div> <!-- Зоны классификации --> <div class="classify-zones"> <button class="classify-zone classify-zone-ser" id="zone-ser" data-choice="SER"> <span class="zone-label">SER</span> <span class="zone-hint">постоянное</span> </button> <button class="classify-zone classify-zone-estar" id="zone-estar" data-choice="ESTAR"> <span class="zone-label">ESTAR</span> <span class="zone-hint">временное</span> </button> </div> </div> `;
 
     lucide.createIcons();
 
@@ -88,12 +53,14 @@ function showClassifyCard(item, current, total, score, streak) {
         setTopbarProgress(total > 0 ? Math.round((current / total) * 100) : 0);
     }
 
-    // Скрываем feedback и сразу очищаем контент
+    // Скрываем feedback, очищаем контент и удаляем кнопку «Дальше»
     // (max-height переход занимает 350ms — без очистки старый текст виден)
     if (feedback) {
         feedback.classList.remove('visible');
         const inner = document.getElementById('classify-feedback-inner');
         if (inner) inner.innerHTML = '';
+        // Удаляем кнопку Дальше — она добавляется снаружи inner
+        feedback.querySelectorAll('.next-button').forEach(function(b) { b.remove(); });
     }
 
     // Скрываем TTS до ответа
@@ -175,13 +142,7 @@ function showClassifyFeedback(item) {
     if (!feedback || !inner) return;
 
     inner.innerHTML = `
-        <div class="feedback-rule">
-            
-            <strong>${item.rule}</strong>
-        </div>
-        <div class="feedback-explanation">${item.explanation}</div>
-        <div class="feedback-correct">Правильно: <em>${item.full}</em></div>
-    `;
+        <div class="feedback-rule"> <strong>${item.rule}</strong> </div> <div class="feedback-explanation">${item.explanation}</div> <div class="feedback-correct">Правильно: <em>${item.full}</em></div> `;
 
     feedback.classList.add('visible');
 }
@@ -206,25 +167,9 @@ function showClassifyResults(score, total, bestStreak) {
     else if (pct >= 40) { medalIcon = 'award'; medalColor = '#cd7c2b'; msg = 'Неплохо, тренируйся дальше!'; }
 
     area.innerHTML = `
-        <div class="classify-results">
-            <div class="results-medal">
-                <i data-lucide="${medalIcon}" style="width:56px;height:56px;stroke:${medalColor}"></i>
-            </div>
-            <h2 class="results-title">Сессия завершена!</h2>
-            <div class="results-score">${score} / ${total}</div>
-            <div class="results-pct">${pct}%</div>
-            <div class="results-msg">${msg}</div>
-            <div class="results-streak">Лучшая серия: ${bestStreak} <i data-lucide="flame" style="width:16px;height:16px;stroke:#f59e0b;display:inline-block;vertical-align:middle"></i></div>
-            <div class="results-buttons">
-                <button class="restart-button" onclick="initClassifyMode()">
-                    <i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Ещё раз
-                </button>
-                <button class="menu-button" onclick="SerEstarApp.showMainMenu()">
-                    <i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> В меню
-                </button>
-            </div>
-        </div>
-    `;
+        <div class="classify-results"> <div class="results-medal"> </div> <h2 class="results-title">Сессия завершена!</h2> <div class="results-score">${score} / ${total}</div> <div class="results-pct">${pct}%</div> <div class="results-msg">${msg}</div> <div class="results-streak">Лучшая серия: ${bestStreak} </div> <div class="results-buttons"> <button class="restart-button" onclick="initClassifyMode()"> Ещё раз
+                </button> <button class="menu-button" onclick="SerEstarApp.showMainMenu()"> В меню
+                </button> </div> </div> `;
     lucide.createIcons();
 }
 

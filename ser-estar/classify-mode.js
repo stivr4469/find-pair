@@ -56,6 +56,9 @@ function showNextClassifyQuestion() {
     classifyState.isAnswered = false;
     classifyState.pendingNext = false;
 
+    // Сбрасываем bubble Naranjito от предыдущего вопроса
+    window.njReset && window.njReset();
+
     // Берём следующий из очереди (циклически)
     if (classifyState.queue.length === 0) {
         classifyState.queue = shuffleArray([...CLASSIFY_DATA]);
@@ -147,8 +150,11 @@ function showClassifyNextButton() {
     const feedback = document.getElementById('classify-feedback');
     if (!feedback) return;
 
+    // Удаляем старую кнопку если осталась от предыдущего вопроса
+    feedback.querySelectorAll('.next-button').forEach(function(b) { b.remove(); });
+
     const btn = document.createElement('button');
-    btn.className = 'next-button';
+    btn.className = 'next-button quiz-next-fixed';
     btn.textContent = 'Дальше →';
     btn.onclick = function() {
         classifyState.totalAnswered++;
