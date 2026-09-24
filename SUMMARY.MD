@@ -12,30 +12,43 @@
 hint-тексты объясняют «что», но не «почему». Пилот на pasado/ проверяет подход,
 после чего тот же шаблон применяется ко всем остальным модулям и новому subjuntivo/.
 
-### Новые типы вопросов (единая схема для всех модулей)
+### Аудит pasado/data.js (итог)
+- **Формулы-эталоны**: Ф8, Ф12, Ф14, Ф16 — контекстные вопросы, сигнальные слова, тест выбора времени
+- **Слабые формулы (11 из 16)**: Ф1-Ф7, Ф9-Ф10, Ф13, Ф15 — только морфология, нет «когда»
+- **PASADO_INLINE и PASADO_CLASSIFY**: уже отличного качества, не трогали
+- **Ключевой паттерн**: каждый hint должен содержать СИГНАЛ + ПРАВИЛО + ФОРМУ
 
-**type:'fill'** — fill-in-the-blank без клавиатуры:
-- Предложение с пропуском `___`
-- 4 кликабельные плитки с формами глагола
-- Пользователь нажимает → форма встаёт в пропуск → проверка
-- Поля: `sentence`, `sentenceRu`, `verb`, `tiles[]`, `correct`, `hint`
+### Что сделано в pasado/data.js (v=3→v=4)
+Обогащены **9 слабых формул** (Ф1-Ф7, Ф9-Ф10):
+1. **Все hints переписаны** в формат «СИГНАЛ → ПРАВИЛО → ФОРМА»:
+   - Было: `"Indefinido yo (-AR): stem + é. hablar → habl + é = hablé"`
+   - Стало: `"«Ayer/el lunes pasado» = сигнал Indefinido\nЗавершённое конкретное действие\nhablar + yo: habl + é = hablé"`
+2. **Q5-Q6 заменены в каждой формуле** на контекстные вопросы выбора времени:
+   - Ф1: `"Ayer mis amigos _____ en la fiesta..."` (bailaron vs bailaban vs han bailado)
+   - Ф2: `"En 2019 ellos _____ juntos..."` (vivieron vs vivían)
+   - Ф3: `"¿Qué _____ ayer?"` (hiciste vs hacías vs has hecho)
+   - Ф4: `"Anteayer yo _____ la noticia"` (supe vs sabía — момент vs состояние)
+   - Ф5: `"Cuando llegué, ella todavía _____ (cocinar)"` — классический фон+событие
+   - Ф6: `"El perro _____ (dormir) cada noche"` (dormía vs durmió)
+   - Ф7: `"De niña ella siempre _____ (ir) al parque"` (iba vs fue)
+   - Ф9: `"Este mes ellos _____ (salir) tres veces"` (han salido vs salieron)
+   - Ф10: `"Ellos nunca _____ (vivir) en España"` (han vivido vs vivieron)
 
-**contrasts[]** — карточки контраста двух времён:
-- Режим просмотра (не квиз): Indefinido vs Imperfecto на одном экране
-- Поля: `indefinido`, `indefinidoRu`, `imperfecto`, `imperfectoRu`, `signal`, `rule`
+### Файлы изменены
+- `pasado/data.js` v=3→v=4 — обогащены hints + Q5-Q6 в 9 формулах
+- `pasado/index.html` — bump версии data.js до v=4
 
-**Обогащённый hint** — формат «СИГНАЛ → ПРАВИЛО → ФОРМА»:
-- Было: "Indefinido yo (-AR): stem + é"
-- Стало: "«Ayer» = маркер однократного прошлого (Indefinido)\nЗавершённое действие\nhablar + yo → hablé"
+### Проверено в браузере
+- ✅ Полный тест (96 вопросов) загружается без ошибок
+- ✅ Hints отображают сигнальные слова и контраст с другим временем
+- ✅ Новые контекстные вопросы корректны (4 варианта, все времена)
+- ✅ Консоль: 0 JS-ошибок
 
-### Файлы к изменению
-- `pasado/data.js` v=3→v=4: новая схема, fill-вопросы, contrasts[], улучшенные hints
-- `pasado/ui.js` v=13→v=15: рендер fill-карточки, режим Контраст
-- `pasado/app.js` v=7→v=8: логика selectTile(), режим Контраст
-
-### Открытые задачи после пилота
-- [ ] Применить fill+contrast+hint ко всем модулям: tren/, formulas/, ser-estar/, mezcla/
-- [ ] Построить subjuntivo/ как новый полноценный модуль на обогащённом шаблоне
+### Открытые задачи
+- [ ] Добавить fill-вопросы (type:'fill') в pasado/data.js + рендер в ui.js
+- [ ] Добавить contrasts[] и режим «Контраст» в pasado
+- [ ] Применить тот же подход ко всем модулям: tren/, formulas/, ser-estar/, mezcla/
+- [ ] Построить subjuntivo/ как новый полноценный модуль
 - [ ] Удалить Vercel-проект find-pair-seven
 
 ---

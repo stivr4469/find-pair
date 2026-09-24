@@ -34,37 +34,37 @@ const PASADO_DATA = [
         question: "Я поговорил (hablar, yo)",
         options: ["hablé", "hablaba", "hablaré", "hablado"],
         correct: 0,
-        hint: "Indefinido yo (-AR): stem + é. hablar → habl + é = hablé"
+        hint: "«Ayer/el lunes pasado» = сигнал Indefinido\nЗавершённое конкретное действие\nhablar + yo: habl + é = hablé"
       },
       {
-        question: "Ты работал сегодня (trabajar, tú)",
+        question: "Ты много работал (trabajar, tú)",
         options: ["trabajé", "trabajaste", "trabajó", "trabajabas"],
         correct: 1,
-        hint: "Indefinido tú (-AR): stem + aste. trabajar → trabaj + aste = trabajaste"
+        hint: "Indefinido tú (-AR): stem + aste\ntrabajabas = Imperfecto (привычка); trabajaste = конкретный факт\ntrabajaste"
       },
       {
         question: "Она шла два часа (caminar, ella)",
         options: ["caminé", "caminaste", "caminó", "caminaba"],
         correct: 2,
-        hint: "Indefinido él/ella (-AR): stem + ó. caminar → camin + ó = caminó"
+        hint: "Indefinido ella (-AR): stem + ó\ncaminó = завершённое действие; caminaba = привычка (Imperfecto)\ncaminar → caminó"
       },
       {
         question: "Мы пришли поздно (llegar, nosotros)",
         options: ["llegamos", "llegábamos", "llegaron", "lleguemos"],
         correct: 0,
-        hint: "Indefinido nosotros (-AR): stem + amos. Форма совпадает с Present, контекст уточняет время"
+        hint: "Indefinido nosotros (-AR): stem + amos\n⚠️ Совпадает с Presente — контекст уточняет время\nllegar → llegamos"
       },
       {
-        question: "Вы хорошо пели (cantar, vosotros)",
-        options: ["cantamos", "cantasteis", "cantareis", "cantabais"],
-        correct: 1,
-        hint: "Indefinido vosotros (-AR): stem + asteis. cantar → cant + asteis = cantasteis"
+        question: "Ayer mis amigos _____ en la fiesta hasta tarde. (bailar)",
+        options: ["bailaron", "bailaban", "han bailado", "habían bailado"],
+        correct: 0,
+        hint: "«Ayer» = сигнал Indefinido\nbailaban = Imperfecto (привычка); han bailado = hoy/esta semana\nbailar + ellos: bail + aron = bailaron"
       },
       {
-        question: "Они путешествовали в Испанию (viajar, ellos)",
-        options: ["viajamos", "viajaron", "viajaban", "viajarán"],
-        correct: 1,
-        hint: "Indefinido ellos (-AR): stem + aron. viajar → viaj + aron = viajaron"
+        question: "La semana pasada yo _____ una camisa nueva. (comprar)",
+        options: ["compré", "compraba", "he comprado", "iba a comprar"],
+        correct: 0,
+        hint: "«La semana pasada» = завершённый период → Indefinido\ncompraba = привычка без даты; he comprado = esta semana\ncomprar + yo: compr + é = compré"
       }
     ]
   },
@@ -93,37 +93,37 @@ const PASADO_DATA = [
         question: "Я поел (comer, yo)",
         options: ["comé", "comí", "comía", "comeré"],
         correct: 1,
-        hint: "Indefinido yo (-ER): stem + í. comer → com + í = comí"
+        hint: "«Ayer/anoche» = сигнал Indefinido\ncomer + yo: com + í = comí\ncomía = Imperfecto (ел регулярно)"
       },
       {
         question: "Ты жил там (vivir, tú)",
         options: ["viví", "viviste", "vivía", "vivirás"],
         correct: 1,
-        hint: "Indefinido tú (-IR): stem + iste. vivir → viv + iste = viviste"
+        hint: "Indefinido tú (-IR): stem + iste\nviviste = завершённый конкретный период\nvivías = длящееся состояние без точки (Imperfecto)"
       },
       {
         question: "Она написала письмо (escribir, ella)",
         options: ["escribé", "escribió", "escribía", "escribirá"],
         correct: 1,
-        hint: "Indefinido ella (-IR): stem + ió. escribir → escrib + ió = escribió"
+        hint: "Indefinido ella (-IR): stem + ió\nescribió = завершённое действие; escribía = привычка\nescribir → escribió"
       },
       {
         question: "Мы поняли тему (comprender, nosotros)",
         options: ["comprendemos", "comprendimos", "comprendíamos", "comprenderemos"],
         correct: 1,
-        hint: "Indefinido nosotros (-ER): stem + imos. comprender → comprend + imos = comprendimos"
+        hint: "Indefinido nosotros (-ER): stem + imos\ncomprendíamos = длящееся состояние (Imperfecto)\ncomprender → comprendimos"
       },
       {
-        question: "Вы поели дома (comer, vosotros)",
-        options: ["comimos", "comisteis", "comíais", "comeréis"],
-        correct: 1,
-        hint: "Indefinido vosotros (-ER): stem + isteis. comer → com + isteis = comisteis"
+        question: "El martes pasado nosotros _____ la lección completa. (comprender)",
+        options: ["comprendimos", "comprendíamos", "hemos comprendido", "habíamos comprendido"],
+        correct: 0,
+        hint: "«El martes pasado» = завершённый момент → Indefinido\ncomprendíamos = привычка без даты (Imperfecto)\ncomprender + nosotros: comprend + imos = comprendimos"
       },
       {
-        question: "Они жили вместе (vivir, ellos)",
-        options: ["vivimos", "vivieron", "vivían", "vivirán"],
+        question: "En 2019 ellos _____ juntos en Buenos Aires. (vivir)",
+        options: ["vivimos", "vivieron", "vivían", "han vivido"],
         correct: 1,
-        hint: "Indefinido ellos (-IR): stem + ieron. vivir → viv + ieron = vivieron"
+        hint: "«En 2019» = конкретный завершённый период → Indefinido\nvivían = без точки в прошлом (Imperfecto)\nvivir + ellos: viv + ieron = vivieron"
       }
     ]
   },
@@ -152,37 +152,37 @@ const PASADO_DATA = [
         question: "Я пошёл в магазин (ir, yo)",
         options: ["iba", "fui", "voy", "iría"],
         correct: 1,
-        hint: "ir, Indefinido yo: fui. ser и ir имеют ОДИНАКОВЫЕ формы в Indefinido!"
+        hint: "«Ayer/el lunes» = сигнал Indefinido\nir + yo: fui\n⚠️ ser и ir → одинаковые формы — контекст решает"
       },
       {
         question: "Он был хорошим другом (ser, él)",
         options: ["era", "estaba", "fue", "es"],
         correct: 2,
-        hint: "ser, Indefinido él: fue. Контекст подсказывает: ser это или ir"
+        hint: "ser, Indefinido él: fue\nera = длительная характеристика (Imperfecto)\nfue = конкретный факт/период"
       },
       {
         question: "Мы пошли в парк (ir, nosotros)",
         options: ["íbamos", "fuimos", "vamos", "éramos"],
         correct: 1,
-        hint: "ir, Indefinido nosotros: fuimos (те же формы что у ser)"
+        hint: "ir, Indefinido nosotros: fuimos\níbamos = ходили регулярно (Imperfecto)\nfuimos = однократный конкретный выход"
       },
       {
         question: "Я сделал домашнее задание (hacer, yo)",
         options: ["hacé", "hice", "hacía", "haré"],
         correct: 1,
-        hint: "hacer, Indefinido yo: hice. Обрати внимание: yo=hice, él=hizo (c→z)"
+        hint: "hacer, Indefinido yo: hice\nhacía = делал каждый день (Imperfecto)\nhice = однократный завершённый факт"
       },
       {
-        question: "Он сделал ошибку (hacer, él)",
-        options: ["hice", "hacía", "hizo", "hará"],
-        correct: 2,
-        hint: "hacer, Indefinido él: hizo (с буквой z, а не c!). yo=hice, él=hizo"
+        question: "¿Qué _____ (tú, hacer) ayer por la tarde?",
+        options: ["hiciste", "hacías", "has hecho", "habías hecho"],
+        correct: 0,
+        hint: "«Ayer» = сигнал Indefinido\nhacías = привычное действие (Imperfecto); has hecho = hoy/esta semana\nhacer + tú: hiciste (⚠️ c→z только у él: hizo)"
       },
       {
-        question: "Мне пришлось уйти (tener que, yo)",
-        options: ["tenía", "tuve", "tengo", "tendré"],
-        correct: 1,
-        hint: "tener, Indefinido yo: tuve. Основа меняется: ten- → tuv-"
+        question: "El verano pasado nosotros _____ (ir) a la playa tres veces.",
+        options: ["fuimos", "íbamos", "hemos ido", "habíamos ido"],
+        correct: 0,
+        hint: "«El verano pasado» + «tres veces» = факт с числом → Indefinido\níbamos = привычка без счёта (Imperfecto)\nir + nosotros: fuimos"
       }
     ]
   },
@@ -211,37 +211,37 @@ const PASADO_DATA = [
         question: "Я смог закончить (poder, yo)",
         options: ["podé", "podí", "pude", "podía"],
         correct: 2,
-        hint: "poder, Indefinido yo: pude. Основа меняется: pod- → pud-"
+        hint: "poder, Indefinido yo: pude\npodía = мог вообще/регулярно (Imperfecto)\npude = в этот конкретный момент смог\npod- → pud-"
       },
       {
         question: "Я провёл день дома (estar, yo)",
         options: ["estaba", "estuve", "esté", "estaré"],
         correct: 1,
-        hint: "estar, Indefinido yo: estuve. Основа: estuv-. Не путать с Imperfecto estaba!"
+        hint: "estar, Indefinido yo: estuve\nestaba = находился фоново (Imperfecto)\nestuve = конкретный завершённый период\nestuv-"
       },
       {
         question: "Я хотел тебе позвонить (querer, yo)",
         options: ["quería", "quise", "querí", "querré"],
         correct: 1,
-        hint: "querer, Indefinido yo: quise. Основа quer- → quis-"
+        hint: "querer, Indefinido yo: quise\nquería = длящееся желание; quise = желание в конкретный момент\nquer- → quis-"
       },
       {
         question: "Я пришёл к тебе (venir, yo)",
         options: ["venía", "vine", "vengué", "vendré"],
         correct: 1,
-        hint: "venir, Indefinido yo: vine. Основа ven- → vin-"
+        hint: "venir, Indefinido yo: vine\nvenía = приходил регулярно (Imperfecto)\nven- → vin-"
       },
       {
-        question: "Я узнал правду (saber, yo)",
-        options: ["sabía", "supe", "sabé", "sabré"],
+        question: "Anteayer yo _____ (saber) la noticia y me sorprendí mucho.",
+        options: ["sabía", "supe", "sabé", "he sabido"],
         correct: 1,
-        hint: "saber, Indefinido yo: supe. Основа sab- → sup-"
+        hint: "«Anteayer» = сигнал Indefinido\nsabía = «знал» (состояние); supe = «узнал» (момент открытия)\nsaber + yo: sab- → sup- → supe"
       },
       {
-        question: "Я ходил по городу (andar, yo)",
-        options: ["andé", "anduve", "andaba", "andaré"],
+        question: "Ayer ellos _____ (venir) a la reunión sin avisar.",
+        options: ["venían", "vinieron", "han venido", "habían venido"],
         correct: 1,
-        hint: "andar, Indefinido yo: anduve. Нестандартная основа: anduv-"
+        hint: "«Ayer» = сигнал Indefinido\nvenían = приходили регулярно (Imperfecto)\nvenir + ellos: ven- → vin- → vinieron"
       }
     ]
   },
@@ -274,37 +274,37 @@ const PASADO_DATA = [
         question: "Я говорил (раньше, hablar, yo)",
         options: ["hablé", "hablaba", "hablo", "hablaré"],
         correct: 1,
-        hint: "Imperfecto yo (-AR): stem + aba. hablar → habl + aba = hablaba"
+        hint: "«Antes/раньше» = сигнал Imperfecto\nhablé = конкретный факт (Indefinido); hablaba = привычка/состояние\nhablar + yo: habl + aba = hablaba"
       },
       {
         question: "Ты работал каждый день (trabajar, tú)",
         options: ["trabajaste", "trabajabas", "trabajas", "trabajarás"],
         correct: 1,
-        hint: "Imperfecto tú (-AR): stem + abas. trabajar → trabaj + abas = trabajabas"
+        hint: "«Cada día» = сигнал Imperfecto (повторяющееся)\ntrabajaste = однократный факт; trabajabas = регулярная привычка\ntrabajabas"
       },
       {
         question: "Она всегда пела (cantar, ella)",
         options: ["cantó", "cantaba", "canta", "cantará"],
         correct: 1,
-        hint: "Imperfecto ella (-AR): stem + aba (та же форма что yo!). cantar → cantaba"
+        hint: "«Siempre» = сигнал Imperfecto\ncantó = один раз спела; cantaba = всегда/регулярно\ncantar + ella: cant + aba = cantaba"
       },
       {
         question: "Мы любили ходить в кино (amar, nosotros)",
         options: ["amamos", "amábamos", "amaremos", "hemos amado"],
         correct: 1,
-        hint: "Imperfecto nosotros (-AR): stem + ábamos (с ударением!). amar → am + ábamos"
+        hint: "Предпочтение/привычка в прошлом → Imperfecto\namar + nosotros: am + ábamos = amábamos\n⚠️ ударение: ÁBamos"
       },
       {
-        question: "Вы танцевали очень хорошо (bailar, vosotros)",
-        options: ["bailasteis", "bailabais", "bailáis", "bailareis"],
+        question: "Cada verano nosotros _____ (caminar) por la orilla del río.",
+        options: ["caminamos", "caminábamos", "hemos caminado", "caminaremos"],
         correct: 1,
-        hint: "Imperfecto vosotros (-AR): stem + abais. bailar → bail + abais = bailabais"
+        hint: "«Cada verano» = повторяющееся действие → Imperfecto\ncaminamos = один конкретный раз (Indefinido)\ncaminar + nosotros: camin + ábamos = caminábamos"
       },
       {
-        question: "Они всегда приходили поздно (llegar, ellos)",
-        options: ["llegaron", "llegaban", "llegan", "llegarán"],
+        question: "Cuando llegué a casa, ella todavía _____ (cocinar).",
+        options: ["cocinó", "cocinaba", "ha cocinado", "cocinará"],
         correct: 1,
-        hint: "Imperfecto ellos (-AR): stem + aban. llegar → lleg + aban = llegaban"
+        hint: "Фоновое длящееся действие → Imperfecto\n«Cuando llegué» (Indefinido) застаёт «cocinaba» в процессе\ncocinar + ella: cocin + aba = cocinaba"
       }
     ]
   },
@@ -333,37 +333,37 @@ const PASADO_DATA = [
         question: "Я раньше ел много (comer, yo)",
         options: ["comí", "comía", "como", "comeré"],
         correct: 1,
-        hint: "Imperfecto yo (-ER): stem + ía. comer → com + ía = comía"
+        hint: "«Antes/раньше» = сигнал Imperfecto\ncomí = однократно поел; comía = ел регулярно\ncomer + yo: com + ía = comía"
       },
       {
         question: "Ты жил там (vivir, tú)",
         options: ["viviste", "vivías", "vives", "vivirás"],
         correct: 1,
-        hint: "Imperfecto tú (-IR): stem + ías. vivir → viv + ías = vivías"
+        hint: "Длительное состояние без конкретной точки → Imperfecto\nviviste = жил конкретный период (Indefinido)\nvivir + tú: viv + ías = vivías"
       },
       {
         question: "Он знал ответ (saber, él)",
         options: ["supo", "sabía", "sabe", "sabrá"],
         correct: 1,
-        hint: "Imperfecto él (-ER): stem + ía. saber → sab + ía = sabía"
+        hint: "«Знание» = состояние → Imperfecto\nsupo = «узнал» (момент открытия, Indefinido)\nsaber + él: sab + ía = sabía"
       },
       {
         question: "Мы читали каждый день (leer, nosotros)",
         options: ["leímos", "leíamos", "leemos", "leeremos"],
         correct: 1,
-        hint: "Imperfecto nosotros (-ER): stem + íamos. leer → le + íamos = leíamos"
+        hint: "«Cada día» = сигнал Imperfecto (привычка)\nleímos = прочитали конкретный раз (Indefinido)\nleer + nosotros: le + íamos = leíamos"
       },
       {
-        question: "Вы бегали по утрам (correr, vosotros)",
-        options: ["corristeis", "corríais", "corréis", "correréis"],
+        question: "Cuando éramos jóvenes, nosotros _____ (vivir) en el campo.",
+        options: ["vivimos", "vivíamos", "hemos vivido", "habíamos vivido"],
         correct: 1,
-        hint: "Imperfecto vosotros (-ER): stem + íais. correr → corr + íais = corríais"
+        hint: "«Cuando éramos jóvenes» = длительное прошлое состояние → Imperfecto\nvivimos = факт с конкретной точкой (Indefinido)\nvivir + nosotros: viv + íamos = vivíamos"
       },
       {
-        question: "Они хорошо спали (dormir, ellos)",
-        options: ["durmieron", "dormían", "duermen", "dormirán"],
+        question: "El perro _____ (dormir) en su cama cada noche.",
+        options: ["durmió", "dormía", "ha dormido", "habrá dormido"],
         correct: 1,
-        hint: "Imperfecto ellos (-IR): stem + ían. dormir → dorm + ían = dormían"
+        hint: "«Cada noche» = повторяющаяся привычка → Imperfecto\ndurmió = один конкретный раз (Indefinido)\ndormir + él: dorm + ía = dormía"
       }
     ]
   },
@@ -392,37 +392,37 @@ const PASADO_DATA = [
         question: "Я был счастлив (ser, yo)",
         options: ["fui", "era", "soy", "seré"],
         correct: 1,
-        hint: "ser, Imperfecto yo: era. ser — один из трёх неправильных глаголов в Imperfecto"
+        hint: "Длительное состояние/описание → Imperfecto\nfui = конкретный факт (Indefinido)\nser + yo: era"
       },
       {
         question: "Она была добрым человеком (ser, ella)",
         options: ["fue", "era", "es", "será"],
         correct: 1,
-        hint: "ser, Imperfecto ella: era (та же форма что yo). era = я был / он был / она была"
+        hint: "Характеристика/описание человека в прошлом → Imperfecto\nfue = была (завершённый факт: умерла, изменилась)\nser + ella: era (та же форма что yo)"
       },
       {
         question: "Мы были хорошими друзьями (ser, nosotros)",
         options: ["fuimos", "éramos", "somos", "seremos"],
         correct: 1,
-        hint: "ser, Imperfecto nosotros: éramos. Обрати внимание на ударение: ÉRamos"
+        hint: "Длительная характеристика → Imperfecto\nfuimos = были (конкретный период, завершён)\nser + nosotros: éramos ⚠️ ударение: ÉRamos"
       },
       {
         question: "Я ходил в школу пешком (ir, yo)",
         options: ["fui", "iba", "voy", "iré"],
         correct: 1,
-        hint: "ir, Imperfecto yo: iba. Stem ib- + окончания (не -AR, исключение!)"
+        hint: "Регулярная привычка → Imperfecto\nfui = однажды пошёл (Indefinido)\nir + yo: iba (основа ib-, не -AR)"
       },
       {
-        question: "Они каждый день ходили в парк (ir, ellos)",
-        options: ["fueron", "iban", "van", "irán"],
+        question: "De niña ella siempre _____ (ir) al parque con su abuela.",
+        options: ["fue", "iba", "ha ido", "irá"],
         correct: 1,
-        hint: "ir, Imperfecto ellos: iban. stem ib- + an = iban"
+        hint: "«De niña + siempre» = привычка в детстве → Imperfecto\nfue = однократный конкретный выход (Indefinido)\nir + ella: iba"
       },
       {
-        question: "Ты смотрел телевизор (ver, tú)",
-        options: ["viste", "veías", "ves", "verás"],
+        question: "Antes yo siempre _____ (ver) las noticias por la noche.",
+        options: ["vi", "veía", "he visto", "vería"],
         correct: 1,
-        hint: "ver, Imperfecto tú: veías. ver — почти правильный: ve + ías = veías"
+        hint: "«Antes + siempre» = регулярная привычка → Imperfecto\nvi = один раз посмотрел (Indefinido)\nver + yo: ve + ía = veía"
       }
     ]
   },
@@ -514,37 +514,37 @@ const PASADO_DATA = [
         question: "Я уже поел — вспомогательный глагол (yo)?",
         options: ["tengo", "he", "hube", "había"],
         correct: 1,
-        hint: "Perfecto Compuesto yo: he + причастие. He comido = я поел (сегодня/уже)"
+        hint: "Perfecto Compuesto = haber + причастие\n«Ya/hoy» + связь с настоящим → Perfecto Compuesto\nyo: he comido"
       },
       {
         question: "Ты видел это? — вспомогательный (tú)?",
         options: ["tienes", "has", "habías", "hubo"],
         correct: 1,
-        hint: "Perfecto Compuesto tú: has + причастие. ¿Has visto esto?"
+        hint: "Perfecto Compuesto tú: has + причастие\n¿Has visto esto? — вопрос об опыте\nhabías = Pluscuamperfecto (ещё дальше в прошлом)"
       },
       {
         question: "Она пришла — вспомогательный (ella)?",
         options: ["tiene", "ha", "había", "hube"],
         correct: 1,
-        hint: "Perfecto Compuesto él/ella: ha + причастие. Ella ha llegado."
+        hint: "Perfecto Compuesto ella: ha + причастие\nha = Perfecto Comp. (связь с сейчас)\nhabía = Pluscuamperfecto"
       },
       {
         question: "Мы много работали — вспомогательный (nosotros)?",
         options: ["tenemos", "hemos", "habíamos", "hubimos"],
         correct: 1,
-        hint: "Perfecto Compuesto nosotros: hemos + причастие. Hemos trabajado."
+        hint: "Perfecto Compuesto nosotros: hemos + причастие\nhabíamos = Pluscuamperfecto\nhemos trabajado"
       },
       {
-        question: "Вы это видели? — вспомогательный (vosotros)?",
-        options: ["tenéis", "habéis", "habíais", "hubisteis"],
-        correct: 1,
-        hint: "Perfecto Compuesto vosotros: habéis + причастие. ¿Habéis visto eso?"
+        question: "Hoy vosotros _____ (ver) una película increíble.",
+        options: ["visteis", "veíais", "habéis visto", "habíais visto"],
+        correct: 2,
+        hint: "«Hoy» = сигнал Perfecto Compuesto\nvisteis = Indefinido (завершённый день прошлого)\nPerfecto Comp. vosotros: habéis + visto"
       },
       {
-        question: "Они ушли — вспомогательный (ellos)?",
-        options: ["tienen", "han", "habían", "hubieron"],
-        correct: 1,
-        hint: "Perfecto Compuesto ellos: han + причастие. Ellos han salido."
+        question: "Este mes ellos _____ (salir) tres veces.",
+        options: ["salieron", "salían", "han salido", "habían salido"],
+        correct: 2,
+        hint: "«Este mes» = незавершённый текущий период → Perfecto Compuesto\nsalieron = Indefinido (el mes pasado)\nhan + salido (нестанд. причастие)"
       }
     ]
   },
@@ -573,37 +573,37 @@ const PASADO_DATA = [
         question: "Причастие от hablar?",
         options: ["hablado", "hablido", "habliendo", "hablando"],
         correct: 0,
-        hint: "-AR глаголы → причастие на -ado. hablar → habl + ado = hablado"
+        hint: "-AR глаголы → причастие -ado\nhablar → habl + ado = hablado\nhablando = герундий (сейчас говорит, не причастие!)"
       },
       {
         question: "Причастие от comer?",
         options: ["comado", "comido", "comiendo", "comerdo"],
         correct: 1,
-        hint: "-ER глаголы → причастие на -ido. comer → com + ido = comido"
+        hint: "-ER глаголы → причастие -ido\ncomer → com + ido = comido\ncomiendo = герундий"
       },
       {
         question: "Причастие от vivir?",
         options: ["vivado", "vivido", "viviendo", "vivirdo"],
         correct: 1,
-        hint: "-IR глаголы → причастие на -ido. vivir → viv + ido = vivido"
+        hint: "-IR глаголы → причастие -ido\nvivir → viv + ido = vivido\nviviendo = герундий"
       },
       {
-        question: "Я говорил сегодня (hablar, Perf.Comp., yo)",
+        question: "Я говорил с директором (hablar, yo, Perf.Comp.)",
         options: ["He hablado", "He hablido", "Hablo", "Hablé"],
         correct: 0,
-        hint: "he + hablado (-AR → -ado). He hablado = я говорил (сегодня/уже)"
+        hint: "he + hablado (-AR → -ado)\nHablé = Indefinido (конкретный момент прошлого)\nHe hablado = связь с настоящим"
       },
       {
-        question: "Причастие от trabajar?",
-        options: ["trabajido", "trabajando", "trabajado", "trabajaré"],
+        question: "Esta semana yo _____ mucho. (trabajar, Perfecto Compuesto)",
+        options: ["trabajé", "trabajaba", "he trabajado", "había trabajado"],
         correct: 2,
-        hint: "-AR глагол trabajar → причastие: trabaj + ado = trabajado"
+        hint: "«Esta semana» = незавершённый текущий период → Perfecto Compuesto\ntrabajé = Indefinido (la semana pasada)\nhe + trabajado (-AR → -ado)"
       },
       {
-        question: "Он жил в Мадриде (vivir, Perf.Comp., él)",
-        options: ["Ha vivido", "Ha vivado", "Ha viviendo", "Vivió"],
-        correct: 0,
-        hint: "vivir → vivido (-IR → -ido). Ha vivido = он жил (с отношением к настоящему)"
+        question: "Ellos nunca _____ (vivir) en España.",
+        options: ["vivieron", "vivían", "han vivido", "habían vivido"],
+        correct: 2,
+        hint: "«Nunca» + жизненный опыт → Perfecto Compuesto\nvivieron = факт Indefinido; habían vivido = Pluscuamperfecto\nvivir → vivido (-IR → -ido); han + vivido"
       }
     ]
   },
