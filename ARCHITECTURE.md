@@ -83,9 +83,9 @@ module/
 | `formulas/app.js` | v=19 |
 | `formulas/ui.js` | v=24 |
 | `formulas/data.js` | v=13 |
-| `pasado/app.js` | v=7 *(→v=8 в работе)* |
-| `pasado/ui.js` | v=13 *(→v=15 в работе)* |
-| `pasado/data.js` | v=3 *(→v=4 в работе)* |
+| `pasado/app.js` | v=7 |
+| `pasado/ui.js` | v=13 |
+| `pasado/data.js` | v=4 |
 | `tren/app.js` | v=14 |
 | `mezcla/app.js` | v=8 |
 | `mezcla/ui.js` | v=10 |
