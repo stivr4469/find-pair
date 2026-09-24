@@ -7,6 +7,10 @@
 function displayRulesUI() {
     const contentArea = document.getElementById('ser-estar-rules-area');
     if (!contentArea) return;
+    if (typeof SER_RULES === 'undefined' || typeof ESTAR_RULES === 'undefined') {
+        contentArea.innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px">Данные не загружены</p>';
+        return;
+    }
 
     // Генерация HTML для правил SER (DOCTOR)
     const serRulesHtml = Object.keys(SER_RULES).map(key => `
