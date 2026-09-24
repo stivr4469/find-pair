@@ -302,7 +302,7 @@ h1, h2, h3 {
    Плавающая корзинка на правом конце buddy-контейнера (= правый конец карточки).
    top и left выставляются через JS (repositionBasket).                     */
 #orange-basket {
-    position: fixed;
+    position: absolute;
     width: 70px;
     height: 66px;
     z-index: 100;

@@ -56,7 +56,6 @@
         document.body.appendChild(el);
         repositionBasket(el);
         window.addEventListener('resize', function () { repositionBasket(el); });
-        window.addEventListener('scroll', function () { repositionBasket(el); }, { passive: true });
         return el;
     }
 
@@ -64,9 +63,11 @@
         var buddy = document.getElementById('buddy');
         if (!buddy) return;
         var rect = buddy.getBoundingClientRect();
-        /* Правый конец buddy-контейнера (= правый конец карточки), чуть выше Naranjito */
-        el.style.top  = Math.max(60, rect.top + 8) + 'px';
-        el.style.left = (rect.right - BASKET_W) + 'px';
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+        /* position:absolute → координаты документа (скроллятся вместе со страницей) */
+        el.style.top  = Math.max(60, rect.top + scrollY + 8) + 'px';
+        el.style.left = (rect.right + scrollX - BASKET_W) + 'px';
         el.style.right = 'auto';
     }
 
