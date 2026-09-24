@@ -186,7 +186,7 @@ const FormulasUI = {
             'justify-content: center;',
             'transition: background 0.2s, transform 0.15s;',
           '" onmouseover="this.style.background=\'var(--accent-mid)\';this.style.transform=\'scale(1.1)\'" onmouseout="this.style.background=\'var(--accent-faint)\';this.style.transform=\'\'">',
-            '',
+            (window.ICON_VOL||''),
           '</button>',
         '</div>',
       ].join('');
@@ -213,9 +213,7 @@ const FormulasUI = {
               'font-size: 0.8rem;',
               'font-weight: 700;',
             '">Формула ' + formula.id + ' / 36</span>',
-            '<span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:' + FORMULA_ICONS[index].bg + ';">',
-              '<i data-lucide="' + FORMULA_ICONS[index].icon + '" style="width:15px;height:15px;stroke:' + FORMULA_ICONS[index].color + ';stroke-width:2;pointer-events:none"></i>',
-            '</span>',
+            '<div style="width:28px;height:28px;border-radius:8px;background:' + FORMULA_ICONS[index].bg + ';flex-shrink:0;"></div>',
           '</div>',
 
           // Name
@@ -259,7 +257,7 @@ const FormulasUI = {
               'opacity: 0.9;',
               'transition: opacity 0.15s, transform 0.15s;',
             '" onmouseover="this.style.opacity=\'1\';this.style.transform=\'scale(1.06)\'" onmouseout="this.style.opacity=\'0.9\';this.style.transform=\'\'">',
-              ' Послушать',
+              (window.ICON_VOL||'') + ' Послушать',
             '</button>',
           '</div>',
 
@@ -526,7 +524,7 @@ const FormulasUI = {
         'background:var(--accent-faint);color:var(--accent);cursor:pointer;' +
         'display:inline-flex;align-items:center;justify-content:center;' +
         'margin-left:8px;vertical-align:middle;transition:background 0.2s;">' +
-        '' +
+        (window.ICON_VOL||'') +
         '</button>';
 
       feedbackEl.style.display = 'flex';

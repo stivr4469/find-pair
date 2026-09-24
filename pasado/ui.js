@@ -255,7 +255,7 @@ const PasadoUI = {
             '<div style="font-size: 1rem; color: var(--text); font-weight: 600;">' + _escHtmlP(ex.es) + '</div>',
             '<div style="font-size: 0.85rem; color: var(--muted); margin-top: 2px;">' + _escHtmlP(ex.ru) + '</div>',
           '</div>',
-          '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ex.es) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать"></button>',
+          '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ex.es) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать">' + (window.ICON_VOL||'') + '</button>',
         '</div>',
       ].join('');
     }).join('');
@@ -270,9 +270,7 @@ const PasadoUI = {
               'color: white; padding: 4px 14px; border-radius: 20px;',
               'font-size: 0.8rem; font-weight: 700;',
             '">Формула ' + formula.id + ' / 16</span>',
-            '<span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:' + PASADO_ICONS[index].bg + ';">',
-              '<i data-lucide="' + PASADO_ICONS[index].icon + '" style="width:15px;height:15px;stroke:' + PASADO_ICONS[index].color + ';stroke-width:2;pointer-events:none"></i>',
-            '</span>',
+            '<div style="width:28px;height:28px;border-radius:8px;background:' + PASADO_ICONS[index].bg + ';flex-shrink:0;"></div>',
           '</div>',
 
           '<h2 style="color: var(--text); margin-bottom: 6px; font-size: 1.3rem;">' + _escHtmlP(formula.name) + '</h2>',
@@ -295,7 +293,7 @@ const PasadoUI = {
               '<div style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 4px;">' + _escHtmlP(formula.example) + '</div>',
               '<div style="font-size: 0.9rem; color: var(--muted); font-style: italic;">' + _escHtmlP(formula.exampleRu) + '</div>',
             '</div>',
-            '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(formula.example) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать пример" style="background:rgba(52,152,219,0.18);"></button>',
+            '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(formula.example) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать пример" style="background:rgba(52,152,219,0.18);">' + (window.ICON_VOL||'') + '</button>',
           '</div>',
 
           '<div style="margin-bottom: 20px;">',
@@ -395,7 +393,7 @@ const PasadoUI = {
             'display: flex; align-items: center; justify-content: center; gap: 8px;',
           '">',
             '<span>' + _escHtmlP(question.question) + '</span>',
-            (ttsSpanish ? '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ttsSpanish) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать"></button>' : ''),
+            (ttsSpanish ? '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ttsSpanish) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать">' + (window.ICON_VOL||'') + '</button>' : ''),
           '</div>',
 
           '<div id="pasado-options" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">',
@@ -472,7 +470,7 @@ const PasadoUI = {
       feedbackEl.style.lineHeight = '1.5';
 
       var ttsBtn = correctText
-        ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(correctText) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать" style="margin-left:6px;"></button>'
+        ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(correctText) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать" style="margin-left:6px;">' + (window.ICON_VOL||'') + '</button>'
         : '';
 
       if (isCorrect) {
@@ -570,7 +568,7 @@ const PasadoUI = {
       feedbackEl.style.fontSize = '0.9rem';
       feedbackEl.style.lineHeight = '1.5';
 
-      var ttsBtn = tts ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(tts) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать"></button>' : '';
+      var ttsBtn = tts ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(tts) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать">' + (window.ICON_VOL||'') + '</button>' : '';
 
       if (isCorrect) {
         feedbackEl.style.background = '#d4edda';
