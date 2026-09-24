@@ -1,40 +1,60 @@
 /**
  * Orange Throw — анимация броска апельсина в корзинку
- * Слушает событие 'vamos:correct', которое naranjito.js диспатчит в api.correct()
+ * Слушает 'vamos:correct' из naranjito.js api.correct()
  */
 (function () {
     var basket = null;
     var throwing = false;
 
-    function injectBasket() {
-        var stats = document.querySelector('.se-topbar-stats');
-        if (!stats) return null;
+    var BASKET_SVG = [
+        '<svg width="54" height="54" viewBox="0 0 54 54" fill="none"',
+        ' xmlns="http://www.w3.org/2000/svg" aria-hidden="true">',
+        /* Ручка */
+        '<path d="M18 15 Q27 3 36 15"',
+        ' stroke="#F26B1D" stroke-width="3.5"',
+        ' stroke-linecap="round" fill="none"/>',
+        /* Ободок */
+        '<ellipse cx="27" cy="17" rx="21" ry="6.5"',
+        ' stroke="#F26B1D" stroke-width="3"',
+        ' fill="rgba(242,107,29,0.15)"/>',
+        /* Тело корзины */
+        '<path d="M6 17 Q7 42 27 44 Q47 42 48 17"',
+        ' stroke="#F26B1D" stroke-width="3"',
+        ' fill="rgba(242,107,29,0.10)"',
+        ' stroke-linecap="round" stroke-linejoin="round"/>',
+        /* Вертикальные прутья */
+        '<line x1="15" y1="18" x2="12" y2="43"',
+        ' stroke="#F26B1D" stroke-width="2" opacity="0.6" stroke-linecap="round"/>',
+        '<line x1="27" y1="17.5" x2="27" y2="44"',
+        ' stroke="#F26B1D" stroke-width="2" opacity="0.6" stroke-linecap="round"/>',
+        '<line x1="39" y1="18" x2="42" y2="43"',
+        ' stroke="#F26B1D" stroke-width="2" opacity="0.6" stroke-linecap="round"/>',
+        /* Горизонтальные дуги плетения */
+        '<path d="M7 26 Q27 29 47 26"',
+        ' stroke="#F26B1D" stroke-width="2" opacity="0.5" fill="none" stroke-linecap="round"/>',
+        '<path d="M8 35 Q27 38 46 35"',
+        ' stroke="#F26B1D" stroke-width="2" opacity="0.5" fill="none" stroke-linecap="round"/>',
+        '</svg>'
+    ].join('');
 
+    function injectBasket() {
         var el = document.createElement('div');
         el.id = 'orange-basket';
         el.setAttribute('aria-hidden', 'true');
-        el.innerHTML = [
-            '<svg width="26" height="26" viewBox="0 0 26 26" fill="none"',
-            ' xmlns="http://www.w3.org/2000/svg" aria-hidden="true">',
-            '<ellipse cx="13" cy="9" rx="9" ry="2.8"',
-            ' stroke="currentColor" stroke-width="1.8"/>',
-            '<path d="M4 9 Q4.5 20 13 21.5 Q21.5 20 22 9"',
-            ' stroke="currentColor" stroke-width="1.8" fill="none"/>',
-            '<line x1="8.5" y1="9.5" x2="7.5" y2="21"',
-            ' stroke="currentColor" stroke-width="1" opacity="0.55"/>',
-            '<line x1="13" y1="9.5" x2="13" y2="21.5"',
-            ' stroke="currentColor" stroke-width="1" opacity="0.55"/>',
-            '<line x1="17.5" y1="9.5" x2="18.5" y2="21"',
-            ' stroke="currentColor" stroke-width="1" opacity="0.55"/>',
-            '<path d="M4.5 13 Q13 14.5 21.5 13"',
-            ' stroke="currentColor" stroke-width="1" opacity="0.4" fill="none"/>',
-            '<path d="M5.5 17 Q13 18.5 20.5 17"',
-            ' stroke="currentColor" stroke-width="1" opacity="0.4" fill="none"/>',
-            '</svg>'
-        ].join('');
-
-        stats.appendChild(el);
+        el.innerHTML = BASKET_SVG;
+        document.body.appendChild(el);
+        repositionBasket(el);
+        window.addEventListener('resize', function () { repositionBasket(el); });
         return el;
+    }
+
+    function repositionBasket(el) {
+        var buddy = document.getElementById('buddy');
+        if (!buddy) return;
+        var rect = buddy.getBoundingClientRect();
+        /* Правее buddy, на уровне его верхней трети */
+        var top = Math.max(70, rect.top + rect.height * 0.12);
+        el.style.top = top + 'px';
     }
 
     function doThrow() {
@@ -47,11 +67,13 @@
         var buddyRect = buddy.getBoundingClientRect();
         var basketRect = basket.getBoundingClientRect();
 
-        var startX = buddyRect.left + buddyRect.width * 0.58;
-        var startY = buddyRect.top + buddyRect.height * 0.32;
+        /* Стартуем от правой руки персонажа */
+        var startX = buddyRect.left + buddyRect.width * 0.62;
+        var startY = buddyRect.top + buddyRect.height * 0.30;
 
+        /* Финиш — центр ободка корзины */
         var endX = basketRect.left + basketRect.width / 2;
-        var endY = basketRect.top + basketRect.height * 0.6;
+        var endY = basketRect.top + basketRect.height * 0.42;
 
         var orange = document.createElement('div');
         orange.className = 'flying-orange';
@@ -64,7 +86,7 @@
             'z-index:9999',
             'transform:translate(-50%,-50%)',
             'will-change:transform',
-            'font-size:20px',
+            'font-size:22px',
             'line-height:1'
         ].join(';');
 
@@ -74,26 +96,27 @@
         var dx = endX - startX;
         var dy = endY - startY;
 
-        var peakDx = dx * 0.42;
-        var peakDy = dy * 0.25 - 88;
+        /* Пик дуги — выше и чуть раньше середины, апельсин всегда летит вверх */
+        var peakDx = dx * 0.40;
+        var peakDy = Math.min(dy * 0.25 - 75, -40);
 
         var anim = orange.animate([
             {
-                transform: 'translate(-50%,-50%) scale(1)',
+                transform: 'translate(-50%,-50%) scale(1) rotate(0deg)',
                 offset: 0
             },
             {
                 transform: 'translate(calc(-50% + ' + peakDx + 'px),' +
-                           ' calc(-50% + ' + peakDy + 'px)) scale(1.12)',
-                offset: 0.42
+                           'calc(-50% + ' + peakDy + 'px)) scale(1.15) rotate(150deg)',
+                offset: 0.40
             },
             {
                 transform: 'translate(calc(-50% + ' + dx + 'px),' +
-                           ' calc(-50% + ' + dy + 'px)) scale(0.4)',
+                           'calc(-50% + ' + dy + 'px)) scale(0.45) rotate(300deg)',
                 offset: 1
             }
         ], {
-            duration: 620,
+            duration: 950,
             easing: 'linear',
             fill: 'forwards'
         });
@@ -111,7 +134,10 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-        basket = injectBasket();
+        /* Небольшая задержка: Naranjito монтируется в своём DOMContentLoaded */
+        setTimeout(function () {
+            basket = injectBasket();
+        }, 80);
         window.addEventListener('vamos:correct', doThrow);
     });
 }());

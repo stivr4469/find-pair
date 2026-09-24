@@ -299,29 +299,33 @@ h1, h2, h3 {
 /* ────────────────────────────────────────────────────────────────────────── */
 
 /* ── Orange basket ──────────────────────────────────────────────────────────
-   Корзинка в топбаре — апельсин летит сюда при правильном ответе          */
+   Плавающая мультяшная корзинка справа от Naranjito.
+   top выставляется через JS (repositionBasket).                            */
 #orange-basket {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    color: var(--muted);
-    flex-shrink: 0;
-    transition: color 0.15s;
+    position: fixed;
+    right: 18px;
+    width: 54px;
+    height: 54px;
+    z-index: 100;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18));
+    transform-origin: center bottom;
 }
 
 #orange-basket.basket-catch {
-    animation: basket-catch 0.45s ease-out;
-    color: var(--accent);
+    animation: basket-catch 0.48s ease-out;
 }
 
 @keyframes basket-catch {
     0%   { transform: scale(1)    rotate(0deg); }
-    20%  { transform: scale(1.35) rotate(-8deg); }
-    45%  { transform: scale(0.88) rotate(5deg); }
-    70%  { transform: scale(1.12) rotate(-2deg); }
+    18%  { transform: scale(1.4)  rotate(-10deg); }
+    40%  { transform: scale(0.85) rotate(6deg); }
+    65%  { transform: scale(1.15) rotate(-3deg); }
     100% { transform: scale(1)    rotate(0deg); }
+}
+
+.flying-orange {
+    user-select: none;
 }
 /* ────────────────────────────────────────────────────────────────────────── */
 
