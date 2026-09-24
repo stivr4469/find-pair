@@ -456,6 +456,7 @@
 
     var CORRECT = [['¡Bien!', 'Верно'], ['¡Correcto!', 'Точно'], ['¡Eso es!', 'Именно так'], ['¡Genial!', 'Здорово'], ['¡Muy bien!', 'Отлично'], ['¡Exacto!', 'В точку']];
     api.correct = async function (streak) {
+      window.dispatchEvent(new CustomEvent('vamos:correct'));
       var live = begin(); streak = streak || 1;
       haptic('success');
       if (streak >= 3) {
