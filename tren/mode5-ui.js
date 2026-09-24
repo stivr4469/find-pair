@@ -82,8 +82,9 @@ function showMode5ResultsUI() {
 
 function updateMode5ScoreUI() {
     const scoreElement = document.getElementById('score-value');
-    if (scoreElement) {
-        scoreElement.textContent = mode5State.score;
+    if (scoreElement) scoreElement.textContent = mode5State.score;
+    if (typeof setTopbarProgress === 'function' && mode5State.sessionLimit > 0) {
+        setTopbarProgress(Math.round((mode5State.totalAnswered / mode5State.sessionLimit) * 100));
     }
 }
 

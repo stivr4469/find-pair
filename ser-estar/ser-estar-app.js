@@ -28,6 +28,8 @@ const SerEstarApp = {
         var backBtn = document.getElementById('btn-back-to-modes');
         if (backBtn) backBtn.style.display = 'inline-flex';
 
+        if (typeof resetTopbar === 'function') resetTopbar();
+
         const modeArea = document.getElementById('ser-estar-' + modeId + '-area');
         if (modeArea) {
             modeArea.classList.remove('hidden');

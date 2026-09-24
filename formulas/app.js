@@ -119,6 +119,7 @@ const FormulasApp = {
     this.state.currentView = 'quiz';
     this._syncBackBtn();
     _njStreak = 0;
+    if (typeof resetTopbar === 'function') resetTopbar();
 
     this._renderCurrentQuestion();
   },
@@ -152,6 +153,7 @@ const FormulasApp = {
     this.state.currentView = 'quiz';
     this._syncBackBtn();
     _njStreak = 0;
+    if (typeof resetTopbar === 'function') resetTopbar();
 
     this._renderCurrentQuestion();
   },
@@ -185,6 +187,7 @@ const FormulasApp = {
     this.state.currentView = 'quiz';
     this._syncBackBtn();
     _njStreak = 0;
+    if (typeof resetTopbar === 'function') resetTopbar();
 
     this._renderMarathonQuestion();
   },
@@ -223,6 +226,14 @@ const FormulasApp = {
       }
     }
     this.state.totalAnswered += 1;
+
+    if (typeof setTopbarScore === 'function') setTopbarScore(this.state.score);
+    var _total = this.state.quizMode === 'marathon'
+      ? this.state.marathonTotal
+      : this.state.quizQuestions.length;
+    if (_total > 0 && typeof setTopbarProgress === 'function') {
+      setTopbarProgress(Math.round(this.state.totalAnswered / _total * 100));
+    }
 
     if (typeof FormulasUI !== 'undefined') {
       FormulasUI.showAnswerFeedback(selectedIndex, question.correct, question.hint);

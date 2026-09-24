@@ -424,22 +424,12 @@ const FormulasUI = {
             '"></div>',
           '</div>',
 
-          // Counter + score (+ marathon remaining)
-          '<div style="',
-            'display: flex;',
-            'justify-content: space-between;',
-            'align-items: center;',
-            'margin-bottom: 4px;',
-            'font-size: 0.85rem;',
-            'color: var(--muted);',
-            'flex-wrap: wrap;',
-            'gap: 6px;',
-          '">',
+          // Position label
+          '<div style="margin-bottom: 4px; font-size: 0.85rem; color: var(--muted);">',
             (marathonLeft != null
               ? '<span style="background:#fff3cd;color:#856404;padding:2px 10px;border-radius:20px;font-weight:700;"><i data-lucide="flame" style="width:14px;height:14px;stroke:#f59e0b;stroke-width:2;vertical-align:middle;margin-right:4px;"></i>Осталось: ' + marathonLeft + '</span>'
-              : '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>'
+              : 'Вопрос ' + (qIndex + 1) + ' из ' + total
             ),
-            '<span style="display:flex;align-items:center;gap:4px;"><i data-lucide="check-circle-2" style="width:13px;height:13px;stroke:#22c55e;stroke-width:2.5;flex-shrink:0;"></i>' + score + ' / ' + qIndex + '</span>',
           '</div>',
 
           // Question text (Russian — no TTS)

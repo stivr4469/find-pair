@@ -12,25 +12,9 @@ function renderClassifyScreen() {
 
     area.innerHTML = `
         <div class="classify-wrapper">
-            <!-- Прогресс и статистика -->
+            <!-- Позиция вопроса -->
             <div class="classify-header">
-                <div class="classify-progress-bar">
-                    <div class="classify-progress-fill" id="classify-progress-fill"></div>
-                </div>
-                <div class="classify-stats">
-                    <div class="classify-stat">
-                        <span class="classify-stat-label">Счёт</span>
-                        <span class="classify-stat-value" id="classify-score-display">0</span>
-                    </div>
-                    <div class="classify-stat">
-                        <span class="classify-stat-label">Серия</span>
-                        <span class="classify-stat-value streak-value" id="classify-streak-display">0 🔥</span>
-                    </div>
-                    <div class="classify-stat">
-                        <span class="classify-stat-label">Вопрос</span>
-                        <span class="classify-stat-value" id="classify-question-display">1/20</span>
-                    </div>
-                </div>
+                <div class="classify-question-label" id="classify-question-display">1/20</div>
             </div>
 
             <!-- Зона карточки -->
@@ -92,24 +76,16 @@ function renderClassifyScreen() {
 function showClassifyCard(item, current, total, score, streak) {
     const sentenceEl = document.getElementById('classify-sentence');
     const card = document.getElementById('classify-card');
-    const progressFill = document.getElementById('classify-progress-fill');
-    const scoreDisplay = document.getElementById('classify-score-display');
-    const streakDisplay = document.getElementById('classify-streak-display');
     const questionDisplay = document.getElementById('classify-question-display');
     const feedback = document.getElementById('classify-feedback');
 
     if (!sentenceEl || !card) return;
 
-    // Обновляем статистику
-    if (scoreDisplay) scoreDisplay.textContent = score;
-    if (streakDisplay) {
-        streakDisplay.innerHTML = streak > 0 ? `${streak} <i data-lucide="flame" style="width:14px;height:14px;stroke:#f59e0b;display:inline-block;vertical-align:middle"></i>` : '0';
-        lucide.createIcons();
-    }
+    // Обновляем позицию вопроса и топбар
     if (questionDisplay) questionDisplay.textContent = `${current + 1}/${total}`;
-    if (progressFill) {
-        const pct = total > 0 ? (current / total) * 100 : 0;
-        progressFill.style.width = pct + '%';
+    if (typeof setTopbarScore === 'function') setTopbarScore(score);
+    if (typeof setTopbarProgress === 'function') {
+        setTopbarProgress(total > 0 ? Math.round((current / total) * 100) : 0);
     }
 
     // Скрываем feedback и сразу очищаем контент

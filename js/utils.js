@@ -54,9 +54,33 @@ function toggleTheme() {
     try { localStorage.setItem('vamos:theme', html.dataset.theme); } catch(e) {}
 }
 
+// ─── Topbar counters ──────────────────────────────────────────────────────────
+
+function setTopbarStreak(val) {
+    var el = document.getElementById('streak-value');
+    if (el) el.textContent = val;
+}
+function setTopbarScore(val) {
+    var el = document.getElementById('score-value');
+    if (el) el.textContent = val;
+}
+function setTopbarProgress(pct) {
+    var el = document.getElementById('se-progress-fill');
+    if (el) el.style.width = Math.min(100, Math.max(0, pct)) + '%';
+}
+function resetTopbar() {
+    setTopbarStreak(0);
+    setTopbarScore(0);
+    setTopbarProgress(0);
+}
+
 // Экспорт для глобального доступа
 if (typeof window !== 'undefined') {
     window.shuffleArray = shuffleArray;
     window.speakSpanish = speakSpanish;
     window.toggleTheme = toggleTheme;
+    window.setTopbarStreak = setTopbarStreak;
+    window.setTopbarScore = setTopbarScore;
+    window.setTopbarProgress = setTopbarProgress;
+    window.resetTopbar = resetTopbar;
 }

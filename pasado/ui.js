@@ -380,7 +380,6 @@ const PasadoUI = {
       ].join('');
     }).join('');
 
-    var scoreLabel = progressLabel || ('<span style="display:inline-flex;align-items:center;gap:3px;"><i data-lucide="check-circle-2" style="width:13px;height:13px;stroke:#22c55e;stroke-width:2.5;flex-shrink:0;"></i>' + score + ' / ' + qIndex + '</span>');
     var ttsSpanish = question.ttsText || '';
 
     var html = [
@@ -395,13 +394,8 @@ const PasadoUI = {
             '<button onclick="pasadoBackToList()" style="background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.2rem; padding: 4px;" title="К списку">✕</button>',
           '</div>',
 
-          '<div class="pasado-prog-bar">',
-            '<div class="pasado-prog-fill" style="width:' + pct + '%"></div>',
-          '</div>',
-
-          '<div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.85rem; color: var(--muted);">',
-            '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>',
-            '<span>' + scoreLabel + '</span>',
+          '<div style="margin-bottom: 4px; font-size: 0.85rem; color: var(--muted);">',
+            (progressLabel || ('Вопрос ' + (qIndex + 1) + ' из ' + total)),
           '</div>',
 
           '<div style="',
@@ -530,28 +524,16 @@ const PasadoUI = {
       ' <span class="pasado-inline-opts" id="pasado-inline-opts">' + optBtnsHtml + '</span> ' +
       _escHtmlP(item.after);
 
-    var streakHtml = streak > 1
-      ? '<span class="pasado-streak"><i data-lucide="flame" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;vertical-align:middle;margin-right:3px;pointer-events:none"></i>' + streak + '</span>'
-      : '';
-
     var html = [
       '<div style="max-width: 620px; margin: 0 auto; padding-bottom: 80px;" class="pasado-anim-in">',
         '<div class="game-area" style="padding: 22px 20px;">',
 
           '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">',
             '<span style="background:var(--accent);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;display:inline-flex;align-items:center;"><i data-lucide="pencil-line" style="width:14px;height:14px;stroke:#fff;stroke-width:2.5;vertical-align:middle;margin-right:5px;"></i>Inline режим</span>',
-            '<div style="display:flex;align-items:center;gap:8px;">',
-              streakHtml,
-              '<button onclick="pasadoBackToList()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:4px;" title="К списку">✕</button>',
-            '</div>',
+            '<button onclick="pasadoBackToList()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:4px;" title="К списку">✕</button>',
           '</div>',
 
-          '<div class="pasado-prog-bar"><div class="pasado-prog-fill" style="width:' + pct + '%"></div></div>',
-
-          '<div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:0.85rem;color:var(--muted);">',
-            '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>',
-            '<span style="display:inline-flex;align-items:center;gap:3px;"><i data-lucide="check-circle-2" style="width:13px;height:13px;stroke:#22c55e;stroke-width:2.5;flex-shrink:0;"></i>' + score + ' / ' + qIndex + '</span>',
-          '</div>',
+          '<div style="margin-bottom:4px;font-size:0.85rem;color:var(--muted);">Вопрос ' + (qIndex + 1) + ' из ' + total + '</div>',
 
           '<div style="background:var(--faint);border-radius:10px;padding:18px 16px;text-align:center;margin-bottom:18px;">',
             '<div style="font-size:0.82rem;color:var(--accent);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Выбери правильную форму</div>',
@@ -624,9 +606,6 @@ const PasadoUI = {
     var root = this._root();
     if (!root) return;
 
-    var pct = total > 0 ? Math.round((qIndex / total) * 100) : 0;
-    var streakHtml = streak > 1 ? '<span class="pasado-streak"><i data-lucide="flame" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;vertical-align:middle;margin-right:3px;pointer-events:none"></i>' + streak + '</span>' : '';
-
     var zones = [
       { key: 'indefinido',       label: 'Indefinido',       cls: 'pcz-indefinido',       iconName: 'check-circle-2', iconColor: '#e74c3c', iconBg: '#fff0f0' },
       { key: 'imperfecto',       label: 'Imperfecto',       cls: 'pcz-imperfecto',       iconName: 'repeat-2',       iconColor: '#3498db', iconBg: '#eff5ff' },
@@ -651,18 +630,10 @@ const PasadoUI = {
 
           '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">',
             '<span style="background:var(--accent);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;display:inline-flex;align-items:center;"><i data-lucide="layers" style="width:14px;height:14px;stroke:#fff;stroke-width:2.5;vertical-align:middle;margin-right:5px;"></i>Классификация</span>',
-            '<div style="display:flex;align-items:center;gap:8px;">',
-              streakHtml,
-              '<button onclick="pasadoBackToList()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:4px;" title="К списку">✕</button>',
-            '</div>',
+            '<button onclick="pasadoBackToList()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:4px;" title="К списку">✕</button>',
           '</div>',
 
-          '<div class="pasado-prog-bar"><div class="pasado-prog-fill" style="width:' + pct + '%"></div></div>',
-
-          '<div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:0.85rem;color:var(--muted);">',
-            '<span>Вопрос ' + (qIndex + 1) + ' из ' + total + '</span>',
-            '<span style="display:inline-flex;align-items:center;gap:3px;"><i data-lucide="check-circle-2" style="width:13px;height:13px;stroke:#22c55e;stroke-width:2.5;flex-shrink:0;"></i>' + score + ' / ' + qIndex + '</span>',
-          '</div>',
+          '<div style="margin-bottom:4px;font-size:0.85rem;color:var(--muted);">Вопрос ' + (qIndex + 1) + ' из ' + total + '</div>',
 
           '<div style="text-align:center;margin-bottom:24px;">',
             '<div style="font-size:0.82rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;">К какому времени относится?</div>',

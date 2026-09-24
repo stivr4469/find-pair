@@ -133,8 +133,9 @@ function showMode6ResultsUI() {
 
 function updateMode6ScoreUI() {
     const scoreElement = document.getElementById('score-value');
-    if (scoreElement) {
-        scoreElement.textContent = mode6State.score;
+    if (scoreElement) scoreElement.textContent = mode6State.score;
+    if (typeof setTopbarProgress === 'function' && mode6State.totalQuestions > 0) {
+        setTopbarProgress(Math.round((mode6State.currentQuestionIndex / mode6State.totalQuestions) * 100));
     }
 }
 

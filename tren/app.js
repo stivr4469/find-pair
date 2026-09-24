@@ -108,8 +108,9 @@ const App = {
         this.state.currentMode = modeId;
         this.state.modeHistory.push(modeId);
 
-        // Сброс серии Naranjito при смене режима
+        // Сброс серии Naranjito и топбара при смене режима
         _njStreak = 0;
+        if (typeof resetTopbar === 'function') resetTopbar();
 
         // Инициализация конкретного режима
         console.log('Switched to mode: ' + modeId);

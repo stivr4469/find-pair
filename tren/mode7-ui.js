@@ -262,8 +262,9 @@ function showMode7ResultsUI() {
 
 function updateMode7ScoreUI() {
     const scoreElement = document.getElementById('score-value');
-    if (scoreElement) {
-        scoreElement.textContent = mode7State.score;
+    if (scoreElement) scoreElement.textContent = mode7State.score;
+    if (typeof setTopbarProgress === 'function' && mode7State.rounds && mode7State.rounds.length > 0) {
+        setTopbarProgress(Math.round((mode7State.currentRoundIndex / mode7State.rounds.length) * 100));
     }
 }
 

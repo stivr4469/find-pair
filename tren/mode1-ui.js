@@ -59,8 +59,9 @@ function showMode1ResultsUI() {
 
 function updateMode1ScoreUI() {
     const scoreElement = document.getElementById('score-value');
-    if (scoreElement) {
-        scoreElement.textContent = mode1State.score;
+    if (scoreElement) scoreElement.textContent = mode1State.score;
+    if (typeof setTopbarProgress === 'function' && mode1State.totalQuestions > 0) {
+        setTopbarProgress(Math.round((mode1State.currentQuestionIndex / mode1State.totalQuestions) * 100));
     }
 }
 

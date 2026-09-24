@@ -28,6 +28,20 @@ const PasadoApp = {
     if (btn) btn.style.display = (this.state.currentView === 'list') ? 'none' : 'inline-flex';
   },
 
+  _updateTopbar: function() {
+    if (typeof setTopbarScore === 'function') setTopbarScore(this.state.score);
+    if (typeof setTopbarStreak === 'function') setTopbarStreak(this.state.streak);
+    var total = this.state.quizMode === 'all'
+      ? this.state.cyclicTotal
+      : this.state.quizQuestions.length;
+    var answered = this.state.quizMode === 'all'
+      ? this.state.cyclicCorrectCount
+      : this.state.totalAnswered;
+    if (total > 0 && typeof setTopbarProgress === 'function') {
+      setTopbarProgress(Math.round(answered / total * 100));
+    }
+  },
+
   showList: function() {
     this.state.currentView = 'list';
     this._syncBackBtn();
@@ -80,6 +94,7 @@ const PasadoApp = {
     this.state.streak = 0;
     this.state.currentView = 'quiz';
     this._syncBackBtn();
+    if (typeof resetTopbar === 'function') resetTopbar();
 
     this._renderCurrentQuestion();
   },
@@ -113,6 +128,7 @@ const PasadoApp = {
     this.state.streak = 0;
     this.state.currentView = 'quiz';
     this._syncBackBtn();
+    if (typeof resetTopbar === 'function') resetTopbar();
 
     // Also keep quizQuestions pointing to cyclicPool for compatibility
     this.state.quizQuestions = this.state.cyclicPool;
@@ -172,6 +188,7 @@ const PasadoApp = {
       if (_nj) _nj.wrong(question.hint, null);
     }
     this.state.totalAnswered += 1;
+    this._updateTopbar();
 
     if (typeof PasadoUI !== 'undefined') {
       PasadoUI.showAnswerFeedback(selectedIndex, question.correct, question.hint, correctText);
@@ -211,6 +228,7 @@ const PasadoApp = {
       if (_nj) _nj.wrong(question.hint, null);
     }
     this.state.totalAnswered += 1;
+    this._updateTopbar();
 
     if (typeof PasadoUI !== 'undefined') {
       PasadoUI.showAnswerFeedback(selectedIndex, question.correct, question.hint, correctText);
@@ -309,6 +327,7 @@ const PasadoApp = {
     this.state.streak = 0;
     this.state.currentView = 'inline';
     this._syncBackBtn();
+    if (typeof resetTopbar === 'function') resetTopbar();
 
     this._renderCurrentInline();
   },
@@ -349,6 +368,7 @@ const PasadoApp = {
       if (_nj) _nj.wrong(item.hint, null);
     }
     this.state.totalAnswered += 1;
+    this._updateTopbar();
 
     if (typeof PasadoUI !== 'undefined') {
       PasadoUI.showInlineFeedback(selectedVal, correctVal, item.hint, item.tts);
@@ -381,6 +401,7 @@ const PasadoApp = {
     this.state.streak = 0;
     this.state.currentView = 'classify';
     this._syncBackBtn();
+    if (typeof resetTopbar === 'function') resetTopbar();
 
     this._renderCurrentClassify();
   },
@@ -420,6 +441,7 @@ const PasadoApp = {
       if (_nj) _nj.wrong(item.hint, null);
     }
     this.state.totalAnswered += 1;
+    this._updateTopbar();
 
     if (typeof PasadoUI !== 'undefined') {
       PasadoUI.showClassifyFeedback(selectedKey, item.answer, item.hint);

@@ -79,6 +79,9 @@ function showAdvancedResults_tren() {
 function updateAdvancedScore_tren() {
     const scoreElement = document.getElementById('score-value');
     if (scoreElement) scoreElement.textContent = advancedModeState_tren.score;
+    if (typeof setTopbarProgress === 'function' && advancedModeState_tren.maxQuestions > 0) {
+        setTopbarProgress(Math.round((advancedModeState_tren.questionCount / advancedModeState_tren.maxQuestions) * 100));
+    }
 }
 
 // Экспорт для глобального доступа

@@ -16,8 +16,9 @@
  */
 function updateScoreMode0() {
   const scoreValue = document.getElementById('score-value');
-  if (scoreValue) {
-    scoreValue.textContent = mode0State.score;
+  if (scoreValue) scoreValue.textContent = mode0State.score;
+  if (typeof setTopbarProgress === 'function' && mode0State.maxQuestions > 0) {
+    setTopbarProgress(Math.round((mode0State.questionCount / mode0State.maxQuestions) * 100));
   }
 }
 
