@@ -256,7 +256,7 @@ h1, h2, h3 {
 .progress-text {
     text-align: center;
     color: var(--muted);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     font-size: 0.95rem;
 }
 
@@ -275,7 +275,7 @@ h1, h2, h3 {
 
 .game-area h2 {
     color: var(--text);
-    margin-bottom: 12px;
+    margin-bottom: 6px;
     text-align: center;
 }
 
@@ -289,7 +289,7 @@ h1, h2, h3 {
 .question-text {
     font-size: 1.3rem;
     text-align: center;
-    margin: 10px 0;
+    margin: 6px 0;
     color: var(--text);
     font-weight: 600;
 }
@@ -297,7 +297,7 @@ h1, h2, h3 {
 .translation-text {
     text-align: center;
     color: var(--muted);
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     font-style: italic;
 }
 
@@ -509,6 +509,10 @@ h1, h2, h3 {
     opacity: 0.88;
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(242, 107, 29, 0.45);
+}
+
+.quiz-next-fixed:hover {
+    transform: translateX(-50%) translateY(-2px);
 }
 
 .menu-button {
