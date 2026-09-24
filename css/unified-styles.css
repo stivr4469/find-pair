@@ -1197,3 +1197,13 @@ select:focus {
     border-radius: 99px;
     transition: width 0.4s ease;
 }
+
+/* ── Quiz "Дальше" button — fixed at bottom ── */
+.quiz-next-fixed {
+    position: fixed !important;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    min-width: 220px;
+}

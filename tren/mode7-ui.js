@@ -159,7 +159,7 @@ function displayMode7RoundUI(round, roundIndex, totalRounds) {
     const isLast = roundIndex >= totalRounds - 1;
 
     contentArea.innerHTML = `
-        <div class="question-container">
+        <div class="question-container" style="padding-bottom: 80px;">
             <div class="progress-text">Раунд ${roundIndex + 1} из ${totalRounds}</div>
             <h3 id="mode7-title" style="text-align:center; margin-bottom:6px; font-size:1.05rem; color:#2c3e50;">${escapeHtml(round.title)}</h3>
             <p class="mode7-instruction" id="mode7-instruction">${escapeHtml(round.instruction || 'Нажми слово → нажми колонку')}</p>
@@ -188,7 +188,7 @@ function displayMode7RoundUI(round, roundIndex, totalRounds) {
             </div>
 
             <div class="feedback" id="mode7-feedback" style="margin-top:14px; min-height:40px;"></div>
-            <button class="next-button" id="mode7-next-btn" style="display:none;" onclick="${isLast ? 'handleNextMode7Round()' : 'handleNextMode7Round()'}">
+            <button class="next-button quiz-next-fixed" id="mode7-next-btn" style="display:none;" onclick="${isLast ? 'handleNextMode7Round()' : 'handleNextMode7Round()'}">
                 ${isLast ? 'Завершить →' : 'Следующий раунд →'}
             </button>
         </div>

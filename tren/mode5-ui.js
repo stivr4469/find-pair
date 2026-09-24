@@ -13,7 +13,7 @@ function displayMode5QuestionUI(question) {
     const contextText = question.context || "";
 
     contentArea.innerHTML = `
-        <div class="question-container">
+        <div class="question-container" style="padding-bottom: 80px;">
             <div class="progress-text">Выполнено ${mode5State.totalAnswered} из ${mode5State.sessionLimit}</div>
             
             <div class="context-box" style="background: #eef2ff; padding: 10px; border-radius: 5px; margin-bottom: 10px; font-style: italic; color: #4f46e5;">
@@ -35,7 +35,7 @@ function displayMode5QuestionUI(question) {
 
             <div class="feedback" id="mode5-feedback" style="min-height: 100px; padding: 15px; margin-top: 15px; background: #f8f9fa; border-radius: 8px; display: none; border-left: 5px solid #ccc;"></div>
             
-            <button class="next-button" id="mode5-next-btn" style="display: none; width: 100%; padding: 15px; background: #4f46e5; color: white; border: none; border-radius: 8px; margin-top: 15px; cursor: pointer; font-weight: bold;">
+            <button class="next-button quiz-next-fixed" id="mode5-next-btn" style="display: none;">
                 Дальше →
             </button>
         </div>

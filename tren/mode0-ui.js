@@ -74,7 +74,7 @@ function displayQuestionMode0(question) {
 
   // Обновляем текст вопроса
   contentArea.innerHTML = `
-    <div class="question-container">
+    <div class="question-container" style="padding-bottom: 80px;">
       <div class="question-number">
         Вопрос ${mode0State.questionCount + 1} из ${mode0State.maxQuestions}
       </div>
@@ -87,8 +87,8 @@ function displayQuestionMode0(question) {
       <div id="mode0-feedback" class="feedback"></div>
       <button
         id="mode0-next-btn"
-        class="next-button"
-        style="display: ${mode0State.isAnswered ? 'inline-block' : 'none'}"
+        class="next-button quiz-next-fixed"
+        style="display: ${mode0State.isAnswered ? 'block' : 'none'}"
       >
         Дальше →
       </button>

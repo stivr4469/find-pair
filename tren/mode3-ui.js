@@ -11,7 +11,7 @@ function displayMode3QuestionUI(question) {
     const options = ['a', 'de', 'en'];
 
     contentArea.innerHTML = `
-        <div class="question-container">
+        <div class="question-container" style="padding-bottom: 80px;">
             <div class="progress-text">Вопрос ${mode3State.currentQuestionIndex + 1} из ${mode3State.totalQuestions}</div>
             <div class="translation-text">${question.translation}</div>
             <div class="question-text">${question.text.replace('___', '<span class="blank" id="question-blank">___</span>')}</div>
@@ -21,7 +21,7 @@ function displayMode3QuestionUI(question) {
                 `).join('')}
             </div>
             <div class="feedback" id="mode3-feedback"></div>
-            <button class="next-button" id="mode3-next-btn" style="display: none;">Дальше →</button>
+            <button class="next-button quiz-next-fixed" id="mode3-next-btn" style="display: none;">Дальше →</button>
         </div>
     `;
 

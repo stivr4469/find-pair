@@ -379,7 +379,7 @@ const FormulasUI = {
     }).join('');
 
     var html = [
-      '<div style="max-width: 600px; margin: 0 auto;">',
+      '<div style="max-width: 600px; margin: 0 auto; padding-bottom: 80px;">',
         '<div class="game-area" style="padding: 22px 20px;">',
 
           // Top row: formula badge + back
@@ -462,11 +462,7 @@ const FormulasUI = {
 
           // Next button (hidden initially)
           '<div id="formula-next-wrap" style="display: none; text-align: center; margin-top: 14px;">',
-            '<button onclick="formulaNext()" class="next-button" style="',
-              'width: auto;',
-              'display: inline-block;',
-              'padding: 12px 36px;',
-            '">Дальше →</button>',
+            '<button onclick="formulaNext()" class="next-button quiz-next-fixed">Дальше →</button>',
           '</div>',
 
         '</div>',

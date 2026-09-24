@@ -12,7 +12,7 @@ function displayMode4QuestionUI(question) {
     const shuffledOptions = shuffleArray(question.options);
 
     contentArea.innerHTML = `
-        <div class="question-container">
+        <div class="question-container" style="padding-bottom: 80px;">
             <div class="progress-text">Вопрос ${mode4State.currentQuestionIndex + 1} из ${mode4State.totalQuestions}</div>
             <div class="question-text">${question.russian}</div>
             <div class="options-container" id="mode4-options">
@@ -21,7 +21,7 @@ function displayMode4QuestionUI(question) {
                 `).join('')}
             </div>
             <div class="feedback" id="mode4-feedback"></div>
-            <button class="next-button" id="mode4-next-btn" style="display: none;">Дальше →</button>
+            <button class="next-button quiz-next-fixed" id="mode4-next-btn" style="display: none;">Дальше →</button>
         </div>
     `;
 

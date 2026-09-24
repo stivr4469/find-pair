@@ -88,12 +88,12 @@ function displayMode6QuestionUI(question) {
     );
 
     contentArea.innerHTML = `
-        <div class="question-container">
+        <div class="question-container" style="padding-bottom: 80px;">
             <div class="progress-text">Вопрос ${mode6State.currentQuestionIndex + 1} из ${mode6State.totalQuestions}</div>
             <div class="translation-text">${question.translation}</div>
             <div class="question-text">${questionHtml}</div>
             <div class="feedback" id="mode6-feedback"></div>
-            <button class="next-button" id="mode6-next-btn" style="display: none;">Дальше →</button>
+            <button class="next-button quiz-next-fixed" id="mode6-next-btn" style="display: none;">Дальше →</button>
         </div>
     `;
 

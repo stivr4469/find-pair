@@ -9,7 +9,7 @@ function displayMode1QuestionUI(question) {
     if (!contentArea) return;
 
     contentArea.innerHTML = `
-        <div class="question-container">
+        <div class="question-container" style="padding-bottom: 80px;">
             <div class="progress-text">Вопрос ${mode1State.currentQuestionIndex + 1} из ${mode1State.totalQuestions}</div>
             <div class="translation-text">${question.translation}</div>
             <div class="question-text">${question.text.replace('___', '<span class="blank" id="question-blank">___</span>')}</div>
@@ -19,7 +19,7 @@ function displayMode1QuestionUI(question) {
                 `).join('')}
             </div>
             <div class="feedback" id="mode1-feedback"></div>
-            <button class="next-button" id="mode1-next-btn" style="display: none;">Дальше →</button>
+            <button class="next-button quiz-next-fixed" id="mode1-next-btn" style="display: none;">Дальше →</button>
         </div>
     `;
 

@@ -36,7 +36,7 @@ function displayBaseQuestion(question, options) {
     }
 
     contentArea.innerHTML = `
-        <div class="question-container">
+        <div class="question-container" style="padding-bottom: 80px;">
             <div class="question-number">
                 Вопрос ${baseModeState.questionCount + 1} из ${baseModeState.maxQuestions}
             </div>
@@ -49,7 +49,7 @@ function displayBaseQuestion(question, options) {
                 `).join('')}
             </div>
             <div class="feedback"></div>
-            <button class="next-button" style="display: none;">Дальше →</button>
+            <button class="next-button quiz-next-fixed" style="display: none;">Дальше →</button>
         </div>
     `;
 

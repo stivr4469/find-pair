@@ -34,7 +34,7 @@ function displayAdvancedQuestion_tren(question, options) {
     if (!contentArea) return;
 
     contentArea.innerHTML = `
-        <div class="question-container">
+        <div class="question-container" style="padding-bottom: 80px;">
             <div class="progress-text">Вопрос ${advancedModeState_tren.questionCount + 1} из ${advancedModeState_tren.maxQuestions}</div>
             <button class="back-to-settings-button" onclick="initMode2()">К настройкам</button>
             <div class="question-text">${question.questionText}</div>
@@ -42,7 +42,7 @@ function displayAdvancedQuestion_tren(question, options) {
                 ${options.map(option => `<button class="option-btn" data-answer="${option}">${option}</button>`).join('')}
             </div>
             <div class="feedback" id="mode2-feedback"></div>
-            <button class="next-button" id="mode2-next-btn" style="display: none;">Дальше →</button>
+            <button class="next-button quiz-next-fixed" id="mode2-next-btn" style="display: none;">Дальше →</button>
         </div>
     `;
 
