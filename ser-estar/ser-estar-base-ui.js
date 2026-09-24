@@ -15,14 +15,7 @@ function displayBaseVerbSelection() {
     }
 
     contentArea.innerHTML = `
-        <div class="verb-selection-container">
-            <h3>Выберите глагол для тренировки:</h3>
-            <div class="verb-buttons">
-                <button class="verb-btn" onclick="startBasePractice('ser')">ser</button>
-                <button class="verb-btn" onclick="startBasePractice('estar')">estar</button>
-            </div>
-        </div>
-    `;
+        <div class="verb-selection-container"> <h3>Выберите глагол для тренировки:</h3> <div class="verb-buttons"> <button class="verb-btn" onclick="startBasePractice('ser')">ser</button> <button class="verb-btn" onclick="startBasePractice('estar')">estar</button> </div> </div> `;
 }
 
 /**
@@ -36,22 +29,11 @@ function displayBaseQuestion(question, options) {
     }
 
     contentArea.innerHTML = `
-        <div class="question-container" style="padding-bottom: 80px;">
-            <div class="question-number">
-                Вопрос ${baseModeState.questionCount + 1} из ${baseModeState.maxQuestions}
-            </div>
-            <div class="question-text">
-                Conjugación de '${question.verb}' en presente para '${question.person}'
-            </div>
-            <div class="options-container">
-                ${options.map(option => `
-                    <button class="option-btn" data-answer="${option}">${option}</button>
-                `).join('')}
-            </div>
-            <div class="feedback"></div>
-            <button class="next-button quiz-next-fixed" style="display: none;">Дальше →</button>
-        </div>
-    `;
+        <div class="question-container" style="padding-bottom: 80px;"> <div class="question-number"> Вопрос ${baseModeState.questionCount + 1} из ${baseModeState.maxQuestions}
+            </div> <div class="question-text"> Conjugación de '${question.verb}' en presente para '${question.person}'
+            </div> <div class="options-container"> ${options.map(option => `
+                    <button class="option-btn" data-answer="${option}">${option}</button> `).join('')}
+            </div> <div class="feedback"></div> <button class="next-button quiz-next-fixed" style="display: none;">Дальше →</button> </div> `;
 
     // Добавляем обработчики на кнопки
     const optionButtons = contentArea.querySelectorAll('.option-btn');

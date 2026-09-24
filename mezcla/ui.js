@@ -46,7 +46,7 @@ const MezclaUI = {
         'display: flex; align-items: center; gap: 16px;',
         'border: 2px dashed var(--border);',
       '" class="mezcla-card mezcla-card-add">',
-        '<div style="font-size: 2rem; flex-shrink: 0;"><i data-lucide="file-plus-2" style="stroke:var(--accent);width:32px;height:32px;"></i></div>',
+        '<div style="font-size: 2rem; flex-shrink: 0;"></div>',
         '<div style="flex: 1; min-width: 0;">',
           '<div style="font-weight: 700; font-size: 1rem; color: var(--accent);">+ Добавить свой текст</div>',
           '<div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">Вставь свой параллельный текст</div>',
@@ -114,7 +114,7 @@ const MezclaUI = {
             'background: var(--faint); border: 1px solid var(--border); color: var(--text);',
             'font-size: 1rem; cursor: pointer; padding: 8px 12px; border-radius: 8px;',
           '">← Назад</button>',
-          '<div style="color: var(--text); font-weight: 700; font-size: 1.1rem;"><i data-lucide="file-plus-2" style="width:18px;height:18px;vertical-align:middle;stroke:var(--accent);margin-right:6px;"></i>Свой текст</div>',
+          '<div style="color: var(--text); font-weight: 700; font-size: 1.1rem;">Свой текст</div>',
         '</div>',
 
         '<div class="game-area" style="padding: 20px 22px;">',
@@ -260,7 +260,7 @@ const MezclaUI = {
               'background: var(--accent-faint); border: 1px solid var(--border); color: var(--accent);',
               'border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; cursor: pointer;',
               'font-weight: 600;',
-            '"><i data-lucide="shuffle" style="width:13px;height:13px;vertical-align:middle;stroke:var(--accent);margin-right:4px;"></i>Перемешать</button>',
+            '">Перемешать</button>',
           '</div>',
 
         '</div>',

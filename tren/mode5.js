@@ -89,9 +89,7 @@ function checkMode5Answer(selected, correct, buttonElement, explanation) {
 
     if (isCorrect) {
         feedback.innerHTML = `
-            <div style="color: var(--success, #27ae60); font-weight: bold; margin-bottom: 8px;">✓ ¡Correcto!</div>
-            <div style="color: var(--text); font-size: 0.95rem; line-height: 1.4;">${explanation}</div>
-        `;
+            <div style="color: var(--success, #27ae60); font-weight: bold; margin-bottom: 8px;">✓ ¡Correcto!</div> <div style="color: var(--text); font-size: 0.95rem; line-height: 1.4;">${explanation}</div> `;
         feedback.style.borderLeft = '5px solid var(--success, #27ae60)';
         buttonElement.classList.add('correct');
         mode5State.score++;
@@ -106,9 +104,7 @@ function checkMode5Answer(selected, correct, buttonElement, explanation) {
         // }
     } else {
         feedback.innerHTML = `
-            <div style="color: var(--danger, #e74c3c); font-weight: bold; margin-bottom: 8px;">✗ Incorrecto. Правильный ответ: ${correct}</div>
-            <div style="color: var(--text); font-size: 0.95rem; line-height: 1.4;">${explanation}</div>
-        `;
+            <div style="color: var(--danger, #e74c3c); font-weight: bold; margin-bottom: 8px;">✗ Incorrecto. Правильный ответ: ${correct}</div> <div style="color: var(--text); font-size: 0.95rem; line-height: 1.4;">${explanation}</div> `;
         feedback.style.borderLeft = '5px solid var(--danger, #e74c3c)';
         buttonElement.classList.add('incorrect');
         window.njWrong && window.njWrong(null, explanation || null);

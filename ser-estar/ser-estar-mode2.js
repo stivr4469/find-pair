@@ -49,36 +49,13 @@ function displayAdvancedSettings() {
     };
 
     contentArea.innerHTML = `
-        <div class="settings-container">
-            <h3>Настройки тренировки (A2)</h3>
-
-            <div class="setting-group">
-                <h4>Глаголы:</h4>
-                <div id="verbs-settings">
-                    ${verbs.map(verb => `
-                        <label>
-                            <input type="checkbox" name="verb" value="${verb}" checked>
-                            ${verb}
-                        </label>
-                    `).join('')}
-                </div>
-            </div>
-
-            <div class="setting-group">
-                <h4>Времена:</h4>
-                <div id="tenses-settings">
-                    ${Object.keys(tenses).map(tense => `
-                        <label>
-                            <input type="checkbox" name="tense" value="${tense}" checked>
-                            ${tenses[tense]}
-                        </label>
-                    `).join('')}
-                </div>
-            </div>
-
-            <button class="start-button" onclick="startAdvancedPractice()">Начать тренировку</button>
-        </div>
-    `;
+        <div class="settings-container"> <h3>Настройки тренировки (A2)</h3> <div class="setting-group"> <h4>Глаголы:</h4> <div id="verbs-settings"> ${verbs.map(verb => `
+                        <label> <input type="checkbox" name="verb" value="${verb}" checked> ${verb}
+                        </label> `).join('')}
+                </div> </div> <div class="setting-group"> <h4>Времена:</h4> <div id="tenses-settings"> ${Object.keys(tenses).map(tense => `
+                        <label> <input type="checkbox" name="tense" value="${tense}" checked> ${tenses[tense]}
+                        </label> `).join('')}
+                </div> </div> <button class="start-button" onclick="startAdvancedPractice()">Начать тренировку</button> </div> `;
 }
 
 /**
@@ -209,23 +186,11 @@ function displayAdvancedQuestion(question, options) {
     };
 
     contentArea.innerHTML = `
-        <div class="question-container" style="padding-bottom: 80px;">
-            <div class="question-number">
-                Вопрос ${advancedModeState.questionCount + 1} из ${advancedModeState.maxQuestions}
-            </div>
-            <button class="back-to-settings-button" onclick="initAdvancedMode()">К настройкам</button>
-            <div class="question-text">
-                Conjugación de '${question.verb}' en ${tenseNames[question.tense]} para '${personNames[question.person]}'
-            </div>
-            <div class="options-container">
-                ${options.map(option => `
-                    <button class="option-btn" data-answer="${option}">${option}</button>
-                `).join('')}
-            </div>
-            <div class="feedback"></div>
-            <button class="next-button quiz-next-fixed" style="display: none;">Дальше →</button>
-        </div>
-    `;
+        <div class="question-container" style="padding-bottom: 80px;"> <div class="question-number"> Вопрос ${advancedModeState.questionCount + 1} из ${advancedModeState.maxQuestions}
+            </div> <button class="back-to-settings-button" onclick="initAdvancedMode()">К настройкам</button> <div class="question-text"> Conjugación de '${question.verb}' en ${tenseNames[question.tense]} para '${personNames[question.person]}'
+            </div> <div class="options-container"> ${options.map(option => `
+                    <button class="option-btn" data-answer="${option}">${option}</button> `).join('')}
+            </div> <div class="feedback"></div> <button class="next-button quiz-next-fixed" style="display: none;">Дальше →</button> </div> `;
 
     // Обработчики на кнопки
     const optionButtons = contentArea.querySelectorAll('.option-btn');
@@ -333,20 +298,9 @@ function showAdvancedResults() {
     }
 
     contentArea.innerHTML = `
-        <div class="results-container">
-            <h3>Результаты</h3>
-            <div class="final-score">${advancedModeState.score} из ${advancedModeState.maxQuestions} (${percentage}%)</div>
-            <div class="final-message">${message}</div>
-            <div class="results-buttons">
-                <button class="restart-button" onclick="initAdvancedMode()">
-                    <i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Ещё раз
-                </button>
-                <button class="menu-button" onclick="SerEstarApp.showMainMenu()">
-                    <i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Меню
-                </button>
-            </div>
-        </div>
-    `;
+        <div class="results-container"> <h3>Результаты</h3> <div class="final-score">${advancedModeState.score} из ${advancedModeState.maxQuestions} (${percentage}%)</div> <div class="final-message">${message}</div> <div class="results-buttons"> <button class="restart-button" onclick="initAdvancedMode()"> Ещё раз
+                </button> <button class="menu-button" onclick="SerEstarApp.showMainMenu()"> Меню
+                </button> </div> </div> `;
     lucide.createIcons();
 }
 

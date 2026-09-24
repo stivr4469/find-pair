@@ -71,9 +71,7 @@ const FormulasUI = {
           'flex-direction: column;',
           'gap: 6px;',
         '">',
-          '<div style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;background:' + FORMULA_ICONS[index].bg + ';margin-bottom:4px;">',
-            '<i data-lucide="' + FORMULA_ICONS[index].icon + '" style="width:22px;height:22px;stroke:' + FORMULA_ICONS[index].color + ';stroke-width:2;pointer-events:none"></i>',
-          '</div>',
+          '<div style="width:40px;height:40px;border-radius:10px;background:' + FORMULA_ICONS[index].color + ';opacity:0.82;margin-bottom:4px;flex-shrink:0;"></div>',
           '<div style="font-weight: 700; font-size: 0.85rem; color: var(--text);">' + formula.shortName + '</div>',
           '<div style="',
             'background: var(--accent-faint);',
@@ -101,7 +99,7 @@ const FormulasUI = {
             'background:var(--surface);color:var(--text);cursor:pointer;',
             'transition:background 0.15s,transform 0.15s;text-align:center;box-shadow:var(--shadow);font-family:inherit;',
           '" onmouseover="this.style.borderColor=\'var(--accent)\';this.style.background=\'var(--accent-faint)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.background=\'var(--surface)\'">',
-            '<span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:var(--faint);"><i data-lucide="clipboard-list" style="width:20px;height:20px;stroke:var(--muted);stroke-width:2;"></i></span>',
+            '<span style="display:inline-block;width:24px;height:24px;border-radius:6px;background:var(--muted);opacity:0.5;"></span>',
             '<span style="font-weight:700;font-size:0.95rem;">Полный тест</span>',
             '<span style="font-size:0.75rem;color:var(--muted);line-height:1.3;">216 вопросов · ошибки не повторяются</span>',
           '</button>',
@@ -112,7 +110,7 @@ const FormulasUI = {
             'color:var(--text);cursor:pointer;',
             'transition:opacity 0.15s,transform 0.15s;text-align:center;font-family:inherit;',
           '" onmouseover="this.style.opacity=\'0.88\'" onmouseout="this.style.opacity=\'1\'">',
-            '<span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;background:rgba(239,68,68,0.2);"><i data-lucide="flame" style="width:20px;height:20px;stroke:#ef4444;stroke-width:2;"></i></span>',
+            '<span style="display:inline-block;width:24px;height:24px;border-radius:6px;background:#ef4444;opacity:0.6;"></span>',
             '<span style="font-weight:700;font-size:0.95rem;">Марафон</span>',
             '<span style="font-size:0.75rem;color:var(--muted);line-height:1.3;">ошибки возвращаются · конец = всё верно</span>',
           '</button>',
@@ -188,7 +186,7 @@ const FormulasUI = {
             'justify-content: center;',
             'transition: background 0.2s, transform 0.15s;',
           '" onmouseover="this.style.background=\'var(--accent-mid)\';this.style.transform=\'scale(1.1)\'" onmouseout="this.style.background=\'var(--accent-faint)\';this.style.transform=\'\'">',
-            '<i data-lucide="volume-2" style="width:15px;height:15px;stroke:currentColor;stroke-width:2;pointer-events:none"></i>',
+            '',
           '</button>',
         '</div>',
       ].join('');
@@ -261,7 +259,7 @@ const FormulasUI = {
               'opacity: 0.9;',
               'transition: opacity 0.15s, transform 0.15s;',
             '" onmouseover="this.style.opacity=\'1\';this.style.transform=\'scale(1.06)\'" onmouseout="this.style.opacity=\'0.9\';this.style.transform=\'\'">',
-              '<i data-lucide="volume-2" style="width:14px;height:14px;stroke:currentColor;stroke-width:2;pointer-events:none"></i> Послушать',
+              ' Послушать',
             '</button>',
           '</div>',
 
@@ -427,7 +425,7 @@ const FormulasUI = {
           // Position label
           '<div style="margin-bottom: 4px; font-size: 0.85rem; color: var(--muted);">',
             (marathonLeft != null
-              ? '<span style="background:#fff3cd;color:#856404;padding:2px 10px;border-radius:20px;font-weight:700;"><i data-lucide="flame" style="width:14px;height:14px;stroke:#f59e0b;stroke-width:2;vertical-align:middle;margin-right:4px;"></i>Осталось: ' + marathonLeft + '</span>'
+              ? '<span style="background:#fff3cd;color:#856404;padding:2px 10px;border-radius:20px;font-weight:700;">Осталось: ' + marathonLeft + '</span>'
               : 'Вопрос ' + (qIndex + 1) + ' из ' + total
             ),
           '</div>',
@@ -528,7 +526,7 @@ const FormulasUI = {
         'background:var(--accent-faint);color:var(--accent);cursor:pointer;' +
         'display:inline-flex;align-items:center;justify-content:center;' +
         'margin-left:8px;vertical-align:middle;transition:background 0.2s;">' +
-        '<i data-lucide="volume-2" style="width:15px;height:15px;stroke:currentColor;stroke-width:2;pointer-events:none"></i>' +
+        '' +
         '</button>';
 
       feedbackEl.style.display = 'flex';
@@ -544,12 +542,12 @@ const FormulasUI = {
         feedbackEl.style.background = '#d4edda';
         feedbackEl.style.color = '#155724';
         feedbackEl.style.border = '1px solid #c3e6cb';
-        feedbackEl.innerHTML = '<div style="flex:1"><span style="color:#22c55e;font-weight:700;"><i data-lucide="check-circle-2" style="width:15px;height:15px;stroke:#22c55e;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Верно!</span> ' + _escHtml(hint) + '</div>' + ttsBtn;
+        feedbackEl.innerHTML = '<div style="flex:1"><span style="color:#22c55e;font-weight:700;">Верно!</span> ' + _escHtml(hint) + '</div>' + ttsBtn;
       } else {
         feedbackEl.style.background = '#f8d7da';
         feedbackEl.style.color = '#721c24';
         feedbackEl.style.border = '1px solid #f5c6cb';
-        feedbackEl.innerHTML = '<div style="flex:1"><span style="color:#ef4444;font-weight:700;"><i data-lucide="x-circle" style="width:15px;height:15px;stroke:#ef4444;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Неверно.</span> ' + _escHtml(hint) + '</div>' + ttsBtn;
+        feedbackEl.innerHTML = '<div style="flex:1"><span style="color:#ef4444;font-weight:700;">Неверно.</span> ' + _escHtml(hint) + '</div>' + ttsBtn;
       }
 
       // Wire up TTS button
@@ -635,8 +633,8 @@ const FormulasUI = {
           '<p style="color: var(--text); font-size: 1rem; margin-bottom: 28px;">' + _escHtml(reactionText) + '</p>',
 
           '<div class="results-buttons">',
-            '<button onclick="' + repeatAction + '" class="restart-button"><i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Повторить</button>',
-            '<button onclick="formulaBackToList()" class="menu-button"><i data-lucide="book-open" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Все формулы</button>',
+            '<button onclick="' + repeatAction + '" class="restart-button"> Повторить</button>',
+            '<button onclick="formulaBackToList()" class="menu-button"> Все формулы</button>',
           '</div>',
 
         '</div>',

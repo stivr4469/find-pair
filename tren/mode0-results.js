@@ -47,27 +47,9 @@ function showMode0Results() {
 
   // Отображаем результаты
   contentArea.innerHTML = `
-    <div class="results-container">
-      <h3>Результаты режима "Базовое спряжение (A1)"</h3>
-      <div class="final-score">
-        <span class="score-number">${mode0State.score}</span>
-        <span class="score-total">из ${mode0State.maxQuestions}</span>
-      </div>
-      <div class="score-percentage">${percentage}%</div>
-      <div class="final-message">
-        <span class="result-emoji">${emoji}</span>
-        <span class="result-text">${message}</span>
-      </div>
-      <div class="results-actions">
-        <button onclick="restartMode0()" class="restart-button">
-          Ещё раз
-        </button>
-        <button onclick="showMainMenu()" class="menu-button">
-          Меню
-        </button>
-      </div>
-    </div>
-  `;
+    <div class="results-container"> <h3>Результаты режима "Базовое спряжение (A1)"</h3> <div class="final-score"> <span class="score-number">${mode0State.score}</span> <span class="score-total">из ${mode0State.maxQuestions}</span> </div> <div class="score-percentage">${percentage}%</div> <div class="final-message"> <span class="result-emoji">${emoji}</span> <span class="result-text">${message}</span> </div> <div class="results-actions"> <button onclick="restartMode0()" class="restart-button"> Ещё раз
+        </button> <button onclick="showMainMenu()" class="menu-button"> Меню
+        </button> </div> </div> `;
 }
 
 /**

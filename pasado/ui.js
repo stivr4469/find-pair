@@ -151,10 +151,7 @@ const PasadoUI = {
             'box-shadow:var(--shadow);border:1px solid var(--border);',
             'display:flex;flex-direction:column;gap:6px;',
           '">',
-            '<div style="display:inline-flex;align-items:center;justify-content:center;',
-              'width:40px;height:40px;border-radius:10px;background:' + ico.bg + ';margin-bottom:2px;">',
-              '<i data-lucide="' + ico.icon + '" style="width:20px;height:20px;stroke:' + ico.color + ';stroke-width:2;"></i>',
-            '</div>',
+            '<div style="width:40px;height:40px;border-radius:10px;background:' + ico.color + ';opacity:0.82;margin-bottom:2px;flex-shrink:0;"></div>',
             '<div style="font-weight:700;font-size:0.82rem;color:var(--text);">' + _escHtmlP(formula.shortName) + '</div>',
             '<div style="background:var(--accent-faint);color:var(--accent);font-size:0.7rem;padding:3px 7px;',
               'border-radius:5px;font-family:monospace;line-height:1.3;word-break:break-word;">',
@@ -167,10 +164,7 @@ const PasadoUI = {
       return [
         '<div style="margin-bottom:24px;">',
           '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">',
-            '<span style="display:inline-flex;align-items:center;justify-content:center;',
-              'width:28px;height:28px;border-radius:8px;background:' + g.bg + ';">',
-              '<i data-lucide="' + g.icon + '" style="width:15px;height:15px;stroke:' + g.color + ';stroke-width:2.5;"></i>',
-            '</span>',
+            '<span style="display:inline-block;width:14px;height:14px;border-radius:4px;background:' + g.color + ';opacity:0.85;flex-shrink:0;"></span>',
             '<span style="font-size:0.82rem;font-weight:700;text-transform:uppercase;',
               'letter-spacing:0.08em;color:var(--text);">' + g.label + '</span>',
           '</div>',
@@ -192,7 +186,6 @@ const PasadoUI = {
             'background:var(--surface);color:var(--text);cursor:pointer;text-align:center;',
             'box-shadow:var(--shadow);transition:background 0.15s,border-color 0.15s;" ',
             'onmouseover="this.style.background=\'var(--accent-faint)\';this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.background=\'var(--surface)\';this.style.borderColor=\'var(--border)\'">',
-            '<i data-lucide="clipboard-list" style="width:22px;height:22px;stroke:var(--accent);stroke-width:2;"></i>',
             '<span style="font-weight:700;font-size:0.82rem;">Полный тест</span>',
             '<span style="font-size:0.7rem;opacity:0.7;">96 вопросов</span>',
           '</button>',
@@ -202,7 +195,6 @@ const PasadoUI = {
             'background:var(--surface);color:var(--text);cursor:pointer;text-align:center;',
             'box-shadow:var(--shadow);transition:background 0.15s,border-color 0.15s;" ',
             'onmouseover="this.style.background=\'var(--accent-faint)\';this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.background=\'var(--surface)\';this.style.borderColor=\'var(--border)\'">',
-            '<i data-lucide="pencil-line" style="width:22px;height:22px;stroke:var(--accent);stroke-width:2;"></i>',
             '<span style="font-weight:700;font-size:0.82rem;">Inline режим</span>',
             '<span style="font-size:0.7rem;color:var(--muted);">28 предложений</span>',
           '</button>',
@@ -212,7 +204,6 @@ const PasadoUI = {
             'background:var(--surface);color:var(--text);cursor:pointer;text-align:center;',
             'box-shadow:var(--shadow);transition:background 0.15s,border-color 0.15s;" ',
             'onmouseover="this.style.background=\'var(--accent-faint)\';this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.background=\'var(--surface)\';this.style.borderColor=\'var(--border)\'">',
-            '<i data-lucide="layers" style="width:22px;height:22px;stroke:var(--accent);stroke-width:2;"></i>',
             '<span style="font-weight:700;font-size:0.82rem;">Классификация</span>',
             '<span style="font-size:0.7rem;color:var(--muted);">48 примеров</span>',
           '</button>',
@@ -264,7 +255,7 @@ const PasadoUI = {
             '<div style="font-size: 1rem; color: var(--text); font-weight: 600;">' + _escHtmlP(ex.es) + '</div>',
             '<div style="font-size: 0.85rem; color: var(--muted); margin-top: 2px;">' + _escHtmlP(ex.ru) + '</div>',
           '</div>',
-          '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ex.es) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать"><i data-lucide="volume-2" style="width:17px;height:17px;stroke:currentColor;stroke-width:2;pointer-events:none"></i></button>',
+          '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ex.es) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать"></button>',
         '</div>',
       ].join('');
     }).join('');
@@ -304,7 +295,7 @@ const PasadoUI = {
               '<div style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 4px;">' + _escHtmlP(formula.example) + '</div>',
               '<div style="font-size: 0.9rem; color: var(--muted); font-style: italic;">' + _escHtmlP(formula.exampleRu) + '</div>',
             '</div>',
-            '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(formula.example) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать пример" style="background:rgba(52,152,219,0.18);"><i data-lucide="volume-2" style="width:17px;height:17px;stroke:currentColor;stroke-width:2;pointer-events:none"></i></button>',
+            '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(formula.example) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать пример" style="background:rgba(52,152,219,0.18);"></button>',
           '</div>',
 
           '<div style="margin-bottom: 20px;">',
@@ -404,7 +395,7 @@ const PasadoUI = {
             'display: flex; align-items: center; justify-content: center; gap: 8px;',
           '">',
             '<span>' + _escHtmlP(question.question) + '</span>',
-            (ttsSpanish ? '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ttsSpanish) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать"><i data-lucide="volume-2" style="width:17px;height:17px;stroke:currentColor;stroke-width:2;pointer-events:none"></i></button>' : ''),
+            (ttsSpanish ? '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ttsSpanish) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать"></button>' : ''),
           '</div>',
 
           '<div id="pasado-options" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">',
@@ -481,14 +472,14 @@ const PasadoUI = {
       feedbackEl.style.lineHeight = '1.5';
 
       var ttsBtn = correctText
-        ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(correctText) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать" style="margin-left:6px;"><i data-lucide="volume-2" style="width:17px;height:17px;stroke:currentColor;stroke-width:2;pointer-events:none"></i></button>'
+        ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(correctText) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать" style="margin-left:6px;"></button>'
         : '';
 
       if (isCorrect) {
         feedbackEl.style.background = '#d4edda';
         feedbackEl.style.color = '#155724';
         feedbackEl.style.border = '1px solid #c3e6cb';
-        feedbackEl.innerHTML = '<span style="color:#22c55e;font-weight:700;"><i data-lucide="check-circle-2" style="width:15px;height:15px;stroke:#22c55e;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Верно!</span> ' + _escHtmlP(hint) + ttsBtn;
+        feedbackEl.innerHTML = '<span style="color:#22c55e;font-weight:700;">Верно!</span> ' + _escHtmlP(hint) + ttsBtn;
         if (correctText && typeof speakSpanish === 'function') {
           speakSpanish(correctText);
         }
@@ -496,7 +487,7 @@ const PasadoUI = {
         feedbackEl.style.background = '#f8d7da';
         feedbackEl.style.color = '#721c24';
         feedbackEl.style.border = '1px solid #f5c6cb';
-        feedbackEl.innerHTML = '<span style="color:#ef4444;font-weight:700;"><i data-lucide="x-circle" style="width:15px;height:15px;stroke:#ef4444;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Неверно.</span> ' + _escHtmlP(hint) + ttsBtn;
+        feedbackEl.innerHTML = '<span style="color:#ef4444;font-weight:700;">Неверно.</span> ' + _escHtmlP(hint) + ttsBtn;
         if (correctText && typeof speakSpanish === 'function') {
           setTimeout(function() { speakSpanish(correctText); }, 600);
         }
@@ -529,7 +520,7 @@ const PasadoUI = {
         '<div class="game-area" style="padding: 22px 20px;">',
 
           '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">',
-            '<span style="background:var(--accent);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;display:inline-flex;align-items:center;"><i data-lucide="pencil-line" style="width:14px;height:14px;stroke:#fff;stroke-width:2.5;vertical-align:middle;margin-right:5px;"></i>Inline режим</span>',
+            '<span style="background:var(--accent);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;display:inline-flex;align-items:center;">Inline режим</span>',
             '<button onclick="pasadoBackToList()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:4px;" title="К списку">✕</button>',
           '</div>',
 
@@ -579,19 +570,19 @@ const PasadoUI = {
       feedbackEl.style.fontSize = '0.9rem';
       feedbackEl.style.lineHeight = '1.5';
 
-      var ttsBtn = tts ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(tts) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать"><i data-lucide="volume-2" style="width:17px;height:17px;stroke:currentColor;stroke-width:2;pointer-events:none"></i></button>' : '';
+      var ttsBtn = tts ? ' <button class="pasado-tts-btn" data-tts="' + _escHtmlP(tts) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать"></button>' : '';
 
       if (isCorrect) {
         feedbackEl.style.background = '#d4edda';
         feedbackEl.style.color = '#155724';
         feedbackEl.style.border = '1px solid #c3e6cb';
-        feedbackEl.innerHTML = '<span style="color:#22c55e;font-weight:700;"><i data-lucide="check-circle-2" style="width:15px;height:15px;stroke:#22c55e;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Верно!</span> ' + _escHtmlP(hint) + ttsBtn;
+        feedbackEl.innerHTML = '<span style="color:#22c55e;font-weight:700;">Верно!</span> ' + _escHtmlP(hint) + ttsBtn;
         if (tts && typeof speakSpanish === 'function') speakSpanish(tts);
       } else {
         feedbackEl.style.background = '#f8d7da';
         feedbackEl.style.color = '#721c24';
         feedbackEl.style.border = '1px solid #f5c6cb';
-        feedbackEl.innerHTML = '<span style="color:#ef4444;font-weight:700;"><i data-lucide="x-circle" style="width:15px;height:15px;stroke:#ef4444;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Неверно.</span> Правильно: <strong>' + _escHtmlP(correctVal) + '</strong>. ' + _escHtmlP(hint) + ttsBtn;
+        feedbackEl.innerHTML = '<span style="color:#ef4444;font-weight:700;">Неверно.</span> Правильно: <strong>' + _escHtmlP(correctVal) + '</strong>. ' + _escHtmlP(hint) + ttsBtn;
         if (tts && typeof speakSpanish === 'function') setTimeout(function() { speakSpanish(tts); }, 600);
       }
     }
@@ -629,7 +620,7 @@ const PasadoUI = {
         '<div class="game-area" style="padding: 22px 20px;">',
 
           '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">',
-            '<span style="background:var(--accent);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;display:inline-flex;align-items:center;"><i data-lucide="layers" style="width:14px;height:14px;stroke:#fff;stroke-width:2.5;vertical-align:middle;margin-right:5px;"></i>Классификация</span>',
+            '<span style="background:var(--accent);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;display:inline-flex;align-items:center;">Классификация</span>',
             '<button onclick="pasadoBackToList()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:4px;" title="К списку">✕</button>',
           '</div>',
 
@@ -705,12 +696,12 @@ const PasadoUI = {
         feedbackEl.style.background = '#d4edda';
         feedbackEl.style.color = '#155724';
         feedbackEl.style.border = '1px solid #c3e6cb';
-        feedbackEl.innerHTML = '<span style="color:#22c55e;font-weight:700;"><i data-lucide="check-circle-2" style="width:15px;height:15px;stroke:#22c55e;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Верно!</span> ' + _escHtmlP(hint);
+        feedbackEl.innerHTML = '<span style="color:#22c55e;font-weight:700;">Верно!</span> ' + _escHtmlP(hint);
       } else {
         feedbackEl.style.background = '#f8d7da';
         feedbackEl.style.color = '#721c24';
         feedbackEl.style.border = '1px solid #f5c6cb';
-        feedbackEl.innerHTML = '<span style="color:#ef4444;font-weight:700;"><i data-lucide="x-circle" style="width:15px;height:15px;stroke:#ef4444;stroke-width:2.5;vertical-align:middle;margin-right:3px;pointer-events:none"></i>Неверно.</span> ' + _escHtmlP(hint);
+        feedbackEl.innerHTML = '<span style="color:#ef4444;font-weight:700;">Неверно.</span> ' + _escHtmlP(hint);
       }
     }
 
@@ -762,8 +753,8 @@ const PasadoUI = {
           '<p style="color: var(--text); font-size: 1rem; margin-bottom: 28px;">' + _escHtmlP(reactionText) + '</p>',
 
           '<div class="results-buttons">',
-            '<button onclick="' + repeatAction + '" class="restart-button"><i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Ещё раз</button>',
-            '<button onclick="pasadoBackToList()" class="menu-button"><i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> К темам</button>',
+            '<button onclick="' + repeatAction + '" class="restart-button"> Ещё раз</button>',
+            '<button onclick="pasadoBackToList()" class="menu-button"> К темам</button>',
           '</div>',
 
         '</div>',

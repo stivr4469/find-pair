@@ -15,26 +15,10 @@ function displayContextQuestionUI(question) {
         : '';
 
     contentArea.innerHTML = `
-        <div class="ctx-question-card">
-            <div class="ctx-progress-label">ВОПРОС ${qNum} ИЗ ${qTotal} &middot; ВСТАВЬ SER ИЛИ ESTAR</div>
-
-            <div class="ctx-question-text">${blankHtml}</div>
-
-            <div class="ctx-translation">${question.translation}</div>
-
-            <div class="options-container" id="context-options">
-                ${question.options.map(option => `
-                    <button class="option-btn" data-answer="${option}">${option}</button>
-                `).join('')}
-            </div>
-
-            <div class="feedback" id="context-feedback"></div>
-
-            <button class="next-button" id="context-next-btn" style="display:none;">
-                Дальше →
-            </button>
-        </div>
-    `;
+        <div class="ctx-question-card"> <div class="ctx-progress-label">ВОПРОС ${qNum} ИЗ ${qTotal} &middot; ВСТАВЬ SER ИЛИ ESTAR</div> <div class="ctx-question-text">${blankHtml}</div> <div class="ctx-translation">${question.translation}</div> <div class="options-container" id="context-options"> ${question.options.map(option => `
+                    <button class="option-btn" data-answer="${option}">${option}</button> `).join('')}
+            </div> <div class="feedback" id="context-feedback"></div> <button class="next-button" id="context-next-btn" style="display:none;"> Дальше →
+            </button> </div> `;
 
     // Обработчики
     contentArea.querySelectorAll('.option-btn').forEach(button => {
@@ -56,20 +40,9 @@ function showContextResultsUI() {
     window.njResult && window.njResult(percentage);
     
     contentArea.innerHTML = `
-        <div class="results-container">
-            <h2>Сессия завершена!</h2>
-            <div class="final-score">${contextModeState.score} / ${contextModeState.sessionLimit}</div>
-            <p>Вы прошли 20 вопросов по Ser и Estar. Вопросы перемещены в конец очереди.</p>
-            <div class="results-buttons">
-                <button class="restart-button" onclick="restartContextMode()">
-                    <i data-lucide="rotate-ccw" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> Продолжить тренировку
-                </button>
-                <button class="menu-button" onclick="showMainMenu()">
-                    <i data-lucide="list" style="width:16px;height:16px;stroke:currentColor;stroke-width:2"></i> В меню
-                </button>
-            </div>
-        </div>
-    `;
+        <div class="results-container"> <h2>Сессия завершена!</h2> <div class="final-score">${contextModeState.score} / ${contextModeState.sessionLimit}</div> <p>Вы прошли 20 вопросов по Ser и Estar. Вопросы перемещены в конец очереди.</p> <div class="results-buttons"> <button class="restart-button" onclick="restartContextMode()"> Продолжить тренировку
+                </button> <button class="menu-button" onclick="showMainMenu()"> В меню
+                </button> </div> </div> `;
     lucide.createIcons();
 }
 

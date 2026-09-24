@@ -77,8 +77,7 @@ function displayMode6QuestionUI(question) {
     const shuffledOptions = shuffleArray([...question.options]);
 
     // Строим кнопки для вставки внутрь предложения
-    const optionButtonsHtml = shuffledOptions.map(option =>
-        `<button class="option-btn inline-option" data-answer="${option}">${option}</button>`
+    const optionButtonsHtml = shuffledOptions.map(option => `<button class="option-btn inline-option" data-answer="${option}">${option}</button>`
     ).join('');
 
     // Заменяем ___ на span с кнопками внутри предложения
@@ -88,14 +87,7 @@ function displayMode6QuestionUI(question) {
     );
 
     contentArea.innerHTML = `
-        <div class="question-container" style="padding-bottom: 80px;">
-            <div class="progress-text">Вопрос ${mode6State.currentQuestionIndex + 1} из ${mode6State.totalQuestions}</div>
-            <div class="translation-text">${question.translation}</div>
-            <div class="question-text">${questionHtml}</div>
-            <div class="feedback" id="mode6-feedback"></div>
-            <button class="next-button quiz-next-fixed" id="mode6-next-btn" style="display: none;">Дальше →</button>
-        </div>
-    `;
+        <div class="question-container" style="padding-bottom: 80px;"> <div class="progress-text">Вопрос ${mode6State.currentQuestionIndex + 1} из ${mode6State.totalQuestions}</div> <div class="translation-text">${question.translation}</div> <div class="question-text">${questionHtml}</div> <div class="feedback" id="mode6-feedback"></div> <button class="next-button quiz-next-fixed" id="mode6-next-btn" style="display: none;">Дальше →</button> </div> `;
 
     // Навешиваем обработчики на inline-кнопки
     contentArea.querySelectorAll('.inline-option').forEach(button => {
@@ -121,14 +113,7 @@ function showMode6ResultsUI() {
     else message = "Sigue practicando!";
 
     contentArea.innerHTML = `
-        <div class="results-container">
-            <h3>Результаты</h3>
-            <div class="final-score">${mode6State.score} из ${mode6State.totalQuestions} (${percentage}%)</div>
-            <div class="final-message">${message}</div>
-            <button class="restart-button" onclick="restartMode6()">Ещё раз</button>
-            <button class="menu-button" onclick="showMainMenu()">Меню</button>
-        </div>
-    `;
+        <div class="results-container"> <h3>Результаты</h3> <div class="final-score">${mode6State.score} из ${mode6State.totalQuestions} (${percentage}%)</div> <div class="final-message">${message}</div> <button class="restart-button" onclick="restartMode6()">Ещё раз</button> <button class="menu-button" onclick="showMainMenu()">Меню</button> </div> `;
 }
 
 function updateMode6ScoreUI() {

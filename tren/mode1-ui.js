@@ -9,19 +9,9 @@ function displayMode1QuestionUI(question) {
     if (!contentArea) return;
 
     contentArea.innerHTML = `
-        <div class="question-container" style="padding-bottom: 80px;">
-            <div class="progress-text">Вопрос ${mode1State.currentQuestionIndex + 1} из ${mode1State.totalQuestions}</div>
-            <div class="translation-text">${question.translation}</div>
-            <div class="question-text">${question.text.replace('___', '<span class="blank" id="question-blank">___</span>')}</div>
-            <div class="options-container" id="mode1-options">
-                ${shuffleArray(question.options).map(option => `
-                    <button class="option-btn" data-answer="${option}">${option}</button>
-                `).join('')}
-            </div>
-            <div class="feedback" id="mode1-feedback"></div>
-            <button class="next-button quiz-next-fixed" id="mode1-next-btn" style="display: none;">Дальше →</button>
-        </div>
-    `;
+        <div class="question-container" style="padding-bottom: 80px;"> <div class="progress-text">Вопрос ${mode1State.currentQuestionIndex + 1} из ${mode1State.totalQuestions}</div> <div class="translation-text">${question.translation}</div> <div class="question-text">${question.text.replace('___', '<span class="blank" id="question-blank">___</span>')}</div> <div class="options-container" id="mode1-options"> ${shuffleArray(question.options).map(option => `
+                    <button class="option-btn" data-answer="${option}">${option}</button> `).join('')}
+            </div> <div class="feedback" id="mode1-feedback"></div> <button class="next-button quiz-next-fixed" id="mode1-next-btn" style="display: none;">Дальше →</button> </div> `;
 
     contentArea.querySelectorAll('.option-btn').forEach(button => {
         button.addEventListener('click', () => {
@@ -47,14 +37,7 @@ function showMode1ResultsUI() {
     else message = "Sigue practicando!";
 
     contentArea.innerHTML = `
-        <div class="results-container">
-            <h3>Результаты</h3>
-            <div class="final-score">${mode1State.score} из ${mode1State.totalQuestions} (${percentage}%)</div>
-            <div class="final-message">${message}</div>
-            <button class="restart-button" onclick="restartMode1()">Ещё раз</button>
-            <button class="menu-button" onclick="showMainMenu()">Меню</button>
-        </div>
-    `;
+        <div class="results-container"> <h3>Результаты</h3> <div class="final-score">${mode1State.score} из ${mode1State.totalQuestions} (${percentage}%)</div> <div class="final-message">${message}</div> <button class="restart-button" onclick="restartMode1()">Ещё раз</button> <button class="menu-button" onclick="showMainMenu()">Меню</button> </div> `;
 }
 
 function updateMode1ScoreUI() {

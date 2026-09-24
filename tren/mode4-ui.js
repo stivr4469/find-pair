@@ -12,18 +12,9 @@ function displayMode4QuestionUI(question) {
     const shuffledOptions = shuffleArray(question.options);
 
     contentArea.innerHTML = `
-        <div class="question-container" style="padding-bottom: 80px;">
-            <div class="progress-text">Вопрос ${mode4State.currentQuestionIndex + 1} из ${mode4State.totalQuestions}</div>
-            <div class="question-text">${question.russian}</div>
-            <div class="options-container" id="mode4-options">
-                ${shuffledOptions.map(option => `
-                    <button class="option-btn" data-answer="${option}">${option}</button>
-                `).join('')}
-            </div>
-            <div class="feedback" id="mode4-feedback"></div>
-            <button class="next-button quiz-next-fixed" id="mode4-next-btn" style="display: none;">Дальше →</button>
-        </div>
-    `;
+        <div class="question-container" style="padding-bottom: 80px;"> <div class="progress-text">Вопрос ${mode4State.currentQuestionIndex + 1} из ${mode4State.totalQuestions}</div> <div class="question-text">${question.russian}</div> <div class="options-container" id="mode4-options"> ${shuffledOptions.map(option => `
+                    <button class="option-btn" data-answer="${option}">${option}</button> `).join('')}
+            </div> <div class="feedback" id="mode4-feedback"></div> <button class="next-button quiz-next-fixed" id="mode4-next-btn" style="display: none;">Дальше →</button> </div> `;
 
     contentArea.querySelectorAll('.option-btn').forEach(button => {
         button.addEventListener('click', () => {
@@ -49,14 +40,7 @@ function showMode4ResultsUI() {
     else message = "Sigue practicando!";
 
     contentArea.innerHTML = `
-        <div class="results-container">
-            <h3>Результаты</h3>
-            <div class="final-score">${mode4State.score} из ${mode4State.totalQuestions} (${percentage}%)</div>
-            <div class="final-message">${message}</div>
-            <button class="restart-button" onclick="restartMode4()">Ещё раз</button>
-            <button class="menu-button" onclick="showMainMenu()">Меню</button>
-        </div>
-    `;
+        <div class="results-container"> <h3>Результаты</h3> <div class="final-score">${mode4State.score} из ${mode4State.totalQuestions} (${percentage}%)</div> <div class="final-message">${message}</div> <button class="restart-button" onclick="restartMode4()">Ещё раз</button> <button class="menu-button" onclick="showMainMenu()">Меню</button> </div> `;
 }
 
 function updateMode4ScoreUI() {

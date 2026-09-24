@@ -158,8 +158,7 @@ function injectMode7Styles() {
         padding: 4px 6px;
     }
 }
-</style>
-    `);
+</style> `);
 }
 
 // --- ГЛАВНАЯ ФУНКЦИЯ ОТОБРАЖЕНИЯ РАУНДА ---
@@ -173,40 +172,8 @@ function displayMode7RoundUI(round, roundIndex, totalRounds) {
     const isLast = roundIndex >= totalRounds - 1;
 
     contentArea.innerHTML = `
-        <div class="question-container" style="padding-bottom: 80px;">
-            <div class="progress-text">Раунд ${roundIndex + 1} из ${totalRounds}</div>
-            <h3 id="mode7-title" style="text-align:center; margin-bottom:6px; font-size:1.05rem; color:var(--text);">${escapeHtml(round.title)}</h3>
-            <p class="mode7-instruction" id="mode7-instruction">${escapeHtml(round.instruction || 'Нажми слово → нажми колонку')}</p>
-
-            <!-- Банк слов -->
-            <div id="mode7-word-bank" class="mode7-word-bank"></div>
-
-            <!-- Три колонки -->
-            <div id="mode7-columns" class="mode7-columns-grid">
-
-                <div class="classify-column" id="col-ir" onclick="placeMode7WordInColumn('ir')">
-                    <h4 class="classify-column-header col-ir">IR</h4>
-                    <div class="column-drop-zone" id="drop-ir"></div>
-                </div>
-
-                <div class="classify-column" id="col-venir" onclick="placeMode7WordInColumn('venir')">
-                    <h4 class="classify-column-header col-venir">VENIR</h4>
-                    <div class="column-drop-zone" id="drop-venir"></div>
-                </div>
-
-                <div class="classify-column" id="col-llegar" onclick="placeMode7WordInColumn('llegar')">
-                    <h4 class="classify-column-header col-llegar">LLEGAR</h4>
-                    <div class="column-drop-zone" id="drop-llegar"></div>
-                </div>
-
-            </div>
-
-            <div class="feedback" id="mode7-feedback" style="margin-top:14px; min-height:40px;"></div>
-            <button class="next-button quiz-next-fixed" id="mode7-next-btn" style="display:none;" onclick="${isLast ? 'handleNextMode7Round()' : 'handleNextMode7Round()'}">
-                ${isLast ? 'Завершить →' : 'Следующий раунд →'}
-            </button>
-        </div>
-    `;
+        <div class="question-container" style="padding-bottom: 80px;"> <div class="progress-text">Раунд ${roundIndex + 1} из ${totalRounds}</div> <h3 id="mode7-title" style="text-align:center; margin-bottom:6px; font-size:1.05rem; color:var(--text);">${escapeHtml(round.title)}</h3> <p class="mode7-instruction" id="mode7-instruction">${escapeHtml(round.instruction || 'Нажми слово → нажми колонку')}</p> <!-- Банк слов --> <div id="mode7-word-bank" class="mode7-word-bank"></div> <!-- Три колонки --> <div id="mode7-columns" class="mode7-columns-grid"> <div class="classify-column" id="col-ir" onclick="placeMode7WordInColumn('ir')"> <h4 class="classify-column-header col-ir">IR</h4> <div class="column-drop-zone" id="drop-ir"></div> </div> <div class="classify-column" id="col-venir" onclick="placeMode7WordInColumn('venir')"> <h4 class="classify-column-header col-venir">VENIR</h4> <div class="column-drop-zone" id="drop-venir"></div> </div> <div class="classify-column" id="col-llegar" onclick="placeMode7WordInColumn('llegar')"> <h4 class="classify-column-header col-llegar">LLEGAR</h4> <div class="column-drop-zone" id="drop-llegar"></div> </div> </div> <div class="feedback" id="mode7-feedback" style="margin-top:14px; min-height:40px;"></div> <button class="next-button quiz-next-fixed" id="mode7-next-btn" style="display:none;" onclick="${isLast ? 'handleNextMode7Round()' : 'handleNextMode7Round()'}"> ${isLast ? 'Завершить →' : 'Следующий раунд →'}
+            </button> </div> `;
 
     // Первичное заполнение банка и колонок
     refreshMode7WordBank();
@@ -262,14 +229,7 @@ function showMode7ResultsUI() {
     else message = 'Sigue practicando! Повтори формы.';
 
     contentArea.innerHTML = `
-        <div class="results-container">
-            <h3>Результаты</h3>
-            <div class="final-score">${correct} из ${total} (${percentage}%)</div>
-            <div class="final-message">${message}</div>
-            <button class="restart-button" onclick="restartMode7()">Ещё раз</button>
-            <button class="menu-button" onclick="showMainMenu()">Меню</button>
-        </div>
-    `;
+        <div class="results-container"> <h3>Результаты</h3> <div class="final-score">${correct} из ${total} (${percentage}%)</div> <div class="final-message">${message}</div> <button class="restart-button" onclick="restartMode7()">Ещё раз</button> <button class="menu-button" onclick="showMainMenu()">Меню</button> </div> `;
 }
 
 // --- СЧЁТ ---

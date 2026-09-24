@@ -186,8 +186,7 @@ function refreshMode7Columns() {
                 }
             }
 
-            return `<div class="${chipClass}">
-                ${escapeHtml(item.word)}${hint}
+            return `<div class="${chipClass}"> ${escapeHtml(item.word)}${hint}
             </div>`;
         }).join('');
     });
