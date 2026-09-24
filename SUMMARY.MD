@@ -2,6 +2,32 @@
 
 ---
 
+## Сессия: 2026-09-24
+
+### Глобальный редизайн: шрифт Nunito + компактный топбар + фиксированная кнопка «Дальше»
+
+**Задача:** привести все модули к единому Duolingo-стилю.
+
+**Что сделано:**
+- `css/unified-styles.css?v=16`:
+  - Шрифт `--font` изменён с `'Inter'` на `'Nunito'`
+  - Добавлены классы: `.se-topbar`, `.se-topbar-title`, `.se-vs`, `.se-topbar-stats`, `.se-stat-pill`, `.se-stat-label`, `.se-progress-bar-wrap`, `.se-progress-bar-track`, `.se-progress-fill`
+  - Добавлен `.quiz-next-fixed` — `position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%)` для кнопок «Дальше»
+- Все `index.html` (ser-estar, formulas, pasado, tren, mezcla, find-pair):
+  - Подключён `Nunito:wght@400;500;600;700;800;900` через Google Fonts
+  - CSS обновлён до `v=16`
+  - Убраны `<header class="app-header">` и `<section class="score-display">`
+  - Добавлен компактный топбар с `.se-topbar` + прогресс-бар
+- `formulas/ui.js?v=20`: убран дублирующий h2 "36 Формул Испанского"; кнопка «Дальше» получила `.quiz-next-fixed`
+- `pasado/ui.js?v=8`: убран дублирующий h2 "Прошедшее время"; 3 кнопки «Дальше» получили `.quiz-next-fixed`
+- `tren/mode0-7-ui.js` (все bumped): кнопки «Дальше» + `padding-bottom: 80px`
+- `ser-estar-base-ui.js?v=2`, `ser-estar-mode2.js?v=5`: кнопки «Дальше» + `.quiz-next-fixed`
+- `ser-estar-app.js?v=2`: добавлены `seUpdateStreak`, `seUpdateScore`, `seSetProgress`, `window.njAddStreak`, `window.njResetStreak`
+
+**Коммит:** `607dee8`
+
+---
+
 ## Сессия: 2026-09-23 (продолжение 3)
 
 ### ser-estar / Context mode — улучшение отображения вопроса
