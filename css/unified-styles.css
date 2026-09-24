@@ -285,9 +285,8 @@ h1, h2, h3 {
 
 /* ── Naranjito overflow effect ──────────────────────────────────────────────
    Персонаж «вылезает» ниже своего контейнера и нависает над карточкой.
-   Срабатывает только когда Naranjito смонтирован (.nj добавляется mount())
-   и только для <main class="game-area"> — прямых сиблингов #buddy
-   (ser-estar, tren). formulas/pasado с .formulas-main не затронуты. */
+   Срабатывает только когда Naranjito смонтирован (.nj добавляется mount()).
+   Все модули с Naranjito имеют class="game-area" на <main>. */
 #buddy.nj {
     position: relative;
     z-index: 10;
