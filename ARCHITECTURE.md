@@ -1,210 +1,414 @@
 # Architecture: VamoS — Spanish Trainer App
 
-> Read this file at the start of every session to skip codebase exploration.
-> **Update this file whenever modules, data structures, or conventions change.**
+> **Читай этот файл в начале каждой сессии.** Он — единственный источник правды об архитектуре.
+> Обновляй при любом изменении версий скриптов, CSS-классов, глобальных имён.
 
 ---
 
-## Tech stack
+## Что это за приложение
 
-- **Vanilla JS** — no build step, no framework, no npm
-- **Plain HTML + CSS** — script tags at bottom of `<body>`
-- **Vercel** — auto-deploy on push to `main` (remote: `github.com:stivr4469/find-pair.git`, project: `find-pair-new`)
-- **Telegram WebApp SDK** — loaded in root `index.html` only
+**VamoS** — тренажёр испанского языка. Шесть независимых игровых модулей: карточки глаголов, спряжение, ser vs estar, грамматические формулы, чтение со смешением языков, прошедшее время. Запускается как веб-страница; деплоится на Vercel.
 
 ---
 
-## Project root layout
+## Стек и ограничения
+
+| Что | Как |
+|-----|-----|
+| Язык | Vanilla JS — никаких `import`, никакого TypeScript |
+| Шаблон | Plain HTML + Plain CSS — никакого React, Vue, Svelte |
+| Сборка | **Нет** — `python3 -m http.server 3001` для локального запуска |
+| npm | **Нет** — все зависимости через CDN `<script>` |
+| Тесты | **Нет** — ручная проверка через Playwright или браузер |
+| Деплой | `git push origin main` → Vercel auto-deploy (~30 с) |
+| Репо | `git@github.com:stivr4469/find-pair.git` |
+| Vercel проект | `find-pair-new` (НЕ `find-pair-seven` — тот дубль, надо удалить) |
+
+### Cache-busting — обязательно
+
+При изменении любого `.js` или `.css` файла нужно увеличить `?v=N` в `index.html` модуля.
+Без этого браузер отдаст старую версию из кэша.
+
+---
+
+## Структура проекта
 
 ```
 spanish-trainer-app/
-├── index.html              ← Main menu (lists all modules as cards)
+├── index.html              ← Главное меню (карточки-ссылки на модули)
+├── CLAUDE.md               ← Инструкции для AI-сессий
+├── ARCHITECTURE.md         ← Этот файл
+├── SUMMARY.MD              ← Журнал изменений
 ├── css/
-│   ├── unified-styles.css  ← Shared styles for all modules (current: v=14)
-│   └── main.css            ← Styles for root index.html only
+│   ├── unified-styles.css  ← Единые стили всех модулей (v=20)
+│   └── main.css            ← Стили только для root index.html
 ├── js/
-│   ├── utils.js            ← Shared utilities: shuffleArray, speakSpanish, toggleTheme (v=18)
+│   ├── utils.js            ← Общие утилиты: shuffleArray, speakSpanish, toggleTheme,
+│   │                          normalizeSpanish, ICON_VOL, ICON_MIC (v=21)
+│   ├── naranjito.js        ← Маскот Naranjito — анимированный персонаж (v=1)
 │   └── main.js             ← Root page JS (Telegram init, closeApp)
-├── find-pair/              ← Module 1: Найди пару (vocabulary matching game)
-├── tren/                   ← Module 2: Глаголы движения (ir/venir/llegar conjugation)
-├── ser-estar/              ← Module 3: Ser vs Estar
-├── formulas/               ← Module 4: 36 Формул (grammar formulas + quiz)
-├── mezcla/                 ← Module 5: Mezcla (mixed reading, word-level)
-└── pasado/                 ← Module 6: Прошедшее время (4 past tenses)
+├── find-pair/              ← Модуль 1: Найди пару
+├── tren/                   ← Модуль 2: Глаголы движения (ir/venir/llegar)
+├── ser-estar/              ← Модуль 3: Ser vs Estar
+├── formulas/               ← Модуль 4: 36 Формул испанского
+├── mezcla/                 ← Модуль 5: Mezcla (смешанное чтение)
+└── pasado/                 ← Модуль 6: Прошедшее время (4 времени)
 ```
 
 ---
 
-## Two-level back navigation (all modules except find-pair)
-
-Every module that has sub-views (card/quiz/modes) has **two** back buttons in `back-button-container`:
-
-```html
-<div class="back-button-container">
-    <a href="../" class="back-button">← Главная</a>
-    <button id="btn-back-to-XXX" class="back-button" style="display:none"
-            onclick="ModuleApp.showXxx()">← Список / Режимы</button>
-</div>
-```
-
-| Module | Button label | onclick | Show when |
-|---|---|---|---|
-| ser-estar | ← Режимы | `SerEstarApp.showMainMenu()` | any sub-mode active |
-| formulas | ← Список | `FormulasApp.backToList()` | currentView ≠ 'list' |
-| pasado | ← Список | `PasadoApp.backToList()` | currentView ≠ 'list' |
-| tren | ← Режимы | `App.showMainMenu()` | any mode active |
-
-Each app controller has `_syncBackBtn()` (formulas, pasado) or inline logic (ser-estar, tren) to show/hide the button.
-
----
-
-## Dark / Light theme
-
-All modules support dark mode via `[data-theme="dark"]` on `<html>`.
-
-- **Toggle**: `#theme-toggle` button in `.back-button-container` of every module
-- **Persistence**: `localStorage('vamos:theme')` (`'light'` | `'dark'`)
-- **Anti-FOUC**: inline `<script>` in `<head>` reads localStorage before CSS loads
-- **Auto**: `@media (prefers-color-scheme: dark)` activates dark tokens when no manual choice is stored
-- **Toggle function**: `toggleTheme()` in `js/utils.js?v=18`
-- **CSS icon**: `#theme-toggle::after { content: '🌙' }` / `[data-theme="dark"] #theme-toggle::after { content: '☀️' }`
-
----
-
-## CSS — unified-styles.css (v=14) — Valencia Design System
-
-CSS token block (`:root`):
-```css
---bg           #FBF6EF (warm sandy)  →  dark: #14110F
---surface      #FFFFFF               →  dark: #1F1B18
---text         #1C1917               →  dark: #F5EFE8
---muted        #78716C               →  dark: #A8A29E
---faint        #EDE8E0               →  dark: #2A2420
---border       rgba(28,25,23,0.10)   →  dark: rgba(255,255,255,0.09)
---accent       #F26B1D               →  dark: #FF7A2E
---accent-faint rgba(242,107,29,0.10) →  dark: rgba(255,122,46,0.13)
---shadow       layered box-shadow
---radius       14px
---font         'Inter', system-ui
-```
-
-Key classes:
-
-```css
-/* Option buttons — use tokens */
-.option-btn, .button-option {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    color: var(--text);
-}
-
-/* SER/ESTAR classify zones */
-.classify-zones         — flex row, full-width container
-.classify-zone          — base zone style
-.classify-zone-ser      — indigo (SER), color: #6366F1 (works both themes)
-.classify-zone-estar    — green (ESTAR), color: #10B981
-.zone-label             — large label inside zone
-.zone-hint              — subtitle inside zone
-```
-
----
-
-## Module structure (canonical 4-file pattern)
-
-Every quiz module follows this structure:
+## Канонический шаблон модуля (4 файла)
 
 ```
 module/
-├── index.html   ← HTML shell, loads scripts with ?v=N
-├── data.js      ← All content data
-├── ui.js        ← Rendering: injects HTML into <main id="module-content">
-└── app.js       ← State machine: handles interaction, game logic
+├── index.html   ← HTML-оболочка; загружает скрипты через <script src="...?v=N">
+├── data.js      ← Все данные в глобальном объекте MODULE_DATA
+├── ui.js        ← Рендеринг: вставляет HTML в <main id="module-content">
+└── app.js       ← Контроллер: обрабатывает клики, управляет состоянием
+```
+
+Все переменные — **глобальные** (`window.XXX`). Никаких ES-модулей.
+
+---
+
+## Версии файлов (актуально на 2026-09-24)
+
+| Файл | Версия в HTML |
+|------|--------------|
+| `css/unified-styles.css` | v=20 |
+| `js/utils.js` | v=21 |
+| `js/naranjito.js` | v=1 |
+| `formulas/app.js` | v=18 |
+| `formulas/ui.js` | v=24 |
+| `formulas/data.js` | v=13 |
+| `pasado/app.js` | v=7 |
+| `pasado/ui.js` | v=13 |
+| `pasado/data.js` | v=3 |
+| `tren/app.js` | v=14 |
+| `mezcla/app.js` | v=8 |
+| `mezcla/ui.js` | v=10 |
+| `ser-estar/ser-estar-app.js` | v=3 |
+| `ser-estar/ser-estar-mode2.js` | v=6 |
+| `ser-estar/ser-estar-context-ui.js` | v=6 |
+| `ser-estar/classify-ui.js` | v=8 |
+| `find-pair/script.js` | v=3 |
+
+---
+
+## CSS — unified-styles.css (v=20) — дизайн-система «Валенсия»
+
+### Токены (CSS-переменные)
+
+```css
+/* Светлая тема (default) */
+--bg:           #FBF6EF   /* тёплый песочный фон */
+--surface:      #FFFFFF   /* карточки, панели */
+--text:         #1C1917
+--muted:        #78716C   /* вспомогательный текст */
+--faint:        #EDE8E0   /* очень слабый фон */
+--border:       rgba(28,25,23,0.10)
+--accent:       #F26B1D   /* оранжевый — главный акцент */
+--accent-faint: rgba(242,107,29,0.10)
+--accent-mid:   rgba(242,107,29,0.25)
+--success:      #22c55e
+--danger:       #ef4444
+--shadow:       многослойный box-shadow
+--radius:       14px
+--font:         'Nunito', system-ui
+
+/* Тёмная тема — [data-theme="dark"] */
+--bg:      #14110F
+--surface: #1F1B18
+--text:    #F5EFE8
+--muted:   #A8A29E
+--faint:   #2A2420
+--accent:  #FF7A2E
+```
+
+### Ключевые CSS-классы
+
+```css
+/* Шаблон макета */
+.game-area          — основная игровая зона (max-width 760px, padding 16px)
+.back-button-container — строка с кнопками "← Назад" и переключателем темы
+.back-button        — стиль кнопки «←»
+.mode-button        — кнопка выбора режима на главном экране модуля
+.next-button        — кнопка «Дальше →»
+.quiz-next-fixed    — position:fixed; bottom:20px — кнопка «Дальше» внизу экрана
+
+/* Топбар */
+.se-topbar          — компактный топбар с названием и статистикой
+.se-topbar-title    — заголовок в топбаре
+.se-stat-pill       — таблетка со значением в топбаре
+.se-progress-bar-wrap / .se-progress-bar-track / .se-progress-fill — прогресс-бар
+
+/* Цветные точки/квадраты (замена emoji) */
+.dot                — inline-block, 9×9px, border-radius 50% (круг)
+.dot-sq             — квадрат (border-radius 2px)
+.dot-orange         — background: var(--accent)
+.dot-blue           — #3b82f6
+.dot-green          — #22c55e
+.dot-purple         — #a855f7
+.dot-red            — #ef4444
+.dot-teal           — #14b8a6
+.dot-yellow         — #eab308
+.dot-pink           — #ec4899
+
+/* Ser vs Estar: classify-зоны */
+.classify-zones     — flex row, full-width
+.classify-zone-ser  — indigo #6366F1
+.classify-zone-estar — green #10B981
+.zone-label / .zone-hint — текст внутри зоны
 ```
 
 ---
 
-## Module 1 — find-pair/
+## Shared utilities — js/utils.js (v=21)
 
-Simple matching game. No sub-modes. Single-level navigation (← Главная only).
+| Функция / константа | Описание |
+|---------------------|----------|
+| `shuffleArray(arr)` | Fisher-Yates, возвращает новый массив |
+| `speakSpanish(text)` | **Отключён** — возвращает сразу. TTS не работает |
+| `toggleTheme()` | Переключает `data-theme` на `<html>`, пишет в `localStorage('vamos:theme')` |
+| `setTopbarStreak(n)` | Обновляет `#streak-value` в топбаре |
+| `setTopbarScore(n)` | Обновляет `#score-value` в топбаре |
+| `setTopbarProgress(pct)` | Обновляет `#se-progress-fill` (ширина в %) |
+| `resetTopbar()` | Сбрасывает все значения топбара в 0 |
+| `normalizeSpanish(str)` | Убирает `¿¡?!.`, trailing subject pronouns, пробелы → lowercase. Нужен для сравнения ответов без учёта пунктуации |
+| `window.ICON_VOL` | Inline SVG строка: иконка "volume-2" (17×17px). Использовать внутри `<button>` |
+| `window.ICON_MIC` | Inline SVG строка: иконка "microphone" (17×17px) |
+
+### Почему ICON_VOL/ICON_MIC в utils.js
+
+Lucide иконки требуют `lucide.createIcons()` после вставки `<i data-lucide>` в DOM. В секциях фидбека (`feedbackEl.innerHTML = '...'`) этот вызов не всегда происходит — иконки пропадают. Inline SVG решает проблему: работает сразу в любом `innerHTML`.
+
+---
+
+## Иконки: текущий подход
+
+**Правило:** `<i data-lucide="...">` **запрещён** в JS-генерируемом HTML (ui.js).
+
+| Назначение | Что использовать |
+|-----------|-----------------|
+| Цветовой маркер режима/категории | `<span class="dot dot-ЦВЕТ"></span>` |
+| Кнопка TTS «Послушать» | `window.ICON_VOL` внутри `<button>` |
+| Декоративный значок карточки | Цветной `<div>` с `border-radius` и `background: FORMULA_ICONS[i].bg` |
+| Статичный HTML (index.html) | `<i data-lucide="...">` + `lucide.createIcons()` в конце `<body>` |
+
+### Паттерн TTS-кнопки
+
+```js
+// Правильно — inline SVG, работает везде
+'<button class="pasado-tts-btn" data-tts="' + text + '" onclick="speakSpanish(this.dataset.tts)">'
+  + (window.ICON_VOL||'') + '</button>'
+
+// Запрещено — после innerHTML lucide.createIcons() не вызывается
+'<button><i data-lucide="volume-2"></i></button>'
+```
+
+### FORMULA_ICONS / PASADO_ICONS
+
+Массивы хранят `{ icon, color, bg }`. Поле `icon` — имя Lucide иконки — **не используется** в рендеринге. Используются только `color` и `bg` для цветовых значков карточек:
+
+```js
+'<div style="width:28px;height:28px;border-radius:8px;background:' + FORMULA_ICONS[i].bg + ';"></div>'
+```
+
+---
+
+## Двухуровневая навигация (все модули кроме find-pair)
+
+```html
+<!-- В index.html каждого модуля -->
+<div class="back-button-container">
+    <a href="../" class="back-button">← Главная</a>
+    <button id="btn-back-to-XXX" class="back-button" style="display:none"
+            onclick="ModuleApp.showXxx()">← Режимы</button>
+    <button id="theme-toggle" onclick="toggleTheme()"></button>
+</div>
+```
+
+| Модуль | ID кнопки | onclick |
+|--------|-----------|---------|
+| ser-estar | `btn-back-to-modes` | `SerEstarApp.showMainMenu()` |
+| formulas | `btn-back-to-list` | `FormulasApp.backToList()` |
+| pasado | `btn-back-to-list` | `PasadoApp.backToList()` |
+| tren | `btn-back-to-modes` | `App.showMainMenu()` |
+
+В `app.js` каждого модуля есть `_syncBackBtn()` — показывает/скрывает вторую кнопку в зависимости от `currentView`.
+
+---
+
+## Тёмная / светлая тема
+
+- **Toggle:** кнопка `#theme-toggle` в каждом модуле, иконка через CSS `::after` (🌙/☀️)
+- **Персистентность:** `localStorage('vamos:theme')` = `'light'` | `'dark'`
+- **Anti-FOUC:** inline `<script>` в `<head>` читает localStorage до загрузки CSS:
+  ```html
+  <script>(function(){try{var t=localStorage.getItem('vamos:theme');if(t)document.documentElement.dataset.theme=t}catch(e){}}());</script>
+  ```
+- **Auto:** `@media (prefers-color-scheme: dark)` работает если пользователь не выбрал вручную
+- **Механика:** `[data-theme="dark"]` на `<html>` переключает CSS-токены
+
+---
+
+## Нормализация ответов (normalizeSpanish)
+
+Применяется в `formulas/app.js` и `pasado/app.js` как запасной сценарий: если выбранный индекс не совпадает с правильным, сравниваем нормализованные строки.
+
+```js
+var isCorrect = selectedIndex === question.correct;
+if (!isCorrect && typeof normalizeSpanish === 'function') {
+    var selNorm = normalizeSpanish(question.options[selectedIndex]);
+    var crtNorm = normalizeSpanish(question.options[question.correct]);
+    if (selNorm && selNorm === crtNorm) isCorrect = true;
+}
+```
+
+Нормализует: убирает `¿¡?!.`, trailing subject pronoun (tú/yo/él/...), лишние пробелы, приводит к lowercase.
+
+---
+
+## Маскот Naranjito (naranjito.js v=1)
+
+Анимированный персонаж над карточками. Загружается в `tren/` и `ser-estar/`.
+
+```js
+// Инициализация в app.js
+var _nj = window.NaranjitoBuddy ? new window.NaranjitoBuddy(document.getElementById('buddy')) : null;
+
+// Вызовы из mode*-ui.js
+window.njResult(pct)          // показывает реакцию на результат (0–100)
+window.njAddStreak()          // +1 к стрику, возвращает текущее значение
+window.njCorrect(n)           // показывает поощрение при n правильных
+window.njResetStreak()        // сброс стрика
+```
+
+---
+
+## Запрещённые паттерны
+
+```js
+// НЕЛЬЗЯ — сломается при спецсимволах в тексте
+onclick="doSomething(${JSON.stringify(obj)})"
+// Использовать: data-атрибуты + this.dataset.xxx
+
+// НЕЛЬЗЯ — Lucide иконка в dynamic innerHTML (не будет отрисована)
+feedbackEl.innerHTML = '<i data-lucide="volume-2"></i>';
+// Использовать: (window.ICON_VOL||'')
+
+// НЕЛЬЗЯ — inline style.display после анимации переопределяет CSS
+element.style.display = 'block';
+// Использовать: управление классами
+
+// НЕЛЬЗЯ — TTS отключён, вызов бесполезен
+speakSpanish(text);  // utils.js v=21 — функция есть, но ничего не делает
+
+// НЕЛЬЗЯ — глобальная переменная window.* перезаписывается при переходах
+window.currentItem = item;  // прочитается уже другой item
+// Использовать: data-атрибуты или замыкание
+```
+
+---
+
+## Модуль 1 — find-pair/
+
+Игра на сопоставление пар (слово ↔ перевод). Нет под-режимов. Одноуровневая навигация.
 
 ```
 find-pair/
-├── index.html   ← loads script.js?v=3, unified-styles.css?v=13
-├── script.js
-├── find-pair.js
-├── styles.css
+├── index.html      ← utils.js?v=21, unified-styles.css?v=20, styles.css?v=3, script.js?v=3
+├── script.js       ← основная логика
+├── find-pair.js    ← вспомогательные функции
+├── styles.css      ← модульные стили
 └── find-pair.css
 ```
 
 ---
 
-## Module 2 — tren/ (app.js?v=11)
+## Модуль 2 — tren/ (app.js v=14)
 
-8 modes (mode0–mode7), each in separate `modeN.js` + `modeN-ui.js` + `modeN-data.js`.
+8 режимов (mode0–mode7) — спряжение и употребление ir/venir/llegar.
 
 ```
 tren/
-├── index.html        ← app.js?v=11, utils.js?v=16
-├── app.js            ← App.switchMode(), App.showMainMenu(), _syncBackBtn inline
-├── mode0–7-data.js
-├── mode0–7-ui.js
-└── mode0–7.js
+├── index.html          ← app.js?v=14, utils.js?v=21, naranjito.js?v=1
+├── app.js              ← App.switchMode(), App.showMainMenu(), _syncBackBtn()
+├── mode0-game.js       ← Базовое спряжение A1 (v=11)
+├── mode0-options.js    ← Выбор глагола (v=10)
+├── mode0-results.js    ← Результаты mode0 (v=12)
+├── mode0-ui.js         ← Рендеринг mode0 (v=15)
+├── mode1–7.js          ← Контроллеры режимов (v=12–13)
+├── mode1–7-ui.js       ← Рендеринг режимов (v=14–16)
+└── mode1–7-data.js     ← Данные режимов (v=10)
 ```
 
-**Navigation:** `App.switchMode(modeId)` shows `#btn-back-to-modes`; `App.showMainMenu()` hides it.
+**Навигация:** `App.switchMode(id)` → показывает `#btn-back-to-modes`; `App.showMainMenu()` → скрывает.
 
 ---
 
-## Module 3 — ser-estar/
+## Модуль 3 — ser-estar/ (ser-estar-app.js v=3)
 
-5 sub-modes: base, advanced, context, rules, classify.
+5 под-режимов: base, advanced, context, rules, classify.
 
 ```
 ser-estar/
-├── index.html              ← ser-estar-app.js (no ?v)
-├── ser-estar-app.js        ← SerEstarApp.switchMode(), .showMainMenu()
-├── ser-estar-data.js
-├── ser-estar-base-ui.js / ser-estar-base-mode.js
-├── ser-estar-mode2.js?v=3  ← advanced mode
-├── ser-estar-context-ui.js?v=3 / ser-estar-context-mode.js?v=2
-├── ser-estar-rules-ui.js?v=2 / ser-estar-rules-mode.js
-├── classify-data.js
-├── classify-ui.js?v=5
-└── classify-mode.js?v=3    ← handleClassifyChoice(), uses 'next-button' CSS class
+├── index.html                  ← ser-estar-app.js?v=3, utils.js?v=21, naranjito.js?v=1
+├── ser-estar-app.js            ← SerEstarApp.switchMode(), .showMainMenu()
+├── ser-estar-data.js           ← Данные спряжений
+├── ser-estar-base-ui.js?v=3    ← Рендеринг базового режима
+├── ser-estar-base-mode.js?v=2  ← Логика базового режима
+├── ser-estar-mode2.js?v=6      ← Продвинутое спряжение A2
+├── ser-estar-context-ui.js?v=6 ← Рендеринг контекстного режима
+├── ser-estar-context-mode.js?v=2
+├── ser-estar-rules-data.js?v=1 ← Данные для DOCTOR/PLACE правил
+├── ser-estar-rules-ui.js?v=4
+├── ser-estar-rules-mode.js
+├── classify-data.js            ← Данные classify режима
+├── classify-ui.js?v=8          ← Рендеринг classify
+└── classify-mode.js?v=3        ← Логика classify
 ```
 
-**Classify mode:** tap SER or ESTAR zone. Wrong answer shows feedback + `next-button` styled "Дальше →". `updateClassifyGlobalScore()` updates `#score-value`.
+**Context mode:** вопрос показывается как карточка с CSS классами `.ctx-question-card`, `.ctx-question-text`, `.ctx-blank` (акцент + underline), `.ctx-translation`. Стили — inline `<style>` в `ser-estar/index.html`.
+
+**Classify mode:** пользователь перетаскивает/нажимает SER или ESTAR зону. Ответ → `next-button` «Дальше →».
 
 ---
 
-## Module 4 — formulas/ (app.js?v=14)
+## Модуль 4 — formulas/ (app.js v=18, ui.js v=24)
 
-36 grammar formulas, 6 MCQ questions each, 3 shown per session.
+36 грамматических формул, 6 вопросов MCQ к каждой.
 
 ```
 formulas/
-├── index.html    ← app.js?v=15, data.js?v=13, ui.js?v=18
-├── data.js       ← FORMULAS_DATA (36 items)
-├── ui.js         ← FormulasUI + FORMULA_ICONS[36] (Lucide icon map)
-└── app.js        ← FormulasApp, has _syncBackBtn()
+├── index.html    ← app.js?v=18, data.js?v=13, ui.js?v=24, utils.js?v=21
+├── data.js       ← FORMULAS_DATA[36] — массив формул с id, name, rule, example, options
+├── ui.js         ← FormulasUI + FORMULA_ICONS[36] (color/bg для значков)
+└── app.js        ← FormulasApp, _syncBackBtn()
 ```
 
-**Views:** `'list'` | `'card'` | `'quiz'` | `'results'`
+**Views:** `'list'` → `'card'` → `'quiz'` → `'results'`
 
-**Modes:** `single` (3 random from 1 formula) | `all` (all formulas shuffled) | `marathon` (216 questions, cyclic)
+**Режимы квиза:**
+- `single` — 3 случайных вопроса из одной формулы
+- `all` — все формулы по порядку
+- `marathon` — 216 вопросов (36×6), циклически
 
-**XP system:** `_addXP(amount)` — in-memory counter, `#xp-counter` widget in HTML.
+**XP-система:** `_addXP(amount)` — в памяти, `#xp-counter` в HTML.
 
 **State:**
 ```js
-state: {
-    currentView: 'list',       // 'list' | 'card' | 'quiz' | 'results'
+FormulasApp.state = {
+    currentView: 'list',        // 'list' | 'card' | 'quiz' | 'results'
     currentFormulaIndex: 0,
-    quizMode: 'single',        // 'single' | 'all' | 'marathon'
+    quizMode: 'single',         // 'single' | 'all' | 'marathon'
     quizQuestions: [],
     currentQuestionIndex: 0,
-    score: 0, totalAnswered: 0, isAnswered: false,
-    marathonPool: [], marathonTotal: 0,
+    score: 0,
+    totalAnswered: 0,
+    isAnswered: false,
+    marathonPool: [],
+    marathonTotal: 0,
 }
 ```
 
@@ -212,102 +416,130 @@ state: {
 
 ---
 
-## Module 5 — mezcla/ (app.js?v=6, ui.js?v=6)
+## Модуль 5 — mezcla/ (app.js v=8, ui.js v=10)
 
-Mixed reading: adjustable % of Spanish words. Word-level tokenization.
+Смешанное чтение: регулируемый % испанских слов в тексте.
 
 ```
 mezcla/
-├── index.html    ← data.js?v=1, ui.js?v=6, app.js?v=6
-├── data.js       ← MEZCLA_DATA (built-in texts)
-├── ui.js         ← MezclaUI, tooltip shows full sentence
-└── app.js        ← MezclaApp, word-level tokenizer, Google Translate API
+├── index.html    ← app.js?v=8, data.js?v=1, ui.js?v=10, utils.js?v=21
+├── data.js       ← MEZCLA_DATA — встроенные тексты
+├── ui.js         ← MezclaUI — рендеринг токенов, тултип с полным предложением
+└── app.js        ← MezclaApp — токенизатор, Google Translate API
 ```
 
-**Token structure:**
+**Структура токена:**
 ```js
 { ru: "слово", es: "palabra", ruSent: "полное предложение RU", esSent: "oración completa ES" }
 ```
 
-**Word-level tokenization:** input split by `.!?` → sentences → words. `ruSent`/`esSent` stored for tooltip (full sentence shown on tap, not just the word pair).
+**Токенизация:** текст → разбивка по `.!?` → предложения → слова. `ruSent`/`esSent` нужны для тултипа (показывает полное предложение при тапе, а не только слово).
 
-**Auto-translate:** single textarea for Russian input → Google Translate unofficial API (`translate.googleapis.com`) → ES sentences auto-filled.
+**Auto-translate:** один textarea для русского ввода → Google Translate unofficial API (`translate.googleapis.com`) → автозаполнение испанского.
 
-**`_mClean(w)`:** strips leading/trailing punctuation from words (`«"'¿¡(` and `»"'.,!?;:)`).
+**`_mClean(w)`:** срезает пунктуацию с краёв: `«"'¿¡(` и `»"'.,!?;:)`.
 
-**Tooltip:** `white-space: normal; max-width: 260px; line-height: 1.4` — wraps to avoid overflow.
+**Тултип:** `white-space: normal; max-width: 260px` — не вылезает за экран.
 
 **Window aliases:** `mezclaSetPct(v)`, `mezclaReshuffle()`, `mezclaTapToken(i)`, `mezclaSubmitCustom()`
 
 ---
 
-## Module 6 — pasado/ (app.js?v=4)
+## Модуль 6 — pasado/ (app.js v=7, ui.js v=13)
 
-4 past tenses, 16 formulas × 6 questions = 96 questions total.
+4 прошедших времени, 16 формул × 6 вопросов = 96 вопросов.
 
 ```
 pasado/
-├── index.html    ← app.js?v=4, data.js?v=2, ui.js?v=6
-├── data.js       ← PASADO_DATA (16 items), PASADO_INLINE, PASADO_CLASSIFY
-├── ui.js         ← PasadoUI + PASADO_ICONS[16] (Lucide icon map)
-└── app.js        ← PasadoApp, has _syncBackBtn()
+├── index.html    ← app.js?v=7, data.js?v=3, ui.js?v=13, utils.js?v=21
+├── data.js       ← PASADO_DATA[16], PASADO_INLINE, PASADO_CLASSIFY
+├── ui.js         ← PasadoUI + PASADO_ICONS[16] (color/bg), CSS инжектируется в <head>
+└── app.js        ← PasadoApp, _syncBackBtn()
 ```
 
-**Views:** `'list'` | `'card'` | `'quiz'` | `'inline'` | `'classify'` | `'results'`
+**Views:** `'list'` → `'card'` → `'quiz'` | `'inline'` | `'classify'` → `'results'`
 
-**Modes:** `single` | `all` (cyclic — wrong answers go back to queue) | `inline` | `classify`
+**Режимы:**
+- `single` — 6 вопросов по одной формуле
+- `all` — циклическая очередь: неправильные ответы возвращаются в конец
+- `inline` — вставить пропущенное слово в предложение
+- `classify` — распределить глагол по временам
 
 **State:**
 ```js
-state: {
+PasadoApp.state = {
     currentView: 'list',
     currentFormulaIndex: 0,
-    quizMode: 'single',        // 'single' | 'all' | 'inline' | 'classify'
+    quizMode: 'single',         // 'single' | 'all' | 'inline' | 'classify'
     quizQuestions: [],
     currentQuestionIndex: 0,
-    score: 0, totalAnswered: 0, isAnswered: false, streak: 0,
-    cyclicPool: [], cyclicCorrectCount: 0, cyclicTotal: 0,
+    score: 0,
+    totalAnswered: 0,
+    isAnswered: false,
+    streak: 0,
+    cyclicPool: [],
+    cyclicCorrectCount: 0,
+    cyclicTotal: 0,
 }
 ```
 
-**Timing groups:**
-| Group | Tense | Formulas |
-|---|---|---|
-| F1–F4 | Pretérito Indefinido | -AR, -ER/-IR, ser/ir/hacer/tener, stem-changing |
-| F5–F8 | Pretérito Imperfecto | -AR, -ER/-IR, ser/ir/ver, usage |
-| F9–F12 | Pretérito Perfecto Compuesto | haber, regular/irregular participles, usage |
-| F13–F16 | Pluscuamperfecto | form, usage, irregular participles, 4-tense comparison |
+**Группы формул:**
+
+| Формулы | Время | Содержание |
+|---------|-------|------------|
+| F1–F4 | Pretérito Indefinido | -AR, -ER/-IR, ser/ir/hacer/tener, стеблевые |
+| F5–F8 | Pretérito Imperfecto | -AR, -ER/-IR, ser/ir/ver, употребление |
+| F9–F12 | Pretérito Perfecto Compuesto | haber, причастия, употребление |
+| F13–F16 | Pluscuamperfecto | форма, употребление, нерег. причастия, сравнение 4 времён |
 
 **Window aliases:** `pasadoShowCard(i)`, `pasadoStartQuiz(i)`, `pasadoStartAllQuiz()`, `pasadoHandleAnswer(i)`, `pasadoNext()`, `pasadoBackToList()`, `pasadoBackToCard()`, `pasadoShowPrev()`, `pasadoShowNext()`, `pasadoStartInline()`, `pasadoInlineAnswer(v)`, `pasadoStartClassify()`, `pasadoClassifyAnswer(k)`
 
 ---
 
-## Shared utilities — js/utils.js (v=17)
+## Именование глобалов
 
-| Function | Signature | Notes |
-|---|---|---|
-| `shuffleArray(array)` | `Array → Array` | Fisher-Yates, returns new array |
-| `speakSpanish(text)` | `string → void` | **Currently disabled** (returns immediately) |
-
----
-
-## Naming conventions
-
-| Concern | Pattern | Example |
-|---|---|---|
-| Data global | `UPPER_MODULE_DATA` | `FORMULAS_DATA`, `PASADO_DATA`, `MEZCLA_DATA` |
-| App global | `ModuleApp` | `FormulasApp`, `PasadoApp`, `MezclaApp` |
-| UI global | `ModuleUI` | `FormulasUI`, `PasadoUI`, `MezclaUI` |
-| Window aliases | `moduleFunctionName` | `formulaStartQuiz`, `pasadoStartQuiz`, `mezclaSetPct` |
-| Main container id | `module-content` | `formulas-content`, `pasado-content`, `mezcla-content` |
-| Score area id | `score-area` or `score-display` | varies by module |
+| Слой | Паттерн | Примеры |
+|------|---------|---------|
+| Данные | `UPPER_MODULE_DATA` | `FORMULAS_DATA`, `PASADO_DATA`, `MEZCLA_DATA` |
+| Контроллер | `ModuleApp` | `FormulasApp`, `PasadoApp`, `MezclaApp`, `SerEstarApp`, `App` (tren) |
+| Рендеринг | `ModuleUI` | `FormulasUI`, `PasadoUI`, `MezclaUI` |
+| Window-алиасы | `moduleFunctionName` | `formulaStartQuiz`, `pasadoStartQuiz`, `mezclaSetPct` |
+| Иконки-массивы | `MODULE_ICONS` | `FORMULA_ICONS[36]`, `PASADO_ICONS[16]` |
 
 ---
 
-## Root index.html — module menu
+## Топбар — структура (все модули)
 
-| # | href | title |
-|---|------|-------|
+```html
+<!-- В index.html каждого модуля -->
+<header class="se-topbar">
+    <h1 class="se-topbar-title"><b>Название</b></h1>
+    <div class="se-topbar-stats">
+        <div class="se-stat-pill">
+            <span class="dot dot-orange"></span>
+            <span id="streak-value">0</span>          <!-- стрик -->
+        </div>
+        <div class="se-stat-pill">
+            <span id="score-value">0</span>
+            <span class="se-stat-label">очк.</span>   <!-- очки -->
+        </div>
+    </div>
+</header>
+<div class="se-progress-bar-wrap">
+    <div class="se-progress-bar-track">
+        <div id="se-progress-fill" class="se-progress-fill"></div>
+    </div>
+</div>
+```
+
+Управляется через `setTopbarStreak()`, `setTopbarScore()`, `setTopbarProgress()` из utils.js.
+
+---
+
+## Главное меню — root index.html
+
+| № | href | Название |
+|---|------|---------|
 | 1 | find-pair/ | Найди пару |
 | 2 | tren/ | Tren Ir/Venir/Llegar |
 | 3 | ser-estar/ | Ser vs Estar |
@@ -317,22 +549,29 @@ state: {
 
 ---
 
-## Deployment
+## Чеклист: добавить новый модуль
 
-- Branch: `main`
-- Remote: `git@github.com:stivr4469/find-pair.git`
-- Vercel project: `find-pair-new` (keep this one; `find-pair-seven` is a duplicate to delete)
-- Deploy: `git push origin main` → auto-deploys in ~30s
-- No CI, no tests, no build step
+1. Создать `NEW_MODULE/` с `data.js`, `app.js`, `ui.js`, `index.html`
+2. За образец взять `formulas/` — заменить все вхождения `Formulas`/`formulas`
+3. В `index.html`:
+   - Anti-FOUC скрипт в `<head>`
+   - Google Fonts Nunito
+   - Кнопка `#theme-toggle`
+   - Двухуровневая навигация (`← Главная` + скрытый `← Список/Режимы`)
+   - Все скрипты с `?v=1`
+4. В `app.js` добавить `_syncBackBtn()`, вызывать при каждой смене `currentView`
+5. Добавить карточку в root `index.html`
+6. `git push origin main`
 
 ---
 
-## Quick-start checklist for adding a new module
+## Открытые задачи
 
-1. Create `MODULE_DIR/` with `data.js`, `app.js`, `ui.js`, `index.html`
-2. Copy structure from `formulas/` — rename all `Formulas`/`formulas` occurrences
-3. Add two-level back navigation: `← Главная` + hidden `← Список` button wired to `backToList()`
-4. Add `_syncBackBtn()` to app.js and call it in every view-switching method
-5. Set script `?v=1` in the new module's `index.html`
-6. Add `<a href="MODULE_DIR/" class="game-card">` to root `index.html`
-7. Push to `main` — Vercel deploys automatically
+- [ ] Удалить Vercel-проект `find-pair-seven` (дубль, лимит 100 деплоев/день)
+- [ ] TTS — `speakSpanish()` отключён в utils.js — нужно решение (Web Speech API или ElevenLabs)
+- [ ] Карточки повторения ошибок (localStorage)
+- [ ] Оставшиеся `<i data-lucide>` в pasado/ui.js и formulas/ui.js — badge в quiz и результатах (не TTS, но также missed bulk-removal)
+
+---
+
+*Последнее обновление: 2026-09-24*

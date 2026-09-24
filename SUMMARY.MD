@@ -1,8 +1,36 @@
 # Spanish Trainer App — Журнал изменений
 
+> Журнал накапливается, не перезаписывается. Новые записи — сверху.
+> Для текущих версий файлов → смотри ARCHITECTURE.md (раздел «Версии файлов»).
+
 ---
 
-## Сессия: 2026-09-24
+## Сессия: 2026-09-24 (продолжение 2)
+
+### TTS-иконки: восстановление speaker-кнопок после случайного удаления
+
+**Задача:** предыдущий bulk-скрипт удалил все `<i data-lucide>` включая функциональные кнопки TTS «Послушать». Восстановить их с современными иконками.
+
+**Решение:** добавить `window.ICON_VOL` и `window.ICON_MIC` как inline SVG строки в `utils.js`. Inline SVG работает в любом `innerHTML` без вызова `lucide.createIcons()`.
+
+**Что сделано:**
+- `js/utils.js?v=20→v21`:
+  - Добавлена вспомогательная `_svgIcon(paths, size)` → строит SVG-строку
+  - `window.ICON_VOL` = Lucide volume-2 SVG (17px) — для кнопок «Послушать»
+  - `window.ICON_MIC` = Lucide mic SVG (17px) — для будущих кнопок записи
+- `formulas/ui.js?v=23→v24`:
+  - Добавлен `(window.ICON_VOL||'')` в 3 TTS-кнопки (`.formula-tts-ex-btn`, «Послушать», `#formula-feedback-tts`)
+  - Заменён `<i data-lucide>` в значке карточки формулы → `<div>` с `background: FORMULA_ICONS[i].bg`
+- `pasado/ui.js?v=12→v13`:
+  - Добавлен `(window.ICON_VOL||'')` в 5 TTS-кнопок (в detail card, main example, quiz question, quiz feedback × 2)
+  - Заменён `<i data-lucide>` в значке карточки формулы → аналогично formulas
+- Все 6 `index.html` модулей: `utils.js?v=20 → v21`
+
+**Коммит:** `d04403a`
+
+---
+
+## Сессия: 2026-09-24 (продолжение 1)
 
 ### Глобальный редизайн: шрифт Nunito + компактный топбар + фиксированная кнопка «Дальше»
 
@@ -28,6 +56,45 @@
 
 ---
 
+## Сессия: 2026-09-24 (начало — совпадает с датой)
+
+### Удаление всех emoji → CSS цветные точки; удаление всех Lucide иконок из кнопок и карточек
+
+**Контекст:** три изменения шли последовательно в одной сессии.
+
+#### 1. Толерантность к пунктуации в проверке ответов
+
+**Задача:** ответ "Cómo te llamas?" помечался неверным, если правильный был "¿Cómo te llamas tú?" (разные знаки препинания).
+
+- `js/utils.js?v=19→v20`: добавлена `normalizeSpanish(str)` — убирает `¿¡?!.`, trailing pronoun, нормализует пробелы
+- `formulas/app.js?v=17→v18`: запасное сравнение через `normalizeSpanish` после провала индексного
+- `pasado/app.js?v=6→v7`: то же в `handleAnswerCyclic` и `handleAnswer`
+- **Коммит:** `ab0cc1c`
+
+#### 2. Замена emoji на CSS цветные точки/квадраты
+
+**Задача:** полностью убрать все emoji из интерфейса (🔥 стрик, ✅❌ ответы, режимы с 🎨⚡ и т.д.).
+
+- `css/unified-styles.css?v=19→v20`: добавлены `.dot`, `.dot-sq`, `.dot-tri`, `.dot-orange/blue/green/purple/red/teal/yellow/pink`
+- `ser-estar/index.html`: кнопки режимов — `<span class="dot dot-ЦВЕТ">` вместо emoji; стрик-пилюля — `<span class="dot dot-orange">`
+- `mezcla/ui.js?v=9→v10`: карточки — цветные квадраты по индексу (6 цветов) вместо emoji
+- Все `tren/mode*-ui.js` + `mode*.js`: убраны emoji-префиксы из строк результатов/фидбека
+- **Коммит:** `0c572cb`
+
+#### 3. Удаление всех Lucide иконок из JS-генерируемого HTML
+
+**Задача:** Lucide иконки в карточках и кнопках мешали дизайну. Убрать все из `data.js`, `ui.js`, `app.js`.
+
+**Принцип:** `<i data-lucide>` работает только при статичном HTML + `lucide.createIcons()`. В `innerHTML` фидбека не работает — поэтому перешли на inline SVG (`window.ICON_VOL`).
+
+- Bulk-удаление regex `<i\s+data-lucide=["\'][^"\']+["\'][^>]*>(?:.*?</i>|</i>)` из 20 JS-файлов через Python
+- `formulas/ui.js?v=22→v23`: значки карточек формул → цветные `<div>` с `FORMULA_ICONS[i].bg`; кнопки режимов → без иконок
+- `pasado/ui.js?v=11→v12`: то же + значки групп → цветные квадраты
+- **Побочный эффект:** случайно удалены TTS-кнопки `volume-2` (исправлено в следующей записи ↑)
+- **Коммит:** `3ac570b`
+
+---
+
 ## Сессия: 2026-09-23 (продолжение 3)
 
 ### ser-estar / Context mode — улучшение отображения вопроса
@@ -43,7 +110,7 @@
   - Добавлен `<style>` блок: `.ctx-question-card` (surface card, `var(--shadow)`), `.ctx-question-text` (2rem, 700), `.ctx-blank` (var(--accent) + underline), `.ctx-translation` (var(--muted), italic)
   - Версия bumped: `ser-estar-context-ui.js?v=4`
 
-**Коммит:** (текущий)
+**Коммит:** `362f11e` (приблизительно, тот же день)
 
 ---
 
@@ -52,6 +119,7 @@
 ### Замена всех emoji на Lucide SVG иконки
 
 **Задача:** убрать все emoji (🎨⚡❓✅❌🔊🔥) из всего приложения — заменить на Lucide SVG иконки.
+> Примечание: это промежуточный шаг. В следующей сессии Lucide тоже были убраны — итоговое состояние: inline SVG + CSS dots.
 
 **Что сделано:**
 - `formulas/ui.js?v=18`: добавлен `FORMULA_ICONS[36]` (module-level array: icon name + color + bg); `renderFormulaList`, `renderFormulaCard`, `renderQuiz`, `showAnswerFeedback`, `renderResults` — все emoji → `<i data-lucide="...">` Lucide-иконки
