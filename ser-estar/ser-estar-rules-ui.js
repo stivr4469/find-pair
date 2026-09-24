@@ -37,7 +37,7 @@ function displayRulesUI() {
             <div class="rules-intro">
                 <p>Используйте акронимы <strong>DOCTOR</strong> для SER и <strong>PLACE</strong> для ESTAR, чтобы запомнить основные правила.</p>
             </div>
-            <div class="rules-cards-container">
+            <div class="rules-container">
                 <div class="rule-card ser-card">
                     <h3><span style="display:inline-block;width:14px;height:14px;background:#2563eb;border-radius:3px;margin-right:6px;vertical-align:middle"></span>SER (DOCTOR)</h3>
                     <ul>${serRulesHtml}</ul>
