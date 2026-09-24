@@ -56,6 +56,7 @@
         document.body.appendChild(el);
         repositionBasket(el);
         window.addEventListener('resize', function () { repositionBasket(el); });
+        window.addEventListener('scroll', function () { repositionBasket(el); }, { passive: true });
         return el;
     }
 
