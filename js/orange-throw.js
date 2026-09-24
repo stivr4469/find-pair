@@ -5,35 +5,46 @@
 (function () {
     var basket = null;
     var throwing = false;
+    var BASKET_W = 70;
 
     var BASKET_SVG = [
-        '<svg width="54" height="54" viewBox="0 0 54 54" fill="none"',
+        '<svg width="70" height="66" viewBox="0 0 70 66" fill="none"',
         ' xmlns="http://www.w3.org/2000/svg" aria-hidden="true">',
         /* Ручка */
-        '<path d="M18 15 Q27 3 36 15"',
-        ' stroke="#F26B1D" stroke-width="3.5"',
+        '<path d="M23 17 Q35 4 47 17"',
+        ' stroke="#F26B1D" stroke-width="4"',
         ' stroke-linecap="round" fill="none"/>',
+        /* Заливка тела */
+        '<path d="M8 20 Q10 54 35 57 Q60 54 62 20 Z"',
+        ' fill="rgba(242,107,29,0.10)"/>',
         /* Ободок */
-        '<ellipse cx="27" cy="17" rx="21" ry="6.5"',
-        ' stroke="#F26B1D" stroke-width="3"',
-        ' fill="rgba(242,107,29,0.15)"/>',
-        /* Тело корзины */
-        '<path d="M6 17 Q7 42 27 44 Q47 42 48 17"',
-        ' stroke="#F26B1D" stroke-width="3"',
-        ' fill="rgba(242,107,29,0.10)"',
+        '<ellipse cx="35" cy="20" rx="27" ry="8.5"',
+        ' stroke="#F26B1D" stroke-width="3.5"',
+        ' fill="rgba(242,107,29,0.20)"/>',
+        /* Контур тела */
+        '<path d="M8 20 Q10 54 35 57 Q60 54 62 20"',
+        ' stroke="#F26B1D" stroke-width="3.5" fill="none"',
         ' stroke-linecap="round" stroke-linejoin="round"/>',
-        /* Вертикальные прутья */
-        '<line x1="15" y1="18" x2="12" y2="43"',
-        ' stroke="#F26B1D" stroke-width="2" opacity="0.6" stroke-linecap="round"/>',
-        '<line x1="27" y1="17.5" x2="27" y2="44"',
-        ' stroke="#F26B1D" stroke-width="2" opacity="0.6" stroke-linecap="round"/>',
-        '<line x1="39" y1="18" x2="42" y2="43"',
-        ' stroke="#F26B1D" stroke-width="2" opacity="0.6" stroke-linecap="round"/>',
+        /* Вертикальные прутья (слегка изогнутые) */
+        '<path d="M18 22 Q16 38 14.5 55"',
+        ' stroke="#F26B1D" stroke-width="2.2" opacity="0.6"',
+        ' stroke-linecap="round" fill="none"/>',
+        '<line x1="35" y1="21" x2="35" y2="57"',
+        ' stroke="#F26B1D" stroke-width="2.2" opacity="0.6"',
+        ' stroke-linecap="round"/>',
+        '<path d="M52 22 Q54 38 55.5 55"',
+        ' stroke="#F26B1D" stroke-width="2.2" opacity="0.6"',
+        ' stroke-linecap="round" fill="none"/>',
         /* Горизонтальные дуги плетения */
-        '<path d="M7 26 Q27 29 47 26"',
-        ' stroke="#F26B1D" stroke-width="2" opacity="0.5" fill="none" stroke-linecap="round"/>',
-        '<path d="M8 35 Q27 38 46 35"',
-        ' stroke="#F26B1D" stroke-width="2" opacity="0.5" fill="none" stroke-linecap="round"/>',
+        '<path d="M9 31 Q35 36 61 31"',
+        ' stroke="#F26B1D" stroke-width="2.5" opacity="0.55"',
+        ' fill="none" stroke-linecap="round"/>',
+        '<path d="M10 43 Q35 48 60 43"',
+        ' stroke="#F26B1D" stroke-width="2.5" opacity="0.55"',
+        ' fill="none" stroke-linecap="round"/>',
+        '<path d="M12 53 Q35 57 58 53"',
+        ' stroke="#F26B1D" stroke-width="2" opacity="0.40"',
+        ' fill="none" stroke-linecap="round"/>',
         '</svg>'
     ].join('');
 
@@ -52,9 +63,10 @@
         var buddy = document.getElementById('buddy');
         if (!buddy) return;
         var rect = buddy.getBoundingClientRect();
-        /* Правее buddy, на уровне его верхней трети */
-        var top = Math.max(70, rect.top + rect.height * 0.12);
-        el.style.top = top + 'px';
+        /* Правый конец buddy-контейнера (= правый конец карточки), чуть выше Naranjito */
+        el.style.top  = Math.max(60, rect.top + 8) + 'px';
+        el.style.left = (rect.right - BASKET_W) + 'px';
+        el.style.right = 'auto';
     }
 
     function doThrow() {
@@ -67,13 +79,13 @@
         var buddyRect = buddy.getBoundingClientRect();
         var basketRect = basket.getBoundingClientRect();
 
-        /* Стартуем от правой руки персонажа */
-        var startX = buddyRect.left + buddyRect.width * 0.62;
-        var startY = buddyRect.top + buddyRect.height * 0.30;
+        /* Стартуем от правой руки Naranjito */
+        var startX = buddyRect.left + buddyRect.width * 0.22;
+        var startY = buddyRect.top  + buddyRect.height * 0.38;
 
-        /* Финиш — центр ободка корзины */
-        var endX = basketRect.left + basketRect.width / 2;
-        var endY = basketRect.top + basketRect.height * 0.42;
+        /* Финиш — ободок корзины */
+        var endX = basketRect.left + basketRect.width  / 2;
+        var endY = basketRect.top  + basketRect.height * 0.40;
 
         var orange = document.createElement('div');
         orange.className = 'flying-orange';
@@ -81,12 +93,12 @@
         orange.style.cssText = [
             'position:fixed',
             'left:' + startX + 'px',
-            'top:' + startY + 'px',
+            'top:'  + startY + 'px',
             'pointer-events:none',
             'z-index:9999',
             'transform:translate(-50%,-50%)',
             'will-change:transform',
-            'font-size:22px',
+            'font-size:24px',
             'line-height:1'
         ].join(';');
 
@@ -96,9 +108,9 @@
         var dx = endX - startX;
         var dy = endY - startY;
 
-        /* Пик дуги — выше и чуть раньше середины, апельсин всегда летит вверх */
+        /* Дуга: пик на 40% пути, всегда уходит вверх минимум на 60px */
         var peakDx = dx * 0.40;
-        var peakDy = Math.min(dy * 0.25 - 75, -40);
+        var peakDy = Math.min(dy * 0.20 - 70, -60);
 
         var anim = orange.animate([
             {
@@ -107,16 +119,16 @@
             },
             {
                 transform: 'translate(calc(-50% + ' + peakDx + 'px),' +
-                           'calc(-50% + ' + peakDy + 'px)) scale(1.15) rotate(150deg)',
+                           'calc(-50% + ' + peakDy + 'px)) scale(1.18) rotate(155deg)',
                 offset: 0.40
             },
             {
                 transform: 'translate(calc(-50% + ' + dx + 'px),' +
-                           'calc(-50% + ' + dy + 'px)) scale(0.45) rotate(300deg)',
+                           'calc(-50% + ' + dy + 'px)) scale(0.42) rotate(310deg)',
                 offset: 1
             }
         ], {
-            duration: 950,
+            duration: 1900,
             easing: 'linear',
             fill: 'forwards'
         });
@@ -134,7 +146,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-        /* Небольшая задержка: Naranjito монтируется в своём DOMContentLoaded */
         setTimeout(function () {
             basket = injectBasket();
         }, 80);

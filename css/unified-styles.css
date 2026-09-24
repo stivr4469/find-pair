@@ -299,16 +299,15 @@ h1, h2, h3 {
 /* ────────────────────────────────────────────────────────────────────────── */
 
 /* ── Orange basket ──────────────────────────────────────────────────────────
-   Плавающая мультяшная корзинка справа от Naranjito.
-   top выставляется через JS (repositionBasket).                            */
+   Плавающая корзинка на правом конце buddy-контейнера (= правый конец карточки).
+   top и left выставляются через JS (repositionBasket).                     */
 #orange-basket {
     position: fixed;
-    right: 18px;
-    width: 54px;
-    height: 54px;
+    width: 70px;
+    height: 66px;
     z-index: 100;
     pointer-events: none;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18));
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.15));
     transform-origin: center bottom;
 }
 
