@@ -283,6 +283,22 @@ h1, h2, h3 {
     text-align: center;
 }
 
+/* ── Naranjito overflow effect ──────────────────────────────────────────────
+   Персонаж «вылезает» ниже своего контейнера и нависает над карточкой.
+   Срабатывает только когда Naranjito смонтирован (.nj добавляется mount())
+   и только для <main class="game-area"> — прямых сиблингов #buddy
+   (ser-estar, tren). formulas/pasado с .formulas-main не затронуты. */
+#buddy.nj {
+    position: relative;
+    z-index: 10;
+}
+
+#buddy.nj ~ main.game-area:not(.hidden) {
+    margin-top: -55px;      /* карточка заходит под ноги персонажа */
+    padding-top: 72px;      /* контент сдвинут вниз, чтобы не быть под персонажем */
+}
+/* ────────────────────────────────────────────────────────────────────────── */
+
 .hidden {
     display: none !important;
 }
