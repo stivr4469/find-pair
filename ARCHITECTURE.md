@@ -45,7 +45,8 @@ spanish-trainer-app/
 ├── js/
 │   ├── utils.js            ← Общие утилиты: shuffleArray, speakSpanish, toggleTheme,
 │   │                          normalizeSpanish, ICON_VOL, ICON_MIC (v=21)
-│   ├── naranjito.js        ← Маскот Naranjito — анимированный персонаж (v=1)
+│   ├── naranjito.js        ← Маскот Naranjito — анимированный персонаж (v=2)
+│   ├── orange-throw.js     ← Анимация броска апельсина в корзинку (v=4)
 │   └── main.js             ← Root page JS (Telegram init, closeApp)
 ├── find-pair/              ← Модуль 1: Найди пару
 ├── tren/                   ← Модуль 2: Глаголы движения (ir/venir/llegar)
@@ -75,9 +76,10 @@ module/
 
 | Файл | Версия в HTML |
 |------|--------------|
-| `css/unified-styles.css` | v=20 |
+| `css/unified-styles.css` | v=24 |
 | `js/utils.js` | v=21 |
-| `js/naranjito.js` | v=1 |
+| `js/naranjito.js` | v=2 |
+| `js/orange-throw.js` | v=4 *(новый)* |
 | `formulas/app.js` | v=18 |
 | `formulas/ui.js` | v=24 |
 | `formulas/data.js` | v=13 |
@@ -87,10 +89,11 @@ module/
 | `tren/app.js` | v=14 |
 | `mezcla/app.js` | v=8 |
 | `mezcla/ui.js` | v=10 |
-| `ser-estar/ser-estar-app.js` | v=3 |
+| `ser-estar/ser-estar-app.js` | v=4 |
 | `ser-estar/ser-estar-mode2.js` | v=6 |
 | `ser-estar/ser-estar-context-ui.js` | v=6 |
-| `ser-estar/classify-ui.js` | v=8 |
+| `ser-estar/classify-ui.js` | v=9 |
+| `ser-estar/classify-mode.js` | v=4 |
 | `find-pair/script.js` | v=3 |
 
 ---
@@ -269,20 +272,98 @@ if (!isCorrect && typeof normalizeSpanish === 'function') {
 
 ---
 
-## Маскот Naranjito (naranjito.js v=1)
+## Маскот Naranjito (naranjito.js v=2)
 
-Анимированный персонаж над карточками. Загружается в `tren/` и `ser-estar/`.
+Анимированный персонаж над игровой карточкой. Подключён в **ser-estar, tren, formulas, pasado**.
+
+### Монтирование
 
 ```js
-// Инициализация в app.js
-var _nj = window.NaranjitoBuddy ? new window.NaranjitoBuddy(document.getElementById('buddy')) : null;
-
-// Вызовы из mode*-ui.js
-window.njResult(pct)          // показывает реакцию на результат (0–100)
-window.njAddStreak()          // +1 к стрику, возвращает текущее значение
-window.njCorrect(n)           // показывает поощрение при n правильных
-window.njResetStreak()        // сброс стрика
+// В DOMContentLoaded каждого app.js
+var buddy = document.getElementById('buddy');
+if (buddy && typeof Naranjito !== 'undefined') {
+    _nj = Naranjito.mount(buddy);  // добавляет класс .nj на #buddy
+    _nj.greet();
+}
 ```
+
+`Naranjito.mount()` добавляет класс `.nj` на контейнер `#buddy` — это CSS-хук для overflow-эффекта.
+
+### API (window-алиасы)
+
+| Алиас | Что делает |
+|-------|-----------|
+| `window.njCorrect(streak)` | Поощрение при правильном ответе (ser-estar, tren) |
+| `window.njWrong(ruleEs, ruleRu)` | Подсказка при ошибке |
+| `window.njResult(pct)` | Реакция на итоговый результат (0–100) |
+| `window.njAddStreak()` | +1 к серии, возвращает текущее значение |
+| `window.njResetStreak()` | Сброс серии |
+| `window.njReset()` | Сброс bubble/анимации (без сброса серии) |
+
+> formulas и pasado вызывают `_nj.correct()` / `_nj.wrong()` напрямую на экземпляре (не через window-алиасы).
+
+### Событие 'vamos:correct' (v=2)
+
+В `api.correct` добавлен dispatch:
+```js
+api.correct = async function(streak) {
+    window.dispatchEvent(new CustomEvent('vamos:correct'));  // ← добавлено в v=2
+    // ... остальная анимация
+}
+```
+Это позволяет `orange-throw.js` перехватывать правильные ответы из **всех** модулей через один слушатель, не трогая каждый app.js отдельно.
+
+### Overflow-into-card эффект
+
+```css
+/* unified-styles.css */
+#buddy.nj { position: relative; z-index: 10; }
+#buddy.nj ~ main.game-area:not(.hidden) {
+    margin-top: -55px;   /* карточка заходит под ноги персонажа */
+    padding-top: 72px;   /* контент не прячется под персонажем */
+}
+```
+
+Для работы селектора `~ main.game-area` все `<main>` во всех модулях с Naranjito имеют класс `game-area`:
+- ser-estar: `<main class="game-area hidden">` (несколько штук, toggle hidden)
+- tren: `<main class="game-area hidden">`
+- formulas: `<main class="formulas-main game-area">`
+- pasado: `<main class="pasado-main game-area">`
+
+---
+
+## Orange throw — js/orange-throw.js (v=4)
+
+Анимация броска апельсина в корзинку при правильном ответе. Подключён в ser-estar, tren, formulas, pasado (после последнего модульного скрипта, до `lucide.createIcons()`).
+
+### Как работает
+
+1. При загрузке страницы вставляет SVG-корзинку (`#orange-basket`) в `document.body`
+2. Позиционирует её через JS: `position:fixed`, у правого края `#buddy`-контейнера, чуть выше персонажа
+3. При скролле и resize пересчитывает позицию через `getBoundingClientRect()`
+4. Слушает `window.addEventListener('vamos:correct', ...)` — при событии запускает анимацию
+
+### Анимация броска
+
+```js
+orange.animate([
+    { transform: 'translate(-50%,-50%) scale(1) rotate(0deg)',     offset: 0    },
+    { transform: 'translate(peakDx, peakDy) scale(1.18) rotate(155deg)', offset: 0.40 },
+    { transform: 'translate(dx, dy) scale(0.42) rotate(310deg)',   offset: 1    }
+], { duration: 1900, easing: 'linear', fill: 'forwards' });
+```
+
+Параметры: `peakDy = Math.min(dy * 0.25 - 75, -60)` — дуга всегда уходит вверх минимум на 60px.
+
+### Корзинка SVG
+
+70×66px, оранжевый цвет `#F26B1D`, rounded strokes — под стиль Naranjito:
+- Ручка: дуга сверху
+- Ободок: эллипс с заливкой `rgba(242,107,29,0.20)`
+- Тело: path + заливка `rgba(242,107,29,0.10)`
+- 3 вертикальных изогнутых прута + 3 горизонтальных дуги плетения
+
+При попадании запускается `@keyframes basket-catch` (встряхивание + масштаб).
 
 ---
 
@@ -574,4 +655,4 @@ PasadoApp.state = {
 
 ---
 
-*Последнее обновление: 2026-09-24*
+*Последнее обновление: 2026-09-24 (продолжение 3)*

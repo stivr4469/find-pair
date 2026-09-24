@@ -5,6 +5,80 @@
 
 ---
 
+## Сессия: 2026-09-24 (продолжение 3)
+
+### 1. Classify mode — исправление двух багов
+
+**Баг 1:** при нескольких неправильных ответах подряд кнопка «Дальше →» накапливалась (N штук в DOM).
+- `ser-estar/classify-mode.js?v=3→v=4`: `showClassifyNextButton()` теперь сначала удаляет старые `.next-button` через `querySelectorAll().forEach(b => b.remove())`
+- `ser-estar/classify-ui.js?v=8→v=9`: `showClassifyCard()` тоже чистит `.next-button` при переходе к следующему вопросу
+
+**Баг 2:** bubble Naranjito от предыдущего вопроса был виден поверх следующей карточки.
+- `ser-estar/classify-mode.js?v=4`: в `showNextClassifyQuestion()` добавлен вызов `window.njReset && window.njReset()`
+- `ser-estar/ser-estar-app.js?v=3→v=4`: добавлен отсутствующий `window.njReset = function() { if (_nj) _nj.reset(); }` — метод `reset()` в naranjito.js существовал, но экспортирован не был
+
+**Коммит:** несколько коммитов, итог: `classify-ui.js v=9`, `classify-mode.js v=4`, `ser-estar-app.js v=4`
+
+---
+
+### 2. Naranjito overflow-into-card эффект
+
+**Задача:** персонаж визуально «вылезает» за нижний край своего контейнера и нависает над карточкой.
+
+**Решение:** CSS sibling-селектор — срабатывает только когда Naranjito смонтирован (`.nj` добавляется `mount()`) и `<main>` виден:
+
+```css
+#buddy.nj { position: relative; z-index: 10; }
+#buddy.nj ~ main.game-area:not(.hidden) {
+    margin-top: -55px;
+    padding-top: 72px;
+}
+```
+
+- `css/unified-styles.css?v=20→v=21`: добавлен блок overflow-эффекта
+- Все 6 `index.html`: `unified-styles.css?v=20→v=21`
+
+**Унификация `game-area`:** ранее formulas и pasado использовали классы `.formulas-main`/`.pasado-main` вместо `.game-area`, поэтому CSS-селектор их не захватывал:
+- `formulas/index.html`: `<main class="formulas-main">` → `<main class="formulas-main game-area">`
+- `pasado/index.html`: `<main class="pasado-main">` → `<main class="pasado-main game-area">`
+- mezcla пропущена намеренно (Naranjito там не используется)
+
+**Коммиты:** `02566e2`, `44749ca`
+
+---
+
+### 3. Orange throw — бросок апельсина в корзинку при правильном ответе
+
+**Идея:** при каждом правильном ответе Naranjito бросает апельсин 🍊 в корзинку сбоку.
+
+**Архитектура:**
+- `naranjito.js?v=1→v=2`: в начало `api.correct` добавлен `window.dispatchEvent(new CustomEvent('vamos:correct'))` — единая точка уведомления для всех модулей
+- `js/orange-throw.js?v=4` (новый файл): слушает `'vamos:correct'`, вставляет SVG-корзинку в DOM, анимирует апельсин через `Web Animations API`
+- `css/unified-styles.css?v=21→v=24`: стили `#orange-basket`, анимация `basket-catch`, класс `.flying-orange`
+
+**Позиция корзинки:** `position: fixed`, top/left вычисляются JS через `getBoundingClientRect()` от `#buddy` — правый край buddy-контейнера (= правый конец карточки), чуть выше персонажа. При скролле пересчитывается через `scroll`-листенер.
+
+**Анимация броска:** 3 keyframe-а, 1900ms, траектория — парабола вправо и вверх, апельсин вращается (0°→310°), при попадании корзинка встряхивается (`basket-catch @keyframes`).
+
+**SVG корзинки:** 70×66px, оранжевый (#F26B1D), ручка сверху, заливка тела `rgba(242,107,29,0.10)`, 3 вертикальных прута + 3 горизонтальных дуги плетения. Стиль под Naranjito: `stroke-linecap="round"`, толстые штрихи.
+
+**Подключена в:** `ser-estar/index.html`, `tren/index.html`, `formulas/index.html`, `pasado/index.html`
+
+**Итоговые версии:** `naranjito.js v=2`, `orange-throw.js v=4`, `unified-styles.css v=24`
+
+**Коммиты:** `ee72da0`, `fd7c4d8`, `5b49957`, `22ffe50`
+
+---
+
+## Открытые задачи (обновлено 2026-09-24)
+
+- [ ] Удалить Vercel-проект `find-pair-seven` (дубль, лимит 100 деплоев/день)
+- [ ] TTS — `speakSpanish()` отключён в utils.js — нужно решение (Web Speech API или ElevenLabs)
+- [ ] Карточки повторения ошибок (localStorage)
+- [ ] Оставшиеся `<i data-lucide>` в pasado/ui.js и formulas/ui.js (quiz badge/результаты — не TTS, пропущены при bulk-удалении)
+
+---
+
 ## Сессия: 2026-09-24 (продолжение 2)
 
 ### TTS-иконки: восстановление speaker-кнопок после случайного удаления
