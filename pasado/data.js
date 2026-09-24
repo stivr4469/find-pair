@@ -50,7 +50,7 @@ const PASADO_DATA = [
       },
       {
         question: "Мы пришли поздно (llegar, nosotros)",
-        options: ["llegamos", "llegábamos", "llegamos", "lleguemos"],
+        options: ["llegamos", "llegábamos", "llegaron", "lleguemos"],
         correct: 0,
         hint: "Indefinido nosotros (-AR): stem + amos. Форма совпадает с Present, контекст уточняет время"
       },
