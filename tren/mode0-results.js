@@ -29,26 +29,26 @@ function showMode0Results() {
   let emoji = '';
 
   if (percentage === 100) {
-    emoji = '🏆';
+    emoji = '';
     message = '¡Excelente! ¡Perfecto!';
   } else if (percentage >= 80) {
-    emoji = '🎉';
+    emoji = '';
     message = '¡Muy bien! ¡Sigue así!';
   } else if (percentage >= 60) {
-    emoji = '👍';
+    emoji = '';
     message = '¡Bien! Pero puedes mejorar.';
   } else if (percentage >= 40) {
-    emoji = '📚';
+    emoji = '';
     message = 'Necesitas practicar más.';
   } else {
-    emoji = '💪';
+    emoji = '';
     message = '¡No te rindes! Sigue practicando.';
   }
 
   // Отображаем результаты
   contentArea.innerHTML = `
     <div class="results-container">
-      <h3>🏁 Результаты режима "Базовое спряжение (A1)"</h3>
+      <h3>Результаты режима "Базовое спряжение (A1)"</h3>
       <div class="final-score">
         <span class="score-number">${mode0State.score}</span>
         <span class="score-total">из ${mode0State.maxQuestions}</span>
@@ -60,10 +60,10 @@ function showMode0Results() {
       </div>
       <div class="results-actions">
         <button onclick="restartMode0()" class="restart-button">
-          🔄 Ещё раз
+          Ещё раз
         </button>
         <button onclick="showMainMenu()" class="menu-button">
-          📋 Меню
+          Меню
         </button>
       </div>
     </div>

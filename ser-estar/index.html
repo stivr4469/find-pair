@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/unified-styles.css?v=19">
+    <link rel="stylesheet" href="../css/unified-styles.css?v=20">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         /* ── Naranjito над карточкой ── */
@@ -86,7 +86,7 @@
     <header class="se-topbar">
         <h1 class="se-topbar-title"><b>Ser</b> <span class="se-vs">vs</span> <b>Estar</b></h1>
         <div class="se-topbar-stats">
-            <div class="se-stat-pill">🔥 <span id="streak-value">0</span></div>
+            <div class="se-stat-pill"><span class="dot dot-orange" style="margin-right:2px"></span><span id="streak-value">0</span></div>
             <div class="se-stat-pill"><span id="score-value">0</span> <span class="se-stat-label">очк.</span></div>
         </div>
     </header>
@@ -99,19 +99,19 @@
     <!-- Главное меню Ser/Estar - 4 режима -->
     <nav class="main-menu">
         <button class="mode-button" data-mode="base">
-            📝 Базовое спряжение
+            <span class="dot dot-blue"></span> Базовое спряжение
         </button>
         <button class="mode-button" data-mode="advanced">
-            ⚙️ Продвинутое спряжение
+            <span class="dot dot-orange"></span> Продвинутое спряжение
         </button>
         <button class="mode-button" data-mode="context">
-            🎯 Контекст
+            <span class="dot dot-green"></span> Контекст
         </button>
         <button class="mode-button" data-mode="rules">
-            📚 Правила (DOCTOR/PLACE)
+            <span class="dot dot-purple"></span> Правила (DOCTOR/PLACE)
         </button>
         <button class="mode-button" data-mode="classify">
-            🃏 Классификация
+            <span class="dot dot-teal"></span> Классификация
         </button>
     </nav>
 
@@ -166,7 +166,7 @@
     <script src="ser-estar-rules-mode.js"></script>
     <script src="ser-estar-mode2.js?v=5"></script>
     <script src="classify-data.js"></script>
-    <script src="classify-ui.js?v=7"></script>
+    <script src="classify-ui.js?v=8"></script>
     <script src="classify-mode.js?v=3"></script>
     <script src="ser-estar-app.js?v=3"></script>
     <script>lucide.createIcons();</script>

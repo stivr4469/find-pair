@@ -66,15 +66,15 @@ function showMode5ResultsUI() {
     
     contentArea.innerHTML = `
         <div class="results-container" style="text-align: center; padding: 20px;">
-            <h2 style="font-size: 2rem;">🏁 Сессия завершена!</h2>
+            <h2 style="font-size: 2rem;">Сессия завершена!</h2>
             <div class="final-score" style="font-size: 3rem; font-weight: bold; margin: 20px 0;">${mode5State.score} / ${mode5State.sessionLimit}</div>
             <div class="percentage" style="font-size: 1.5rem; color: var(--accent); margin-bottom: 20px;">Успешность: ${percentage}%</div>
             <p style="margin-bottom: 30px; color: var(--muted);">Вы прошли 20 вопросов. Вопросы перемещены в конец очереди и скоро встретятся вам снова!</p>
             <button class="restart-button" onclick="restartMode5()" style="width: 100%; padding: 15px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 10px;">
-                🔄 Продолжить тренировку
+                Продолжить тренировку
             </button>
             <button class="menu-button" onclick="showMainMenu()" style="width: 100%; padding: 15px; background: #6b7280; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
-                📋 В главное меню
+                В главное меню
             </button>
         </div>
     `;

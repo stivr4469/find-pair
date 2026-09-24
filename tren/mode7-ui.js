@@ -256,18 +256,18 @@ function showMode7ResultsUI() {
     const percentage = total > 0 ? Math.round((correct / total) * 100) : 0;
 
     let message = '';
-    if (percentage === 100) message = '🎉 ¡Excelente! Все формы знаешь!';
-    else if (percentage >= 80) message = '👏 ¡Muy bien! Отлично справился!';
-    else if (percentage >= 60) message = '👍 ¡Bien! Есть куда расти.';
-    else message = '📚 Sigue practicando! Повтори формы.';
+    if (percentage === 100) message = '¡Excelente! Все формы знаешь!';
+    else if (percentage >= 80) message = '¡Muy bien! Отлично справился!';
+    else if (percentage >= 60) message = '¡Bien! Есть куда расти.';
+    else message = 'Sigue practicando! Повтори формы.';
 
     contentArea.innerHTML = `
         <div class="results-container">
-            <h3>🏁 Результаты</h3>
+            <h3>Результаты</h3>
             <div class="final-score">${correct} из ${total} (${percentage}%)</div>
             <div class="final-message">${message}</div>
-            <button class="restart-button" onclick="restartMode7()">🔄 Ещё раз</button>
-            <button class="menu-button" onclick="showMainMenu()">📋 Меню</button>
+            <button class="restart-button" onclick="restartMode7()">Ещё раз</button>
+            <button class="menu-button" onclick="showMainMenu()">Меню</button>
         </div>
     `;
 }

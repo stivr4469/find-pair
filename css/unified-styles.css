@@ -1187,6 +1187,27 @@ select:focus {
     gap: 4px;
 }
 .se-stat-label { font-weight: 500; color: var(--muted); }
+
+/* ── Цветные кружки/квадраты вместо эмодзи ── */
+.dot {
+    display: inline-block;
+    flex-shrink: 0;
+    vertical-align: middle;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+.dot-sq  { border-radius: 2px; }
+.dot-tri { width: 0; height: 0; background: transparent !important;
+           border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 9px solid; }
+.dot-orange { background: var(--accent); }
+.dot-blue   { background: #3b82f6; }
+.dot-green  { background: #22c55e; }
+.dot-purple { background: #a855f7; }
+.dot-red    { background: #ef4444; }
+.dot-teal   { background: #14b8a6; }
+.dot-yellow { background: #eab308; }
+.dot-pink   { background: #ec4899; }
 .se-progress-bar-wrap {
     max-width: 760px;
     margin: 0 auto 4px;

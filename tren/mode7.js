@@ -211,10 +211,10 @@ function showMode7RoundComplete() {
     const percentage = Math.round((roundCorrect / roundTotal) * 100);
 
     let emoji = '';
-    if (percentage === 100) emoji = '🎉';
-    else if (percentage >= 75) emoji = '👏';
-    else if (percentage >= 50) emoji = '👍';
-    else emoji = '📚';
+    if (percentage === 100) emoji = '';
+    else if (percentage >= 75) emoji = '';
+    else if (percentage >= 50) emoji = '';
+    else emoji = '';
 
     feedback.innerHTML = `${emoji} Раунд завершён: ${roundCorrect} из ${roundTotal} (${percentage}%)`;
     feedback.className = roundCorrect === roundTotal ? 'feedback correct' : 'feedback warning';

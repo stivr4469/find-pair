@@ -22,7 +22,7 @@ const App = {
      * Инициализация приложения
      */
     init: function() {
-        console.log('🚂 Tren Ir/Venir/Llegar - Application initialized');
+        console.log('Tren Ir/Venir/Llegar - Application initialized');
 
         // Загрузка прогресса из localStorage
         this.loadProgress();

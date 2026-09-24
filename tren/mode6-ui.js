@@ -115,18 +115,18 @@ function showMode6ResultsUI() {
 
     const percentage = Math.round((mode6State.score / mode6State.totalQuestions) * 100);
     let message = "";
-    if (percentage === 100) message = "🎉 ¡Excelente!";
-    else if (percentage >= 80) message = "👏 ¡Muy bien!";
-    else if (percentage >= 60) message = "👍 ¡Bien!";
-    else message = "📚 Sigue practicando!";
+    if (percentage === 100) message = "¡Excelente!";
+    else if (percentage >= 80) message = "¡Muy bien!";
+    else if (percentage >= 60) message = "¡Bien!";
+    else message = "Sigue practicando!";
 
     contentArea.innerHTML = `
         <div class="results-container">
-            <h3>🏁 Результаты</h3>
+            <h3>Результаты</h3>
             <div class="final-score">${mode6State.score} из ${mode6State.totalQuestions} (${percentage}%)</div>
             <div class="final-message">${message}</div>
-            <button class="restart-button" onclick="restartMode6()">🔄 Ещё раз</button>
-            <button class="menu-button" onclick="showMainMenu()">📋 Меню</button>
+            <button class="restart-button" onclick="restartMode6()">Ещё раз</button>
+            <button class="menu-button" onclick="showMainMenu()">Меню</button>
         </div>
     `;
 }

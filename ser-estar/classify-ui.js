@@ -176,7 +176,7 @@ function showClassifyFeedback(item) {
 
     inner.innerHTML = `
         <div class="feedback-rule">
-            <span class="feedback-icon">💡</span>
+            
             <strong>${item.rule}</strong>
         </div>
         <div class="feedback-explanation">${item.explanation}</div>

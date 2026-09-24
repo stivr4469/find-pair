@@ -180,18 +180,18 @@ function showBaseResults() {
 
     let message = '';
     if (percentage === 100) {
-        message = '🎉 ¡Excelente! Perfecto!';
+        message = '¡Excelente! Perfecto!';
     } else if (percentage >= 80) {
-        message = '👏 ¡Muy bien!';
+        message = '¡Muy bien!';
     } else if (percentage >= 60) {
-        message = '👍 ¡Bien!';
+        message = '¡Bien!';
     } else {
-        message = '📚 Sigue practicando!';
+        message = 'Sigue practicando!';
     }
     
     contentArea.innerHTML = `
         <div class="results-container">
-            <h3>🏁 Результаты</h3>
+            <h3>Результаты</h3>
             <div class="final-score">${baseModeState.score} из ${baseModeState.maxQuestions} (${percentage}%)</div>
             <div class="final-message">${message}</div>
             <div class="results-buttons">

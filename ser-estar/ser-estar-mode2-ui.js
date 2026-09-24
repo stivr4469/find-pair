@@ -173,16 +173,16 @@ function showSerEstarMode2Results() {
     let emoji = '';
 
     if (percentage === 100) {
-        emoji = '🏆';
+        emoji = '';
         message = '¡Excelente! ¡Perfecto!';
     } else if (percentage >= 80) {
-        emoji = '🎉';
+        emoji = '';
         message = '¡Muy bien! Очень хорошо!';
     } else if (percentage >= 60) {
-        emoji = '👍';
+        emoji = '';
         message = '¡Bien! Хорошо!';
     } else {
-        emoji = '📚';
+        emoji = '';
         message = 'Sigue practicando! Продолжай тренироваться!';
     }
 

@@ -178,13 +178,13 @@ function showSerEstarMode4Results() {
 
     let message = '';
     if (percentage === 100) {
-        message = '🎉 ¡Excelente! Perfecto!';
+        message = '¡Excelente! Perfecto!';
     } else if (percentage >= 80) {
-        message = '👏 ¡Muy bien! Очень хорошо!';
+        message = '¡Muy bien! Очень хорошо!';
     } else if (percentage >= 60) {
-        message = '👍 ¡Bien! Хорошо!';
+        message = '¡Bien! Хорошо!';
     } else {
-        message = '📚 Sigue practicando! Продолжай тренироваться!';
+        message = 'Sigue practicando! Продолжай тренироваться!';
     }
     document.getElementById('ser-estar-mode4-message').textContent = message;
 }

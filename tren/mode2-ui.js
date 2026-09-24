@@ -63,15 +63,15 @@ function showAdvancedResults_tren() {
 
     const percentage = Math.round((advancedModeState_tren.score / advancedModeState_tren.maxQuestions) * 100);
     window.njResult && window.njResult(percentage);
-    let message = (percentage === 100) ? "🎉 ¡Excelente!" : (percentage >= 80) ? "👏 ¡Muy bien!" : "📚 Sigue practicando!";
+    let message = (percentage === 100) ? "¡Excelente!" : (percentage >= 80) ? "¡Muy bien!" : "Sigue practicando!";
 
     contentArea.innerHTML = `
         <div class="results-container">
-            <h3>🏁 Результаты</h3>
+            <h3>Результаты</h3>
             <div class="final-score">${advancedModeState_tren.score} из ${advancedModeState_tren.maxQuestions} (${percentage}%)</div>
             <div class="final-message">${message}</div>
-            <button class="restart-button" onclick="initMode2()">🔄 Ещё раз</button>
-            <button class="menu-button" onclick="showMainMenu()">📋 Меню</button>
+            <button class="restart-button" onclick="initMode2()">Ещё раз</button>
+            <button class="menu-button" onclick="showMainMenu()">Меню</button>
         </div>
     `;
 }

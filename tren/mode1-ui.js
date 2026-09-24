@@ -41,18 +41,18 @@ function showMode1ResultsUI() {
     const percentage = Math.round((mode1State.score / mode1State.totalQuestions) * 100);
     window.njResult && window.njResult(percentage);
     let message = "";
-    if (percentage === 100) message = "🎉 ¡Excelente!";
-    else if (percentage >= 80) message = "👏 ¡Muy bien!";
-    else if (percentage >= 60) message = "👍 ¡Bien!";
-    else message = "📚 Sigue practicando!";
+    if (percentage === 100) message = "¡Excelente!";
+    else if (percentage >= 80) message = "¡Muy bien!";
+    else if (percentage >= 60) message = "¡Bien!";
+    else message = "Sigue practicando!";
 
     contentArea.innerHTML = `
         <div class="results-container">
-            <h3>🏁 Результаты</h3>
+            <h3>Результаты</h3>
             <div class="final-score">${mode1State.score} из ${mode1State.totalQuestions} (${percentage}%)</div>
             <div class="final-message">${message}</div>
-            <button class="restart-button" onclick="restartMode1()">🔄 Ещё раз</button>
-            <button class="menu-button" onclick="showMainMenu()">📋 Меню</button>
+            <button class="restart-button" onclick="restartMode1()">Ещё раз</button>
+            <button class="menu-button" onclick="showMainMenu()">Меню</button>
         </div>
     `;
 }
