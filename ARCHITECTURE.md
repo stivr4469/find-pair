@@ -72,20 +72,20 @@ module/
 
 ---
 
-## Версии файлов (актуально на 2026-09-24)
+## Версии файлов (актуально на 2026-09-25)
 
 | Файл | Версия в HTML |
 |------|--------------|
-| `css/unified-styles.css` | v=24 |
+| `css/unified-styles.css` | v=25 |
 | `js/utils.js` | v=21 |
-| `js/naranjito.js` | v=2 |
-| `js/orange-throw.js` | v=4 *(новый)* |
-| `formulas/app.js` | v=18 |
+| `js/naranjito.js` | v=3 |
+| `js/orange-throw.js` | v=6 |
+| `formulas/app.js` | v=19 |
 | `formulas/ui.js` | v=24 |
 | `formulas/data.js` | v=13 |
-| `pasado/app.js` | v=7 |
-| `pasado/ui.js` | v=13 |
-| `pasado/data.js` | v=3 |
+| `pasado/app.js` | v=7 *(→v=8 в работе)* |
+| `pasado/ui.js` | v=13 *(→v=15 в работе)* |
+| `pasado/data.js` | v=3 *(→v=4 в работе)* |
 | `tren/app.js` | v=14 |
 | `mezcla/app.js` | v=8 |
 | `mezcla/ui.js` | v=10 |
@@ -95,6 +95,53 @@ module/
 | `ser-estar/classify-ui.js` | v=9 |
 | `ser-estar/classify-mode.js` | v=4 |
 | `find-pair/script.js` | v=3 |
+
+---
+
+## Типы вопросов в data.js (единая схема)
+
+### type: 'mcq' (по умолчанию, можно не указывать)
+```js
+{
+  question: "Я поговорил (hablar, yo)",
+  options: ["hablé", "hablaba", "hablaré", "hablado"],
+  correct: 0,
+  hint: "«Ayer» = маркер Indefinido\nЗавершённое действие\nhablar + yo → hablé"
+}
+```
+
+### type: 'fill' — fill-in-the-blank без клавиатуры
+```js
+{
+  type: 'fill',
+  sentence: "Ayer ___ con María por teléfono.",
+  sentenceRu: "Вчера я поговорил с Марией по телефону.",
+  verb: "hablar (yo)",
+  tiles: ["hablé", "hablaba", "hablaré", "hablado"],
+  correct: 0,
+  hint: "«Ayer» = маркер Indefinido → hablar + yo → hablé"
+}
+```
+UI: плитки снизу, нажатие вставляет слово в пропуск `___`.
+Глобальный колбэк: `window.pasadoSelectTile(index)` → `window.trenoSelectTile(index)` и т.д.
+
+### contrasts[] — карточки контраста (только просмотр, без квиза)
+```js
+contrasts: [
+  {
+    indefinido: "Ayer comí una pizza.",
+    indefinidoRu: "Вчера я съел пиццу. (факт, завершено)",
+    imperfecto: "De niño comía pizza los viernes.",
+    imperfectoRu: "В детстве я ел пиццу по пятницам. (привычка)",
+    signal: "ayer vs de niño / los viernes",
+    rule: "Indefinido = факт/событие | Imperfecto = фон/привычка"
+  }
+]
+```
+
+### Формат обогащённого hint
+Формула: «СИГНАЛ-слово → ПРАВИЛО (на русском) → ФОРМА»
+Пример: `"«Ayer» = маркер однократного прошлого (Indefinido)\nhablar + yo → hablé"`
 
 ---
 
