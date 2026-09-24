@@ -170,6 +170,11 @@ const PasadoApp = {
     var pool = this.state.cyclicPool;
     var question = pool[0];
     var isCorrect = selectedIndex === question.correct;
+    if (!isCorrect && question.options && typeof normalizeSpanish === 'function') {
+      var selNorm = normalizeSpanish(question.options[selectedIndex]);
+      var crtNorm = normalizeSpanish(question.options[question.correct]);
+      if (selNorm && selNorm === crtNorm) isCorrect = true;
+    }
 
     var correctText = question.options[question.correct] || null;
 
@@ -217,6 +222,11 @@ const PasadoApp = {
     this.state.isAnswered = true;
     var question = this.state.quizQuestions[this.state.currentQuestionIndex];
     var isCorrect = selectedIndex === question.correct;
+    if (!isCorrect && question.options && typeof normalizeSpanish === 'function') {
+      var selNorm = normalizeSpanish(question.options[selectedIndex]);
+      var crtNorm = normalizeSpanish(question.options[question.correct]);
+      if (selNorm && selNorm === crtNorm) isCorrect = true;
+    }
     var correctText = question.options[question.correct] || null;
 
     if (isCorrect) {

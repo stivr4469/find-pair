@@ -74,6 +74,18 @@ function resetTopbar() {
     setTopbarProgress(0);
 }
 
+// Нормализация испанского текста для сравнения ответов:
+// убирает знаки ¿¡?!., опциональные подлежащие в конце, лишние пробелы
+function normalizeSpanish(str) {
+    return (str || '')
+        .replace(/[¿¡]/g, '')
+        .replace(/[?!.]/g, '')
+        .replace(/\s+(tú|tu|yo|él|el|ella|nosotros|vosotros|ellos|ellas|usted|ustedes)\s*$/i, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .toLowerCase();
+}
+
 // Экспорт для глобального доступа
 if (typeof window !== 'undefined') {
     window.shuffleArray = shuffleArray;
@@ -83,4 +95,5 @@ if (typeof window !== 'undefined') {
     window.setTopbarScore = setTopbarScore;
     window.setTopbarProgress = setTopbarProgress;
     window.resetTopbar = resetTopbar;
+    window.normalizeSpanish = normalizeSpanish;
 }
