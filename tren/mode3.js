@@ -41,6 +41,7 @@ function displayMode3Question() {
 }
 
 function checkMode3Answer(selected, correct, buttonElement, explanation) {
+    if (mode3State.isAnswered) return;
     mode3State.isAnswered = true;
 
     const feedback = document.getElementById('mode3-feedback');

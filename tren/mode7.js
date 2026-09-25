@@ -16,7 +16,8 @@ let mode7State = {
     assignments: {},    // word -> columnId
     results: {},        // word -> true (правильно) | false (временно, красный флеш)
     firstTryWrong: {},  // word -> true, если была хотя бы одна ошибка
-    selectedWord: null
+    selectedWord: null,
+    wrongTimers: {}     // word -> setTimeout ID (for stale-state cleanup)
 };
 
 // --- ЛОГИКА ИГРЫ ---
@@ -27,9 +28,14 @@ function initMode7() {
         return;
     }
 
+    if (mode7State.wrongTimers) {
+        Object.values(mode7State.wrongTimers).forEach(function(id) { clearTimeout(id); });
+    }
+
     mode7State.currentRoundIndex = 0;
     mode7State.score = 0;
     mode7State.isRoundComplete = false;
+    mode7State.wrongTimers = {};
     mode7State.rounds = MODE7_ROUNDS;
     mode7State.maxScore = MODE7_ROUNDS.reduce(function(s, r) { return s + r.items.length; }, 0);
 
@@ -45,12 +51,17 @@ function displayMode7Round() {
 
     const round = mode7State.rounds[mode7State.currentRoundIndex];
 
+    if (mode7State.wrongTimers) {
+        Object.values(mode7State.wrongTimers).forEach(function(id) { clearTimeout(id); });
+    }
+
     mode7State.currentItems = shuffleArray([...round.items]);
     mode7State.assignments = {};
     mode7State.results = {};
     mode7State.firstTryWrong = {};
     mode7State.selectedWord = null;
     mode7State.isRoundComplete = false;
+    mode7State.wrongTimers = {};
 
     displayMode7RoundUI(round, mode7State.currentRoundIndex, mode7State.rounds.length);
 }
@@ -106,12 +117,16 @@ function checkMode7Item(word, targetColumn) {
         if (typeof window.njWrong === 'function') window.njWrong(null, null);
         refreshMode7Columns();
 
-        setTimeout(function() {
+        var stateRef = mode7State;
+        var timerId = setTimeout(function() {
+            if (stateRef !== mode7State) return;
+            delete mode7State.wrongTimers[word];
             delete mode7State.assignments[word];
             delete mode7State.results[word];
             refreshMode7WordBank();
             refreshMode7Columns();
         }, 700);
+        mode7State.wrongTimers[word] = timerId;
     }
 }
 

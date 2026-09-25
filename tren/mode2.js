@@ -63,6 +63,7 @@ function generateAndShowAdvancedQuestion_tren() {
 }
 
 function checkAdvancedAnswer_tren(selected, correct, buttonElement) {
+    if (advancedModeState_tren.isAnswered) return;
     advancedModeState_tren.isAnswered = true;
     const allButtons = document.querySelectorAll('#mode2-options .option-btn');
     allButtons.forEach(btn => btn.disabled = true);

@@ -41,6 +41,7 @@ function displayMode4Question() {
 }
 
 function checkMode4Answer(selected, correct, buttonElement, explanation) {
+    if (mode4State.isAnswered) return;
     mode4State.isAnswered = true;
 
     const feedback = document.getElementById('mode4-feedback');

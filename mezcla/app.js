@@ -142,8 +142,12 @@ const MezclaApp = {
       + '?client=gtx&sl=' + fromLang + '&tl=' + toLang + '&dt=t'
       + '&q=' + encodeURIComponent(joined);
 
-    return fetch(url)
+    var ctrl = new AbortController();
+    var abortTimer = setTimeout(function() { ctrl.abort(); }, 10000);
+
+    return fetch(url, { signal: ctrl.signal })
       .then(function(r) {
+        clearTimeout(abortTimer);
         if (!r.ok) throw new Error('HTTP ' + r.status);
         return r.json();
       })
@@ -156,6 +160,10 @@ const MezclaApp = {
           result = translated.split('\n').map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });
         }
         return result;
+      })
+      .catch(function(err) {
+        clearTimeout(abortTimer);
+        throw err;
       });
   },
 
@@ -211,7 +219,11 @@ const MezclaApp = {
       .catch(function(err) {
         if (progressEl) progressEl.style.display = 'none';
         if (btn) { btn.disabled = false; btn.textContent = 'Перевести и создать →'; }
-        showError('Ошибка перевода. Проверь интернет и попробуй снова. (' + err.message + ')');
+        if (err.name === 'AbortError') {
+          showError('Превышено время ожидания (10с). Проверь интернет и попробуй снова.');
+        } else {
+          showError('Ошибка перевода. Проверь интернет и попробуй снова. (' + err.message + ')');
+        }
       });
   },
 
@@ -274,5 +286,4 @@ if (typeof window !== 'undefined') {
   window.mezclaReshuffle       = function()  { MezclaApp.reshuffle(); };
   window.mezclaTapToken        = function(i) { MezclaApp.tapToken(i); };
   window.mezclaOpenCustomInput = function()  { MezclaApp.openCustomInput(); };
-  window.mezclaSaveCustomText  = function()  { MezclaApp.saveCustomTextFromForm(); };
 }

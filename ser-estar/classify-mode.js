@@ -14,7 +14,8 @@ let classifyState = {
     totalAnswered: 0,
     sessionLimit: CLASSIFY_SESSION_LIMIT,
     isAnswered: false,
-    pendingNext: false
+    pendingNext: false,
+    nextTimer: null
 };
 
 /**
@@ -24,6 +25,10 @@ function initClassifyMode() {
     if (typeof CLASSIFY_DATA === 'undefined') {
         console.error('[Classify] CLASSIFY_DATA не загружен');
         return;
+    }
+
+    if (classifyState && classifyState.nextTimer) {
+        clearTimeout(classifyState.nextTimer);
     }
 
     classifyState.queue = shuffleArray([...CLASSIFY_DATA]);
@@ -106,7 +111,8 @@ function handleClassifyChoice(choice) {
 
         // Через 500ms — следующая карточка
         classifyState.pendingNext = true;
-        setTimeout(() => {
+        classifyState.nextTimer = setTimeout(() => {
+            classifyState.nextTimer = null;
             classifyState.totalAnswered++;
             showNextClassifyQuestion();
         }, 550);

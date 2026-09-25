@@ -64,6 +64,7 @@ function displayMode5Question() {
  * Проверка ответа (вызывается из UI)
  */
 function checkMode5Answer(selected, correct, buttonElement, explanation) {
+    if (mode5State.isAnswered) return;
     mode5State.isAnswered = true;
 
     const feedback = document.getElementById('mode5-feedback');

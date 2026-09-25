@@ -315,39 +315,9 @@ function restartMode0() {
     }
 }
 
-function restartMode1() {
-    if (typeof initMode1 === 'function') {
-        initMode1();
-    }
-}
-
 function restartMode2() {
     if (typeof initMode2 === 'function') {
         initMode2();
-    }
-}
-
-function restartMode3() {
-    if (typeof initMode3 === 'function') {
-        initMode3();
-    }
-}
-
-function restartMode4() {
-    if (typeof initMode4 === 'function') {
-        initMode4();
-    }
-}
-
-function restartMode6() {
-    if (typeof initMode6 === 'function') {
-        initMode6();
-    }
-}
-
-function restartMode7() {
-    if (typeof initMode7 === 'function') {
-        initMode7();
     }
 }
 
