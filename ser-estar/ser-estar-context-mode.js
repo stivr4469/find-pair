@@ -65,6 +65,7 @@ function checkContextAnswer(selected, correct, buttonElement, explanation) {
         feedback.className = 'feedback correct';
         feedback.innerHTML = `<strong>¡Correcto!</strong><div style="font-size:0.9rem;margin-top:4px;opacity:0.85">${explanation}</div>`;
         buttonElement.classList.add('correct');
+        if (typeof replayAnimation === 'function') replayAnimation(buttonElement, 'anim-correct');
         contextModeState.score++;
         updateContextScoreUI();
         window.njAddStreak && window.njCorrect(window.njAddStreak());
@@ -72,6 +73,7 @@ function checkContextAnswer(selected, correct, buttonElement, explanation) {
         feedback.className = 'feedback wrong';
         feedback.innerHTML = `<strong>Ответ: ${correct}</strong><div style="font-size:0.9rem;margin-top:4px;opacity:0.85">${explanation}</div>`;
         buttonElement.classList.add('incorrect');
+        if (typeof replayAnimation === 'function') replayAnimation(buttonElement, 'anim-wrong');
         window.njWrong && window.njWrong(null, explanation || null);
 
         allButtons.forEach(btn => {

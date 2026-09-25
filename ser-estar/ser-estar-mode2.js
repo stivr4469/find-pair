@@ -218,6 +218,7 @@ function checkAdvancedAnswer(selected, correct, buttonElement) {
             feedback.textContent = '✓ ¡Correcto!';
             feedback.className = 'feedback correct';
             buttonElement.classList.add('correct');
+            if (typeof replayAnimation === 'function') replayAnimation(buttonElement, 'anim-correct');
             advancedModeState.score++;
             updateAdvancedScore();
             window.njAddStreak && window.njCorrect(window.njAddStreak());
@@ -225,6 +226,7 @@ function checkAdvancedAnswer(selected, correct, buttonElement) {
             feedback.textContent = `✗ Incorrecto. La respuesta correcta es: ${correct}`;
             feedback.className = 'feedback wrong';
             buttonElement.classList.add('incorrect');
+            if (typeof replayAnimation === 'function') replayAnimation(buttonElement, 'anim-wrong');
             window.njWrong && window.njWrong(null, null);
 
             allButtons.forEach(btn => {

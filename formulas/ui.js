@@ -537,6 +537,9 @@ const FormulasUI = {
       correctBtn.style.borderColor = '#27ae60';
       correctBtn.style.background = '#d4edda';
       correctBtn.style.color = '#155724';
+      if (selectedIndex === correctIndex && typeof replayAnimation === 'function') {
+        replayAnimation(correctBtn, 'anim-correct');
+      }
     }
 
     // Highlight wrong (if selected wrong)
@@ -546,6 +549,7 @@ const FormulasUI = {
         wrongBtn.style.borderColor = '#e74c3c';
         wrongBtn.style.background = '#f8d7da';
         wrongBtn.style.color = '#721c24';
+        if (typeof replayAnimation === 'function') replayAnimation(wrongBtn, 'anim-wrong');
       }
     }
 
@@ -589,6 +593,9 @@ const FormulasUI = {
         feedbackEl.style.border = '1px solid #f5c6cb';
         feedbackEl.innerHTML = '<div style="flex:1"><span style="color:#ef4444;font-weight:700;">Неверно.</span> ' + _escHtml(hint) + '</div>' + ttsBtn;
       }
+
+      // Animate feedback appearance
+      if (typeof replayAnimation === 'function') replayAnimation(feedbackEl, 'view-enter');
 
       // Wire up TTS button
       if (typeof lucide !== 'undefined') lucide.createIcons();
