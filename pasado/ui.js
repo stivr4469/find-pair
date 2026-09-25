@@ -792,11 +792,11 @@ const PasadoUI = {
 
     var pct = total > 0 ? Math.round((score / total) * 100) : 0;
 
-    var reactionEmoji, reactionText;
-    if (pct === 100)      { reactionEmoji = '🏆'; reactionText = 'Отлично! Все верно!'; }
-    else if (pct >= 75)   { reactionEmoji = '🥇'; reactionText = 'Хорошо! Почти всё верно!'; }
-    else if (pct >= 50)   { reactionEmoji = '👍'; reactionText = 'Неплохо! Можно лучше'; }
-    else                  { reactionEmoji = '📖'; reactionText = 'Нужно повторить материал'; }
+    var reactionIcon, reactionText;
+    if (pct === 100)      { reactionIcon = 'trophy'; reactionText = 'Отлично! Все верно!'; }
+    else if (pct >= 75)   { reactionIcon = 'award'; reactionText = 'Хорошо! Почти всё верно!'; }
+    else if (pct >= 50)   { reactionIcon = 'thumbsUp'; reactionText = 'Неплохо! Можно лучше'; }
+    else                  { reactionIcon = 'bookOpen'; reactionText = 'Нужно повторить материал'; }
 
     var repeatAction;
     if (quizMode === 'all') {
@@ -813,7 +813,7 @@ const PasadoUI = {
       '<div style="max-width: 500px; margin: 0 auto;" class="pasado-anim-in">',
         '<div class="game-area" style="text-align: center; padding: 32px 24px;">',
 
-          '<div style="margin-bottom: 12px; font-size: 56px; line-height: 1;">' + reactionEmoji + '</div>',
+          '<div style="margin-bottom: 12px; color: var(--accent); line-height: 1;">' + ((window.ICON_RESULT && window.ICON_RESULT[reactionIcon]) || '') + '</div>',
           '<h2 style="color: var(--text); margin-bottom: 8px; font-size: 1.4rem;">Результат</h2>',
 
           '<div style="font-size: 3rem; font-weight: 700; color: var(--accent); margin: 16px 0 8px;">',

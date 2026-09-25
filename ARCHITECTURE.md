@@ -44,7 +44,7 @@ spanish-trainer-app/
 │   └── main.css            ← Стили только для root index.html
 ├── js/
 │   ├── utils.js            ← Общие утилиты: shuffleArray, speakSpanish, toggleTheme,
-│   │                          normalizeSpanish, ICON_VOL, ICON_MIC (v=21)
+│   │                          normalizeSpanish, isEquivalentAnswer, ICON_VOL, ICON_MIC, ICON_RESULT (v=23)
 │   ├── naranjito.js        ← Маскот Naranjito — анимированный персонаж (v=2)
 │   ├── orange-throw.js     ← Анимация броска апельсина в корзинку (v=4)
 │   └── main.js             ← Root page JS (Telegram init, closeApp)
@@ -77,29 +77,29 @@ module/
 | Файл | Версия в HTML |
 |------|--------------|
 | `css/unified-styles.css` | v=25 |
-| `js/utils.js` | v=22 ← добавлена `isEquivalentAnswer()` |
+| `js/utils.js` | v=23 ← `isEquivalentAnswer()`, `ICON_RESULT` (SVG итогового экрана) |
 | `js/main.js` | v=2 ← stripped (убраны initTelegram, setupNavigation, console.log) |
 | `js/naranjito.js` | v=3 |
 | `js/orange-throw.js` | v=6 |
 | `formulas/app.js` | v=20 ← isEquivalentAnswer вместо normalizeSpanish |
-| `formulas/ui.js` | v=26 ← карточки→button, TTS data-tts, нет lucide в dynamic HTML |
+| `formulas/ui.js` | v=27 ← карточки→button, TTS data-tts, иконка результата = `ICON_RESULT` |
 | `formulas/data.js` | v=16 ← Q1-Q6 fill-blank для 9 формул (54 вопроса) |
 | `pasado/app.js` | v=9 ← isEquivalentAnswer в handleAnswer + handleAnswerCyclic |
-| `pasado/ui.js` | v=18 ← карточки→button, classify zones→button, нет lucide, emoji реакции |
+| `pasado/ui.js` | v=19 ← карточки→button, classify zones→button, иконка результата = `ICON_RESULT` |
 | `pasado/data.js` | v=7 ← все Q1-Q6 before/after + PASADO_CONTRAST (15 пар) |
 | `tren/app.js` | v=16 ← удалены App.debug() и все console.log |
 | `tren/mode6-ui.js` | v=16 ← blank-fill layout (sentence + tiles below) |
 | `tren/mode6.js` | v=13 ← blank fill green/red on answer |
-| `tren/mode7-ui.js` | v=16 ← classify columns → button, упрощён ternary |
+| `tren/mode7-ui.js` | v=17 ← колонки = `div role="button" tabindex=0` + `mode7ColumnKeydown` (Enter/Space) |
 | `mezcla/app.js` | v=9 ← AbortController для отмены перевода при быстрых кликах |
 | `mezcla/ui.js` | v=10 |
-| `ser-estar/ser-estar-app.js` | v=5 ← убран console.log |
+| `ser-estar/ser-estar-app.js` | v=6 ← switchMode/showMainMenu вызывают `stopClassifyMode()` |
 | `ser-estar/ser-estar-mode2.js` | v=6 |
 | `ser-estar/ser-estar-context-ui.js` | v=7 ← fill-blank tile UI (sentence + tiles below) |
 | `ser-estar/ser-estar-context-mode.js` | v=3 ← убран console.log |
 | `ser-estar/ser-estar-rules-data.js` | v=2 ← исправлен комментарий |
 | `ser-estar/classify-ui.js` | v=9 |
-| `ser-estar/classify-mode.js` | v=5 |
+| `ser-estar/classify-mode.js` | v=6 ← `stopClassifyMode()` — отмена таймера перехода |
 | `find-pair/script.js` | v=5 ← убраны console.log |
 
 ---
@@ -219,7 +219,7 @@ contrasts: [
 
 ---
 
-## Shared utilities — js/utils.js (v=22)
+## Shared utilities — js/utils.js (v=23)
 
 | Функция / константа | Описание |
 |---------------------|----------|
@@ -234,6 +234,7 @@ contrasts: [
 | `isEquivalentAnswer(a, b)` | Нормализует обе строки (убирает точку, trailing pronoun, пробелы → lowercase) и сравнивает. Используется в formulas/app.js и pasado/app.js как запасной сценарий: если индексы не совпали, сравниваем строки. Не убирает `¿¡` (в отличие от `normalizeSpanish`) |
 | `window.ICON_VOL` | Inline SVG строка: иконка "volume-2" (17×17px). Использовать внутри `<button>` |
 | `window.ICON_MIC` | Inline SVG строка: иконка "microphone" (17×17px) |
+| `window.ICON_RESULT` | `{trophy, award, thumbsUp, bookOpen}` — SVG 56px для итогового экрана квиза, цвет через `currentColor` |
 
 ### Почему ICON_VOL/ICON_MIC в utils.js
 
@@ -452,7 +453,7 @@ window.currentItem = item;  // прочитается уже другой item
 
 ```
 find-pair/
-├── index.html   ← utils.js?v=22, unified-styles.css?v=25, styles.css?v=3, script.js?v=5
+├── index.html   ← utils.js?v=23, unified-styles.css?v=25, styles.css?v=3, script.js?v=5
 ├── script.js    ← основная логика (find-pair.js удалён)
 └── styles.css   ← модульные стили (find-pair.css удалён)
 ```
@@ -465,7 +466,7 @@ find-pair/
 
 ```
 tren/
-├── index.html          ← app.js?v=16, utils.js?v=22, naranjito.js?v=3
+├── index.html          ← app.js?v=16, utils.js?v=23, naranjito.js?v=3
 ├── app.js              ← App.switchMode(), App.showMainMenu() (debug убран)
 ├── mode0-game.js       ← Базовое спряжение A1 (v=11)
 ├── mode0-options.js    ← Выбор глагола (v=10)
@@ -480,13 +481,13 @@ tren/
 
 ---
 
-## Модуль 3 — ser-estar/ (ser-estar-app.js v=5)
+## Модуль 3 — ser-estar/ (ser-estar-app.js v=6)
 
 5 под-режимов: base, advanced, context, rules, classify.
 
 ```
 ser-estar/
-├── index.html                  ← ser-estar-app.js?v=5, utils.js?v=22, naranjito.js?v=3
+├── index.html                  ← ser-estar-app.js?v=6, utils.js?v=23, naranjito.js?v=3
 ├── ser-estar-app.js            ← SerEstarApp.switchMode(), .showMainMenu()
 ├── ser-estar-data.js           ← Данные спряжений (удалены дубли text:, исправлена пунктуация)
 ├── ser-estar-base-ui.js?v=3    ← Рендеринг базового режима
@@ -499,7 +500,7 @@ ser-estar/
 ├── ser-estar-rules-mode.js
 ├── classify-data.js            ← Данные classify режима
 ├── classify-ui.js?v=9          ← Рендеринг classify
-└── classify-mode.js?v=5        ← Логика classify
+└── classify-mode.js?v=6        ← Логика classify
 ```
 Удалены: `ser-estar-mode3.js`, `ser-estar-mode4.js`, `ser-estar-mode2-data.js`, `ser-estar-mode2-logic.js`, `ser-estar-mode2-utils.js` — не подключались ни в одном `index.html`.
 
@@ -515,7 +516,7 @@ ser-estar/
 
 ```
 formulas/
-├── index.html    ← app.js?v=20, data.js?v=16, ui.js?v=26, utils.js?v=22
+├── index.html    ← app.js?v=20, data.js?v=16, ui.js?v=27, utils.js?v=23
 ├── data.js       ← FORMULAS_DATA[36] — массив формул с id, name, rule, example, options
 ├── ui.js         ← FormulasUI + FORMULA_ICONS[36] (color/bg); карточки = button; TTS через data-tts
 └── app.js        ← FormulasApp, _syncBackBtn(); isEquivalentAnswer для запасного сравнения
@@ -556,7 +557,7 @@ FormulasApp.state = {
 
 ```
 mezcla/
-├── index.html    ← app.js?v=8, data.js?v=1, ui.js?v=10, utils.js?v=21
+├── index.html    ← app.js?v=9, data.js?v=1, ui.js?v=10, utils.js?v=23
 ├── data.js       ← MEZCLA_DATA — встроенные тексты
 ├── ui.js         ← MezclaUI — рендеринг токенов, тултип с полным предложением
 └── app.js        ← MezclaApp — токенизатор, Google Translate API
@@ -585,9 +586,9 @@ mezcla/
 
 ```
 pasado/
-├── index.html    ← app.js?v=9, data.js?v=7, ui.js?v=18, utils.js?v=22
+├── index.html    ← app.js?v=9, data.js?v=7, ui.js?v=19, utils.js?v=23
 ├── data.js       ← PASADO_DATA[16], PASADO_INLINE, PASADO_CLASSIFY, PASADO_CONTRAST
-├── ui.js         ← PasadoUI + PASADO_ICONS[16]; карточки и classify zones = button; emoji реакции
+├── ui.js         ← PasadoUI + PASADO_ICONS[16]; карточки и classify zones = button; ICON_RESULT на итоговом экране
 └── app.js        ← PasadoApp, _syncBackBtn(); isEquivalentAnswer для запасного сравнения
 ```
 

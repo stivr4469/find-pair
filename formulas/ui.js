@@ -622,15 +622,15 @@ const FormulasUI = {
 
     var pct = total > 0 ? Math.round((score / total) * 100) : 0;
 
-    var reactionEmoji, reactionText;
+    var reactionIcon, reactionText;
     if (pct === 100) {
-      reactionEmoji = '🏆'; reactionText = 'Отлично! Все верно!';
+      reactionIcon = 'trophy'; reactionText = 'Отлично! Все верно!';
     } else if (pct >= 75) {
-      reactionEmoji = '🥇'; reactionText = 'Хорошо! Почти все верно!';
+      reactionIcon = 'award'; reactionText = 'Хорошо! Почти все верно!';
     } else if (pct >= 50) {
-      reactionEmoji = '👍'; reactionText = 'Неплохо! Можно лучше';
+      reactionIcon = 'thumbsUp'; reactionText = 'Неплохо! Можно лучше';
     } else {
-      reactionEmoji = '📖'; reactionText = 'Нужно повторить материал';
+      reactionIcon = 'bookOpen'; reactionText = 'Нужно повторить материал';
     }
 
     var repeatAction = quizMode === 'all'
@@ -643,7 +643,7 @@ const FormulasUI = {
       '<div style="max-width: 500px; margin: 0 auto;">',
         '<div class="game-area" style="text-align: center; padding: 32px 24px;">',
 
-          '<div style="margin-bottom: 12px; font-size: 56px; line-height: 1;">' + reactionEmoji + '</div>',
+          '<div style="margin-bottom: 12px; color: var(--accent); line-height: 1;">' + ((window.ICON_RESULT && window.ICON_RESULT[reactionIcon]) || '') + '</div>',
 
           '<h2 style="color: var(--text); margin-bottom: 8px; font-size: 1.4rem;">Результат</h2>',
 

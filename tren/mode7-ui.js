@@ -167,6 +167,13 @@ function injectMode7Styles() {
 
 // --- ГЛАВНАЯ ФУНКЦИЯ ОТОБРАЖЕНИЯ РАУНДА ---
 
+// Клавиатура для колонок (div role="button"): Enter / Space = клик
+function mode7ColumnKeydown(event, columnId) {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    placeMode7WordInColumn(columnId);
+}
+
 function displayMode7RoundUI(round, roundIndex, totalRounds) {
     injectMode7Styles();
 
@@ -176,7 +183,7 @@ function displayMode7RoundUI(round, roundIndex, totalRounds) {
     const isLast = roundIndex >= totalRounds - 1;
 
     contentArea.innerHTML = `
-        <div class="question-container" style="padding-bottom: 80px;"> <div class="progress-text">Раунд ${roundIndex + 1} из ${totalRounds}</div> <h3 id="mode7-title" style="text-align:center; margin-bottom:6px; font-size:1.05rem; color:var(--text);">${escapeHtml(round.title)}</h3> <p class="mode7-instruction" id="mode7-instruction">${escapeHtml(round.instruction || 'Нажми слово → нажми колонку')}</p> <!-- Банк слов --> <div id="mode7-word-bank" class="mode7-word-bank"></div> <!-- Три колонки --> <div id="mode7-columns" class="mode7-columns-grid"> <button type="button" class="classify-column" id="col-ir" onclick="placeMode7WordInColumn('ir')"> <h4 class="classify-column-header col-ir">IR</h4> <div class="column-drop-zone" id="drop-ir"></div> </button> <button type="button" class="classify-column" id="col-venir" onclick="placeMode7WordInColumn('venir')"> <h4 class="classify-column-header col-venir">VENIR</h4> <div class="column-drop-zone" id="drop-venir"></div> </button> <button type="button" class="classify-column" id="col-llegar" onclick="placeMode7WordInColumn('llegar')"> <h4 class="classify-column-header col-llegar">LLEGAR</h4> <div class="column-drop-zone" id="drop-llegar"></div> </button> </div> <div class="feedback" id="mode7-feedback" style="margin-top:14px; min-height:40px;"></div> <button class="next-button quiz-next-fixed" id="mode7-next-btn" style="display:none;" onclick="handleNextMode7Round()"> ${isLast ? 'Завершить →' : 'Следующий раунд →'}
+        <div class="question-container" style="padding-bottom: 80px;"> <div class="progress-text">Раунд ${roundIndex + 1} из ${totalRounds}</div> <h3 id="mode7-title" style="text-align:center; margin-bottom:6px; font-size:1.05rem; color:var(--text);">${escapeHtml(round.title)}</h3> <p class="mode7-instruction" id="mode7-instruction">${escapeHtml(round.instruction || 'Нажми слово → нажми колонку')}</p> <!-- Банк слов --> <div id="mode7-word-bank" class="mode7-word-bank"></div> <!-- Три колонки --> <div id="mode7-columns" class="mode7-columns-grid"> <div class="classify-column" id="col-ir" role="button" tabindex="0" onclick="placeMode7WordInColumn('ir')" onkeydown="mode7ColumnKeydown(event, 'ir')"> <h4 class="classify-column-header col-ir">IR</h4> <div class="column-drop-zone" id="drop-ir"></div> </div> <div class="classify-column" id="col-venir" role="button" tabindex="0" onclick="placeMode7WordInColumn('venir')" onkeydown="mode7ColumnKeydown(event, 'venir')"> <h4 class="classify-column-header col-venir">VENIR</h4> <div class="column-drop-zone" id="drop-venir"></div> </div> <div class="classify-column" id="col-llegar" role="button" tabindex="0" onclick="placeMode7WordInColumn('llegar')" onkeydown="mode7ColumnKeydown(event, 'llegar')"> <h4 class="classify-column-header col-llegar">LLEGAR</h4> <div class="column-drop-zone" id="drop-llegar"></div> </div> </div> <div class="feedback" id="mode7-feedback" style="margin-top:14px; min-height:40px;"></div> <button class="next-button quiz-next-fixed" id="mode7-next-btn" style="display:none;" onclick="handleNextMode7Round()"> ${isLast ? 'Завершить →' : 'Следующий раунд →'}
             </button> </div> `;
 
     // Первичное заполнение банка и колонок

@@ -21,6 +21,7 @@ const SerEstarApp = {
     },
 
     switchMode: function(modeId) {
+        if (typeof stopClassifyMode === 'function') stopClassifyMode();
         // Hide all areas
         document.querySelectorAll('.game-area').forEach(el => el.classList.add('hidden'));
         document.querySelector('.main-menu').classList.add('hidden');
@@ -50,6 +51,7 @@ const SerEstarApp = {
     },
 
     showMainMenu: function() {
+        if (typeof stopClassifyMode === 'function') stopClassifyMode();
         document.querySelectorAll('.game-area').forEach(el => el.classList.add('hidden'));
         document.querySelector('.main-menu').classList.remove('hidden');
         var backBtn = document.getElementById('btn-back-to-modes');

@@ -19,6 +19,17 @@ let classifyState = {
 };
 
 /**
+ * Останавливает отложенный переход к следующей карточке (выход из режима / перезапуск)
+ */
+function stopClassifyMode() {
+    if (classifyState.nextTimer) {
+        clearTimeout(classifyState.nextTimer);
+        classifyState.nextTimer = null;
+    }
+    classifyState.pendingNext = false;
+}
+
+/**
  * Инициализирует режим классификации
  */
 function initClassifyMode() {
@@ -27,9 +38,7 @@ function initClassifyMode() {
         return;
     }
 
-    if (classifyState && classifyState.nextTimer) {
-        clearTimeout(classifyState.nextTimer);
-    }
+    stopClassifyMode();
 
     classifyState.queue = shuffleArray([...CLASSIFY_DATA]);
     classifyState.score = 0;

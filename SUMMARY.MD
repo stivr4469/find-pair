@@ -5,6 +5,19 @@
 
 ---
 
+## Сессия: 2026-09-25 (продолжение 6) — Доработка замечаний по ревью Stages 1–4
+
+- **Иконки итогового экрана (formulas, pasado):** эмодзи 🏆🥇👍📖 заменены на inline SVG из нового `window.ICON_RESULT` в `js/utils.js` (trophy / award / thumbsUp / bookOpen, 56px, `color: var(--accent)`). Эмодзи противоречили дизайн-системе (точки/SVG вместо emoji).
+- **tren mode7:** колонки IR/VENIR/LLEGAR были `<button>` с `<h4>`/`<div>` внутри (невалидный HTML). Теперь `div role="button" tabindex="0"` + `mode7ColumnKeydown(event, col)` — Enter/Space работают как клик.
+- **ser-estar classify:** новый `stopClassifyMode()` отменяет отложенный переход к следующей карточке; вызывается из `initClassifyMode()`, `SerEstarApp.switchMode()` и `SerEstarApp.showMainMenu()`.
+- Версии: utils.js v=23, formulas/ui.js v=27, pasado/ui.js v=19, tren/mode7-ui.js v=17, ser-estar-app.js v=6, classify-mode.js v=6.
+- Проверка: smoke 84/84 + разовые Playwright-проверки (SVG на экране результатов formulas, Enter на колонке mode7, таймер classify не срабатывает после выхода в меню).
+- Также в предыдущем коммите `d6fbc2a` из репозитория убраны `tests/node_modules` (190 файлов).
+
+**Открыто:** отозвать ключ Firebase service account (утёк в истории git, коммит `a16dcd6`) — делает владелец в Google Cloud Console.
+
+---
+
 ## Сессия: 2026-09-25 (продолжение 5) — Code Review: Stages 1–4
 
 ### Выполнено по TASK-code-review-fixes.md (4 этапа, 84/84 тестов зелёных после каждого)

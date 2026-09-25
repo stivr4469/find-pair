@@ -95,16 +95,16 @@
 | Файл | Текущая версия в HTML |
 |---|---|
 | `css/unified-styles.css` | v=25 |
-| `js/utils.js` | v=22 |
+| `js/utils.js` | v=23 |
 | `js/main.js` | v=2 |
 | `formulas/app.js` | v=20 |
-| `formulas/ui.js` | v=26 |
+| `formulas/ui.js` | v=27 |
 | `pasado/app.js` | v=9 |
-| `pasado/ui.js` | v=18 |
+| `pasado/ui.js` | v=19 |
 | `tren/app.js` | v=16 |
-| `tren/mode7-ui.js` | v=16 |
-| `ser-estar/ser-estar-app.js` | v=5 |
-| `ser-estar/classify-mode.js` | v=5 |
+| `tren/mode7-ui.js` | v=17 |
+| `ser-estar/ser-estar-app.js` | v=6 |
+| `ser-estar/classify-mode.js` | v=6 |
 | `mezcla/app.js` | v=9 |
 | `find-pair/script.js` | v=5 |
 
