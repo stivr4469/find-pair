@@ -270,11 +270,12 @@ body::before {
 
 .game-card {
   --c: var(--accent);
+  --ink: color-mix(in srgb, var(--c), #fff var(--lift));
   position: relative;
   isolation: isolate;
   overflow: hidden;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: 14px;
   padding: 16px 14px 16px 16px;
@@ -301,19 +302,6 @@ body::before {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
-.game-card-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-sm);
-  display: grid;
-  place-items: center;
-  background: color-mix(in srgb, var(--c) 13%, var(--surface));
-  flex-shrink: 0;
-}
-/* --ink: цвет игры, в тёмной теме осветлённый для контраста */
-.game-card { --ink: color-mix(in srgb, var(--c), #fff var(--lift)); }
-.game-card-icon svg { width: 24px; height: 24px; stroke: var(--ink); }
 
 .game-card-body { min-width: 0; }
 
@@ -460,13 +448,12 @@ html.intro .game-card {
   .app { max-width: 760px; padding-top: 32px; }
   .hero { padding: 40px 2px 28px; }
   .games { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .game-card { grid-template-columns: auto 1fr; align-items: start; padding: 18px; }
+  .game-card { grid-template-columns: 1fr; align-items: start; padding: 18px; }
   .game-card-arrow { display: none; }
 }
 
 @media (max-width: 360px) {
   .game-card { gap: 12px; padding: 14px 12px; }
-  .game-card-icon { width: 42px; height: 42px; }
 }
 
 /* ============================================

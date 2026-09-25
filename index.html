@@ -27,14 +27,8 @@
     <link rel="stylesheet" href="css/main.css?v=7">
 </head>
 <body>
-    <!-- Иконки Lucide, встроены спрайтом: без CDN и без мигания при загрузке -->
+    <!-- SVG-спрайт: только иконки, использующиеся вне карточек игр -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-      <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
-      <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></symbol>
-      <symbol id="i-branch" viewBox="0 0 24 24"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
-      <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
-      <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/></symbol>
-      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
       <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
       <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 3l14 9-14 9z"/></symbol>
       <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
@@ -74,7 +68,6 @@
         <!-- Список игр -->
         <nav class="games" aria-label="Игры">
             <a href="find-pair/" class="game-card" data-game="find-pair" style="--i:3">
-                <span class="game-card-icon"><svg class="i" aria-hidden="true"><use href="#i-layers"/></svg></span>
                 <span class="game-card-body">
                     <h2 class="game-card-title">Найди пару</h2>
                     <p class="game-card-description">Сопоставь слова с переводом: глаголы, существительные, прилагательные, наречия</p>
@@ -88,7 +81,6 @@
             </a>
 
             <a href="tren/" class="game-card" data-game="tren" style="--i:4">
-                <span class="game-card-icon"><svg class="i" aria-hidden="true"><use href="#i-compass"/></svg></span>
                 <span class="game-card-body">
                     <h2 class="game-card-title">Глаголы движения</h2>
                     <p class="game-card-description">Спряжение глаголов ir, venir, llegar</p>
@@ -102,7 +94,6 @@
             </a>
 
             <a href="ser-estar/" class="game-card" data-game="ser-estar" style="--i:5">
-                <span class="game-card-icon"><svg class="i" aria-hidden="true"><use href="#i-branch"/></svg></span>
                 <span class="game-card-body">
                     <h2 class="game-card-title">Ser vs Estar</h2>
                     <p class="game-card-description">Научись различать глаголы SER и ESTAR</p>
@@ -116,7 +107,6 @@
             </a>
 
             <a href="formulas/" class="game-card" data-game="formulas" style="--i:6">
-                <span class="game-card-icon"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg></span>
                 <span class="game-card-body">
                     <h2 class="game-card-title">36 формул</h2>
                     <p class="game-card-description">36 грамматических формул испанского с проверкой</p>
@@ -130,7 +120,6 @@
             </a>
 
             <a href="mezcla/" class="game-card" data-game="mezcla" style="--i:7">
-                <span class="game-card-icon"><svg class="i" aria-hidden="true"><use href="#i-shuffle"/></svg></span>
                 <span class="game-card-body">
                     <h2 class="game-card-title">Mezcla</h2>
                     <p class="game-card-description">Тексты с регулируемой смесью русских и испанских слов</p>
@@ -144,7 +133,6 @@
             </a>
 
             <a href="pasado/" class="game-card" data-game="pasado" style="--i:8">
-                <span class="game-card-icon"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg></span>
                 <span class="game-card-body">
                     <h2 class="game-card-title">Прошедшее время</h2>
                     <p class="game-card-description">Indefinido, Imperfecto, Perfecto Compuesto, Pluscuamperfecto: 16 формул и 96 вопросов</p>
