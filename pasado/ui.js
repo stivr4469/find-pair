@@ -348,13 +348,14 @@ const PasadoUI = {
       var optBtnsHtml = question.options.map(function(opt, i) {
         return '<button class="pasado-inline-btn" id="pasado-opt-' + i + '" onclick="pasadoHandleAnswer(' + i + ')">' + _escHtmlP(opt) + '</button>';
       }).join('');
-      var sentenceHtml = _escHtmlP(question.before) +
-        ' <span class="pasado-inline-opts" id="pasado-inline-opts">' + optBtnsHtml + '</span>' +
+      var blankHtml = '<span id="pasado-blank" style="display:inline-block;min-width:72px;border-bottom:2px solid var(--accent);color:var(--muted);padding:0 4px;text-align:center;">___</span>';
+      var sentenceHtml = _escHtmlP(question.before) + ' ' + blankHtml +
         (question.after ? ' ' + _escHtmlP(question.after) : '');
       questionBodyHtml = [
         '<div style="background:var(--faint);border-radius:10px;padding:18px 16px;text-align:center;margin-bottom:16px;">',
-          '<div style="font-size:0.82rem;color:var(--accent);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;">Выбери правильную форму</div>',
-          '<div class="inline-question-text">' + sentenceHtml + '</div>',
+          '<div style="font-size:0.82rem;color:var(--accent);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">Выбери правильную форму</div>',
+          '<div class="inline-question-text" style="margin-bottom:18px;">' + sentenceHtml + '</div>',
+          '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;" id="pasado-inline-opts">' + optBtnsHtml + '</div>',
         '</div>',
       ].join('');
     } else {
@@ -510,6 +511,14 @@ const PasadoUI = {
       }
     }
 
+    var blankEl = root.querySelector('#pasado-blank');
+    if (blankEl && correctText) {
+      blankEl.textContent = correctText;
+      blankEl.style.borderBottomColor = '#27ae60';
+      blankEl.style.color = '#27ae60';
+      blankEl.style.fontWeight = '700';
+    }
+
     var nextWrap = root.querySelector('#pasado-next-wrap');
     if (nextWrap) nextWrap.style.display = 'block';
   },
@@ -527,9 +536,9 @@ const PasadoUI = {
       return '<button class="pasado-inline-btn" data-val="' + _escHtmlP(opt) + '" onclick="window.pasadoInlineAnswer(this.dataset.val)">' + _escHtmlP(opt) + '</button>';
     }).join('');
 
-    var sentenceHtml = _escHtmlP(item.before) +
-      ' <span class="pasado-inline-opts" id="pasado-inline-opts">' + optBtnsHtml + '</span> ' +
-      _escHtmlP(item.after);
+    var blankHtml = '<span id="pasado-inline-blank" style="display:inline-block;min-width:72px;border-bottom:2px solid var(--accent);color:var(--muted);padding:0 4px;text-align:center;">___</span>';
+    var sentenceHtml = _escHtmlP(item.before) + ' ' + blankHtml +
+      (item.after ? ' ' + _escHtmlP(item.after) : '');
 
     var html = [
       '<div style="max-width: 620px; margin: 0 auto; padding-bottom: 80px;" class="pasado-anim-in">',
@@ -543,8 +552,9 @@ const PasadoUI = {
           '<div style="margin-bottom:4px;font-size:0.85rem;color:var(--muted);">Вопрос ' + (qIndex + 1) + ' из ' + total + '</div>',
 
           '<div style="background:var(--faint);border-radius:10px;padding:18px 16px;text-align:center;margin-bottom:18px;">',
-            '<div style="font-size:0.82rem;color:var(--accent);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Выбери правильную форму</div>',
-            '<div class="inline-question-text">' + sentenceHtml + '</div>',
+            '<div style="font-size:0.82rem;color:var(--accent);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">Выбери правильную форму</div>',
+            '<div class="inline-question-text" style="margin-bottom:18px;">' + sentenceHtml + '</div>',
+            '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;" id="pasado-inline-opts">' + optBtnsHtml + '</div>',
           '</div>',
 
           '<div id="pasado-inline-feedback" style="display:none;"></div>',
@@ -601,6 +611,14 @@ const PasadoUI = {
         feedbackEl.innerHTML = '<span style="color:#ef4444;font-weight:700;">Неверно.</span> Правильно: <strong>' + _escHtmlP(correctVal) + '</strong>. ' + _escHtmlP(hint) + ttsBtn;
         if (tts && typeof speakSpanish === 'function') setTimeout(function() { speakSpanish(tts); }, 600);
       }
+    }
+
+    var inlineBlankEl = root.querySelector('#pasado-inline-blank');
+    if (inlineBlankEl) {
+      inlineBlankEl.textContent = correctVal;
+      inlineBlankEl.style.borderBottomColor = '#27ae60';
+      inlineBlankEl.style.color = '#27ae60';
+      inlineBlankEl.style.fontWeight = '700';
     }
 
     var nextEl = root.querySelector('#pasado-inline-next');
