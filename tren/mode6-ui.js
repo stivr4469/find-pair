@@ -35,7 +35,7 @@
             cursor: pointer;
             font-size: 1rem;
             font-weight: 600;
-            transition: all 0.18s ease;
+            transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
             color: var(--text);
             line-height: 1.4;
             font-family: inherit;

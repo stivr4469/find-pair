@@ -52,7 +52,7 @@
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -176,7 +176,7 @@
     border: 2px solid transparent;
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
     background: #f8f9fa;
     color: #2c3e50;
 }
@@ -274,7 +274,7 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color var(--dur-fast) var(--ease-out);
 }
 
 .ser-estar-btn.primary {
@@ -544,7 +544,7 @@
     color: #2c3e50;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
 
 .option-btn:hover, .button-option:hover {
@@ -632,7 +632,7 @@ body {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
     background: white;
     color: #2c3e50;
 }
@@ -737,7 +737,7 @@ body {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
 }
 
 .restart-button {
@@ -782,7 +782,7 @@ body {
     text-decoration: none;
     border-radius: 8px;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
 }
 
 .back-button:hover {
@@ -839,9 +839,11 @@ body {
 .classify-progress-fill {
     height: 100%;
     background: linear-gradient(90deg, #a78bfa, #7c3aed);
-    border-radius: 3px;
-    transition: width 0.4s ease;
-    width: 0%;
+    border-radius: 0;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--dur-slow) var(--ease-out);
 }
 
 .classify-stats {
@@ -991,24 +993,30 @@ body {
 .classify-feedback {
     background: rgba(255, 255, 255, 0.97);
     border-radius: 14px;
-    padding: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.35s ease, padding 0.35s ease, box-shadow 0.35s ease;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--dur-slow) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
     box-shadow: none;
 }
 
 .classify-feedback.visible {
-    max-height: 280px;
-    padding: 16px 18px;
+    grid-template-rows: 1fr;
     box-shadow: 0 4px 16px rgba(239, 68, 68, 0.18);
     border-left: 4px solid #ef4444;
 }
 
 .classify-feedback-inner {
+    overflow: hidden;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     gap: 6px;
+    padding: 0;
+    transition: padding var(--dur-slow) var(--ease-out);
+}
+
+.classify-feedback.visible .classify-feedback-inner {
+    padding: 16px 18px;
 }
 
 .classify-next-btn {

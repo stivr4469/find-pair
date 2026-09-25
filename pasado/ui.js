@@ -54,7 +54,7 @@
     '  display:inline-block;padding:4px 13px;border-radius:16px;',
     '  border:2px solid var(--border);background:var(--surface);cursor:pointer;',
     '  font-size:0.95rem;font-weight:600;vertical-align:middle;',
-    '  transition:all 0.18s ease;color:var(--text);line-height:1.4;',
+    '  transition:background-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out);color:var(--text);line-height:1.4;',
     '  font-family:inherit;',
     '}',
     '.pasado-inline-btn:hover:not(:disabled){background:var(--accent-faint);border-color:var(--accent);color:var(--accent);transform:scale(1.06)}',
@@ -66,7 +66,7 @@
     // Classify zones
     '.pasado-classify-zone{',
     '  padding:14px 8px;border-radius:12px;border:2.5px solid transparent;',
-    '  cursor:pointer;transition:all 0.18s ease;',
+    '  cursor:pointer;transition:background-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-out);',
     '  font-size:0.82rem;font-weight:700;text-align:center;',
     '  text-transform:uppercase;letter-spacing:0.05em;',
     '  user-select:none;-webkit-user-select:none;',
@@ -95,7 +95,7 @@
 
     // Progress bar
     '.pasado-prog-bar{height:6px;background:var(--faint);border-radius:3px;overflow:hidden;margin-bottom:14px;}',
-    '.pasado-prog-fill{height:100%;border-radius:3px;transition:width 0.4s ease;background:var(--accent)}',
+    '.pasado-prog-fill{height:100%;width:100%;border-radius:0;transform:scaleX(0);transform-origin:left center;transition:transform var(--dur-slow) var(--ease-out);background:var(--accent)}',
 
     // Card thumb hover
     '.pasado-card-thumb{transition:transform 0.2s,box-shadow 0.2s;}',

@@ -35,7 +35,7 @@ function injectMode7Styles() {
     font-size: 0.95rem;
     font-weight: 600;
     color: var(--text);
-    transition: all 0.15s ease;
+    transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
     user-select: none;
     line-height: 1.4;
 }

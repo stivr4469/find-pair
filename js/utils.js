@@ -66,7 +66,7 @@ function setTopbarScore(val) {
 }
 function setTopbarProgress(pct) {
     var el = document.getElementById('se-progress-fill');
-    if (el) el.style.width = Math.min(100, Math.max(0, pct)) + '%';
+    if (el) el.style.transform = 'scaleX(' + Math.min(1, Math.max(0, pct / 100)) + ')';
 }
 function resetTopbar() {
     setTopbarStreak(0);

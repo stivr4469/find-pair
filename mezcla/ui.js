@@ -246,7 +246,7 @@ const MezclaUI = {
                   'border: 2px solid ' + (isActive ? 'var(--accent)' : 'var(--border)') + ';',
                   'background: ' + (isActive ? 'var(--accent)' : 'var(--surface)') + ';',
                   'color: ' + (isActive ? 'white' : 'var(--muted)') + ';',
-                  'transition: all 0.15s;',
+                  'transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);',
                 '">' + v + '%</button>',
               ].join('');
             }).join(''),
