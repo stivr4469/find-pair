@@ -597,7 +597,7 @@ const FormulasUI = {
       }
 
       // Animate feedback appearance
-      if (typeof replayAnimation === 'function') replayAnimation(feedbackEl, 'view-enter');
+      if (typeof replayAnimation === 'function') replayAnimation(feedbackEl, 'anim-rise');
 
       // Wire up TTS button
       if (typeof lucide !== 'undefined') lucide.createIcons();

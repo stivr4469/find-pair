@@ -94,11 +94,11 @@
 
 | Файл | Текущая версия в HTML |
 |---|---|
-| `css/unified-styles.css` | v=29 |
+| `css/unified-styles.css` | v=30 |
 | `js/utils.js` | v=25 |
 | `js/main.js` | v=2 |
 | `formulas/app.js` | v=20 |
-| `formulas/ui.js` | v=31 |
+| `formulas/ui.js` | v=32 |
 | `pasado/app.js` | v=9 |
 | `pasado/ui.js` | v=23 |
 | `tren/app.js` | v=17 |
