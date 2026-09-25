@@ -94,13 +94,13 @@
 
 | Файл | Текущая версия в HTML |
 |---|---|
-| `css/unified-styles.css` | v=30 |
+| `css/unified-styles.css` | v=31 |
 | `js/utils.js` | v=25 |
 | `js/main.js` | v=2 |
 | `formulas/app.js` | v=20 |
 | `formulas/ui.js` | v=32 |
 | `pasado/app.js` | v=9 |
-| `pasado/ui.js` | v=23 |
+| `pasado/ui.js` | v=24 |
 | `tren/app.js` | v=17 |
 | `tren/mode7-ui.js` | v=19 |
 | `ser-estar/ser-estar-app.js` | v=8 |

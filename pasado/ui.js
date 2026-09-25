@@ -32,7 +32,7 @@
     '  70%{box-shadow:0 0 0 10px rgba(39,174,96,0)}',
     '  100%{box-shadow:0 0 0 0 rgba(39,174,96,0)}',
     '}',
-    '.pasado-anim-in{animation:vm-enter var(--dur-slow) var(--ease-out) backwards}',
+    '.pasado-anim-in{animation:vm-enter var(--dur-view) var(--ease-view) backwards}',
     '.pasado-shake{animation:pasadoShake 0.35s ease}',
     '.pasado-bounce{animation:pasadoBounce 0.4s ease}',
     '.pasado-pulse{animation:pasadoPulse 0.5s ease}',

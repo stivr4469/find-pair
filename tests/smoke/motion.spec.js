@@ -260,6 +260,7 @@ test.describe('motion — кнопка «Дальше» (position:fixed) вид�
         await page.setViewportSize({ width: 1280, height: 720 });
         await page.goto('/formulas/');
         await page.evaluate(() => formulaStartQuiz(0));
+        await page.waitForTimeout(1200); // экран должен доехать (--dur-view), как у живого пользователя
         await page.evaluate(() => { var s = FormulasApp.state; formulaHandleAnswer(s.quizQuestions[s.currentQuestionIndex].correct); });
         expect(await nextBtnInViewport(page)).toBe('ok');
     });
@@ -268,6 +269,7 @@ test.describe('motion — кнопка «Дальше» (position:fixed) вид�
         await page.setViewportSize({ width: 1280, height: 720 });
         await page.goto('/pasado/');
         await page.evaluate(() => pasadoStartQuiz(0));
+        await page.waitForTimeout(1200);
         await page.evaluate(() => { var s = PasadoApp.state; pasadoHandleAnswer(s.quizQuestions[s.currentQuestionIndex].correct); });
         expect(await nextBtnInViewport(page)).toBe('ok');
     });
@@ -276,6 +278,7 @@ test.describe('motion — кнопка «Дальше» (position:fixed) вид�
         await page.setViewportSize({ width: 390, height: 700 });
         await page.goto('/tren/');
         await page.evaluate(() => App.switchMode('mode1'));
+        await page.waitForTimeout(1200);
         await page.locator('.game-area:not(.hidden) .stagger > button').first().click();
         expect(await nextBtnInViewport(page)).toBe('ok');
     });

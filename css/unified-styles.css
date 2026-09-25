@@ -33,8 +33,11 @@
     --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
     --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
     --spring:       cubic-bezier(0.34, 1.56, 0.64, 1);
-    --stagger-step: 70ms;
-    --dur-view:     450ms;
+    --stagger-step: 110ms;
+    --dur-view:     750ms;   /* смена экрана */
+    --dur-rise:     600ms;   /* каскад вариантов/карточек */
+    --dur-react:    600ms;   /* реакция на ответ (pop / shake) */
+    --ease-view:    cubic-bezier(0.33, 1, 0.68, 1);  /* мягче, чем --ease-out: движение растянуто по времени */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1332,15 +1335,15 @@ select:focus {
 /* backwards, НЕ both: после окончания анимация должна перестать действовать.
    Иначе предок с «застывшим» transform становится контейнером для position:fixed
    и кнопка .quiz-next-fixed уезжает под карточку за пределы экрана. */
-.view-enter   { animation: vm-enter var(--dur-view) var(--ease-out) backwards; }
-.anim-rise    { animation: vm-rise var(--dur-slow) var(--ease-out) backwards; }
-.anim-correct { animation: vm-pop var(--dur-slow) var(--spring); }
-.anim-wrong   { animation: vm-shake 0.5s var(--ease-out); }
+.view-enter   { animation: vm-enter var(--dur-view) var(--ease-view) backwards; }
+.anim-rise    { animation: vm-rise var(--dur-rise) var(--ease-view) backwards; }
+.anim-correct { animation: vm-pop var(--dur-react) var(--spring); }
+.anim-wrong   { animation: vm-shake var(--dur-react) var(--ease-out); }
 
 /* Каскадное появление дочерних элементов (карточки списка, варианты ответа) */
 /* :where() обнуляет специфичность: любой класс анимации (ответ, исчезновение)
    на ребёнке перекрывает каскадный вход и его задержку, независимо от порядка в CSS. */
-:where(.stagger) > * { animation: vm-rise var(--dur-slow) var(--ease-out) backwards; }
+:where(.stagger) > * { animation: vm-rise var(--dur-rise) var(--ease-view) backwards; }
 :where(.stagger > :nth-child(2))  { animation-delay: calc(var(--stagger-step) * 1); }
 :where(.stagger > :nth-child(3))  { animation-delay: calc(var(--stagger-step) * 2); }
 :where(.stagger > :nth-child(4))  { animation-delay: calc(var(--stagger-step) * 3); }
