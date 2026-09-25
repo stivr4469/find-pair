@@ -60,8 +60,12 @@ var SubjuntivoUI = (function () {
   }
 
   /* ── Вопрос квиза ── */
+  function _isFill(q) {
+    return q.type === 'fill' || (q.question && q.question.indexOf('___') !== -1);
+  }
+
   function renderQuiz(q, num, total) {
-    var body = (q.type === 'fill') ? _renderFill(q, num, total) : _renderMCQ(q, num, total);
+    var body = _isFill(q) ? _renderFill(q, num, total) : _renderMCQ(q, num, total);
     return '<div class="view-enter">' +
       body +
       '<div id="sj-hint" class="sj-hint" hidden></div>' +
@@ -80,16 +84,19 @@ var SubjuntivoUI = (function () {
   }
 
   function _renderFill(q, num, total) {
-    var parts = q.sentence.split('___');
+    var sentence = q.sentence || q.question || '';
+    var sentRu   = q.sentenceRu || q.questionRu;
+    var tilesList = q.tiles || q.options || [];
+    var parts = sentence.split('___');
     var sentHtml = _esc(parts[0]) +
       '<span id="sj-blank" class="sj-blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>' +
       _esc(parts[1] || '');
-    var tiles = q.tiles.map(function (tile, i) {
+    var tiles = tilesList.map(function (tile, i) {
       return '<button class="sj-tile" onclick="subjuntivoSelectTile(' + i + ')">' + _esc(tile) + '</button>';
     }).join('');
     return '<p class="sj-qnum">' + num + ' / ' + total + '</p>' +
       '<div class="sj-fill-box">' + sentHtml + '</div>' +
-      (q.sentenceRu ? '<p class="sj-sent-ru">' + _esc(q.sentenceRu) + '</p>' : '') +
+      (sentRu ? '<p class="sj-sent-ru">' + _esc(sentRu) + '</p>' : '') +
       (q.verb ? '<p class="sj-verb-label">' + _esc(q.verb) + '</p>' : '') +
       '<div class="sj-tiles stagger">' + tiles + '</div>';
   }
@@ -113,5 +120,5 @@ var SubjuntivoUI = (function () {
       '</div>';
   }
 
-  return { renderList: renderList, renderCard: renderCard, renderQuiz: renderQuiz, renderResults: renderResults };
+  return { renderList: renderList, renderCard: renderCard, renderQuiz: renderQuiz, renderResults: renderResults, isFill: _isFill };
 })();

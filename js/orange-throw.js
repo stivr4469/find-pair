@@ -62,12 +62,13 @@
     function repositionBasket(el) {
         var buddy = document.getElementById('buddy');
         if (!buddy) return;
-        var rect = buddy.getBoundingClientRect();
+        var charEl = buddy.querySelector && buddy.querySelector('.nj-char');
+        var ref = charEl ? charEl.getBoundingClientRect() : buddy.getBoundingClientRect();
         var scrollY = window.pageYOffset || document.documentElement.scrollTop;
         var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
-        /* position:absolute → координаты документа (скроллятся вместе со страницей) */
-        el.style.top  = Math.max(60, rect.top + scrollY + 8) + 'px';
-        el.style.left = (rect.right + scrollX - BASKET_W) + 'px';
+        /* position:absolute → координаты документа; корзина правее nj-char */
+        el.style.top  = Math.max(60, ref.top + scrollY + 8) + 'px';
+        el.style.left = (ref.right + scrollX + 20) + 'px';
         el.style.right = 'auto';
     }
 

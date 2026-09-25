@@ -81,7 +81,7 @@
     var q = state.quizQuestions[state.currentQuestionIndex];
     var isCorrect = (optionIndex === q.correct);
 
-    if (q.type === 'fill') {
+    if (SubjuntivoUI.isFill(q)) {
       _revealFill(optionIndex, q, isCorrect);
     } else {
       _revealMCQ(optionIndex, q, isCorrect);
@@ -139,7 +139,8 @@
     });
     var blankEl = document.getElementById('sj-blank');
     if (blankEl) {
-      blankEl.textContent = q.tiles[q.correct];
+      var answerList = q.tiles || q.options;
+      blankEl.textContent = answerList[q.correct];
       blankEl.style.borderBottomColor = isCorrect ? '#22c55e' : '#ef4444';
       blankEl.style.color             = isCorrect ? '#22c55e' : '#ef4444';
     }
