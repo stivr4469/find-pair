@@ -53,7 +53,8 @@ spanish-trainer-app/
 ├── ser-estar/              ← Модуль 3: Ser vs Estar
 ├── formulas/               ← Модуль 4: 36 Формул испанского
 ├── mezcla/                 ← Модуль 5: Mezcla (смешанное чтение)
-└── pasado/                 ← Модуль 6: Прошедшее время (4 времени)
+├── subjuntivo/             ← Модуль 6: Presente de Subjuntivo (12 тем)
+└── pasado/                 ← Модуль 7: Прошедшее время (4 времени)
 ```
 
 ---
@@ -72,7 +73,7 @@ module/
 
 ---
 
-## Версии файлов (актуально на 2026-09-25 после TASK-motion-ui)
+## Версии файлов (актуально на 2026-09-26 после TASK-subjuntivo)
 
 | Файл | Версия в HTML |
 |------|--------------|
@@ -111,6 +112,9 @@ module/
 | `ser-estar/classify-mode.js` | v=6 |
 | `find-pair/script.js` | v=6 ← stagger columns, anim-correct/wrong, animated match disappear, checkGameEnd→.matched |
 | `find-pair/styles.css` | v=4 ← .word-out (vm-fade-out-scale) |
+| `subjuntivo/data.js` | v=1 |
+| `subjuntivo/ui.js` | v=1 |
+| `subjuntivo/app.js` | v=1 |
 
 ---
 
@@ -647,7 +651,58 @@ mezcla/
 
 ---
 
-## Модуль 6 — pasado/ (app.js v=9, ui.js v=18)
+## Модуль 6 — subjuntivo/ (app.js v=1, ui.js v=1)
+
+Presente de Subjuntivo — 12 тем, 5 вопросов каждая (MCQ + fill-blank). Цвет модуля: `#9333EA`.
+
+```
+subjuntivo/
+├── index.html    ← data.js?v=1, ui.js?v=1, app.js?v=1, utils.js?v=25, naranjito.js?v=3, orange-throw.js?v=7
+├── data.js       ← SUBJUNTIVO_DATA[12] — 12 тем × 5 вопросов (type:'fill' и MCQ)
+├── ui.js         ← SubjuntivoUI + SUBJUNTIVO_ICONS[12] (12 цветов для тегов тем)
+└── app.js        ← SubjuntivoApp, _syncBackBtn(); quizMode: 'single'|'all'
+```
+
+**Views:** `'list'` → `'card'` → `'quiz'` → `'results'`
+
+**Режимы квиза:**
+- `single` — все 5 вопросов темы (перемешаны)
+- `all` — по 3 вопроса из каждой темы = 36 вопросов
+
+**Темы (12):**
+1. Глаголы -AR (llegue, hable...)
+2. Глаголы -ER/-IR (coma, viva...)
+3. Irregular yo-stem (tenga, diga, haga...)
+4. ser/ir/saber/haber (sea, vaya, sepa...)
+5. Es + adj + que (Es importante que...)
+6. querer/pedir + que (Quiero que...)
+7. ¡Que + Subj! (¡Que tengas suerte!)
+8. Эмоции (Me alegra que..., Tengo miedo de que...)
+9. No creo que / No pienso que...
+10. Cuando + будущее (Cuando llegues...)
+11. para que / aunque / ojalá
+12. Imperativo negativo (¡No hables!, ¡No comas!)
+
+**State:**
+```js
+SubjuntivoApp.state = {
+    currentView: 'list',
+    currentTopicIndex: 0,
+    quizMode: 'single',    // 'single' | 'all'
+    quizQuestions: [],
+    currentQuestionIndex: 0,
+    score: 0,
+    totalAnswered: 0,
+    isAnswered: false,
+    streak: 0,
+}
+```
+
+**Window aliases:** `subjuntivoShowCard(i)`, `subjuntivoStartQuiz(i)`, `subjuntivoHandleAnswer(i)`, `subjuntivoSelectTile(i)`, `subjuntivoNext()`, `subjuntivoBackToList()`, `subjuntivoBackToCard()`, `subjuntivoShowPrev()`, `subjuntivoShowNext()`, `subjuntivoStartAll()`
+
+---
+
+## Модуль 7 — pasado/ (app.js v=9, ui.js v=18)
 
 4 прошедших времени, 16 формул × 6 вопросов = 96 вопросов.
 
@@ -747,7 +802,8 @@ PasadoApp.state = {
 | 3 | ser-estar/ | Ser vs Estar |
 | 4 | formulas/ | 36 Формул |
 | 5 | mezcla/ | Mezcla |
-| 6 | pasado/ | Прошедшее время |
+| 6 | subjuntivo/ | Presente de Subjuntivo |
+| 7 | pasado/ | Прошедшее время |
 
 ---
 
@@ -775,4 +831,4 @@ PasadoApp.state = {
 
 ---
 
-*Последнее обновление: 2026-09-25 (code-review: Stages 1–4)*
+*Последнее обновление: 2026-09-26 (feat: Модуль 6 — Presente de Subjuntivo)*

@@ -5,6 +5,24 @@
 
 ---
 
+## Сессия: 2026-09-26 (продолжение 7) — Модуль «Presente de Subjuntivo»
+
+**Задача:** `TASK-subjuntivo.md` — создать полноценный интерактивный модуль.
+
+**Создано (`subjuntivo/`, 4 файла):**
+- `data.js` (v=1) — `SUBJUNTIVO_DATA[12]`: 12 тем × 5 вопросов (MCQ + fill-blank). Темы: -AR, -ER/-IR, irregular yo-stem, ser/ir/saber/haber, Es+adj+que, querer/pedir+que, ¡Que+Subj!, Эмоции, No creo que, Cuando+futuro, para que/aunque/ojalá, Imperativo negativo.
+- `ui.js` (v=1) — `SubjuntivoUI`: рендер списка тем (grid 2×6), карточки тем (правило + примеры), квиза (MCQ + fill-blank), результатов. `_esc()` для защиты HTML.
+- `app.js` (v=1) — `SubjuntivoApp`: state-машина views `list→card→quiz→results`, режимы `single` (5 вопросов темы) и `all` (36 вопросов — по 3 из каждой темы). Naranjito + VamoS.save('subjuntivo').
+- `index.html` (v=1) — стандартный шелл: Anti-FOUC, двухуровневая навигация, топбар, `--sj: #9333EA`.
+
+**Обновлено:**
+- `css/main.css`: добавлен цвет `.game-card[data-game="subjuntivo"] { --c: #9333EA; }`.
+- `index.html` (root): добавлена карточка Subjuntivo (`--i:8`), Pasado сдвинут на `--i:9`.
+
+**Smoke: 105 passed ✅**
+
+---
+
 ## Сессия: 2026-09-26 (продолжение) — Визуальные правки главного экрана
 
 **Коммиты:** `af73e1b`, `ec551a6`

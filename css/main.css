@@ -68,7 +68,8 @@
 .game-card[data-game="ser-estar"] { --c: #2563EB; }
 .game-card[data-game="formulas"]  { --c: #7C3AED; }
 .game-card[data-game="mezcla"]    { --c: #DB2777; }
-.game-card[data-game="pasado"]    { --c: #0891B2; }
+.game-card[data-game="pasado"]     { --c: #0891B2; }
+.game-card[data-game="subjuntivo"] { --c: #9333EA; }
 
 /* Плавный переход между страницами (та же строка нужна в CSS игр) */
 @view-transition { navigation: auto; }
