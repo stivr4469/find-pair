@@ -40,7 +40,7 @@ spanish-trainer-app/
 ├── ARCHITECTURE.md         ← Этот файл
 ├── SUMMARY.MD              ← Журнал изменений
 ├── css/
-│   ├── unified-styles.css  ← Единые стили всех модулей (v=31)
+│   ├── unified-styles.css  ← Единые стили всех модулей (v=32)
 │   └── main.css            ← Стили только для root index.html
 ├── js/
 │   ├── utils.js            ← Общие утилиты: shuffleArray, speakSpanish, toggleTheme,
@@ -76,7 +76,7 @@ module/
 
 | Файл | Версия в HTML |
 |------|--------------|
-| `css/unified-styles.css` | v=31 ← медленнее: --dur-view 750, --dur-rise 600, --dur-react 600, --stagger-step 110, --ease-view;  заметные анимации: vm-enter въезд справа 56px/450мс, vm-rise для .stagger (шаг 70мс), сильнее pop/shake;  view-enter/stagger с fill-mode `backwards` (фикс кнопки «Дальше»);  `:where(.stagger)` — нулевая специфичность каскада (фикс перекрытия анимаций ответа);  токены motion, keyframes vm-*, .view-enter/.stagger/.anim-*, .se-progress-fill→scaleX |
+| `css/unified-styles.css` | v=32 ← ещё ×1.5: --dur-view 1125, --dur-rise 900, --dur-react 900, --stagger-step 165, --ease-view;  заметные анимации: vm-enter въезд справа 56px/450мс, vm-rise для .stagger (шаг 70мс), сильнее pop/shake;  view-enter/stagger с fill-mode `backwards` (фикс кнопки «Дальше»);  `:where(.stagger)` — нулевая специфичность каскада (фикс перекрытия анимаций ответа);  токены motion, keyframes vm-*, .view-enter/.stagger/.anim-*, .se-progress-fill→scaleX |
 | `js/utils.js` | v=25 ← `replayAnimation()`, `animateCount()`, `prefersReducedMotion()`, `setTopbarProgress→scaleX` |
 | `js/main.js` | v=2 |
 | `js/naranjito.js` | v=3 |
@@ -209,7 +209,7 @@ setTopbarProgress(pct)          // устанавливает scaleX на #se-pr
 
 ---
 
-## CSS — unified-styles.css (v=31) — дизайн-система «Валенсия»
+## CSS — unified-styles.css (v=32) — дизайн-система «Валенсия»
 
 ### Токены (CSS-переменные)
 
@@ -511,7 +511,7 @@ window.currentItem = item;  // прочитается уже другой item
 
 ```
 find-pair/
-├── index.html   ← utils.js?v=25, unified-styles.css?v=31, styles.css?v=4, script.js?v=5
+├── index.html   ← utils.js?v=25, unified-styles.css?v=32, styles.css?v=4, script.js?v=5
 ├── script.js    ← основная логика (find-pair.js удалён)
 └── styles.css   ← модульные стили (find-pair.css удалён)
 ```

@@ -245,7 +245,7 @@ test.describe('motion — кнопка «Дальше» (position:fixed) вид�
     // Регрессия: fill-mode:both у .view-enter оставлял transform на предке →
     // position:fixed считался от карточки, кнопка уезжала за нижний край экрана.
     async function nextBtnInViewport(page) {
-        await page.waitForTimeout(700); // дождаться конца анимаций появления
+        await page.waitForTimeout(1000); // дождаться конца анимаций появления
         return page.evaluate(() => {
             // offsetParent у position:fixed всегда null — видимость проверяем по размеру и display
             var b = [...document.querySelectorAll('.quiz-next-fixed')]
@@ -260,7 +260,7 @@ test.describe('motion — кнопка «Дальше» (position:fixed) вид�
         await page.setViewportSize({ width: 1280, height: 720 });
         await page.goto('/formulas/');
         await page.evaluate(() => formulaStartQuiz(0));
-        await page.waitForTimeout(1200); // экран должен доехать (--dur-view), как у живого пользователя
+        await page.waitForTimeout(1600); // экран должен доехать (--dur-view), как у живого пользователя
         await page.evaluate(() => { var s = FormulasApp.state; formulaHandleAnswer(s.quizQuestions[s.currentQuestionIndex].correct); });
         expect(await nextBtnInViewport(page)).toBe('ok');
     });
@@ -269,7 +269,7 @@ test.describe('motion — кнопка «Дальше» (position:fixed) вид�
         await page.setViewportSize({ width: 1280, height: 720 });
         await page.goto('/pasado/');
         await page.evaluate(() => pasadoStartQuiz(0));
-        await page.waitForTimeout(1200);
+        await page.waitForTimeout(1600);
         await page.evaluate(() => { var s = PasadoApp.state; pasadoHandleAnswer(s.quizQuestions[s.currentQuestionIndex].correct); });
         expect(await nextBtnInViewport(page)).toBe('ok');
     });
@@ -278,7 +278,7 @@ test.describe('motion — кнопка «Дальше» (position:fixed) вид�
         await page.setViewportSize({ width: 390, height: 700 });
         await page.goto('/tren/');
         await page.evaluate(() => App.switchMode('mode1'));
-        await page.waitForTimeout(1200);
+        await page.waitForTimeout(1600);
         await page.locator('.game-area:not(.hidden) .stagger > button').first().click();
         expect(await nextBtnInViewport(page)).toBe('ok');
     });

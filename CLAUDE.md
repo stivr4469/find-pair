@@ -94,7 +94,7 @@
 
 | Файл | Текущая версия в HTML |
 |---|---|
-| `css/unified-styles.css` | v=31 |
+| `css/unified-styles.css` | v=32 |
 | `js/utils.js` | v=25 |
 | `js/main.js` | v=2 |
 | `formulas/app.js` | v=20 |

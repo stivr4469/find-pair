@@ -33,10 +33,10 @@
     --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
     --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
     --spring:       cubic-bezier(0.34, 1.56, 0.64, 1);
-    --stagger-step: 110ms;
-    --dur-view:     750ms;   /* смена экрана */
-    --dur-rise:     600ms;   /* каскад вариантов/карточек */
-    --dur-react:    600ms;   /* реакция на ответ (pop / shake) */
+    --stagger-step: 165ms;
+    --dur-view:     1125ms;   /* смена экрана */
+    --dur-rise:     900ms;   /* каскад вариантов/карточек */
+    --dur-react:    900ms;   /* реакция на ответ (pop / shake) */
     --ease-view:    cubic-bezier(0.33, 1, 0.68, 1);  /* мягче, чем --ease-out: движение растянуто по времени */
 }
 
