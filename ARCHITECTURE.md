@@ -72,31 +72,35 @@ module/
 
 ---
 
-## Версии файлов (актуально на 2026-09-25)
+## Версии файлов (актуально на 2026-09-25 после code-review)
 
 | Файл | Версия в HTML |
 |------|--------------|
 | `css/unified-styles.css` | v=25 |
-| `js/utils.js` | v=21 |
+| `js/utils.js` | v=22 ← добавлена `isEquivalentAnswer()` |
+| `js/main.js` | v=2 ← stripped (убраны initTelegram, setupNavigation, console.log) |
 | `js/naranjito.js` | v=3 |
 | `js/orange-throw.js` | v=6 |
-| `formulas/app.js` | v=19 |
-| `formulas/ui.js` | v=25 ← fill-blank tiles (renderQuiz + showAnswerFeedback) |
-| `formulas/data.js` | v=15 ← Q1-Q6 fill-blank для 9 формул (54 вопроса) |
-| `pasado/app.js` | v=8 ← Контраст mode (startContrast/nextContrast/prevContrast) |
-| `pasado/ui.js` | v=17 ← fill-blank tiles + Контраст deck (2-col cards) |
+| `formulas/app.js` | v=20 ← isEquivalentAnswer вместо normalizeSpanish |
+| `formulas/ui.js` | v=26 ← карточки→button, TTS data-tts, нет lucide в dynamic HTML |
+| `formulas/data.js` | v=16 ← Q1-Q6 fill-blank для 9 формул (54 вопроса) |
+| `pasado/app.js` | v=9 ← isEquivalentAnswer в handleAnswer + handleAnswerCyclic |
+| `pasado/ui.js` | v=18 ← карточки→button, classify zones→button, нет lucide, emoji реакции |
 | `pasado/data.js` | v=7 ← все Q1-Q6 before/after + PASADO_CONTRAST (15 пар) |
-| `tren/app.js` | v=14 |
+| `tren/app.js` | v=16 ← удалены App.debug() и все console.log |
 | `tren/mode6-ui.js` | v=16 ← blank-fill layout (sentence + tiles below) |
 | `tren/mode6.js` | v=13 ← blank fill green/red on answer |
-| `mezcla/app.js` | v=8 |
+| `tren/mode7-ui.js` | v=16 ← classify columns → button, упрощён ternary |
+| `mezcla/app.js` | v=9 ← AbortController для отмены перевода при быстрых кликах |
 | `mezcla/ui.js` | v=10 |
-| `ser-estar/ser-estar-app.js` | v=4 |
+| `ser-estar/ser-estar-app.js` | v=5 ← убран console.log |
 | `ser-estar/ser-estar-mode2.js` | v=6 |
 | `ser-estar/ser-estar-context-ui.js` | v=7 ← fill-blank tile UI (sentence + tiles below) |
+| `ser-estar/ser-estar-context-mode.js` | v=3 ← убран console.log |
+| `ser-estar/ser-estar-rules-data.js` | v=2 ← исправлен комментарий |
 | `ser-estar/classify-ui.js` | v=9 |
-| `ser-estar/classify-mode.js` | v=4 |
-| `find-pair/script.js` | v=3 |
+| `ser-estar/classify-mode.js` | v=5 |
+| `find-pair/script.js` | v=5 ← убраны console.log |
 
 ---
 
@@ -215,7 +219,7 @@ contrasts: [
 
 ---
 
-## Shared utilities — js/utils.js (v=21)
+## Shared utilities — js/utils.js (v=22)
 
 | Функция / константа | Описание |
 |---------------------|----------|
@@ -227,6 +231,7 @@ contrasts: [
 | `setTopbarProgress(pct)` | Обновляет `#se-progress-fill` (ширина в %) |
 | `resetTopbar()` | Сбрасывает все значения топбара в 0 |
 | `normalizeSpanish(str)` | Убирает `¿¡?!.`, trailing subject pronouns, пробелы → lowercase. Нужен для сравнения ответов без учёта пунктуации |
+| `isEquivalentAnswer(a, b)` | Нормализует обе строки (убирает точку, trailing pronoun, пробелы → lowercase) и сравнивает. Используется в formulas/app.js и pasado/app.js как запасной сценарий: если индексы не совпали, сравниваем строки. Не убирает `¿¡` (в отличие от `normalizeSpanish`) |
 | `window.ICON_VOL` | Inline SVG строка: иконка "volume-2" (17×17px). Использовать внутри `<button>` |
 | `window.ICON_MIC` | Inline SVG строка: иконка "microphone" (17×17px) |
 
@@ -304,20 +309,20 @@ Lucide иконки требуют `lucide.createIcons()` после встав�
 
 ---
 
-## Нормализация ответов (normalizeSpanish)
+## Нормализация ответов (isEquivalentAnswer)
 
 Применяется в `formulas/app.js` и `pasado/app.js` как запасной сценарий: если выбранный индекс не совпадает с правильным, сравниваем нормализованные строки.
 
 ```js
 var isCorrect = selectedIndex === question.correct;
-if (!isCorrect && typeof normalizeSpanish === 'function') {
-    var selNorm = normalizeSpanish(question.options[selectedIndex]);
-    var crtNorm = normalizeSpanish(question.options[question.correct]);
-    if (selNorm && selNorm === crtNorm) isCorrect = true;
+if (!isCorrect && typeof isEquivalentAnswer === 'function') {
+    if (isEquivalentAnswer(question.options[selectedIndex], question.options[question.correct])) {
+        isCorrect = true;
+    }
 }
 ```
 
-Нормализует: убирает `¿¡?!.`, trailing subject pronoun (tú/yo/él/...), лишние пробелы, приводит к lowercase.
+`isEquivalentAnswer(a, b)` нормализует: убирает trailing `.`, trailing subject pronoun (tú/yo/él/...), лишние пробелы, приводит к lowercase. **Не убирает `¿¡`** (в отличие от `normalizeSpanish`) — это намеренно, чтобы не ломать вопросительные конструкции.
 
 ---
 
@@ -447,28 +452,26 @@ window.currentItem = item;  // прочитается уже другой item
 
 ```
 find-pair/
-├── index.html      ← utils.js?v=21, unified-styles.css?v=20, styles.css?v=3, script.js?v=3
-├── script.js       ← основная логика
-├── find-pair.js    ← вспомогательные функции
-├── styles.css      ← модульные стили
-└── find-pair.css
+├── index.html   ← utils.js?v=22, unified-styles.css?v=25, styles.css?v=3, script.js?v=5
+├── script.js    ← основная логика (find-pair.js удалён)
+└── styles.css   ← модульные стили (find-pair.css удалён)
 ```
 
 ---
 
-## Модуль 2 — tren/ (app.js v=14)
+## Модуль 2 — tren/ (app.js v=16)
 
 8 режимов (mode0–mode7) — спряжение и употребление ir/venir/llegar.
 
 ```
 tren/
-├── index.html          ← app.js?v=14, utils.js?v=21, naranjito.js?v=1
-├── app.js              ← App.switchMode(), App.showMainMenu(), _syncBackBtn()
+├── index.html          ← app.js?v=16, utils.js?v=22, naranjito.js?v=3
+├── app.js              ← App.switchMode(), App.showMainMenu() (debug убран)
 ├── mode0-game.js       ← Базовое спряжение A1 (v=11)
 ├── mode0-options.js    ← Выбор глагола (v=10)
 ├── mode0-results.js    ← Результаты mode0 (v=12)
 ├── mode0-ui.js         ← Рендеринг mode0 (v=15)
-├── mode1–7.js          ← Контроллеры режимов (v=12–13)
+├── mode1–7.js          ← Контроллеры режимов (v=12–16)
 ├── mode1–7-ui.js       ← Рендеринг режимов (v=14–16)
 └── mode1–7-data.js     ← Данные режимов (v=10)
 ```
@@ -477,27 +480,28 @@ tren/
 
 ---
 
-## Модуль 3 — ser-estar/ (ser-estar-app.js v=3)
+## Модуль 3 — ser-estar/ (ser-estar-app.js v=5)
 
 5 под-режимов: base, advanced, context, rules, classify.
 
 ```
 ser-estar/
-├── index.html                  ← ser-estar-app.js?v=3, utils.js?v=21, naranjito.js?v=1
+├── index.html                  ← ser-estar-app.js?v=5, utils.js?v=22, naranjito.js?v=3
 ├── ser-estar-app.js            ← SerEstarApp.switchMode(), .showMainMenu()
-├── ser-estar-data.js           ← Данные спряжений
+├── ser-estar-data.js           ← Данные спряжений (удалены дубли text:, исправлена пунктуация)
 ├── ser-estar-base-ui.js?v=3    ← Рендеринг базового режима
 ├── ser-estar-base-mode.js?v=2  ← Логика базового режима
 ├── ser-estar-mode2.js?v=6      ← Продвинутое спряжение A2
-├── ser-estar-context-ui.js?v=6 ← Рендеринг контекстного режима
-├── ser-estar-context-mode.js?v=2
-├── ser-estar-rules-data.js?v=1 ← Данные для DOCTOR/PLACE правил
+├── ser-estar-context-ui.js?v=7 ← Рендеринг контекстного режима (fill-blank tiles)
+├── ser-estar-context-mode.js?v=3
+├── ser-estar-rules-data.js?v=2 ← Данные для DOCTOR/PLACE правил
 ├── ser-estar-rules-ui.js?v=4
 ├── ser-estar-rules-mode.js
 ├── classify-data.js            ← Данные classify режима
-├── classify-ui.js?v=8          ← Рендеринг classify
-└── classify-mode.js?v=3        ← Логика classify
+├── classify-ui.js?v=9          ← Рендеринг classify
+└── classify-mode.js?v=5        ← Логика classify
 ```
+Удалены: `ser-estar-mode3.js`, `ser-estar-mode4.js`, `ser-estar-mode2-data.js`, `ser-estar-mode2-logic.js`, `ser-estar-mode2-utils.js` — не подключались ни в одном `index.html`.
 
 **Context mode:** вопрос показывается как карточка с CSS классами `.ctx-question-card`, `.ctx-question-text`, `.ctx-blank` (акцент + underline), `.ctx-translation`. Стили — inline `<style>` в `ser-estar/index.html`.
 
@@ -505,16 +509,16 @@ ser-estar/
 
 ---
 
-## Модуль 4 — formulas/ (app.js v=18, ui.js v=24)
+## Модуль 4 — formulas/ (app.js v=20, ui.js v=26)
 
 36 грамматических формул, 6 вопросов MCQ к каждой.
 
 ```
 formulas/
-├── index.html    ← app.js?v=18, data.js?v=13, ui.js?v=24, utils.js?v=21
+├── index.html    ← app.js?v=20, data.js?v=16, ui.js?v=26, utils.js?v=22
 ├── data.js       ← FORMULAS_DATA[36] — массив формул с id, name, rule, example, options
-├── ui.js         ← FormulasUI + FORMULA_ICONS[36] (color/bg для значков)
-└── app.js        ← FormulasApp, _syncBackBtn()
+├── ui.js         ← FormulasUI + FORMULA_ICONS[36] (color/bg); карточки = button; TTS через data-tts
+└── app.js        ← FormulasApp, _syncBackBtn(); isEquivalentAnswer для запасного сравнения
 ```
 
 **Views:** `'list'` → `'card'` → `'quiz'` → `'results'`
@@ -542,7 +546,7 @@ FormulasApp.state = {
 }
 ```
 
-**Window aliases:** `formulaShowCard(i)`, `formulaStartQuiz(i)`, `formulaStartAllQuiz()`, `formulaStartMarathon()`, `formulaHandleAnswer(i)`, `formulaNext()`, `formulaBackToList()`, `formulaBackToCard()`, `formulaShowPrev()`, `formulaShowNext()`, `formulaSpeakExample(text)`
+**Window aliases:** `formulaShowCard(i)`, `formulaStartQuiz(i)`, `formulaStartAllQuiz()`, `formulaStartMarathon()`, `formulaHandleAnswer(i)`, `formulaNext()`, `formulaBackToList()`, `formulaBackToCard()`, `formulaShowPrev()`, `formulaShowNext()`
 
 ---
 
@@ -575,16 +579,16 @@ mezcla/
 
 ---
 
-## Модуль 6 — pasado/ (app.js v=7, ui.js v=13)
+## Модуль 6 — pasado/ (app.js v=9, ui.js v=18)
 
 4 прошедших времени, 16 формул × 6 вопросов = 96 вопросов.
 
 ```
 pasado/
-├── index.html    ← app.js?v=7, data.js?v=3, ui.js?v=13, utils.js?v=21
-├── data.js       ← PASADO_DATA[16], PASADO_INLINE, PASADO_CLASSIFY
-├── ui.js         ← PasadoUI + PASADO_ICONS[16] (color/bg), CSS инжектируется в <head>
-└── app.js        ← PasadoApp, _syncBackBtn()
+├── index.html    ← app.js?v=9, data.js?v=7, ui.js?v=18, utils.js?v=22
+├── data.js       ← PASADO_DATA[16], PASADO_INLINE, PASADO_CLASSIFY, PASADO_CONTRAST
+├── ui.js         ← PasadoUI + PASADO_ICONS[16]; карточки и classify zones = button; emoji реакции
+└── app.js        ← PasadoApp, _syncBackBtn(); isEquivalentAnswer для запасного сравнения
 ```
 
 **Views:** `'list'` → `'card'` → `'quiz'` | `'inline'` | `'classify'` → `'results'`
@@ -700,8 +704,7 @@ PasadoApp.state = {
 - [ ] Удалить Vercel-проект `find-pair-seven` (дубль, лимит 100 деплоев/день)
 - [ ] TTS — `speakSpanish()` отключён в utils.js — нужно решение (Web Speech API или ElevenLabs)
 - [ ] Карточки повторения ошибок (localStorage)
-- [ ] Оставшиеся `<i data-lucide>` в pasado/ui.js и formulas/ui.js — badge в quiz и результатах (не TTS, но также missed bulk-removal)
 
 ---
 
-*Последнее обновление: 2026-09-24 (продолжение 3)*
+*Последнее обновление: 2026-09-25 (code-review: Stages 1–4)*

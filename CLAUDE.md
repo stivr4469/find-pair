@@ -90,16 +90,23 @@
 
 ### Версии файлов (актуальные)
 
+> Актуальная таблица — в ARCHITECTURE.md. Здесь только ключевые файлы.
+
 | Файл | Текущая версия в HTML |
 |---|---|
-| `css/unified-styles.css` | v=13 |
-| `js/utils.js` | v=17 |
-| `formulas/app.js` | v=14 |
-| `pasado/app.js` | v=3 |
-| `tren/app.js` | v=11 |
-| `ser-estar/classify-mode.js` | v=3 |
-| `mezcla/app.js` | v=6 |
-| `mezcla/ui.js` | v=6 |
+| `css/unified-styles.css` | v=25 |
+| `js/utils.js` | v=22 |
+| `js/main.js` | v=2 |
+| `formulas/app.js` | v=20 |
+| `formulas/ui.js` | v=26 |
+| `pasado/app.js` | v=9 |
+| `pasado/ui.js` | v=18 |
+| `tren/app.js` | v=16 |
+| `tren/mode7-ui.js` | v=16 |
+| `ser-estar/ser-estar-app.js` | v=5 |
+| `ser-estar/classify-mode.js` | v=5 |
+| `mezcla/app.js` | v=9 |
+| `find-pair/script.js` | v=5 |
 
 ### Паттерн двухуровневой навигации
 

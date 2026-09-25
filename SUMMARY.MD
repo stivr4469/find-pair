@@ -5,6 +5,49 @@
 
 ---
 
+## Сессия: 2026-09-25 (продолжение 5) — Code Review: Stages 1–4
+
+### Выполнено по TASK-code-review-fixes.md (4 этапа, 84/84 тестов зелёных после каждого)
+
+#### Stage 1 — Качество данных (коммит `345d4e1`)
+- `ser-estar/ser-estar-data.js`: удалены 56 дубликатов ключа `text:`, исправлена пунктуация в 6 строках, "Rafael и Хуан" → "Rafael y Juan"
+- `ser-estar/ser-estar-rules-data.js?v=1→v=2`: исправлен комментарий (убрана ссылка на удалённый mode3.js)
+- `js/utils.js?v=21→v=22`: добавлена `isEquivalentAnswer(a, b)` — нормализация без удаления `¿¡`; экспортирована как `window.isEquivalentAnswer`
+- `formulas/app.js?v=19→v=20`: запасное сравнение через `isEquivalentAnswer` вместо `normalizeSpanish`
+- `pasado/app.js?v=8→v=9`: то же в `handleAnswerCyclic` и `handleAnswer`
+
+#### Stage 2 — Логические баги (коммит `073376b`)
+- `tren/mode5-ui.js` и `mode6-ui.js`: сброс `wrongTimer`/`nextTimer` при инициализации нового вопроса
+- `tren/mode6.js`, `tren/mode7.js`: guard `if (isAnswered) return` против двойного ответа
+- Дубли `restartMode1()`/`restartMode2()` в `tren/app.js` удалены; оставлены только в mode*.js
+- `mezcla/app.js?v=8→v=9`: AbortController для отмены висящего `translateText` при быстрых кликах
+
+#### Stage 3 — Мёртвый код (коммит `69792bc`)
+- Удалены файлы (git rm): `find-pair/find-pair.js`, `find-pair/find-pair.css`, `preview.html`, `ser-estar/ser-estar-mode3.js`, `ser-estar/ser-estar-mode4.js`, `ser-estar/ser-estar-mode2-data.js`, `ser-estar/ser-estar-mode2-logic.js`, `ser-estar/ser-estar-mode2-utils.js`
+- `js/main.js?v=1→v=2`: убраны `initTelegram`, `applyTelegramTheme`, `setupNavigation`, `handleGameCardClick`, `getUrlParams`, `logTelegramInfo`, `showCloseButton`, все console.log; `closeApp()` обновлён
+- `tren/app.js?v=15→v=16`: удалены `App.debug()` и 20+ вызовов, все console.log; switch → table lookup
+- `find-pair/script.js?v=4→v=5`: удалены 4 console.log
+- `ser-estar/ser-estar-app.js?v=4→v=5`, `ser-estar-context-mode.js?v=2→v=3`: удалены console.log
+- `.gitignore`: добавлены `tren/Nginx+PHP/`, `.playwright-mcp/`, `*.zip`
+
+#### Stage 4 — Доступность и чистота DOM (коммит `dbfd9c2`)
+- `tren/mode7-ui.js?v=15→v=16`: classify columns `div` → `button[type=button]`; CSS `.classify-column` дополнен reset-свойствами; упрощён ternary с двумя одинаковыми ветками
+- `formulas/ui.js?v=25→v=26`: `.formula-card-thumb` div → button; TTS главного примера переведена на `data-tts`/`speakSpanish(this.dataset.tts)` (убран `replace(/'/g, "\\'")` — сломался бы на апострофах); badge `<i data-lucide>` 14px убраны из renderQuiz (2 варианта); renderResults: lucide-иконка → эмодзи 🏆🥇👍📖
+- `pasado/ui.js?v=17→v=18`: `.pasado-card-thumb` div → button; `.pasado-classify-zone` div → button; CSS `.pasado-classify-zone` добавлен reset; `<i data-lucide>` зон классификации → `<span>`-точки; renderResults: lucide-иконка → эмодзи
+
+### Коммиты
+- `345d4e1` fix: исправлены данные вопросов (ser-estar дубли text, пунктуация в формуле 3, дубль варианта)
+- `073376b` fix: очистка таймеров при смене режима, guard двойного ответа, дубли функций tren, таймаут перевода mezcla
+- `69792bc` chore: удалены неподключённые файлы, дубль инициализации Telegram, отладочные логи; .gitignore
+- `dbfd9c2` fix: доступность карточек с клавиатуры, TTS через data-атрибут, убраны lucide из генерируемого HTML
+
+### Открытые задачи
+- [ ] Удалить Vercel-проект `find-pair-seven`
+- [ ] TTS — speakSpanish() отключён
+- [ ] Карточки повторения ошибок (localStorage)
+
+---
+
 ## Сессия: 2026-09-25 — Smoke-тесты (84/84 зелёных маячков)
 
 ### Что сделано
