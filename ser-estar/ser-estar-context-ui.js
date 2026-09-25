@@ -1,28 +1,68 @@
 /**
  * Ser vs Estar Trainer - Context Mode: UI Functions
- * Улучшенный интерфейс с поддержкой объяснений и прогресса.
+ * Fill-blank формат: предложение с пропуском и тайлы-варианты.
  */
 
+/**
+ * Разбивает text по ___ на части before и after.
+ * @param {string} text
+ * @returns {{ before: string, after: string }}
+ */
+function _ctxParseSentence(text) {
+    if (!text) return { before: '', after: '' };
+    var parts = text.split('___');
+    return {
+        before: (parts[0] || '').trimEnd(),
+        after:  (parts[1] || '').trimStart()
+    };
+}
+
+/**
+ * Экранирование HTML-спецсимволов для безопасной вставки в атрибуты/текст.
+ * @param {string} str
+ * @returns {string}
+ */
+function _ctxEsc(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
 function displayContextQuestionUI(question) {
-    const contentArea = document.getElementById('ser-estar-context-area');
+    var contentArea = document.getElementById('ser-estar-context-area');
     if (!contentArea) return;
 
-    var qNum = contextModeState.totalAnswered + 1;
+    var qNum   = contextModeState.totalAnswered + 1;
     var qTotal = contextModeState.sessionLimit;
     window.seSetProgress && window.seSetProgress((contextModeState.totalAnswered / qTotal) * 100);
-    var blankHtml = question.text
-        ? question.text.replace('___', '<span class="ctx-blank">___</span>')
-        : '';
 
-    contentArea.innerHTML = `
-        <div class="ctx-question-card"> <div class="ctx-progress-label">ВОПРОС ${qNum} ИЗ ${qTotal} &middot; ВСТАВЬ SER ИЛИ ESTAR</div> <div class="ctx-question-text">${blankHtml}</div> <div class="ctx-translation">${question.translation}</div> <div class="options-container" id="context-options"> ${question.options.map(option => `
-                    <button class="option-btn" data-answer="${option}">${option}</button> `).join('')}
-            </div> <div class="feedback" id="context-feedback"></div> <button class="next-button" id="context-next-btn" style="display:none;"> Дальше →
-            </button> </div> `;
+    // Строим предложение с blank-пропуском
+    var parts   = _ctxParseSentence(question.text);
+    var blankEl = '<span id="question-blank" class="ctx-blank">___</span>';
+    var sentenceHtml = _ctxEsc(parts.before) + ' ' + blankEl
+        + (parts.after ? ' ' + _ctxEsc(parts.after) : '');
+
+    // Тайлы вариантов
+    var tilesHtml = question.options.map(function(opt) {
+        return '<button class="ctx-tile option-btn" data-answer="' + _ctxEsc(opt) + '">'
+            + _ctxEsc(opt) + '</button>';
+    }).join('');
+
+    contentArea.innerHTML = '<div class="ctx-question-card">'
+        + '<div class="ctx-progress-label">ВОПРОС ' + qNum + ' ИЗ ' + qTotal
+        + ' &middot; ВСТАВЬ SER ИЛИ ESTAR</div>'
+        + '<div class="ctx-question-text ctx-sentence">' + sentenceHtml + '</div>'
+        + '<div class="ctx-translation">' + _ctxEsc(question.translation) + '</div>'
+        + '<div class="ctx-tiles" id="context-options">' + tilesHtml + '</div>'
+        + '<div class="feedback" id="context-feedback"></div>'
+        + '<button class="next-button" id="context-next-btn" style="display:none;">Дальше →</button>'
+        + '</div>';
 
     // Обработчики
-    contentArea.querySelectorAll('.option-btn').forEach(button => {
-        button.addEventListener('click', () => {
+    contentArea.querySelectorAll('.option-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
             if (!contextModeState.isAnswered) {
                 checkContextAnswer(button.dataset.answer, question.correct, button, question.explanation);
             }

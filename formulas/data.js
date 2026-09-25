@@ -373,26 +373,26 @@ const FORMULAS_DATA = [
     ],
     quiz: [
       {
-        question: "Я умываюсь",
-        options: ["Yo lavo la cara", "Yo me lavo la cara a mí", "Lavo me la cara", "Me lavo la cara"],
+        before: "Cada mañana yo", after: "antes de desayunar.",
+        options: ["lavo la cara", "me lavo la cara a mí", "lavo me la cara", "me lavo la cara"],
         correct: 3,
         hint: "Возвратное местоимение me стоит ПЕРЕД глаголом"
       },
       {
-        question: "Она одевается",
-        options: ["Ella viste", "Se ella viste", "Ella se vestirse", "Ella se viste"],
+        before: "Por las mañanas, ella", after: "para ir al trabajo.",
+        options: ["viste", "se ella viste", "se vestirse", "se viste"],
         correct: 3,
         hint: "se перед спрягаемым глаголом: Ella se viste"
       },
       {
-        question: "Мы садимся",
-        options: ["Sentamos", "Nosotros sentamos nos", "Nos estamos sentado", "Nos sentamos"],
+        before: "Nosotros siempre", after: "en la misma mesa.",
+        options: ["sentamos", "sentamos nos", "estamos sentado", "nos sentamos"],
         correct: 3,
         hint: "Возвратное nos стоит перед глаголом: nos sentamos"
       },
       {
-        question: "Я встаю рано",
-        options: ["Levanto temprano", "Yo me levanta temprano", "Me levanto temprano", "Yo levanto me temprano"],
+        before: "Yo siempre", after: "temprano para ir al trabajo.",
+        options: ["levanto", "me levanta", "me levanto", "levanto me"],
         correct: 2,
         hint: "me стоит ПЕРЕД спрягаемым глаголом: me levanto (levantarse, 1 л. ед.ч.)"
       },
@@ -431,26 +431,26 @@ const FORMULAS_DATA = [
     ],
     quiz: [
       {
-        question: "Я хочу учиться",
-        options: ["Quiero que estudiar", "Quiero estudiando", "Quiero estudio", "Quiero estudiar"],
+        before: "Yo", after: "español este año.",
+        options: ["quiero que estudiar", "quiero estudiando", "quiero estudio", "quiero estudiar"],
         correct: 3,
         hint: "querer + инфинитив напрямую, без «que»"
       },
       {
-        question: "Она может петь",
-        options: ["Ella puede canta", "Ella puede cantando", "Ella puede que canta", "Ella puede cantar"],
+        before: "Ella", after: "muy bien en el escenario.",
+        options: ["puede canta", "puede cantando", "puede que canta", "puede cantar"],
         correct: 3,
         hint: "poder + инфинитив: puede + cantar"
       },
       {
-        question: "Им нужно работать",
-        options: ["Necesitan que trabajar", "Necesitan trabajando", "Necesitan trabajan", "Necesitan trabajar"],
+        before: "Ellos", after: "mucho para pagar el alquiler.",
+        options: ["necesitan que trabajar", "necesitan trabajando", "necesitan trabajan", "necesitan trabajar"],
         correct: 3,
         hint: "necesitar + инфинитив: necesitan + trabajar"
       },
       {
-        question: "Я умею готовить",
-        options: ["Sé que cocinar", "Sé cocinando", "Sé cocino", "Sé cocinar"],
+        before: "Yo", after: "muy bien — tomé clases de cocina.",
+        options: ["sé que cocinar", "sé cocinando", "sé cocino", "sé cocinar"],
         correct: 3,
         hint: "saber + инфинитив напрямую: sé + cocinar (без «que»)"
       },
@@ -607,26 +607,26 @@ const FORMULAS_DATA = [
     ],
     quiz: [
       {
-        question: "Я поел",
-        options: ["Yo he comida", "Yo he comidos", "Yo comido he", "He comido"],
+        before: "Hoy yo", after: "en un restaurante italiano.",
+        options: ["he comida", "he comidos", "comido he", "he comido"],
         correct: 3,
         hint: "Причастие в Pretérito Perfecto НЕ согласуется: всегда «comido», не «comida»"
       },
       {
-        question: "Она написала книгу",
-        options: ["Ella ha escrita un libro", "Ella escribió un libro haber", "Ella ha escribir un libro", "Ella ha escrito un libro"],
+        before: "Ella ya", after: "sobre su experiencia en Asia.",
+        options: ["ha escrita un libro", "escribió un libro haber", "ha escribir un libro", "ha escrito un libro"],
         correct: 3,
         hint: "ha (3 л. ед.ч. haber) + причастие escrito (неправильное). Не «escrita»"
       },
       {
-        question: "Мы посмотрели фильм",
-        options: ["Hemos vistos la película", "Nosotros han visto la película", "Hemos ver la película", "Hemos visto la película"],
+        before: "Esta semana nosotros", after: "en el cine — fue increíble.",
+        options: ["hemos vistos la película", "han visto la película", "hemos ver la película", "hemos visto la película"],
         correct: 3,
         hint: "hemos (1 л. мн.ч.) + visto (неправильное причастие от ver). Не «vistos»"
       },
       {
-        question: "Ты сделал домашнее задание?",
-        options: ["¿Has hacido los deberes?", "¿Has hacer los deberes?", "¿Haces los deberes ya?", "¿Has hecho los deberes?"],
+        before: "¿Ya", after: "para el examen de mañana?",
+        options: ["has hacido los deberes", "has hacer los deberes", "haces los deberes ya", "has hecho los deberes"],
         correct: 3,
         hint: "has (2 л. ед.ч. haber) + hecho (неправильное причастие от hacer). Не «hacido»"
       },
@@ -665,26 +665,26 @@ const FORMULAS_DATA = [
     ],
     quiz: [
       {
-        question: "Я сейчас учусь",
-        options: ["Estoy estudiar", "Soy estudiando", "Estoy estudiado", "Estoy estudiando"],
+        before: "Ahora mismo yo", after: "para el examen de mañana.",
+        options: ["estoy estudiar", "soy estudiando", "estoy estudiado", "estoy estudiando"],
         correct: 3,
         hint: "estar + герундий: estoy + estudiando (не soy, не причастие)"
       },
       {
-        question: "Она сейчас читает",
-        options: ["Ella está leer", "Ella es leyendo", "Ella está leído", "Ella está leyendo"],
+        before: "En este momento ella", after: "en el sofá — no la molestes.",
+        options: ["está leer", "es leyendo", "está leído", "está leyendo"],
         correct: 3,
         hint: "está + leyendo (leer → leyendo, не «leído»). Глагол estar, не ser"
       },
       {
-        question: "Мы сейчас едим",
-        options: ["Estamos comer", "Somos comiendo", "Hemos comiendo", "Estamos comiendo"],
+        before: "Ahora nosotros", after: "en la cocina — espera un momento.",
+        options: ["estamos comer", "somos comiendo", "hemos comiendo", "estamos comiendo"],
         correct: 3,
         hint: "estamos + comiendo. Не haber, не ser — только estar для Progressive"
       },
       {
-        question: "Вы (мн.ч.) сейчас разговариваете по телефону?",
-        options: ["¿Estáis hablar por teléfono?", "¿Sois hablando por teléfono?", "¿Estáis hablando por teléfono?", "¿Estáis hablados por teléfono?"],
+        before: "¿Vosotros", after: "por teléfono en este momento?",
+        options: ["estáis hablar", "sois hablando", "estáis hablando", "estáis hablados"],
         correct: 2,
         hint: "estáis (2 л. мн.ч. estar) + hablando (герундий от hablar). Не ser"
       },
@@ -723,26 +723,26 @@ const FORMULAS_DATA = [
     ],
     quiz: [
       {
-        question: "Я учусь уже два часа",
-        options: ["Estoy dos horas estudiando", "Llevo dos horas estudiar", "Llevo estudiando dos horas ya", "Llevo dos horas estudiando"],
+        before: "Yo", after: "— ¡ya no puedo más!",
+        options: ["estoy dos horas estudiando", "llevo dos horas estudiar", "llevo estudiando dos horas ya", "llevo dos horas estudiando"],
         correct: 3,
         hint: "llevar + промежуток времени + герундий: llevo + dos horas + estudiando"
       },
       {
-        question: "Она живёт здесь уже год",
-        options: ["Está un año viviendo aquí", "Lleva viviendo aquí un año", "Lleva un año vivir aquí", "Lleva un año viviendo aquí"],
+        before: "Ella", after: "— ya habla el idioma perfectamente.",
+        options: ["está un año viviendo aquí", "lleva viviendo aquí un año", "lleva un año vivir aquí", "lleva un año viviendo aquí"],
         correct: 3,
         hint: "lleva (3 л. ед.ч.) + un año + viviendo. Порядок: llevar + время + герундий"
       },
       {
-        question: "Они путешествуют уже три дня",
-        options: ["Están tres días viajando", "Llevan tres días viajar", "Llevan viajando tres días", "Llevan tres días viajando"],
+        before: "Ellos", after: "por toda Europa — ¡qué aventura!",
+        options: ["están tres días viajando", "llevan tres días viajar", "llevan viajando tres días", "llevan tres días viajando"],
         correct: 3,
         hint: "llevan (3 л. мн.ч.) + tres días + viajando. Время — между глаголом и герундием"
       },
       {
-        question: "Сколько времени ты уже ждёшь?",
-        options: ["¿Cuánto tiempo llevas esperando?", "¿Cuánto tiempo llevas esperar?", "¿Cuánto tiempo estás llevas esperando?", "¿Cuánto tiempo llevas esperado?"],
+        before: "¿Cuánto tiempo", after: "aquí? ¿Media hora ya?",
+        options: ["llevas esperando", "llevas esperar", "estás llevas esperando", "llevas esperado"],
         correct: 0,
         hint: "¿Cuánto tiempo llevas + герундий? — вопрос о длительности. Не «esperar» (инф.) и не «esperado» (причастие)"
       },
@@ -1190,26 +1190,26 @@ const FORMULAS_DATA = [
     ],
     quiz: [
       {
-        question: "Я собираюсь поесть",
-        options: ["Voy comer", "Voy a comer", "Voy a come", "Iré a comer"],
+        before: "Tengo hambre —", after: "algo en ese restaurante.",
+        options: ["voy comer", "voy a comer", "voy a come", "iré a comer"],
         correct: 1,
         hint: "ir + a + ИНФИНИТИВ. «voy» (иду) + «a» + «comer» (есть)"
       },
       {
-        question: "Мы будем учиться завтра",
-        options: ["Vamos estudiar mañana", "Iremos a estudiar mañana", "Vamos a estudiando mañana", "Vamos a estudiar mañana"],
+        before: "Esta tarde nosotros", after: "para el examen del viernes.",
+        options: ["vamos estudiar mañana", "iremos a estudiar mañana", "vamos a estudiando", "vamos a estudiar"],
         correct: 3,
         hint: "vamos (мы идём) + a + infinitivo. Не герундий! estudiar, не estudiando"
       },
       {
-        question: "Что ты собираешься делать?",
-        options: ["¿Qué haces?", "¿Qué vas hacer?", "¿Qué vas a hacer?", "¿Qué irás a hacer?"],
+        before: "¿Qué tú", after: "este fin de semana?",
+        options: ["haces", "vas hacer", "vas a hacer", "irás a hacer"],
         correct: 2,
         hint: "¿Qué + vas + a + hacer? Предлог «a» обязателен"
       },
       {
-        question: "Он не собирается приходить (отрицание)",
-        options: ["No ir a venir", "No va venir", "No va a venir", "No voy a venir él"],
+        before: "Él tiene otra reunión, así que", after: "a nuestra fiesta.",
+        options: ["no ir a venir", "no va venir", "no va a venir", "no voy a venir"],
         correct: 2,
         hint: "Отрицание: no + va + a + infinitivo. «a» сохраняется: no va a venir"
       },
@@ -1249,26 +1249,26 @@ const FORMULAS_DATA = [
     ],
     quiz: [
       {
-        question: "Я бы хотел кофе (вежливо)",
-        options: ["Quiero un café", "Quisiera un café", "Me gustaría un café", "Me gustaba un café"],
+        before: "Perdona, yo", after: "con leche, por favor.",
+        options: ["quiero un café", "quisiera un café", "me gustaría un café", "me gustaba un café"],
         correct: 2,
         hint: "gustar в конdicional: me gustaría (мне бы понравился = я бы хотел)"
       },
       {
-        question: "Не мог бы ты мне помочь?",
-        options: ["¿Puedes ayudarme?", "¿Podrías ayudarme?", "¿Podías ayudarme?", "¿Podrás ayudarme?"],
+        before: "¿", after: "con las maletas? Son muy pesadas.",
+        options: ["¿Puedes ayudarme", "¿Podrías ayudarme", "¿Podías ayudarme", "¿Podrás ayudarme"],
         correct: 1,
         hint: "poder в конdicional: podría/podrías (мог бы). Звучит вежливее, чем puedes"
       },
       {
-        question: "Мне следовало бы учиться больше",
-        options: ["Debo estudiar más", "Debía estudiar más", "Debería estudiar más", "Deba estudiar más"],
+        before: "Yo en tu lugar", after: "— tienes un examen mañana.",
+        options: ["debo estudiar más", "debía estudiar más", "debería estudiar más", "deba estudiar más"],
         correct: 2,
         hint: "deber в конdicional: debería (следовало бы). Выражает мягкий совет"
       },
       {
-        question: "Я бы поговорил с ним (hablar)",
-        options: ["Hablaría con él", "Hablaré con él", "Hablaba con él", "Hablaría a él"],
+        before: "Si tuviera su número, yo", after: "para aclarar el problema.",
+        options: ["hablaría con él", "hablaré con él", "hablaba con él", "hablaría a él"],
         correct: 0,
         hint: "hablar + -ía = hablaría (кондисьональ, 1л. ед.ч.). Суффикс -ía добавляется к инфинитиву"
       },
@@ -1426,26 +1426,26 @@ const FORMULAS_DATA = [
     ],
     quiz: [
       {
-        question: "Я только что пришёл",
-        options: ["Llegué ahora", "Acabo llegar", "Acabo de llegar", "Acabo de llegando"],
+        before: "Justo yo", after: "— la puerta aún está abierta.",
+        options: ["llegué ahora", "acabo llegar", "acabo de llegar", "acabo de llegando"],
         correct: 2,
         hint: "acabar + de + инфинитив: acabo + de + llegar. «de» обязательно!"
       },
       {
-        question: "Они только что поели",
-        options: ["Acaban comer", "Acaban de comer", "Acaban de comiendo", "Acabaron de comer"],
+        before: "En este momento ellos", after: "— todavía tienen los cubiertos en la mano.",
+        options: ["acaban comer", "acaban de comer", "acaban de comiendo", "acabaron de comer"],
         correct: 1,
         hint: "acaban (3л.мн.ч.) + de + comer. Настоящее время, не прошедшее!"
       },
       {
-        question: "Мы только что посмотрели фильм",
-        options: ["Acabamos ver la película", "Acabamos de viendo la película", "Acabamos de ver la película", "Acabamos a ver la película"],
+        before: "Nosotros", after: "— todavía recordamos cada escena.",
+        options: ["acabamos ver la película", "acabamos de viendo la película", "acabamos de ver la película", "acabamos a ver la película"],
         correct: 2,
         hint: "acabamos + de + ver (инфинитив). Не герундий (viendo)!"
       },
       {
-        question: "Он только что позвонил (3-е лицо ед.ч.)",
-        options: ["Acaba llamar", "Acabó de llamar", "Acaba de llamando", "Acaba de llamar"],
+        before: "Él", after: "— pregunta si quieres hablar.",
+        options: ["acaba llamar", "acabó de llamar", "acaba de llamando", "acaba de llamar"],
         correct: 3,
         hint: "3л.ед.ч.: acaba + de + infinitivo. Настоящее время! «de» обязательно. Не герундий"
       },
@@ -1544,26 +1544,26 @@ const FORMULAS_DATA = [
     ],
     quiz: [
       {
-        question: "Я пробую снова",
-        options: ["Intento de nuevo", "Vuelvo a intentarlo", "Vuelvo intentarlo", "Sigo a intentarlo"],
+        before: "El ejercicio es difícil, pero yo", after: "hasta conseguirlo.",
+        options: ["intento de nuevo", "vuelvo a intentarlo", "vuelvo intentarlo", "sigo a intentarlo"],
         correct: 1,
         hint: "volver a + инфинитив = делать снова. «a» обязательно!"
       },
       {
-        question: "Она продолжает учиться",
-        options: ["Ella sigue a estudiar", "Ella vuelve estudiando", "Ella sigue estudiar", "Ella sigue estudiando"],
+        before: "Aunque es tarde, ella", after: "para el examen de mañana.",
+        options: ["sigue a estudiar", "vuelve estudiando", "sigue estudiar", "sigue estudiando"],
         correct: 3,
         hint: "seguir + ГЕРУНДИЙ (не инфинитив!): sigue + estudiando"
       },
       {
-        question: "Он бросил курить",
-        options: ["Dejó fumar", "Dejó de fumando", "Dejó de fumar", "Dejó a fumar"],
+        before: "Por su salud, él", after: "hace dos años — ahora se siente mejor.",
+        options: ["dejó fumar", "dejó de fumando", "dejó de fumar", "dejó a fumar"],
         correct: 2,
         hint: "dejar de + инфинитив = перестать. «de» обязательно!"
       },
       {
-        question: "Ты продолжаешь жаловаться (seguir + герундий)",
-        options: ["Sigues quejarte", "Sigues de quejarte", "Sigues quejándote", "Sigues a quejarte"],
+        before: "Después de tantos problemas, tú todavía", after: "— ¡ya basta!",
+        options: ["sigues quejarte", "sigues de quejarte", "sigues quejándote", "sigues a quejarte"],
         correct: 2,
         hint: "seguir + ГЕРУНДИЙ: sigues + quejándote. Не инфинитив, не «de»!"
       },

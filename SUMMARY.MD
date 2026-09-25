@@ -5,6 +5,47 @@
 
 ---
 
+## Сессия: 2026-09-25 (продолжение 3) — Fill-blank Q1-Q4 по всему приложению (4 агента параллельно)
+
+### Что сделано
+
+**Задача:** Конвертировать ВСЕ оставшиеся MCQ-вопросы Q1-Q4 в fill-blank формат (`before`/`after`) по всем модулям — pasado, formulas, tren, ser-estar.
+
+**Стратегия:** 4 параллельных субагента, каждый работал с отдельным набором файлов без конфликтов.
+
+#### pasado/data.js v=5→v=6
+Все Q1-Q4 (64 вопроса) у 16 формул конвертированы из `{question: "..."}` в `{before: "...", after: "...", ...}`:
+- Indefinido: сигналы "ayer"/"anoche"
+- Imperfecto: сигналы "siempre"/"antes"  
+- Perfecto: сигналы "hoy"/"esta semana"
+- Pluscuamperfecto: паттерн "Cuando llegué, ya..."
+
+#### formulas/data.js v=14→v=15
+Q1-Q4 для 9 глагольных формул (F7,F8,F11,F12,F13,F21,F22,F25,F27) конвертированы в `before`/`after`:
+- 36 дополнительных fill-blank вопросов
+- Итого в formulas/data.js: 54 fill-blank вопроса (Q1-Q6)
+
+#### ser-estar/ser-estar-context-ui.js v=6→v=7
+`displayContextQuestionUI()` полностью переписан:
+- Предложение с `<span id="question-blank" class="ctx-blank">___</span>`
+- Тайлы-варианты (`.ctx-tile`) ниже предложения
+- После ответа: blank заполняется правильным ответом, цвет — зелёный (верно) / красный (нет)
+- Исправлен молчащий баг: `checkContextAnswer` в context-mode.js уже искал `#question-blank`, но старый UI не создавал этот ID
+
+#### ser-estar/index.html
+Добавлены CSS классы `.ctx-tiles`, `.ctx-tile`, `.ctx-blank`, `.ctx-tile.correct`, `.ctx-tile.incorrect`.
+Версия ser-estar-context-ui.js: v=6→v=7
+
+#### tren/ — без изменений
+Агент провёл аудит и подтвердил: tren уже имеет 4 fill-blank режима (mode1/3/5/6).
+
+#### Результат тестирования (Playwright)
+- pasado Q1 (Indefinido -AR): "Yo ___ con ella ayer." → тайлы → blank заполняется зелёным ✅
+- ser-estar context: "Las tiendas ___ cerradas los domingos." → тайлы → blank заполняется красным/зелёным ✅
+- JS ошибок нет ✅
+
+---
+
 ## Сессия: 2026-09-25 (продолжение) — Inline tiles для fill-blank вопросов
 
 ### Что сделано (коммит `d85e662`)
