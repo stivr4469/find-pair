@@ -5,6 +5,20 @@
 
 ---
 
+## Сессия: 2026-09-25 (продолжение 7) — Русский перевод для fill-blank вопросов
+
+**Коммит:** `4bd4154`
+
+- **formulas/data.js v=16→v=17:** добавлено поле `ru:` ко всем 54 fill-blank вопросам (7 формул: возвратные, инфинитив, pretérito perfecto, estar+gerundio, llevar+gerundio, ir a+inf, condicional, acabar de, volver/seguir/dejar)
+- **formulas/ui.js v=26→v=27:** fill-blank рендер теперь показывает `question.ru` курсивом под испанским предложением (если поле задано)
+- **formulas/index.html:** версии обновлены (data v=17, ui v=27)
+- Smoke: 84/84 зелёных
+- **Причина бага:** fill-blank вопросы используют `before`/`after` без `ru`; MCQ-вопросы используют `question` = русский текст — он и был переводом. Fill-blank были без перевода изначально.
+
+**Статус ветки:** main опережает origin/main на 6 коммитов (push не делался — нужно явное подтверждение)
+
+---
+
 ## Сессия: 2026-09-25 (продолжение 6) — Доработка замечаний по ревью Stages 1–4
 
 - **Иконки итогового экрана (formulas, pasado):** эмодзи 🏆🥇👍📖 заменены на inline SVG из нового `window.ICON_RESULT` в `js/utils.js` (trophy / award / thumbsUp / bookOpen, 56px, `color: var(--accent)`). Эмодзи противоречили дизайн-системе (точки/SVG вместо emoji).
