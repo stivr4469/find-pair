@@ -22,9 +22,6 @@ async function initGame() {
     // Получаем выбранное количество пар из выпадающего списка
     const pairCount = parseInt(document.getElementById('pair-count').value);
 
-    console.log(`Выбрано количество пар: ${pairCount}`);
-    console.log(`Выбрана категория: ${selectedCategoryValue}`);
-
     // Создаем массив пар (ру-ис)
     let pairs = selectedCategory.map(word => ({
         ru: word.ru,
@@ -33,9 +30,6 @@ async function initGame() {
 
     // Перемешиваем и выбираем нужное количество пар
     pairs = pairs.sort(() => Math.random() - 0.5).slice(0, pairCount);
-
-    // Проверяем количество пар после обрезки
-    console.log(`Количество пар после обрезки: ${pairs.length}`);
 
     // Очищаем старые элементы на странице
     clearColumns();
@@ -77,9 +71,6 @@ function displayWords(pairs) {
         rightWordElement.dataset.match = pair.ru;  // Сохраняем соответствующее русское слово
         rightColumn.appendChild(rightWordElement);
     });
-
-    // Проверяем отображение количества пар
-    console.log(`Отображено пар: ${pairs.length}`);
 
     // Добавляем обработчики для проверки соответствия
     addEventListeners();

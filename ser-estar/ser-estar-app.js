@@ -7,7 +7,6 @@ const SerEstarApp = {
     currentMode: null,
 
     init: function() {
-        console.log('[SerEstar] App initialized');
         this.setupNavigation();
     },
 

@@ -1,6 +1,6 @@
 /**
  * Ser vs Estar — Rules Data (DOCTOR / PLACE)
- * SER_RULES и ESTAR_RULES используются в ser-estar-rules-ui.js и ser-estar-mode3.js
+ * SER_RULES и ESTAR_RULES используются в ser-estar-rules-ui.js
  */
 
 // SER — мнемоника DOCTOR

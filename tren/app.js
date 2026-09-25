@@ -1,8 +1,6 @@
 /**
  * Tren Ir/Venir/Llegar - Main Application Controller
  * Integrates all game modes and manages application state
- *
- * DEBUG VERSION: Enhanced logging for all mode switches
  */
 
 // Naranjito mascot instance and streak counter
@@ -22,8 +20,6 @@ const App = {
      * Инициализация приложения
      */
     init: function() {
-        console.log('Tren Ir/Venir/Llegar - Application initialized');
-
         // Загрузка прогресса из localStorage
         this.loadProgress();
 
@@ -35,42 +31,20 @@ const App = {
 
         // Инициализация всех режимов
         this.initModes();
-
-        // Debug log
-        this.debug('Application initialization complete');
-    },
-
-    /**
-     * Debug helper - writes to visible debug panel
-     */
-    debug: function(msg) {
-        const debugDiv = document.getElementById('debug-output');
-        if (debugDiv) {
-            const time = new Date().toLocaleTimeString();
-            const line = document.createElement('div');
-            line.className = 'debug-line';
-            line.innerHTML = `<span class="debug-time">[${time}]</span> [APP] ${msg}`;
-            debugDiv.appendChild(line);
-            debugDiv.scrollTop = debugDiv.scrollHeight;
-        }
-        console.log('[APP DEBUG]', msg);
     },
 
     /**
      * Инициализация всех игровых режимов
      */
     initModes: function() {
-        // Mode 1 уже имеет initMode1() в mode1.js
-        // Mode 2-4 будут инициализированы при переключении
-        this.debug('All modes initialized');
+        // Режимы инициализируются при переключении через switchMode
     },
 
     /**
      * Настройка навигации по меню
      */
     setupNavigation: function() {
-        // Навигация теперь через onclick атрибуты в HTML
-        this.debug('Navigation setup complete (using inline onclick)');
+        // Навигация через onclick атрибуты в HTML
     },
 
     /**
@@ -78,10 +52,6 @@ const App = {
      * @param {string} modeId - идентификатор режима (mode1, mode2, etc.)
      */
     switchMode: function(modeId) {
-        const self = this;
-
-        this.debug('>>> switchMode called: ' + modeId);
-
         // Скрытие всех игровых зон
         document.querySelectorAll('.game-area').forEach(el => {
             el.classList.add('hidden');
@@ -93,15 +63,10 @@ const App = {
         var backBtn = document.getElementById('btn-back-to-modes');
         if (backBtn) backBtn.style.display = 'inline-flex';
 
-        this.debug('All game areas and main menu hidden');
-
         // Показать выбранную игровую зону
         const modeElement = document.getElementById(modeId + '-area') || document.getElementById(modeId);
         if (modeElement) {
             modeElement.classList.remove('hidden');
-            this.debug('Mode element shown: ' + modeId);
-        } else {
-            this.debug('ERROR: Mode element not found: ' + modeId);
         }
 
         // Сохранение текущего режима
@@ -113,99 +78,28 @@ const App = {
         if (typeof resetTopbar === 'function') resetTopbar();
 
         // Инициализация конкретного режима
-        console.log('Switched to mode: ' + modeId);
-        this.debug('Initializing mode: ' + modeId);
-
-        switch(modeId) {
-            case 'mode0':
-                if (typeof initMode0 === 'function') {
-                    initMode0();
-                    this.debug('initMode0() called successfully');
-                } else {
-                    this.debug('ERROR: initMode0 is not a function');
-                }
-                break;
-            case 'mode1':
-                if (typeof initMode1 === 'function') {
-                    initMode1();
-                    this.debug('initMode1() called successfully');
-                } else {
-                    this.debug('ERROR: initMode1 is not a function');
-                }
-                break;
-            case 'mode2':
-                if (typeof initMode2 === 'function') {
-                    initMode2();
-                    this.debug('initMode2() called successfully');
-                } else {
-                    this.debug('ERROR: initMode2 is not a function');
-                }
-                break;
-            case 'mode3':
-                if (typeof initMode3 === 'function') {
-                    initMode3();
-                    this.debug('initMode3() called successfully');
-                } else {
-                    this.debug('ERROR: initMode3 is not a function');
-                }
-                break;
-            case 'mode4':
-                if (typeof initMode4 === 'function') {
-                    initMode4();
-                    this.debug('initMode4() called successfully');
-                } else {
-                    this.debug('ERROR: initMode4 is not a function');
-                }
-                break;
-            case 'mode5':
-                if (typeof initMode5 === 'function') {
-                    initMode5();
-                    this.debug('initMode5() called successfully');
-                } else {
-                    this.debug('ERROR: initMode5 is not a function');
-                }
-                break;
-            case 'mode6':
-                if (typeof initMode6 === 'function') {
-                    initMode6();
-                    this.debug('initMode6() called successfully');
-                } else {
-                    this.debug('ERROR: initMode6 is not a function');
-                }
-                break;
-            case 'mode7':
-                if (typeof initMode7 === 'function') {
-                    initMode7();
-                    this.debug('initMode7() called successfully');
-                } else {
-                    this.debug('ERROR: initMode7 is not a function');
-                }
-                break;
-            default:
-                this.debug('WARNING: Unknown mode: ' + modeId);
-        }
-
-        this.debug('<<< switchMode complete: ' + modeId);
+        var inits = {
+            mode0: initMode0, mode1: initMode1, mode2: initMode2, mode3: initMode3,
+            mode4: initMode4, mode5: initMode5, mode6: initMode6, mode7: initMode7
+        };
+        var fn = inits[modeId];
+        if (typeof fn === 'function') fn();
     },
 
     /**
      * Обновление отображения статистики
      */
     updateStats: function() {
-        // Обновление счета
         const scoreElement = document.getElementById('score-value');
         if (scoreElement) {
             scoreElement.textContent = this.state.totalScore;
         }
 
-        // Обновление прогресса
         const progressElement = document.getElementById('progress-value');
         if (progressElement) {
             const progress = Math.min(100, Math.floor((this.state.gamesPlayed % 10) * 10));
             progressElement.textContent = progress + '%';
         }
-
-        this.debug('Stats updated: score=' + this.state.totalScore + ', games=' + this.state.gamesPlayed);
     },
 
     /**
@@ -216,7 +110,6 @@ const App = {
         this.state.totalScore += points;
         this.updateStats();
         this.saveProgress();
-        this.debug('Score added: +' + points + ', total=' + this.state.totalScore);
     },
 
     /**
@@ -225,7 +118,6 @@ const App = {
     completeGame: function() {
         this.state.gamesPlayed++;
         this.saveProgress();
-        this.debug('Game completed, total games: ' + this.state.gamesPlayed);
     },
 
     /**
@@ -239,11 +131,8 @@ const App = {
                 lastPlayed: new Date().toISOString()
             };
             localStorage.setItem('trenIrVenirProgress', JSON.stringify(progress));
-            console.log('Progress saved:', progress);
-            this.debug('Progress saved');
         } catch (e) {
             console.warn('Failed to save progress:', e);
-            this.debug('WARNING: Failed to save progress: ' + e.message);
         }
     },
 
@@ -257,12 +146,9 @@ const App = {
                 const progress = JSON.parse(saved);
                 this.state.totalScore = progress.totalScore || 0;
                 this.state.gamesPlayed = progress.gamesPlayed || 0;
-                console.log('Progress loaded:', progress);
-                this.debug('Progress loaded: score=' + progress.totalScore + ', games=' + progress.gamesPlayed);
             }
         } catch (e) {
             console.warn('Failed to load progress:', e);
-            this.debug('WARNING: Failed to load progress: ' + e.message);
         }
     },
 
@@ -276,7 +162,6 @@ const App = {
             this.state.modeHistory = [];
             localStorage.removeItem('trenIrVenirProgress');
             this.updateStats();
-            this.debug('Progress reset');
         }
     },
 
@@ -284,8 +169,6 @@ const App = {
      * Возврат в главное меню
      */
     showMainMenu: function() {
-        this.debug('>>> showMainMenu called');
-
         // Скрытие всех игровых зон
         document.querySelectorAll('.game-area').forEach(el => {
             el.classList.add('hidden');
@@ -299,8 +182,6 @@ const App = {
 
         // Сброс текущего режима
         this.state.currentMode = null;
-
-        this.debug('Main menu shown, state reset');
     }
 };
 

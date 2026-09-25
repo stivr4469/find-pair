@@ -14,8 +14,6 @@ let contextModeState = {
 };
 
 function initContextMode() {
-    console.log('[SerEstar] Initializing logic...');
-    
     if (typeof MODE1_SENTENCES === 'undefined') {
         console.error("Данные Ser/Estar не загружены!");
         return;
