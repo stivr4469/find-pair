@@ -55,8 +55,11 @@ test.describe('ser-estar — навигация и игровой флоу', () 
         // Нажимаем «ser»
         await page.click('.verb-btn:has-text("ser")');
 
-        // Должен появиться вопрос
-        await expect(page.locator('.question-text')).toBeVisible();
+        // Вопрос — предложение с пропуском, а не «Conjugación de …»
+        const sentence = page.locator('#ser-estar-base-area .ctx-sentence');
+        await expect(sentence).toBeVisible();
+        await expect(sentence.locator('.ctx-blank')).toHaveText('___');
+        await expect(sentence).not.toContainText('Conjugación');
 
         // Должны появиться кнопки ответов
         const optionBtns = page.locator('.option-btn');
@@ -107,6 +110,27 @@ test.describe('ser-estar — навигация и игровой флоу', () 
         await expect(page.locator('#ser-estar-advanced-area')).not.toHaveClass(/hidden/);
         // initAdvancedMode рендерит экран настроек с кнопкой "Начать тренировку"
         await expect(page.locator('#ser-estar-advanced-area .start-button')).toBeVisible();
+
+        expect(errors).toHaveLength(0);
+    });
+
+    test('продвинутое спряжение: предложение с пропуском, ответ заполняет пропуск', async ({ page }) => {
+        const errors = [];
+        page.on('pageerror', err => errors.push(err.message));
+
+        await page.goto('/ser-estar/');
+        await page.click('[data-mode="advanced"]');
+        await page.click('#ser-estar-advanced-area .start-button');
+
+        const area = page.locator('#ser-estar-advanced-area');
+        await expect(area.locator('.ctx-sentence .ctx-blank')).toHaveText('___');
+        await expect(area.locator('.ctx-tile')).toHaveCount(4);
+
+        await area.locator('.ctx-tile').first().click();
+        await expect(area.locator('.ctx-blank')).not.toHaveText('___');
+        await expect(area.locator('.ctx-tile.correct')).toHaveCount(1);
+        await expect(area.locator('.feedback')).not.toBeEmpty();
+        await expect(area.locator('.quiz-next-fixed')).toBeVisible();
 
         expect(errors).toHaveLength(0);
     });

@@ -98,11 +98,13 @@ module/
 | `mezcla/ui.js` | v=11 ← view-enter on all 3 screens, stagger on list cards |
 | `ser-estar/ser-estar.css` | v=2 ← переписан под «Валенсию»: только классы модуля на токенах темы (449 строк вместо 1318) |
 | `ser-estar/ser-estar-app.js` | v=8 ← stagger replay in showMainMenu(), seSetProgress→scaleX |
-| `ser-estar/ser-estar-base-ui.js` | v=4 ← view-enter |
-| `ser-estar/ser-estar-base-mode.js` | v=3 ← anim-correct/wrong in checkBaseAnswer |
-| `ser-estar/ser-estar-mode2.js` | v=8 ← view-enter, anim-correct/wrong in checkAdvancedAnswer |
+| `ser-estar/ser-estar-conj-data.js` | v=1 ← CONJ_SENTENCES[verb][tense][person] — 96 предложений с ___ для режимов спряжения |
+| `ser-estar/ser-estar-conj-ui.js` | v=1 ← общий рендер «предложение + фишки» для Базового/Продвинутого: seConjSentence, seConjOptions, seRenderConjQuestion, seRevealConjAnswer |
+| `ser-estar/ser-estar-base-ui.js` | v=5 ← вопрос через seRenderConjQuestion |
+| `ser-estar/ser-estar-base-mode.js` | v=4 ← предложение с пропуском (2 круга × 6 лиц, без повторов), seRevealConjAnswer |
+| `ser-estar/ser-estar-mode2.js` | v=9 ← предложение с пропуском вместо «Conjugación de…», usedTexts против повторов в сессии |
 | `ser-estar/ser-estar-context-ui.js` | v=8 ← view-enter |
-| `ser-estar/ser-estar-context-mode.js` | v=4 ← anim-correct/wrong in checkContextAnswer |
+| `ser-estar/ser-estar-context-mode.js` | v=5 ← подсветка пропуска классами .is-correct/.is-wrong вместо inline-стилей |
 | `ser-estar/ser-estar-rules-ui.js` | v=5 ← view-enter |
 | `ser-estar/ser-estar-rules-data.js` | v=2 |
 | `ser-estar/classify-ui.js` | v=10 ← view-enter |
@@ -566,6 +568,8 @@ ser-estar/
 ```
 ```
 Удалены: `ser-estar-mode3.js`, `ser-estar-mode4.js`, `ser-estar-mode2-data.js`, `ser-estar-mode2-logic.js`, `ser-estar-mode2-utils.js` — не подключались ни в одном `index.html`.
+
+**Спряжение (Базовое / Продвинутое):** вопрос — предложение из `CONJ_SENTENCES` с пропуском и 4 фишки (правильная форма + та же форма в другом времени + формы других лиц того же времени). Метка «Вопрос N из M · глагол · время». Рендер общий — `ser-estar-conj-ui.js`, использует `_ctxParseSentence`/`_ctxEsc` из context-ui. `.ctx-question-card` — тонированная панель `var(--faint)` без рамки (как inline-режим pasado), `.ctx-tile { width:auto }` — фишки в строку.
 
 **Context mode:** вопрос показывается как карточка с CSS классами `.ctx-question-card`, `.ctx-question-text`, `.ctx-blank` (акцент + underline), `.ctx-translation`. Стили — inline `<style>` в `ser-estar/index.html`.
 

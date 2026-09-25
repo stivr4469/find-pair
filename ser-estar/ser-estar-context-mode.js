@@ -57,8 +57,7 @@ function checkContextAnswer(selected, correct, buttonElement, explanation) {
     const blank = document.getElementById('question-blank');
     if (blank) {
         blank.textContent = correct;
-        blank.style.color = isCorrect ? '#27ae60' : '#e74c3c';
-        blank.style.fontWeight = 'bold';
+        blank.classList.add(isCorrect ? 'is-correct' : 'is-wrong');
     }
 
     if (isCorrect) {

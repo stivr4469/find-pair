@@ -11,6 +11,7 @@ let advancedModeState = {
     maxQuestions: 10,
     isGameStarted: false,
     isAnswered: false,
+    usedTexts: new Set(),
     settings: {
         verbs: ['ser', 'estar'],
         tenses: ['presente', 'indefinido', 'imperfecto', 'futuro']
@@ -81,6 +82,7 @@ function startAdvancedPractice() {
     advancedModeState.score = 0;
     advancedModeState.questionCount = 0;
     advancedModeState.isAnswered = false;
+    advancedModeState.usedTexts = new Set();
 
     // Обновляем счёт
     updateAdvancedScore();
@@ -90,7 +92,7 @@ function startAdvancedPractice() {
 }
 
 /**
- * Генерирует и показывает вопрос
+ * Генерирует и показывает вопрос: случайные глагол/время/лицо из настроек, предложение с пропуском
  */
 function generateAndShowAdvancedQuestion() {
     if (advancedModeState.questionCount >= advancedModeState.maxQuestions) {
@@ -98,152 +100,50 @@ function generateAndShowAdvancedQuestion() {
         return;
     }
 
-    // Случайный выбор из настроек
-    const verb = advancedModeState.settings.verbs[
-        Math.floor(Math.random() * advancedModeState.settings.verbs.length)
-    ];
-    const tense = advancedModeState.settings.tenses[
-        Math.floor(Math.random() * advancedModeState.settings.tenses.length)
-    ];
-    const persons = ['yo', 'tu', 'el/ella', 'nosotros', 'vosotros', 'ellos'];
-    const person = persons[Math.floor(Math.random() * persons.length)];
+    const pick = (list) => list[Math.floor(Math.random() * list.length)];
+    const verb = pick(advancedModeState.settings.verbs);
+    const tense = pick(advancedModeState.settings.tenses);
+    const person = pick(SE_PERSONS);
+    const sentence = seConjSentence(verb, tense, person, undefined, advancedModeState.usedTexts);
+    advancedModeState.usedTexts.add(sentence.text);
 
-    const correctAnswer = CONJUGATIONS[verb][tense][person];
-    const question = { verb, tense, person, correctAnswer };
-
-    // Генерируем варианты ответов
-    const options = generateAdvancedOptions(correctAnswer, verb, tense);
-
-    // Отображаем вопрос
-    displayAdvancedQuestion(question, options);
+    const question = { verb, tense, person, sentence, options: seConjOptions(verb, tense, person) };
+    displayAdvancedQuestion(question);
     updateAdvancedProgress();
-}
-
-/**
- * Генерирует варианты ответов
- */
-function generateAdvancedOptions(correctAnswer, verb, tense) {
-    const options = new Set();
-    options.add(correctAnswer);
-
-    const persons = ['yo', 'tu', 'el/ella', 'nosotros', 'vosotros', 'ellos'];
-    const tenses = ['presente', 'indefinido', 'imperfecto', 'futuro'];
-
-    // Другие времена того же глагола
-    for (const t of tenses) {
-        if (t !== tense) {
-            for (const p of persons) {
-                options.add(CONJUGATIONS[verb][t][p]);
-                if (options.size >= 5) break;
-            }
-        }
-        if (options.size >= 5) break;
-    }
-
-    // Другой глагол
-    if (options.size < 5) {
-        const otherVerb = verb === 'ser' ? 'estar' : 'ser';
-        for (const t of ['presente']) {
-            for (const p of persons) {
-                options.add(CONJUGATIONS[otherVerb][t][p]);
-                if (options.size >= 5) break;
-            }
-            if (options.size >= 5) break;
-        }
-    }
-
-    // Перемешиваем
-    const optionsArray = Array.from(options);
-    for (let i = optionsArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [optionsArray[i], optionsArray[j]] = [optionsArray[j], optionsArray[i]];
-    }
-
-    return optionsArray.slice(0, 5);
 }
 
 /**
  * Отображает вопрос
  */
-function displayAdvancedQuestion(question, options) {
+function displayAdvancedQuestion(question) {
     const contentArea = document.getElementById('ser-estar-advanced-area');
     if (!contentArea) return;
 
-    const tenseNames = {
-        'presente': 'presente',
-        'indefinido': 'indefinido',
-        'imperfecto': 'imperfecto',
-        'futuro': 'futuro'
-    };
-
-    const personNames = {
-        'yo': 'yo',
-        'tu': 'tú',
-        'el/ella': 'él/ella',
-        'nosotros': 'nosotros',
-        'vosotros': 'vosotros',
-        'ellos': 'ellos/ellas'
-    };
-
-    contentArea.innerHTML = `
-        <div class="question-container view-enter" style="padding-bottom: 80px;"> <div class="question-number"> Вопрос ${advancedModeState.questionCount + 1} из ${advancedModeState.maxQuestions}
-            </div> <button class="back-to-settings-button" onclick="initAdvancedMode()">К настройкам</button> <div class="question-text"> Conjugación de '${question.verb}' en ${tenseNames[question.tense]} para '${personNames[question.person]}'
-            </div> <div class="options-container"> ${options.map(option => `
-                    <button class="option-btn" data-answer="${option}">${option}</button> `).join('')}
-            </div> <div class="feedback"></div> <button class="next-button quiz-next-fixed" style="display: none;">Дальше →</button> </div> `;
-
-    // Обработчики на кнопки
-    const optionButtons = contentArea.querySelectorAll('.option-btn');
-    optionButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const selected = btn.dataset.answer;
-            checkAdvancedAnswer(selected, question.correctAnswer, btn);
-        });
+    seRenderConjQuestion(contentArea, Object.assign({
+        num: advancedModeState.questionCount + 1,
+        total: advancedModeState.maxQuestions,
+        headerHtml: '<button class="back-to-settings-button" onclick="initAdvancedMode()">К настройкам</button>'
+    }, question), function(selected, btn) {
+        checkAdvancedAnswer(selected, btn, question);
     });
 }
 
 /**
  * Проверка ответа
  */
-function checkAdvancedAnswer(selected, correct, buttonElement) {
-    const allButtons = document.querySelectorAll('#ser-estar-advanced-area .option-btn');
-    allButtons.forEach(btn => btn.disabled = true);
-
-    const normalize = (str) => str.trim().normalize('NFC').toLowerCase();
-    const isCorrect = normalize(selected) === normalize(correct);
-
-    const feedback = document.getElementById('ser-estar-advanced-area').querySelector('.feedback');
-    if (feedback) {
-        if (isCorrect) {
-            feedback.textContent = '✓ ¡Correcto!';
-            feedback.className = 'feedback correct';
-            buttonElement.classList.add('correct');
-            if (typeof replayAnimation === 'function') replayAnimation(buttonElement, 'anim-correct');
-            advancedModeState.score++;
-            updateAdvancedScore();
-            window.njAddStreak && window.njCorrect(window.njAddStreak());
-        } else {
-            feedback.textContent = `✗ Incorrecto. La respuesta correcta es: ${correct}`;
-            feedback.className = 'feedback wrong';
-            buttonElement.classList.add('incorrect');
-            if (typeof replayAnimation === 'function') replayAnimation(buttonElement, 'anim-wrong');
-            window.njWrong && window.njWrong(null, null);
-
-            allButtons.forEach(btn => {
-                if (normalize(btn.dataset.answer) === normalize(correct)) {
-                    btn.classList.add('correct');
-                }
-            });
-        }
-    }
-
-    const nextButton = document.getElementById('ser-estar-advanced-area').querySelector('.next-button');
-    if (nextButton) {
-        nextButton.style.display = 'inline-block';
-        nextButton.onclick = nextAdvancedQuestion;
-    }
-
+function checkAdvancedAnswer(selected, buttonElement, question) {
+    if (advancedModeState.isAnswered) return;
     advancedModeState.isAnswered = true;
+
+    const area = document.getElementById('ser-estar-advanced-area');
+    const isCorrect = seRevealConjAnswer(area, selected, buttonElement, question, nextAdvancedQuestion);
+    if (isCorrect) {
+        advancedModeState.score++;
+        updateAdvancedScore();
+        window.njAddStreak && window.njCorrect(window.njAddStreak());
+    } else {
+        window.njWrong && window.njWrong(null, null);
+    }
 }
 
 /**
@@ -276,6 +176,7 @@ function updateAdvancedProgress() {
         progressLabel.textContent = 'Прогресс:';
         progressValue.textContent = `${percentage}%`;
     }
+    window.seSetProgress && window.seSetProgress((advancedModeState.questionCount / advancedModeState.maxQuestions) * 100);
 }
 
 /**

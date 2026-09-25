@@ -19,29 +19,20 @@ function displayBaseVerbSelection() {
 }
 
 /**
- * Отображает вопрос и варианты ответа для базового режима
+ * Отображает вопрос: предложение с пропуском и фишки-формы
  */
-function displayBaseQuestion(question, options) {
+function displayBaseQuestion(question) {
     const contentArea = document.getElementById('ser-estar-base-area');
     if (!contentArea) {
         console.error('ser-estar-base-area not found');
         return;
     }
 
-    contentArea.innerHTML = `
-        <div class="question-container view-enter" style="padding-bottom: 80px;"> <div class="question-number"> Вопрос ${baseModeState.questionCount + 1} из ${baseModeState.maxQuestions}
-            </div> <div class="question-text"> Conjugación de '${question.verb}' en presente para '${question.person}'
-            </div> <div class="options-container"> ${options.map(option => `
-                    <button class="option-btn" data-answer="${option}">${option}</button> `).join('')}
-            </div> <div class="feedback"></div> <button class="next-button quiz-next-fixed" style="display: none;">Дальше →</button> </div> `;
-
-    // Добавляем обработчики на кнопки
-    const optionButtons = contentArea.querySelectorAll('.option-btn');
-    optionButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const selected = btn.dataset.answer;
-            checkBaseAnswer(selected, question.correctAnswer, btn);
-        });
+    seRenderConjQuestion(contentArea, Object.assign({
+        num: baseModeState.questionCount + 1,
+        total: baseModeState.maxQuestions
+    }, question), function(selected, btn) {
+        checkBaseAnswer(selected, btn, question);
     });
 }
 
@@ -66,6 +57,7 @@ function updateBaseProgress() {
         progressLabel.textContent = 'Прогресс:';
         progressValue.textContent = `${percentage}%`;
     }
+    window.seSetProgress && window.seSetProgress((baseModeState.questionCount / baseModeState.maxQuestions) * 100);
 }
 
 // Экспорт

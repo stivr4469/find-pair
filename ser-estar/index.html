@@ -43,6 +43,7 @@
             margin-top: 4px;
         }
         .ctx-tile {
+            width: auto;
             padding: 10px 28px;
             border-radius: 20px;
             border: 2px solid var(--border);
@@ -79,12 +80,11 @@
         }
 
         /* ── Context mode question card ── */
+        /* Панель вопроса внутри карточки — как inline-режим pasado */
         .ctx-question-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 28px 24px 24px;
+            background: var(--faint);
+            border-radius: 10px;
+            padding: 22px 16px 20px;
             max-width: 700px;
             margin: 0 auto;
             display: flex;
@@ -96,7 +96,7 @@
             font-weight: 600;
             letter-spacing: 0.09em;
             text-transform: uppercase;
-            color: var(--muted);
+            color: var(--accent);
             text-align: center;
         }
         .ctx-question-text {
@@ -113,6 +113,18 @@
             text-underline-offset: 4px;
             text-decoration-thickness: 2px;
             letter-spacing: 0.01em;
+        }
+        .ctx-blank.is-correct { color: var(--success); }
+        .ctx-blank.is-wrong   { color: var(--danger); }
+
+        /* ── Спряжение в предложении (Базовый / Продвинутый) ── */
+        .conj-card { margin-bottom: 80px; }
+        .conj-card .back-to-settings-button { margin: 0 auto; }
+        .conj-card .next-button[hidden] { display: none; }
+        .conj-hint {
+            font-size: 0.9rem;
+            margin-top: 4px;
+            opacity: 0.85;
         }
         .ctx-translation {
             font-size: 0.95rem;
@@ -205,14 +217,16 @@
     <script src="../js/naranjito.js?v=3"></script>
     <script src="../js/utils.js?v=25"></script>
     <script src="ser-estar-data.js"></script>
-    <script src="ser-estar-base-ui.js?v=4"></script>
-    <script src="ser-estar-base-mode.js?v=3"></script>
+    <script src="ser-estar-conj-data.js?v=1"></script>
+    <script src="ser-estar-conj-ui.js?v=1"></script>
+    <script src="ser-estar-base-ui.js?v=5"></script>
+    <script src="ser-estar-base-mode.js?v=4"></script>
     <script src="ser-estar-context-ui.js?v=8"></script>
-    <script src="ser-estar-context-mode.js?v=4"></script>
+    <script src="ser-estar-context-mode.js?v=5"></script>
     <script src="ser-estar-rules-data.js?v=2"></script>
     <script src="ser-estar-rules-ui.js?v=5"></script>
     <script src="ser-estar-rules-mode.js"></script>
-    <script src="ser-estar-mode2.js?v=8"></script>
+    <script src="ser-estar-mode2.js?v=9"></script>
     <script src="classify-data.js"></script>
     <script src="classify-ui.js?v=10"></script>
     <script src="classify-mode.js?v=6"></script>

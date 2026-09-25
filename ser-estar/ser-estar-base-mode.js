@@ -45,120 +45,43 @@ function startBasePractice(verb) {
 }
 
 /**
- * Генерирует и показывает вопрос
+ * Генерирует и показывает вопрос: предложение с пропуском, лица по кругу
  */
 function generateAndShowBaseQuestion() {
     if (baseModeState.questionCount >= baseModeState.maxQuestions) {
         showBaseResults();
         return;
     }
-    
-    // Последовательный перебор лиц
-    const personIndex = baseModeState.questionCount % 6;
-    const person = baseModeState.persons[personIndex];
-    const verb = baseModeState.selectedVerb;
-    const correctAnswer = CONJUGATIONS[verb]['presente'][person];
-    
-    const question = { verb, person, correctAnswer };
-    
-    // Генерируем варианты ответов (правильный + 4 неправильных)
-    const options = generateBaseOptions(correctAnswer, verb);
-    
-    // Отображаем вопрос
-    displayBaseQuestion(question, options);
-    updateBaseProgress();
-}
 
-/**
- * Генерирует варианты ответов для вопроса
- */
-function generateBaseOptions(correctAnswer, verb) {
-    const options = new Set();
-    options.add(correctAnswer);
-    
-    // Добавляем другие формы этого же глагола
-    const tenses = ['presente', 'indefinido', 'imperfecto', 'futuro'];
-    const persons = ['yo', 'tu', 'el/ella', 'nosotros', 'vosotros', 'ellos'];
-    
-    for (const tense of tenses) {
-        for (const person of persons) {
-            if (CONJUGATIONS[verb][tense][person] !== correctAnswer) {
-                options.add(CONJUGATIONS[verb][tense][person]);
-            }
-            if (options.size >= 5) break;
-        }
-        if (options.size >= 5) break;
-    }
-    
-    // Если мало вариантов, добавляем формы другого глагола
-    const otherVerb = verb === 'ser' ? 'estar' : 'ser';
-    if (options.size < 5) {
-        for (const tense of ['presente']) {
-            for (const person of persons) {
-                options.add(CONJUGATIONS[otherVerb][tense][person]);
-                if (options.size >= 5) break;
-            }
-            if (options.size >= 5) break;
-        }
-    }
-    
-    // Перемешиваем и берём 5
-    const optionsArray = Array.from(options);
-    for (let i = optionsArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [optionsArray[i], optionsArray[j]] = [optionsArray[j], optionsArray[i]];
-    }
-    
-    return optionsArray.slice(0, 5);
+    const round = Math.floor(baseModeState.questionCount / baseModeState.persons.length);
+    const person = baseModeState.persons[baseModeState.questionCount % baseModeState.persons.length];
+    const verb = baseModeState.selectedVerb;
+    const question = {
+        verb, tense: 'presente', person,
+        sentence: seConjSentence(verb, 'presente', person, round),
+        options: seConjOptions(verb, 'presente', person)
+    };
+
+    displayBaseQuestion(question);
+    updateBaseProgress();
 }
 
 /**
  * Проверка ответа
  */
-function checkBaseAnswer(selected, correct, buttonElement) {
-    // Блокируем все кнопки
-    const allButtons = document.querySelectorAll('#ser-estar-base-area .option-btn');
-    allButtons.forEach(btn => btn.disabled = true);
-    
-    // Нормализация строк
-    const normalize = (str) => str.trim().normalize('NFC').toLowerCase();
-    const isCorrect = normalize(selected) === normalize(correct);
-    
-    // Показываем обратную связь
-    const feedback = document.getElementById('ser-estar-base-area').querySelector('.feedback');
-    if (feedback) {
-        if (isCorrect) {
-            feedback.textContent = '✓ ¡Correcto!';
-            feedback.className = 'feedback correct';
-            buttonElement.classList.add('correct');
-            if (typeof replayAnimation === 'function') replayAnimation(buttonElement, 'anim-correct');
-            baseModeState.score++;
-            updateBaseScore();
-            window.njAddStreak && window.njCorrect(window.njAddStreak());
-        } else {
-            feedback.textContent = `✗ Incorrecto. La respuesta correcta es: ${correct}`;
-            feedback.className = 'feedback wrong';
-            buttonElement.classList.add('incorrect');
-            if (typeof replayAnimation === 'function') replayAnimation(buttonElement, 'anim-wrong');
-            window.njWrong && window.njWrong(null, null);
-
-            // Подсветить правильную кнопку
-            allButtons.forEach(btn => {
-                if (normalize(btn.dataset.answer) === normalize(correct)) {
-                    btn.classList.add('correct');
-                }
-            });
-        }
-    }
-    
-    // Показать кнопку "Дальше"
-    const nextButton = document.getElementById('ser-estar-base-area').querySelector('.next-button');
-    if (nextButton) {
-        nextButton.style.display = 'inline-block';
-        nextButton.onclick = nextBaseQuestion;
-    }
-    
+function checkBaseAnswer(selected, buttonElement, question) {
+    if (baseModeState.isAnswered) return;
     baseModeState.isAnswered = true;
+
+    const area = document.getElementById('ser-estar-base-area');
+    const isCorrect = seRevealConjAnswer(area, selected, buttonElement, question, nextBaseQuestion);
+    if (isCorrect) {
+        baseModeState.score++;
+        updateBaseScore();
+        window.njAddStreak && window.njCorrect(window.njAddStreak());
+    } else {
+        window.njWrong && window.njWrong(null, null);
+    }
 }
 
 /**
@@ -192,7 +115,7 @@ function showBaseResults() {
     }
     
     contentArea.innerHTML = `
-        <div class="results-container"> <h3>Результаты</h3> <div class="final-score">${baseModeState.score} из ${baseModeState.maxQuestions} (${percentage}%)</div> <div class="final-message">${message}</div> <div class="results-buttons"> <button class="restart-button" onclick="initBaseMode()"> Ещё раз
+        <div class="results-container view-enter"> <h3>Результаты</h3> <div class="final-score">${baseModeState.score} из ${baseModeState.maxQuestions} (${percentage}%)</div> <div class="final-message">${message}</div> <div class="results-buttons"> <button class="restart-button" onclick="initBaseMode()"> Ещё раз
                 </button> <button class="menu-button" onclick="SerEstarApp.showMainMenu()"> Меню
                 </button> </div> </div> `;
     lucide.createIcons();
