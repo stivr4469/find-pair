@@ -7,9 +7,10 @@ var _nj = null;
 
 const PasadoApp = {
   state: {
-    currentView: 'list',           // 'list' | 'card' | 'quiz' | 'inline' | 'classify' | 'results'
+    currentView: 'list',           // 'list' | 'card' | 'quiz' | 'inline' | 'classify' | 'contrast' | 'results'
     currentFormulaIndex: 0,
     quizMode: 'single',            // 'single' | 'all' | 'inline' | 'classify'
+    contrastIndex: 0,
     quizQuestions: [],
     currentQuestionIndex: 0,
     score: 0,
@@ -458,6 +459,34 @@ const PasadoApp = {
     }
   },
 
+  // ─── Contrast mode ───────────────────────────────────────────────────────────
+
+  startContrast: function() {
+    this.state.contrastIndex = 0;
+    this.state.currentView = 'contrast';
+    this._syncBackBtn();
+    if (typeof PasadoUI !== 'undefined') {
+      PasadoUI.renderContrastDeck(0);
+    }
+  },
+
+  nextContrast: function() {
+    var total = (typeof PASADO_CONTRAST !== 'undefined') ? PASADO_CONTRAST.length : 0;
+    var next = this.state.contrastIndex + 1;
+    if (next < total) {
+      this.state.contrastIndex = next;
+      if (typeof PasadoUI !== 'undefined') PasadoUI.renderContrastDeck(next);
+    }
+  },
+
+  prevContrast: function() {
+    var prev = this.state.contrastIndex - 1;
+    if (prev >= 0) {
+      this.state.contrastIndex = prev;
+      if (typeof PasadoUI !== 'undefined') PasadoUI.renderContrastDeck(prev);
+    }
+  },
+
   nextClassifyQuestion: function() {
     var next = this.state.currentQuestionIndex + 1;
     if (next >= this.state.quizQuestions.length) {
@@ -501,4 +530,7 @@ if (typeof window !== 'undefined') {
   window.pasadoInlineAnswer    = function(v) { PasadoApp.handleInlineAnswer(v); };
   window.pasadoStartClassify   = function()  { PasadoApp.startClassify(); };
   window.pasadoClassifyAnswer  = function(k) { PasadoApp.handleClassifyAnswer(k); };
+  window.pasadoStartContrast   = function()  { PasadoApp.startContrast(); };
+  window.pasadoNextContrast    = function()  { PasadoApp.nextContrast(); };
+  window.pasadoPrevContrast    = function()  { PasadoApp.prevContrast(); };
 }

@@ -97,7 +97,35 @@
     '.pasado-prog-fill{height:100%;border-radius:3px;transition:width 0.4s ease;background:var(--accent)}',
 
     // Card thumb hover
-    '.pasado-card-thumb{transition:transform 0.2s,box-shadow 0.2s;}'
+    '.pasado-card-thumb{transition:transform 0.2s,box-shadow 0.2s;}',
+
+    // Contrast mode
+    '.pct-card{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);',
+    '  border:1px solid var(--border);padding:20px 20px 16px;margin-bottom:16px;animation:pasadoFadeIn 0.3s ease both}',
+    '.pct-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}',
+    '@media(max-width:500px){.pct-pair{grid-template-columns:1fr}}',
+    '.pct-half{border-radius:12px;padding:14px 14px 12px;}',
+    '.pct-half-indef{background:rgba(231,76,60,0.09);border:1.5px solid rgba(231,76,60,0.35)}',
+    '.pct-half-imp{background:rgba(52,152,219,0.09);border:1.5px solid rgba(52,152,219,0.35)}',
+    '.pct-badge{display:inline-block;font-size:0.65rem;font-weight:700;letter-spacing:0.08em;',
+    '  text-transform:uppercase;padding:2px 8px;border-radius:6px;margin-bottom:8px;}',
+    '.pct-badge-indef{background:rgba(231,76,60,0.18);color:#c0392b}',
+    '.pct-badge-imp{background:rgba(52,152,219,0.18);color:#1a78c2}',
+    '.pct-es{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:5px;line-height:1.4}',
+    '.pct-ru{font-size:0.82rem;color:var(--muted);font-style:italic;line-height:1.4}',
+    '.pct-signal{background:rgba(234,179,8,0.13);border:1px solid rgba(234,179,8,0.4);border-radius:8px;',
+    '  padding:8px 12px;margin-bottom:10px;font-size:0.82rem;color:var(--text);}',
+    '.pct-signal-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;',
+    '  color:rgba(161,125,0,0.85);margin-bottom:3px;}',
+    '.pct-signal-val{font-family:monospace;font-weight:600;word-break:break-word;}',
+    '.pct-rule{font-size:0.82rem;color:var(--muted);line-height:1.5}',
+    '.pct-nav{display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:8px}',
+    '.pct-nav-btn{background:var(--faint);border:1.5px solid var(--border);border-radius:10px;',
+    '  padding:9px 18px;font-size:0.9rem;font-weight:700;cursor:pointer;color:var(--text);',
+    '  transition:background 0.15s,border-color 0.15s;font-family:inherit}',
+    '.pct-nav-btn:hover{background:var(--accent-faint);border-color:var(--accent);color:var(--accent)}',
+    '.pct-nav-btn:disabled{opacity:0.35;cursor:default}',
+    '.pct-counter{font-size:0.82rem;color:var(--muted);font-weight:600}'
   ].join('\n');
   document.head.appendChild(style);
 })();
@@ -179,7 +207,7 @@ const PasadoUI = {
       '<div style="max-width:700px;margin:0 auto;padding:0 4px;" class="pasado-anim-in">',
 
 
-        '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:24px;">',
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">',
           '<button onclick="pasadoStartAllQuiz()" style="',
             'display:flex;flex-direction:column;align-items:center;gap:4px;',
             'padding:12px 8px;border:1.5px solid var(--border);border-radius:12px;',
@@ -198,6 +226,8 @@ const PasadoUI = {
             '<span style="font-weight:700;font-size:0.82rem;">Inline режим</span>',
             '<span style="font-size:0.7rem;color:var(--muted);">28 предложений</span>',
           '</button>',
+        '</div>',
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;">',
           '<button onclick="pasadoStartClassify()" style="',
             'display:flex;flex-direction:column;align-items:center;gap:4px;',
             'padding:12px 8px;border:1.5px solid var(--border);border-radius:12px;',
@@ -206,6 +236,15 @@ const PasadoUI = {
             'onmouseover="this.style.background=\'var(--accent-faint)\';this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.background=\'var(--surface)\';this.style.borderColor=\'var(--border)\'">',
             '<span style="font-weight:700;font-size:0.82rem;">Классификация</span>',
             '<span style="font-size:0.7rem;color:var(--muted);">48 примеров</span>',
+          '</button>',
+          '<button onclick="pasadoStartContrast()" style="',
+            'display:flex;flex-direction:column;align-items:center;gap:4px;',
+            'padding:12px 8px;border:1.5px solid var(--border);border-radius:12px;',
+            'background:var(--surface);color:var(--text);cursor:pointer;text-align:center;',
+            'box-shadow:var(--shadow);transition:background 0.15s,border-color 0.15s;" ',
+            'onmouseover="this.style.background=\'var(--accent-faint)\';this.style.borderColor=\'var(--accent)\'" onmouseout="this.style.background=\'var(--surface)\';this.style.borderColor=\'var(--border)\'">',
+            '<span style="font-weight:700;font-size:0.82rem;">Контраст</span>',
+            '<span style="font-size:0.7rem;color:var(--muted);">Indef. vs Imp. · 15 пар</span>',
           '</button>',
         '</div>',
 
@@ -798,6 +837,79 @@ const PasadoUI = {
     root.innerHTML = html;
     if (typeof lucide !== 'undefined') lucide.createIcons();
   },
+
+  // ─── View: contrast deck ─────────────────────────────────────────────────────
+
+  renderContrastDeck: function(index) {
+    var root = this._root();
+    if (!root) return;
+    var data = (typeof PASADO_CONTRAST !== 'undefined') ? PASADO_CONTRAST : [];
+    var total = data.length;
+    if (!total) return;
+    var i = Math.max(0, Math.min(index, total - 1));
+    var pair = data[i];
+
+    var html = [
+      '<div style="max-width:700px;margin:0 auto;padding:0 4px;" class="pasado-anim-in">',
+
+        // header
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">',
+          '<span style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);">Контраст: Indefinido vs Imperfecto</span>',
+          '<span style="font-size:0.78rem;color:var(--muted);">' + (i + 1) + ' / ' + total + '</span>',
+        '</div>',
+
+        // card
+        '<div class="pct-card">',
+
+          // pair columns
+          '<div class="pct-pair">',
+
+            '<div class="pct-half pct-half-indef">',
+              '<span class="pct-badge pct-badge-indef">Indefinido</span>',
+              '<div class="pct-es">' + _escHtmlP(pair.indef.es) + '</div>',
+              '<div class="pct-ru">' + _escHtmlP(pair.indef.ru) + '</div>',
+            '</div>',
+
+            '<div class="pct-half pct-half-imp">',
+              '<span class="pct-badge pct-badge-imp">Imperfecto</span>',
+              '<div class="pct-es">' + _escHtmlP(pair.imp.es) + '</div>',
+              '<div class="pct-ru">' + _escHtmlP(pair.imp.ru) + '</div>',
+            '</div>',
+
+          '</div>',
+
+          // signal
+          '<div class="pct-signal">',
+            '<div class="pct-signal-label">Ключевой сигнал</div>',
+            '<div class="pct-signal-val">' + _escHtmlP(pair.signal) + '</div>',
+          '</div>',
+
+          // rule
+          '<div class="pct-rule">' + _escHtmlP(pair.rule) + '</div>',
+
+          // navigation
+          '<div class="pct-nav">',
+            '<button class="pct-nav-btn" onclick="pasadoPrevContrast()" ' + (i === 0 ? 'disabled' : '') + '>← Пред.</button>',
+            '<button class="pct-nav-btn" onclick="pasadoBackToList()" style="font-size:0.78rem;padding:8px 12px;">✕ Закрыть</button>',
+            '<button class="pct-nav-btn" onclick="pasadoNextContrast()" ' + (i === total - 1 ? 'disabled' : '') + '>След. →</button>',
+          '</div>',
+
+        '</div>',
+
+        // progress dots
+        '<div style="display:flex;justify-content:center;gap:6px;margin-top:14px;flex-wrap:wrap;">',
+          data.map(function(_, j) {
+            return '<span style="width:8px;height:8px;border-radius:50%;flex-shrink:0;background:' +
+              (j === i ? 'var(--accent)' : 'var(--border)') + ';display:inline-block;"></span>';
+          }).join(''),
+        '</div>',
+
+      '</div>',
+    ].join('');
+
+    root.innerHTML = html;
+  },
+
 };
 
 // ─── Helper ───────────────────────────────────────────────────────────────────

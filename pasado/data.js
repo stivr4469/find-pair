@@ -1353,3 +1353,100 @@ const PASADO_CLASSIFY = [
   { text: "habíais visto esa película", answer: "pluscuamperfecto", hint: "habíais + participio = Pluscuamperfecto vosotros" },
   { text: "No pude porque había perdido", answer: "pluscuamperfecto", hint: "había perdido = причина в прошлом до другого прошлого → Pluscuamperfecto" }
 ];
+
+// ══════════════════════════════════════════════════════════════
+//  PASADO_CONTRAST — 15 пар Indefinido vs Imperfecto
+// ══════════════════════════════════════════════════════════════
+
+const PASADO_CONTRAST = [
+  {
+    indef: { es: "Ayer hablé con ella.", ru: "Вчера я поговорил с ней." },
+    imp:   { es: "Antes hablaba con ella todos los días.", ru: "Раньше я говорил с ней каждый день." },
+    signal: "ayer  vs  antes / todos los días",
+    rule: "Indefinido = конкретный момент в прошлом · Imperfecto = привычка"
+  },
+  {
+    indef: { es: "El sábado comí paella.", ru: "В субботу я ел паэлью." },
+    imp:   { es: "De niño comía paella cada semana.", ru: "В детстве я ел паэлью каждую неделю." },
+    signal: "el sábado  vs  de niño / cada semana",
+    rule: "Indefinido = единственный факт · Imperfecto = регулярная привычка"
+  },
+  {
+    indef: { es: "Llegó tarde ayer.", ru: "Вчера он опоздал." },
+    imp:   { es: "Siempre llegaba tarde al trabajo.", ru: "Он всегда опаздывал на работу." },
+    signal: "ayer  vs  siempre",
+    rule: "ayer → однократное прошлое (Indefinido) · siempre → повторяющееся (Imperfecto)"
+  },
+  {
+    indef: { es: "El domingo fui al mercado.", ru: "В воскресенье я сходил на рынок." },
+    imp:   { es: "Los domingos iba al mercado con mi madre.", ru: "По воскресеньям я ходил на рынок с мамой." },
+    signal: "el domingo  vs  los domingos",
+    rule: "Единственное воскресенье (Indef.) vs каждое воскресенье (Imp.)"
+  },
+  {
+    indef: { es: "Ayer hice mucho ejercicio.", ru: "Вчера я много тренировался." },
+    imp:   { es: "Antes hacía ejercicio todos los días.", ru: "Раньше я тренировался каждый день." },
+    signal: "ayer  vs  antes / todos los días",
+    rule: "Indef. = завершённое действие · Imp. = описание образа жизни в прошлом"
+  },
+  {
+    indef: { es: "Tuve miedo en ese momento.", ru: "В тот момент мне стало страшно." },
+    imp:   { es: "Tenía miedo de la oscuridad de niño.", ru: "В детстве я боялся темноты." },
+    signal: "en ese momento  vs  de niño",
+    rule: "en ese momento = конкретный эпизод (Indef.) · de niño = постоянное состояние (Imp.)"
+  },
+  {
+    indef: { es: "El viernes vi esa película.", ru: "В пятницу я посмотрел этот фильм." },
+    imp:   { es: "Cuando era estudiante, veía muchas películas.", ru: "Когда я был студентом, я смотрел много фильмов." },
+    signal: "el viernes  vs  cuando era estudiante",
+    rule: "Indef. = разовое событие · Imp. = фон / описание периода жизни"
+  },
+  {
+    indef: { es: "Estuve en Roma tres días.", ru: "Я пробыл в Риме три дня." },
+    imp:   { es: "Vivía en Roma cuando tenía 20 años.", ru: "Я жил в Риме, когда мне было 20 лет." },
+    signal: "tres días (ограниченный период)  vs  cuando tenía 20 años",
+    rule: "Indef. = период с чёткими границами · Imp. = фоновое состояние/жизнь"
+  },
+  {
+    indef: { es: "No pude dormir anoche.", ru: "Прошлой ночью я не смог заснуть." },
+    imp:   { es: "Antes podía dormir ocho horas sin problema.", ru: "Раньше я мог спать по восемь часов без проблем." },
+    signal: "anoche  vs  antes",
+    rule: "anoche = вчерашняя ночь, факт (Indef.) · antes = в прошлом обычно (Imp.)"
+  },
+  {
+    indef: { es: "Conocí a María en 2020.", ru: "Я познакомился с Марией в 2020 году." },
+    imp:   { es: "Conocía bien la ciudad donde vivía.", ru: "Я хорошо знал город, в котором жил." },
+    signal: "en 2020  vs  donde vivía",
+    rule: "conocer (Indef.) = момент знакомства · conocer (Imp.) = длительное состояние «знать»"
+  },
+  {
+    indef: { es: "De repente, supe la verdad.", ru: "Внезапно я узнал правду." },
+    imp:   { es: "Sabía que algo iba mal.", ru: "Я знал, что что-то идёт не так." },
+    signal: "de repente  vs  (фон без маркёра)",
+    rule: "saber (Indef.) = момент, когда узнал · saber (Imp.) = уже знал / фоновое знание"
+  },
+  {
+    indef: { es: "El año pasado trabajé en París.", ru: "В прошлом году я работал в Париже." },
+    imp:   { es: "Cuando era joven, trabajaba en una tienda.", ru: "Когда я был молодым, я работал в магазине." },
+    signal: "el año pasado  vs  cuando era joven",
+    rule: "el año pasado = конкретный завершённый год (Indef.) · cuando era = фоновый период (Imp.)"
+  },
+  {
+    indef: { es: "Vi a Juan y le hablé.", ru: "Я увидел Хуана и заговорил с ним." },
+    imp:   { es: "Cuando le vi, hablaba por teléfono.", ru: "Когда я увидел его, он говорил по телефону." },
+    signal: "vi + hablé (два события) vs vi + hablaba (событие + фон)",
+    rule: "Два Indef. = цепочка действий · Indef. + Imp. = событие прерывает фоновое действие"
+  },
+  {
+    indef: { es: "Ayer fue un día horrible.", ru: "Вчера был ужасный день." },
+    imp:   { es: "Era un día horrible cuando llegó la noticia.", ru: "Это был ужасный день, когда пришла новость." },
+    signal: "ayer  vs  cuando llegó (фон для события)",
+    rule: "fue (Indef.) = оценка завершённого дня · era (Imp.) = описание фона"
+  },
+  {
+    indef: { es: "Aquel día me enamoré de ella.", ru: "В тот день я влюбился в неё." },
+    imp:   { es: "Cuando era joven, me gustaba mucho la música.", ru: "Когда я был молодым, мне очень нравилась музыка." },
+    signal: "aquel día  vs  cuando era joven",
+    rule: "Indef. = переломный момент · Imp. = постоянный вкус/состояние в прошлом"
+  }
+];
