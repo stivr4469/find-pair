@@ -55,13 +55,15 @@ const PASADO_DATA = [
         hint: "Indefinido nosotros (-AR): stem + amos\n⚠️ Совпадает с Presente — контекст уточняет время\nllegar → llegamos"
       },
       {
-        question: "Ayer mis amigos _____ en la fiesta hasta tarde. (bailar)",
+        before: "Ayer mis amigos",
+        after: "en la fiesta hasta tarde.",
         options: ["bailaron", "bailaban", "han bailado", "habían bailado"],
         correct: 0,
         hint: "«Ayer» = сигнал Indefinido\nbailaban = Imperfecto (привычка); han bailado = hoy/esta semana\nbailar + ellos: bail + aron = bailaron"
       },
       {
-        question: "La semana pasada yo _____ una camisa nueva. (comprar)",
+        before: "La semana pasada yo",
+        after: "una camisa nueva.",
         options: ["compré", "compraba", "he comprado", "iba a comprar"],
         correct: 0,
         hint: "«La semana pasada» = завершённый период → Indefinido\ncompraba = привычка без даты; he comprado = esta semana\ncomprar + yo: compr + é = compré"
@@ -114,13 +116,15 @@ const PASADO_DATA = [
         hint: "Indefinido nosotros (-ER): stem + imos\ncomprendíamos = длящееся состояние (Imperfecto)\ncomprender → comprendimos"
       },
       {
-        question: "El martes pasado nosotros _____ la lección completa. (comprender)",
+        before: "El martes pasado nosotros",
+        after: "la lección completa.",
         options: ["comprendimos", "comprendíamos", "hemos comprendido", "habíamos comprendido"],
         correct: 0,
         hint: "«El martes pasado» = завершённый момент → Indefinido\ncomprendíamos = привычка без даты (Imperfecto)\ncomprender + nosotros: comprend + imos = comprendimos"
       },
       {
-        question: "En 2019 ellos _____ juntos en Buenos Aires. (vivir)",
+        before: "En 2019 ellos",
+        after: "juntos en Buenos Aires.",
         options: ["vivimos", "vivieron", "vivían", "han vivido"],
         correct: 1,
         hint: "«En 2019» = конкретный завершённый период → Indefinido\nvivían = без точки в прошлом (Imperfecto)\nvivir + ellos: viv + ieron = vivieron"
@@ -173,13 +177,15 @@ const PASADO_DATA = [
         hint: "hacer, Indefinido yo: hice\nhacía = делал каждый день (Imperfecto)\nhice = однократный завершённый факт"
       },
       {
-        question: "¿Qué _____ (tú, hacer) ayer por la tarde?",
+        before: "¿Qué",
+        after: "ayer por la tarde?",
         options: ["hiciste", "hacías", "has hecho", "habías hecho"],
         correct: 0,
         hint: "«Ayer» = сигнал Indefinido\nhacías = привычное действие (Imperfecto); has hecho = hoy/esta semana\nhacer + tú: hiciste (⚠️ c→z только у él: hizo)"
       },
       {
-        question: "El verano pasado nosotros _____ (ir) a la playa tres veces.",
+        before: "El verano pasado nosotros",
+        after: "a la playa tres veces.",
         options: ["fuimos", "íbamos", "hemos ido", "habíamos ido"],
         correct: 0,
         hint: "«El verano pasado» + «tres veces» = факт с числом → Indefinido\níbamos = привычка без счёта (Imperfecto)\nir + nosotros: fuimos"
@@ -232,13 +238,15 @@ const PASADO_DATA = [
         hint: "venir, Indefinido yo: vine\nvenía = приходил регулярно (Imperfecto)\nven- → vin-"
       },
       {
-        question: "Anteayer yo _____ (saber) la noticia y me sorprendí mucho.",
+        before: "Anteayer yo",
+        after: "la noticia y me sorprendí mucho.",
         options: ["sabía", "supe", "sabé", "he sabido"],
         correct: 1,
         hint: "«Anteayer» = сигнал Indefinido\nsabía = «знал» (состояние); supe = «узнал» (момент открытия)\nsaber + yo: sab- → sup- → supe"
       },
       {
-        question: "Ayer ellos _____ (venir) a la reunión sin avisar.",
+        before: "Ayer ellos",
+        after: "a la reunión sin avisar.",
         options: ["venían", "vinieron", "han venido", "habían venido"],
         correct: 1,
         hint: "«Ayer» = сигнал Indefinido\nvenían = приходили регулярно (Imperfecto)\nvenir + ellos: ven- → vin- → vinieron"
@@ -295,13 +303,15 @@ const PASADO_DATA = [
         hint: "Предпочтение/привычка в прошлом → Imperfecto\namar + nosotros: am + ábamos = amábamos\n⚠️ ударение: ÁBamos"
       },
       {
-        question: "Cada verano nosotros _____ (caminar) por la orilla del río.",
+        before: "Cada verano nosotros",
+        after: "por la orilla del río.",
         options: ["caminamos", "caminábamos", "hemos caminado", "caminaremos"],
         correct: 1,
         hint: "«Cada verano» = повторяющееся действие → Imperfecto\ncaminamos = один конкретный раз (Indefinido)\ncaminar + nosotros: camin + ábamos = caminábamos"
       },
       {
-        question: "Cuando llegué a casa, ella todavía _____ (cocinar).",
+        before: "Cuando llegué a casa, ella todavía",
+        after: "la cena.",
         options: ["cocinó", "cocinaba", "ha cocinado", "cocinará"],
         correct: 1,
         hint: "Фоновое длящееся действие → Imperfecto\n«Cuando llegué» (Indefinido) застаёт «cocinaba» в процессе\ncocinar + ella: cocin + aba = cocinaba"
@@ -354,13 +364,15 @@ const PASADO_DATA = [
         hint: "«Cada día» = сигнал Imperfecto (привычка)\nleímos = прочитали конкретный раз (Indefinido)\nleer + nosotros: le + íamos = leíamos"
       },
       {
-        question: "Cuando éramos jóvenes, nosotros _____ (vivir) en el campo.",
+        before: "Cuando éramos jóvenes, nosotros",
+        after: "en el campo.",
         options: ["vivimos", "vivíamos", "hemos vivido", "habíamos vivido"],
         correct: 1,
         hint: "«Cuando éramos jóvenes» = длительное прошлое состояние → Imperfecto\nvivimos = факт с конкретной точкой (Indefinido)\nvivir + nosotros: viv + íamos = vivíamos"
       },
       {
-        question: "El perro _____ (dormir) en su cama cada noche.",
+        before: "El perro",
+        after: "en su cama cada noche.",
         options: ["durmió", "dormía", "ha dormido", "habrá dormido"],
         correct: 1,
         hint: "«Cada noche» = повторяющаяся привычка → Imperfecto\ndurmió = один конкретный раз (Indefinido)\ndormir + él: dorm + ía = dormía"
@@ -413,13 +425,15 @@ const PASADO_DATA = [
         hint: "Регулярная привычка → Imperfecto\nfui = однажды пошёл (Indefinido)\nir + yo: iba (основа ib-, не -AR)"
       },
       {
-        question: "De niña ella siempre _____ (ir) al parque con su abuela.",
+        before: "De niña ella siempre",
+        after: "al parque con su abuela.",
         options: ["fue", "iba", "ha ido", "irá"],
         correct: 1,
         hint: "«De niña + siempre» = привычка в детстве → Imperfecto\nfue = однократный конкретный выход (Indefinido)\nir + ella: iba"
       },
       {
-        question: "Antes yo siempre _____ (ver) las noticias por la noche.",
+        before: "Antes yo siempre",
+        after: "las noticias por la noche.",
         options: ["vi", "veía", "he visto", "vería"],
         correct: 1,
         hint: "«Antes + siempre» = регулярная привычка → Imperfecto\nvi = один раз посмотрел (Indefinido)\nver + yo: ve + ía = veía"
@@ -472,7 +486,8 @@ const PASADO_DATA = [
         hint: "Imperfecto = длящееся ФОНОВОЕ действие. Indefinido = конкретный момент (зазвонил)"
       },
       {
-        question: "Antes, ella siempre _____ (comprar) en ese mercado",
+        before: "Antes, ella siempre",
+        after: "en ese mercado.",
         options: ["compró", "compraba", "ha comprado", "había comprado"],
         correct: 1,
         hint: "Antes + siempre = сигналы Imperfecto (привычка). Правильно: compraba"
@@ -535,13 +550,15 @@ const PASADO_DATA = [
         hint: "Perfecto Compuesto nosotros: hemos + причастие\nhabíamos = Pluscuamperfecto\nhemos trabajado"
       },
       {
-        question: "Hoy vosotros _____ (ver) una película increíble.",
+        before: "Hoy vosotros",
+        after: "una película increíble.",
         options: ["visteis", "veíais", "habéis visto", "habíais visto"],
         correct: 2,
         hint: "«Hoy» = сигнал Perfecto Compuesto\nvisteis = Indefinido (завершённый день прошлого)\nPerfecto Comp. vosotros: habéis + visto"
       },
       {
-        question: "Este mes ellos _____ (salir) tres veces.",
+        before: "Este mes ellos",
+        after: "tres veces.",
         options: ["salieron", "salían", "han salido", "habían salido"],
         correct: 2,
         hint: "«Este mes» = незавершённый текущий период → Perfecto Compuesto\nsalieron = Indefinido (el mes pasado)\nhan + salido (нестанд. причастие)"
@@ -594,13 +611,15 @@ const PASADO_DATA = [
         hint: "he + hablado (-AR → -ado)\nHablé = Indefinido (конкретный момент прошлого)\nHe hablado = связь с настоящим"
       },
       {
-        question: "Esta semana yo _____ mucho. (trabajar, Perfecto Compuesto)",
+        before: "Esta semana yo",
+        after: "mucho.",
         options: ["trabajé", "trabajaba", "he trabajado", "había trabajado"],
         correct: 2,
         hint: "«Esta semana» = незавершённый текущий период → Perfecto Compuesto\ntrabajé = Indefinido (la semana pasada)\nhe + trabajado (-AR → -ado)"
       },
       {
-        question: "Ellos nunca _____ (vivir) en España.",
+        before: "Ellos nunca",
+        after: "en España.",
         options: ["vivieron", "vivían", "han vivido", "habían vivido"],
         correct: 2,
         hint: "«Nunca» + жизненный опыт → Perfecto Compuesto\nvivieron = факт Indefinido; habían vivido = Pluscuamperfecto\nvivir → vivido (-IR → -ido); han + vivido"
@@ -700,7 +719,8 @@ const PASADO_DATA = [
         hint: "esta semana (на этой неделе) — сигнал Perfecto Compuesto"
       },
       {
-        question: "¿___ estado alguna vez en España? (tú)",
+        before: "¿",
+        after: "estado alguna vez en España?",
         options: ["Has", "Habías", "Hubo", "Hube"],
         correct: 0,
         hint: "alguna vez (когда-нибудь) + Perfecto Compuesto: ¿Has estado alguna vez...?"
@@ -816,7 +836,8 @@ const PASADO_DATA = [
         hint: "Pluscuamperfecto = действие, завершившееся ДО другого прошлого момента"
       },
       {
-        question: "Cuando llegué, ella ya ___ (salir)",
+        before: "Cuando llegué, ella ya",
+        after: "de casa.",
         options: ["salió", "había salido", "salía", "ha salido"],
         correct: 1,
         hint: "ya + Pluscuamperfecto: ya había salido. Она ушла ДО того, как я пришёл"
@@ -828,7 +849,8 @@ const PASADO_DATA = [
         hint: "Nunca había visto = я никогда раньше не видел (до этого момента в прошлом)"
       },
       {
-        question: "Cuando volvió a casa, los niños ya ___ (acostarse)",
+        before: "Cuando volvió a casa, los niños ya",
+        after: ".",
         options: ["se acostaron", "se habían acostado", "se acostaban", "se han acostado"],
         correct: 1,
         hint: "ya + Pluscuamperfecto: se habían acostado — дети уже спали к моменту возвращения"
@@ -840,7 +862,8 @@ const PASADO_DATA = [
         hint: "Потеря произошла ДО нужды в ключе → Pluscuamperfecto: había perdido"
       },
       {
-        question: "Él me dijo que ___ (ver) esa película.",
+        before: "Él me dijo que",
+        after: "esa película.",
         options: ["vio", "había visto", "veía", "ha visto"],
         correct: 1,
         hint: "dijo que + прошлое внутри → Pluscuamperfecto: había visto"

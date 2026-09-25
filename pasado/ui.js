@@ -341,35 +341,62 @@ const PasadoUI = {
     var root = this._root();
     if (!root) return;
 
-    var optionLabels = ['A', 'B', 'C', 'D'];
-    var pct = total > 0 ? Math.round((qIndex / total) * 100) : 0;
-
-    var optionsHtml = question.options.map(function(option, i) {
-      return [
-        '<button',
-          ' id="pasado-opt-' + i + '"',
-          ' onclick="pasadoHandleAnswer(' + i + ')"',
-          ' style="',
-            'display: flex; align-items: center; gap: 12px;',
-            'width: 100%; padding: 13px 16px;',
-            'border: 2px solid var(--border); border-radius: 10px;',
-            'background: var(--surface); cursor: pointer;',
-            'transition: border-color 0.2s, background 0.2s;',
-            'text-align: left; font-size: 0.95rem; font-family: inherit; color: var(--text);',
-          '"',
-        '>',
-          '<span style="',
-            'display: inline-flex; align-items: center; justify-content: center;',
-            'width: 28px; height: 28px; border-radius: 50%;',
-            'background: var(--accent-faint); color: var(--accent);',
-            'font-weight: 700; font-size: 0.8rem; flex-shrink: 0;',
-          '">' + optionLabels[i] + '</span>',
-          '<span>' + _escHtmlP(option) + '</span>',
-        '</button>',
-      ].join('');
-    }).join('');
-
     var ttsSpanish = question.ttsText || '';
+    var questionBodyHtml;
+
+    if (question.before !== undefined) {
+      var optBtnsHtml = question.options.map(function(opt, i) {
+        return '<button class="pasado-inline-btn" id="pasado-opt-' + i + '" onclick="pasadoHandleAnswer(' + i + ')">' + _escHtmlP(opt) + '</button>';
+      }).join('');
+      var sentenceHtml = _escHtmlP(question.before) +
+        ' <span class="pasado-inline-opts" id="pasado-inline-opts">' + optBtnsHtml + '</span>' +
+        (question.after ? ' ' + _escHtmlP(question.after) : '');
+      questionBodyHtml = [
+        '<div style="background:var(--faint);border-radius:10px;padding:18px 16px;text-align:center;margin-bottom:16px;">',
+          '<div style="font-size:0.82rem;color:var(--accent);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;">Выбери правильную форму</div>',
+          '<div class="inline-question-text">' + sentenceHtml + '</div>',
+        '</div>',
+      ].join('');
+    } else {
+      var optionLabels = ['A', 'B', 'C', 'D'];
+      var optionsHtml = question.options.map(function(option, i) {
+        return [
+          '<button',
+            ' id="pasado-opt-' + i + '"',
+            ' onclick="pasadoHandleAnswer(' + i + ')"',
+            ' style="',
+              'display: flex; align-items: center; gap: 12px;',
+              'width: 100%; padding: 13px 16px;',
+              'border: 2px solid var(--border); border-radius: 10px;',
+              'background: var(--surface); cursor: pointer;',
+              'transition: border-color 0.2s, background 0.2s;',
+              'text-align: left; font-size: 0.95rem; font-family: inherit; color: var(--text);',
+            '"',
+          '>',
+            '<span style="',
+              'display: inline-flex; align-items: center; justify-content: center;',
+              'width: 28px; height: 28px; border-radius: 50%;',
+              'background: var(--accent-faint); color: var(--accent);',
+              'font-weight: 700; font-size: 0.8rem; flex-shrink: 0;',
+            '">' + optionLabels[i] + '</span>',
+            '<span>' + _escHtmlP(option) + '</span>',
+          '</button>',
+        ].join('');
+      }).join('');
+      questionBodyHtml = [
+        '<div style="',
+          'font-size: 1.15rem; font-weight: 700; color: var(--text);',
+          'text-align: center; margin-bottom: 8px; line-height: 1.5;',
+          'display: flex; align-items: center; justify-content: center; gap: 8px;',
+        '">',
+          '<span>' + _escHtmlP(question.question) + '</span>',
+          (ttsSpanish ? '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ttsSpanish) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать">' + (window.ICON_VOL||'') + '</button>' : ''),
+        '</div>',
+        '<div id="pasado-options" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">',
+          optionsHtml,
+        '</div>',
+      ].join('');
+    }
 
     var html = [
       '<div style="max-width: 600px; margin: 0 auto; padding-bottom: 80px;" class="pasado-anim-in">',
@@ -379,7 +406,7 @@ const PasadoUI = {
             '<span style="',
               'background: var(--accent);',
               'color: white; padding: 4px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 700;',
-            '"><i data-lucide="' + formulaEmoji + '" style="width:14px;height:14px;stroke:#fff;stroke-width:2;vertical-align:middle;margin-right:5px;pointer-events:none"></i>' + _escHtmlP(formulaName) + '</span>',
+            '">' + _escHtmlP(formulaName) + '</span>',
             '<button onclick="pasadoBackToList()" style="background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.2rem; padding: 4px;" title="К списку">✕</button>',
           '</div>',
 
@@ -387,18 +414,7 @@ const PasadoUI = {
             (progressLabel || ('Вопрос ' + (qIndex + 1) + ' из ' + total)),
           '</div>',
 
-          '<div style="',
-            'font-size: 1.15rem; font-weight: 700; color: var(--text);',
-            'text-align: center; margin-bottom: 8px; line-height: 1.5;',
-            'display: flex; align-items: center; justify-content: center; gap: 8px;',
-          '">',
-            '<span>' + _escHtmlP(question.question) + '</span>',
-            (ttsSpanish ? '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ttsSpanish) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать">' + (window.ICON_VOL||'') + '</button>' : ''),
-          '</div>',
-
-          '<div id="pasado-options" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">',
-            optionsHtml,
-          '</div>',
+          questionBodyHtml,
 
           '<div id="pasado-feedback" style="display: none;"></div>',
 
@@ -412,20 +428,22 @@ const PasadoUI = {
 
     root.innerHTML = html;
 
-    root.querySelectorAll('[id^="pasado-opt-"]').forEach(function(btn) {
-      btn.addEventListener('mouseenter', function() {
-        if (!btn.disabled) {
-          btn.style.borderColor = 'var(--accent)';
-          btn.style.background = 'var(--accent-faint)';
-        }
+    if (question.before === undefined) {
+      root.querySelectorAll('[id^="pasado-opt-"]').forEach(function(btn) {
+        btn.addEventListener('mouseenter', function() {
+          if (!btn.disabled) {
+            btn.style.borderColor = 'var(--accent)';
+            btn.style.background = 'var(--accent-faint)';
+          }
+        });
+        btn.addEventListener('mouseleave', function() {
+          if (!btn.disabled && !btn.classList.contains('correct') && !btn.classList.contains('incorrect')) {
+            btn.style.borderColor = 'var(--border)';
+            btn.style.background = 'var(--surface)';
+          }
+        });
       });
-      btn.addEventListener('mouseleave', function() {
-        if (!btn.disabled && !btn.classList.contains('correct') && !btn.classList.contains('incorrect')) {
-          btn.style.borderColor = 'var(--border)';
-          btn.style.background = 'var(--surface)';
-        }
-      });
-    });
+    }
   },
 
   // ─── Quiz feedback ───────────────────────────────────────────────────────────
