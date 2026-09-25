@@ -70,6 +70,12 @@ html, body {
     background: color-mix(in srgb, var(--accent) 8%, var(--surface));
 }
 
+/* Исчезновение совпавшего слова */
+.word-out {
+    animation: vm-fade-out-scale var(--dur-normal) var(--ease-in-out) forwards;
+    pointer-events: none;
+}
+
 /* Слова */
 .word {
     padding: 12px 15px;

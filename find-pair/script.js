@@ -52,6 +52,9 @@ function displayWords(pairs) {
     const leftColumn = document.getElementById('left-column');
     const rightColumn = document.getElementById('right-column');
 
+    leftColumn.classList.add('stagger');
+    rightColumn.classList.add('stagger');
+
     // Перемешиваем только правую колонку отдельно от левой
     const rightWords = pairs.map(pair => pair.es).sort(() => Math.random() - 0.5);
 
@@ -164,32 +167,62 @@ function updateBlockedWords() {
 
 // Функция для проверки соответствия выбранных слов
 function checkMatch() {
-    isProcessing = true;  // Блокируем клики во время проверки
+    isProcessing = true;
 
     if (selectedLeftWord.dataset.match === selectedRightWord.textContent) {
-        // Если пара совпадает, скрываем слова
-        selectedLeftWord.style.visibility = 'hidden';
-        selectedRightWord.style.visibility = 'hidden';
-        selectedLeftWord.classList.add('matched');
-        selectedRightWord.classList.add('matched');
-        selectedLeftWord.classList.remove('selected');
-        selectedRightWord.classList.remove('selected');
-        
-        // Сбрасываем выбор
+        var leftW = selectedLeftWord;
+        var rightW = selectedRightWord;
+
+        // Помечаем совпавшие сразу — блокирует повторные клики
+        leftW.classList.add('matched');
+        rightW.classList.add('matched');
+        leftW.classList.remove('selected');
+        rightW.classList.remove('selected');
+
         selectedLeftWord = null;
         selectedRightWord = null;
         isProcessing = false;
-        
-        // Снимаем блокировку с остальных слов
         updateBlockedWords();
-        
-        // Проверяем окончание игры
-        checkGameEnd();
+
+        // Счётчик: checkGameEnd только когда оба слова скрыты
+        var pending = 2;
+        function onWordHidden() {
+            pending--;
+            if (pending === 0) checkGameEnd();
+        }
+
+        [leftW, rightW].forEach(function(w) {
+            if (typeof replayAnimation === 'function') replayAnimation(w, 'anim-correct');
+            // После vm-pop (--dur-slow = 400ms) — запускаем fade-out
+            setTimeout(function() {
+                w.classList.remove('anim-correct');
+                w.classList.add('word-out');
+                var done = false;
+                function hide() {
+                    if (done) return; done = true;
+                    w.style.visibility = 'hidden';
+                    w.classList.remove('word-out');
+                    onWordHidden();
+                }
+                w.addEventListener('animationend', function handler(e) {
+                    if (e.animationName === 'vm-fade-out-scale') {
+                        w.removeEventListener('animationend', handler);
+                        hide();
+                    }
+                });
+                setTimeout(hide, 400); // страховка: dur-normal(250) + буфер
+            }, 400); // ждём окончания vm-pop
+        });
     } else {
-        // Если пара не совпадает, снимаем выделение через небольшую задержку
-        setTimeout(() => {
-            selectedLeftWord.classList.remove('selected');
-            selectedRightWord.classList.remove('selected');
+        var leftW = selectedLeftWord;
+        var rightW = selectedRightWord;
+        if (typeof replayAnimation === 'function') {
+            replayAnimation(leftW, 'anim-wrong');
+            replayAnimation(rightW, 'anim-wrong');
+        }
+        setTimeout(function() {
+            leftW.classList.remove('selected');
+            rightW.classList.remove('selected');
             selectedLeftWord = null;
             selectedRightWord = null;
             isProcessing = false;
@@ -200,8 +233,7 @@ function checkMatch() {
 
 // Функция для проверки завершения игры
 function checkGameEnd() {
-    const remainingWords = document.querySelectorAll('.word:not([style*="visibility: hidden"])');
-
+    var remainingWords = document.querySelectorAll('.word:not(.matched)');
     if (remainingWords.length === 0) {
         showFindPairToast('¡Excelente! Все пары найдены!', function() { initGame(); });
     }

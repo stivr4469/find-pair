@@ -817,9 +817,9 @@ const PasadoUI = {
           '<h2 style="color: var(--text); margin-bottom: 8px; font-size: 1.4rem;">Результат</h2>',
 
           '<div style="font-size: 3rem; font-weight: 700; color: var(--accent); margin: 16px 0 8px;">',
-            score + ' / ' + total,
+            '<span id="pas-res-score">0</span> / ' + total,
           '</div>',
-          '<div style="font-size: 1.1rem; color: var(--muted); margin-bottom: 6px;">' + pct + '%</div>',
+          '<div style="font-size: 1.1rem; color: var(--muted); margin-bottom: 6px;"><span id="pas-res-pct">0</span>%</div>',
 
           '<div style="height: 8px; background: var(--faint); border-radius: 4px; margin: 12px auto 20px; max-width: 280px; overflow: hidden;">',
             '<div style="height: 100%; width: ' + pct + '%; background: linear-gradient(90deg, var(--accent), #27ae60); border-radius: 4px;"></div>',
@@ -838,6 +838,10 @@ const PasadoUI = {
 
     root.innerHTML = html;
     if (typeof lucide !== 'undefined') lucide.createIcons();
+    if (typeof animateCount === 'function') {
+      animateCount(root.querySelector('#pas-res-score'), score, 700);
+      animateCount(root.querySelector('#pas-res-pct'), pct, 700);
+    }
   },
 
   // ─── View: contrast deck ─────────────────────────────────────────────────────

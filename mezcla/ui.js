@@ -56,9 +56,9 @@ const MezclaUI = {
     ].join('');
 
     var html = [
-      '<div style="max-width: 600px; margin: 0 auto; padding: 0 4px;">',
+      '<div class="view-enter" style="max-width: 600px; margin: 0 auto; padding: 0 4px;">',
 
-        '<div style="display: flex; flex-direction: column; gap: 12px;">',
+        '<div class="stagger" style="display: flex; flex-direction: column; gap: 12px;">',
           cardsHtml,
           addCardHtml,
         '</div>',
@@ -107,7 +107,7 @@ const MezclaUI = {
     if (!root) return;
 
     var html = [
-      '<div style="max-width: 600px; margin: 0 auto;">',
+      '<div class="view-enter" style="max-width: 600px; margin: 0 auto;">',
 
         '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">',
           '<button data-mezcla-back style="',
@@ -200,7 +200,7 @@ const MezclaUI = {
     var esCount = state.tokenLangs.filter(function(l) { return l === 'es'; }).length;
 
     var html = [
-      '<div style="max-width: 620px; margin: 0 auto;">',
+      '<div class="view-enter" style="max-width: 620px; margin: 0 auto;">',
 
         // ── Header
         '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">',

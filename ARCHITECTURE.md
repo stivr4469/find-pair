@@ -72,35 +72,42 @@ module/
 
 ---
 
-## Версии файлов (актуально на 2026-09-25 после code-review)
+## Версии файлов (актуально на 2026-09-25 после TASK-motion-ui)
 
 | Файл | Версия в HTML |
 |------|--------------|
-| `css/unified-styles.css` | v=25 |
-| `js/utils.js` | v=23 ← `isEquivalentAnswer()`, `ICON_RESULT` (SVG итогового экрана) |
-| `js/main.js` | v=2 ← stripped (убраны initTelegram, setupNavigation, console.log) |
+| `css/unified-styles.css` | v=27 ← токены motion, keyframes vm-*, .view-enter/.stagger/.anim-*, .se-progress-fill→scaleX |
+| `js/utils.js` | v=25 ← `replayAnimation()`, `animateCount()`, `prefersReducedMotion()`, `setTopbarProgress→scaleX` |
+| `js/main.js` | v=2 |
 | `js/naranjito.js` | v=3 |
-| `js/orange-throw.js` | v=6 |
-| `formulas/app.js` | v=20 ← isEquivalentAnswer вместо normalizeSpanish |
-| `formulas/ui.js` | v=27 ← карточки→button, TTS data-tts, иконка результата = `ICON_RESULT` |
-| `formulas/data.js` | v=16 ← Q1-Q6 fill-blank для 9 формул (54 вопроса) |
-| `pasado/app.js` | v=9 ← isEquivalentAnswer в handleAnswer + handleAnswerCyclic |
-| `pasado/ui.js` | v=19 ← карточки→button, classify zones→button, иконка результата = `ICON_RESULT` |
-| `pasado/data.js` | v=7 ← все Q1-Q6 before/after + PASADO_CONTRAST (15 пар) |
-| `tren/app.js` | v=16 ← удалены App.debug() и все console.log |
-| `tren/mode6-ui.js` | v=16 ← blank-fill layout (sentence + tiles below) |
-| `tren/mode6.js` | v=13 ← blank fill green/red on answer |
-| `tren/mode7-ui.js` | v=17 ← колонки = `div role="button" tabindex=0` + `mode7ColumnKeydown` (Enter/Space) |
-| `mezcla/app.js` | v=9 ← AbortController для отмены перевода при быстрых кликах |
-| `mezcla/ui.js` | v=10 |
-| `ser-estar/ser-estar-app.js` | v=6 ← switchMode/showMainMenu вызывают `stopClassifyMode()` |
-| `ser-estar/ser-estar-mode2.js` | v=6 |
-| `ser-estar/ser-estar-context-ui.js` | v=7 ← fill-blank tile UI (sentence + tiles below) |
-| `ser-estar/ser-estar-context-mode.js` | v=3 ← убран console.log |
-| `ser-estar/ser-estar-rules-data.js` | v=2 ← исправлен комментарий |
-| `ser-estar/classify-ui.js` | v=9 |
-| `ser-estar/classify-mode.js` | v=6 ← `stopClassifyMode()` — отмена таймера перехода |
-| `find-pair/script.js` | v=5 ← убраны console.log |
+| `js/orange-throw.js` | v=7 ← prefersReducedMotion check, duration 1900→1200ms, easing linear→ease-out |
+| `formulas/app.js` | v=20 |
+| `formulas/ui.js` | v=31 ← view-enter, stagger, anim-correct/wrong, scaleX progress, animateCount results |
+| `formulas/data.js` | v=16 |
+| `pasado/app.js` | v=9 |
+| `pasado/ui.js` | v=22 ← view-enter, stagger, .pasado-anim-in→vm-enter token, scaleX fills, animateCount results |
+| `pasado/data.js` | v=7 |
+| `tren/app.js` | v=17 ← stagger replay in showMainMenu() |
+| `tren/mode0-ui.js` | v=16 ← view-enter, stagger |
+| `tren/mode1-4-ui.js` | v=15 ← view-enter, stagger |
+| `tren/mode5-6-ui.js` | v=17 ← view-enter, stagger |
+| `tren/mode6-ui.js` | v=18 ← specific transition (no more transition:all) |
+| `tren/mode7-ui.js` | v=19 ← view-enter, stagger, specific transition |
+| `tren/mode6.js` | v=13 |
+| `mezcla/app.js` | v=9 |
+| `mezcla/ui.js` | v=11 ← view-enter on all 3 screens, stagger on list cards |
+| `ser-estar/ser-estar-app.js` | v=8 ← stagger replay in showMainMenu(), seSetProgress→scaleX |
+| `ser-estar/ser-estar-base-ui.js` | v=4 ← view-enter |
+| `ser-estar/ser-estar-base-mode.js` | v=3 ← anim-correct/wrong in checkBaseAnswer |
+| `ser-estar/ser-estar-mode2.js` | v=8 ← view-enter, anim-correct/wrong in checkAdvancedAnswer |
+| `ser-estar/ser-estar-context-ui.js` | v=8 ← view-enter |
+| `ser-estar/ser-estar-context-mode.js` | v=4 ← anim-correct/wrong in checkContextAnswer |
+| `ser-estar/ser-estar-rules-ui.js` | v=5 ← view-enter |
+| `ser-estar/ser-estar-rules-data.js` | v=2 |
+| `ser-estar/classify-ui.js` | v=10 ← view-enter |
+| `ser-estar/classify-mode.js` | v=6 |
+| `find-pair/script.js` | v=6 ← stagger columns, anim-correct/wrong, animated match disappear, checkGameEnd→.matched |
+| `find-pair/styles.css` | v=4 ← .word-out (vm-fade-out-scale) |
 
 ---
 
@@ -148,6 +155,50 @@ contrasts: [
 ### Формат обогащённого hint
 Формула: «СИГНАЛ-слово → ПРАВИЛО (на русском) → ФОРМА»
 Пример: `"«Ayer» = маркер однократного прошлого (Indefinido)\nhablar + yo → hablé"`
+
+---
+
+## Unified Motion System (TASK-motion-ui — завершён 2026-09-25)
+
+### CSS-классы
+
+| Класс | Применение |
+|-------|-----------|
+| `.view-enter` | Первый рендер экрана — opacity 0→1, translateY 8px→0 (`vm-enter`) |
+| `.stagger` | Контейнер — все `> *` получают cascading animation-delay |
+| `.anim-correct` | Кнопка правильного ответа — `vm-pop` (spring scale) |
+| `.anim-wrong` | Кнопка неверного ответа — `vm-shake` (translateX shake) |
+| `.word-out` | find-pair: совпавшее слово исчезает — `vm-fade-out-scale` |
+
+### CSS-токены (в `:root`)
+
+```css
+--dur-fast:   150ms   /* hover transitions */
+--dur-normal: 250ms   /* view-enter, word-out */
+--dur-slow:   400ms   /* anim-correct, anim-wrong, progress bars */
+--ease-out:   cubic-bezier(0.16, 1, 0.3, 1)
+--ease-in-out: cubic-bezier(0.65, 0, 0.35, 1)
+--spring:     cubic-bezier(0.34, 1.56, 0.64, 1)
+```
+
+### JS-хелперы (в `js/utils.js`, все глобальные)
+
+```js
+replayAnimation(el, className)  // убрать/reflow/добавить класс
+animateCount(el, to, ms, sfx)   // плавный счёт 0→to
+prefersReducedMotion()          // true если OS reduced-motion
+setTopbarProgress(pct)          // устанавливает scaleX на #se-progress-fill
+```
+
+### Правило reduced-motion
+
+- CSS: `@media (prefers-reduced-motion: reduce)` → `animation-duration: 0.01ms` (не `none` — сохраняет `animationend`)
+- JS: `prefersReducedMotion()` проверяется в `replayAnimation`, `animateCount`, `orange-throw`
+
+### Прогресс-бары (scaleX-паттерн)
+
+Прогресс-бары используют `transform: scaleX(0→1)` вместо `width: 0→100%`.
+Элемент имеет `width: 100%; transform-origin: left center`.
 
 ---
 

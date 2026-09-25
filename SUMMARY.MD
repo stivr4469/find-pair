@@ -5,6 +5,46 @@
 
 ---
 
+## Сессия: 2026-09-25 (продолжение 8) — Завершение TASK-motion-ui (Этапы 5–6)
+
+**Коммит:** (pending)
+
+### Этап 5.1 — find-pair анимации (`find-pair/script.js` v=5→6, `find-pair/styles.css` v=3→4)
+
+- **Stagger при старте:** `displayWords()` добавляет `stagger` на `#left-column` и `#right-column` → карточки каскадно появляются
+- **Правильная пара:** вместо мгновенного `visibility:hidden` — `anim-correct` (vm-pop 400ms) → `word-out` (vm-fade-out-scale 250ms) → `visibility:hidden`; `checkGameEnd()` вызывается после скрытия обоих слов
+- **Неверная пара:** `replayAnimation(el, 'anim-wrong')` на обоих словах
+- **`checkGameEnd()`** переключён с `querySelectorAll('.word:not([style*="visibility: hidden"])')` → `.word:not(.matched)` (надёжнее во время анимации)
+- **`.word-out`** добавлен в `find-pair/styles.css`: `animation: vm-fade-out-scale var(--dur-normal) var(--ease-in-out) forwards`
+
+### Этап 5.2 — mezcla (`mezcla/ui.js` v=10→11)
+
+- `view-enter` на внешнем `<div>` всех трёх экранов: `renderList`, `renderCustomInput`, `renderText`
+- `stagger` на списке карточек в `renderList` — каскадный вход
+
+### Этап 5.3 — orange-throw (`js/orange-throw.js` v=6→7; bumped в 4 index.html v=6→7)
+
+- `prefersReducedMotion()` check в начале `doThrow()` — при reduced-motion диспатчит `vamos:scored` сразу, без анимации
+- Duration 1900ms → 1200ms
+- Easing `'linear'` → `'cubic-bezier(0.25, 0.46, 0.45, 0.94)'`
+
+### Этап 5.4 — Анимированный счёт результатов
+
+- **`formulas/ui.js` v=30→31:** в `renderResults` — `<span id="fml-res-score">` и `<span id="fml-res-pct">` + `animateCount(el, val, 700)` после innerHTML
+- **`pasado/ui.js` v=21→22:** аналогично — `<span id="pas-res-score">` / `<span id="pas-res-pct">` + `animateCount`
+
+### Этап 6 — Тест движения + docs
+
+- `tests/smoke/motion.spec.js` (новый файл, 14 тестов): CSS-токены, keyframes, глобальные хелперы, stagger, matched-класс, wrong-shake, view-enter, scaleX
+- `ARCHITECTURE.md`: обновлена таблица версий; добавлен раздел «Unified Motion System» с CSS-классами, токенами, JS-хелперами, правилами reduced-motion
+- `SUMMARY.MD`: эта запись
+- Smoke: **98/98** зелёных (84 старых + 14 новых motion)
+- `TASK-motion-ui.md` удалён (задача выполнена)
+
+**Итоговые версии:** см. ARCHITECTURE.md → «Версии файлов»
+
+---
+
 ## Сессия: 2026-09-25 (продолжение 7) — Русский перевод для fill-blank вопросов
 
 **Коммит:** `4bd4154`

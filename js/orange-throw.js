@@ -74,6 +74,10 @@
     function doThrow() {
         if (throwing) return;
         if (!basket) return;
+        if (typeof prefersReducedMotion === 'function' && prefersReducedMotion()) {
+            window.dispatchEvent(new CustomEvent('vamos:scored'));
+            return;
+        }
 
         var buddy = document.getElementById('buddy');
         if (!buddy || !buddy.classList.contains('nj')) return;
@@ -130,8 +134,8 @@
                 offset: 1
             }
         ], {
-            duration: 1900,
-            easing: 'linear',
+            duration: 1200,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             fill: 'forwards'
         });
 

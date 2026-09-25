@@ -662,13 +662,13 @@ const FormulasUI = {
             'font-weight: 700;',
             'color: var(--accent);',
             'margin: 16px 0 8px;',
-          '">' + score + ' / ' + total + '</div>',
+          '"><span id="fml-res-score">0</span> / ' + total + '</div>',
 
           '<div style="',
             'font-size: 1.1rem;',
             'color: var(--muted);',
             'margin-bottom: 6px;',
-          '">' + pct + '%</div>',
+          '"><span id="fml-res-pct">0</span>%</div>',
 
           // Progress bar
           '<div style="',
@@ -701,6 +701,10 @@ const FormulasUI = {
     root.innerHTML = html;
 
     if (typeof lucide !== 'undefined') lucide.createIcons();
+    if (typeof animateCount === 'function') {
+      animateCount(root.querySelector('#fml-res-score'), score, 700);
+      animateCount(root.querySelector('#fml-res-pct'), pct, 700);
+    }
   },
 };
 
