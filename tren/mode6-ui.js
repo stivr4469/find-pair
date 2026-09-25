@@ -1,95 +1,112 @@
 // spanish-trainer-app/tren/mode6-ui.js
 /**
  * Tren Ir/Venir/Llegar - Mode 6: UI Functions
- * Функции отображения для режима "Выбор в предложении" (InlineChoice)
- *
- * Ключевое отличие: варианты ответа встроены ПРЯМО В ПРЕДЛОЖЕНИЕ,
- * заменяя ___ на кнопки внутри строки текста.
+ * Fill-blank формат: предложение с бланком ___ вверху, тайлы-варианты снизу.
  */
 
-// Добавляем стили для inline-кнопок один раз при первой загрузке
-(function injectInlineOptionStyles() {
+(function injectMode6Styles() {
     if (document.getElementById('mode6-inline-styles')) return;
     const style = document.createElement('style');
     style.id = 'mode6-inline-styles';
     style.textContent = `
-        .inline-options {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            vertical-align: middle;
+        .m6-blank {
+            display: inline-block;
+            min-width: 72px;
+            border-bottom: 2px solid var(--accent);
+            color: var(--muted);
+            padding: 0 6px;
+            font-style: italic;
+            text-align: center;
+            transition: color 0.2s, border-bottom-color 0.2s;
         }
-
+        .m6-tiles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0 12px;
+        }
         .inline-option {
             display: inline-block;
-            margin: 0 3px;
-            padding: 4px 12px;
-            border-radius: 16px;
+            padding: 6px 18px;
+            border-radius: 20px;
             border: 2px solid var(--border);
             background: var(--surface);
             cursor: pointer;
             font-size: 1rem;
             font-weight: 600;
-            vertical-align: middle;
-            transition: all 0.2s ease;
+            transition: all 0.18s ease;
             color: var(--text);
             line-height: 1.4;
+            font-family: inherit;
         }
-
         .inline-option:hover:not(:disabled) {
             background: var(--accent-faint);
             border-color: var(--accent);
             color: var(--accent);
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
-
-        .inline-option:disabled {
-            cursor: not-allowed;
-            opacity: 0.75;
-        }
-
+        .inline-option:disabled { cursor: not-allowed; opacity: 0.7; }
         .inline-option.correct {
             background: #27ae60 !important;
             border-color: #27ae60 !important;
             color: white !important;
-            animation: pulse 0.5s ease;
         }
-
         .inline-option.incorrect {
             background: #e74c3c !important;
             border-color: #e74c3c !important;
             color: white !important;
-            animation: shake 0.3s ease;
         }
-
         #mode6-content .question-text {
-            line-height: 2.2;
+            line-height: 2.0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            color: var(--text);
+            margin: 14px 0 0;
         }
     `;
     document.head.appendChild(style);
 })();
 
+function _m6Esc(str) {
+    return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
 function displayMode6QuestionUI(question) {
     const contentArea = document.getElementById('mode6-content');
     if (!contentArea) return;
 
-    // Перемешиваем варианты для каждого вопроса, чтобы правильный не был всегда первым
-    const shuffledOptions = shuffleArray([...question.options]);
+    const shuffledOptions = (typeof shuffleArray === 'function')
+        ? shuffleArray([...question.options])
+        : [...question.options];
 
-    // Строим кнопки для вставки внутрь предложения
-    const optionButtonsHtml = shuffledOptions.map(option => `<button class="option-btn inline-option" data-answer="${option}">${option}</button>`
-    ).join('');
+    // Split sentence at ___
+    const parts = question.sentence.split('___');
+    const before = (parts[0] || '').trimEnd();
+    const after = (parts[1] || '').trimStart();
 
-    // Заменяем ___ на span с кнопками внутри предложения
-    const questionHtml = question.sentence.replace(
-        '___',
-        `<span class="inline-options" id="mode6-options">${optionButtonsHtml}</span>`
-    );
+    const blankSpan = '<span id="mode6-blank" class="m6-blank">___</span>';
+    const sentenceHtml = _m6Esc(before) + ' ' + blankSpan + (after ? ' ' + _m6Esc(after) : '');
+
+    const tilesHtml = shuffledOptions
+        .map(opt => `<button class="inline-option option-btn" data-answer="${_m6Esc(opt)}">${_m6Esc(opt)}</button>`)
+        .join('');
 
     contentArea.innerHTML = `
-        <div class="question-container" style="padding-bottom: 80px;"> <div class="progress-text">Вопрос ${mode6State.currentQuestionIndex + 1} из ${mode6State.totalQuestions}</div> <div class="translation-text">${question.translation}</div> <div class="question-text">${questionHtml}</div> <div class="feedback" id="mode6-feedback"></div> <button class="next-button quiz-next-fixed" id="mode6-next-btn" style="display: none;">Дальше →</button> </div> `;
+        <div class="question-container" style="padding-bottom: 80px;">
+            <div class="progress-text">Вопрос ${mode6State.currentQuestionIndex + 1} из ${mode6State.totalQuestions}</div>
+            <div class="translation-text">${_m6Esc(question.translation)}</div>
+            <div class="question-text">${sentenceHtml}</div>
+            <div id="mode6-options" class="m6-tiles">${tilesHtml}</div>
+            <div class="feedback" id="mode6-feedback"></div>
+            <button class="next-button quiz-next-fixed" id="mode6-next-btn" style="display: none;">Дальше →</button>
+        </div>`;
 
-    // Навешиваем обработчики на inline-кнопки
     contentArea.querySelectorAll('.inline-option').forEach(button => {
         button.addEventListener('click', () => {
             if (!mode6State.isAnswered) {
@@ -106,14 +123,16 @@ function showMode6ResultsUI() {
     if (!contentArea) return;
 
     const percentage = Math.round((mode6State.score / mode6State.totalQuestions) * 100);
-    let message = "";
-    if (percentage === 100) message = "¡Excelente!";
-    else if (percentage >= 80) message = "¡Muy bien!";
-    else if (percentage >= 60) message = "¡Bien!";
-    else message = "Sigue practicando!";
+    let message = percentage === 100 ? '¡Excelente!' : percentage >= 80 ? '¡Muy bien!' : percentage >= 60 ? '¡Bien!' : 'Sigue practicando!';
 
     contentArea.innerHTML = `
-        <div class="results-container"> <h3>Результаты</h3> <div class="final-score">${mode6State.score} из ${mode6State.totalQuestions} (${percentage}%)</div> <div class="final-message">${message}</div> <button class="restart-button" onclick="restartMode6()">Ещё раз</button> <button class="menu-button" onclick="showMainMenu()">Меню</button> </div> `;
+        <div class="results-container" style="text-align: center; padding: 20px;">
+            <h3>Результаты</h3>
+            <div class="final-score">${mode6State.score} из ${mode6State.totalQuestions} (${percentage}%)</div>
+            <div class="final-message">${message}</div>
+            <button class="restart-button" onclick="restartMode6()">Ещё раз</button>
+            <button class="menu-button" onclick="showMainMenu()">Меню</button>
+        </div>`;
 }
 
 function updateMode6ScoreUI() {
@@ -124,7 +143,6 @@ function updateMode6ScoreUI() {
     }
 }
 
-// Экспорт для глобального доступа
 if (typeof window !== 'undefined') {
     window.displayMode6QuestionUI = displayMode6QuestionUI;
     window.showMode6ResultsUI = showMode6ResultsUI;

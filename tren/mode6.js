@@ -47,32 +47,42 @@ function checkMode6Answer(selected, correct, buttonElement, explanation) {
     const feedback = document.getElementById('mode6-feedback');
     const allButtons = document.querySelectorAll('#mode6-options .inline-option');
     const nextButton = document.getElementById('mode6-next-btn');
+    const blank = document.getElementById('mode6-blank');
 
     allButtons.forEach(btn => btn.disabled = true);
+
+    const isCorrect = selected.toLowerCase() === correct.toLowerCase();
+
+    // Заполняем бланк правильным ответом
+    if (blank) {
+        blank.textContent = correct;
+        blank.style.color = isCorrect ? '#27ae60' : '#e74c3c';
+        blank.style.fontWeight = '700';
+        blank.style.fontStyle = 'normal';
+        blank.style.borderBottomColor = isCorrect ? '#27ae60' : '#e74c3c';
+    }
 
     const explanationHtml = explanation
         ? `<div style="font-size: 0.9rem; margin-top: 8px; line-height: 1.4; opacity: 0.85;">${explanation}</div>`
         : '';
 
-    if (selected.toLowerCase() === correct.toLowerCase()) {
+    if (isCorrect) {
         feedback.innerHTML = `<div style="font-weight: bold; color: var(--success, #22c55e);">✓ ¡Correcto!</div>${explanationHtml}`;
         feedback.className = "feedback correct";
-        feedback.style.flexDirection = 'column';
-        feedback.style.alignItems = 'center';
         buttonElement.classList.add('correct');
         mode6State.score++;
         updateMode6ScoreUI();
+        if (typeof window.njCorrect === 'function') window.njCorrect(1);
     } else {
-        feedback.innerHTML = `<div style="font-weight: bold; color: var(--danger, #ef4444);">✗ Incorrecto. Правильно: ${correct}</div>${explanationHtml}`;
+        feedback.innerHTML = `<div style="font-weight: bold; color: var(--danger, #ef4444);">✗ Правильно: ${correct}</div>${explanationHtml}`;
         feedback.className = "feedback incorrect";
-        feedback.style.flexDirection = 'column';
-        feedback.style.alignItems = 'center';
         buttonElement.classList.add('incorrect');
         allButtons.forEach(btn => {
             if (btn.dataset.answer.toLowerCase() === correct.toLowerCase()) {
                 btn.classList.add('correct');
             }
         });
+        if (typeof window.njWrong === 'function') window.njWrong(null, explanation || null);
     }
 
     nextButton.style.display = 'inline-block';
