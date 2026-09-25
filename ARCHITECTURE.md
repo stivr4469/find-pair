@@ -83,10 +83,12 @@ module/
 | `formulas/app.js` | v=19 |
 | `formulas/ui.js` | v=25 ← fill-blank tiles (renderQuiz + showAnswerFeedback) |
 | `formulas/data.js` | v=15 ← Q1-Q6 fill-blank для 9 формул (54 вопроса) |
-| `pasado/app.js` | v=7 |
-| `pasado/ui.js` | v=16 ← fill-blank tiles + inline mode blank fill |
-| `pasado/data.js` | v=6 ← все Q1-Q6 в before/after формате (96 вопросов) |
+| `pasado/app.js` | v=8 ← Контраст mode (startContrast/nextContrast/prevContrast) |
+| `pasado/ui.js` | v=17 ← fill-blank tiles + Контраст deck (2-col cards) |
+| `pasado/data.js` | v=7 ← все Q1-Q6 before/after + PASADO_CONTRAST (15 пар) |
 | `tren/app.js` | v=14 |
+| `tren/mode6-ui.js` | v=16 ← blank-fill layout (sentence + tiles below) |
+| `tren/mode6.js` | v=13 ← blank fill green/red on answer |
 | `mezcla/app.js` | v=8 |
 | `mezcla/ui.js` | v=10 |
 | `ser-estar/ser-estar-app.js` | v=4 |

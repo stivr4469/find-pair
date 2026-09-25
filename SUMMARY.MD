@@ -5,6 +5,32 @@
 
 ---
 
+## Сессия: 2026-09-25 (продолжение 4) — tren mode6 blank-fill + pasado Контраст
+
+### Что сделано
+
+#### tren/mode6-ui.js v=15→v=16, tren/mode6.js v=12→v=13
+Исправлен layout режима «Inline выбор»: варианты больше не вставляются inline внутри строки предложения.
+Теперь: предложение отображается целиком с `___` пропуском (span.m6-blank), плитки-варианты — flex-row снизу.
+При ответе пропуск заполняется словом и красится зелёным/красным. Коммит `9ceee1b`.
+
+#### pasado/ — режим «Контраст» (Indefinido vs Imperfecto)
+- `pasado/data.js` v=6→v=7: добавлен `PASADO_CONTRAST` — 15 контрастных пар (Indefinido / Imperfecto)
+- `pasado/ui.js` v=16→v=17: кнопка «Контраст» в меню, `renderContrastDeck()` — 2-колоночные карточки (красный/синий), сигналы, навигация, прогресс-точки
+- `pasado/app.js` v=7→v=8: `startContrast()`, `nextContrast()`, `prevContrast()`, window-алиасы
+- `pasado/index.html`: версии bumped, footer обновлён
+
+### Коммиты
+- `9ceee1b` tren mode6 blank-fill layout
+- (pasado Контраст коммит из предыдущей сессии)
+
+### Открытые задачи
+- [ ] Удалить Vercel-проект `find-pair-seven`
+- [ ] TTS — speakSpanish() отключён
+- [ ] Карточки повторения ошибок (localStorage)
+
+---
+
 ## Сессия: 2026-09-25 (продолжение 3) — Fill-blank Q1-Q4 по всему приложению (4 агента параллельно)
 
 ### Что сделано
