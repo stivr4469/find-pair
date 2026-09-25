@@ -70,6 +70,7 @@
     '  font-size:0.82rem;font-weight:700;text-align:center;',
     '  text-transform:uppercase;letter-spacing:0.05em;',
     '  user-select:none;-webkit-user-select:none;',
+    '  font-family:inherit;color:inherit;background:transparent;',
     '}',
     '.pasado-classify-zone:hover{transform:translateY(-3px);filter:brightness(1.06)}',
     '.pasado-classify-zone:active{transform:scale(0.97)}',
@@ -174,10 +175,11 @@ const PasadoUI = {
         var formula = PASADO_DATA[i];
         var ico = PASADO_ICONS[i];
         cardsHtml += [
-          '<div class="pasado-card-thumb" onclick="pasadoShowCard(' + i + ')" style="',
+          '<button type="button" class="pasado-card-thumb" onclick="pasadoShowCard(' + i + ')" style="',
             'background:var(--surface);border-radius:12px;padding:16px 14px;cursor:pointer;',
             'box-shadow:var(--shadow);border:1px solid var(--border);',
             'display:flex;flex-direction:column;gap:6px;',
+            'font-family:inherit;color:inherit;text-align:left;',
           '">',
             '<div style="width:40px;height:40px;border-radius:10px;background:' + ico.color + ';opacity:0.82;margin-bottom:2px;flex-shrink:0;"></div>',
             '<div style="font-weight:700;font-size:0.82rem;color:var(--text);">' + _escHtmlP(formula.shortName) + '</div>',
@@ -185,7 +187,7 @@ const PasadoUI = {
               'border-radius:5px;font-family:monospace;line-height:1.3;word-break:break-word;">',
               _escHtmlP(formula.rule.split('|')[0].trim()),
             '</div>',
-          '</div>',
+          '</button>',
         ].join('');
       }
 
@@ -679,12 +681,12 @@ const PasadoUI = {
 
     var zonesHtml = zones.map(function(z) {
       return [
-        '<div class="pasado-classify-zone ' + z.cls + '" id="pclz-' + z.key + '" data-key="' + z.key + '"',
+        '<button type="button" class="pasado-classify-zone ' + z.cls + '" id="pclz-' + z.key + '" data-key="' + z.key + '"',
         ' onclick="window.pasadoClassifyAnswer(this.dataset.key)">',
         '<span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:' + z.iconBg + ';margin-bottom:4px;">',
-        '<i data-lucide="' + z.iconName + '" style="width:16px;height:16px;stroke:' + z.iconColor + ';stroke-width:2.5;"></i>',
+        '<span style="width:12px;height:12px;border-radius:50%;background:' + z.iconColor + ';flex-shrink:0;"></span>',
         '</span><br>' + z.label,
-        '</div>',
+        '</button>',
       ].join('');
     }).join('');
 
@@ -790,11 +792,11 @@ const PasadoUI = {
 
     var pct = total > 0 ? Math.round((score / total) * 100) : 0;
 
-    var reactionIcon, reactionText;
-    if (pct === 100)      { reactionIcon = 'trophy';    reactionText = 'Отлично! Все верно!'; }
-    else if (pct >= 75)   { reactionIcon = 'award';     reactionText = 'Хорошо! Почти всё верно!'; }
-    else if (pct >= 50)   { reactionIcon = 'thumbs-up'; reactionText = 'Неплохо! Можно лучше'; }
-    else                  { reactionIcon = 'book-open';  reactionText = 'Нужно повторить материал'; }
+    var reactionEmoji, reactionText;
+    if (pct === 100)      { reactionEmoji = '🏆'; reactionText = 'Отлично! Все верно!'; }
+    else if (pct >= 75)   { reactionEmoji = '🥇'; reactionText = 'Хорошо! Почти всё верно!'; }
+    else if (pct >= 50)   { reactionEmoji = '👍'; reactionText = 'Неплохо! Можно лучше'; }
+    else                  { reactionEmoji = '📖'; reactionText = 'Нужно повторить материал'; }
 
     var repeatAction;
     if (quizMode === 'all') {
@@ -811,7 +813,7 @@ const PasadoUI = {
       '<div style="max-width: 500px; margin: 0 auto;" class="pasado-anim-in">',
         '<div class="game-area" style="text-align: center; padding: 32px 24px;">',
 
-          '<div style="margin-bottom: 12px;"><i data-lucide="' + reactionIcon + '" style="width:56px;height:56px;stroke:var(--accent);stroke-width:1.5"></i></div>',
+          '<div style="margin-bottom: 12px; font-size: 56px; line-height: 1;">' + reactionEmoji + '</div>',
           '<h2 style="color: var(--text); margin-bottom: 8px; font-size: 1.4rem;">Результат</h2>',
 
           '<div style="font-size: 3rem; font-weight: 700; color: var(--accent); margin: 16px 0 8px;">',

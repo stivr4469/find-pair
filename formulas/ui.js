@@ -59,7 +59,7 @@ const FormulasUI = {
 
     var cardsHtml = FORMULAS_DATA.map(function(formula, index) {
       return [
-        '<div class="formula-card-thumb" onclick="formulaShowCard(' + index + ')" style="',
+        '<button type="button" class="formula-card-thumb" onclick="formulaShowCard(' + index + ')" style="',
           'background: var(--surface);',
           'border-radius: 12px;',
           'padding: 18px 16px;',
@@ -70,6 +70,9 @@ const FormulasUI = {
           'display: flex;',
           'flex-direction: column;',
           'gap: 6px;',
+          'font-family: inherit;',
+          'color: inherit;',
+          'text-align: left;',
         '">',
           '<div style="width:40px;height:40px;border-radius:10px;background:' + FORMULA_ICONS[index].color + ';opacity:0.82;margin-bottom:4px;flex-shrink:0;"></div>',
           '<div style="font-weight: 700; font-size: 0.85rem; color: var(--text);">' + formula.shortName + '</div>',
@@ -83,7 +86,7 @@ const FormulasUI = {
             'line-height: 1.3;',
             'word-break: break-word;',
           '">' + _escHtml(formula.rule) + '</div>',
-        '</div>',
+        '</button>',
       ].join('');
     }).join('');
 
@@ -243,7 +246,7 @@ const FormulasUI = {
           '">',
             '<div style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 4px;">' + _escHtml(formula.example) + '</div>',
             '<div style="font-size: 0.9rem; color: var(--muted); font-style: italic; margin-bottom: 8px;">' + _escHtml(formula.exampleRu) + '</div>',
-            '<button onclick="window.formulaSpeakExample(\'' + _escHtml(formula.example).replace(/'/g, "\\'") + '\')" title="Озвучить" style="',
+            '<button data-tts="' + _escHtml(formula.example) + '" onclick="speakSpanish(this.dataset.tts)" title="Озвучить" style="',
               'background: var(--accent);',
               'border: none;',
               'border-radius: 20px;',
@@ -343,7 +346,7 @@ const FormulasUI = {
         '<div style="max-width:600px;margin:0 auto;padding-bottom:80px;">',
           '<div class="game-area" style="padding:22px 20px;">',
             '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">',
-              '<span style="background:var(--accent);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;"><i data-lucide="' + formulaEmoji + '" style="width:14px;height:14px;stroke:#fff;stroke-width:2;vertical-align:middle;margin-right:5px;pointer-events:none"></i>' + _escHtml(formulaName) + '</span>',
+              '<span style="background:var(--accent);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;">' + _escHtml(formulaName) + '</span>',
               '<button onclick="formulaBackToList()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:4px;" title="К списку">✕</button>',
             '</div>',
             '<div style="height:5px;background:var(--faint);border-radius:3px;margin-bottom:14px;overflow:hidden;">',
@@ -429,7 +432,7 @@ const FormulasUI = {
               'border-radius: 20px;',
               'font-size: 0.78rem;',
               'font-weight: 700;',
-            '"><i data-lucide="' + formulaEmoji + '" style="width:14px;height:14px;stroke:#fff;stroke-width:2;vertical-align:middle;margin-right:5px;pointer-events:none"></i>' + _escHtml(formulaName) + '</span>',
+            '">' + _escHtml(formulaName) + '</span>',
             '<button onclick="formulaBackToList()" style="',
               'background: none;',
               'border: none;',
@@ -619,15 +622,15 @@ const FormulasUI = {
 
     var pct = total > 0 ? Math.round((score / total) * 100) : 0;
 
-    var reactionIcon, reactionText;
+    var reactionEmoji, reactionText;
     if (pct === 100) {
-      reactionIcon = 'trophy';    reactionText = 'Отлично! Все верно!';
+      reactionEmoji = '🏆'; reactionText = 'Отлично! Все верно!';
     } else if (pct >= 75) {
-      reactionIcon = 'award';     reactionText = 'Хорошо! Почти все верно!';
+      reactionEmoji = '🥇'; reactionText = 'Хорошо! Почти все верно!';
     } else if (pct >= 50) {
-      reactionIcon = 'thumbs-up'; reactionText = 'Неплохо! Можно лучше';
+      reactionEmoji = '👍'; reactionText = 'Неплохо! Можно лучше';
     } else {
-      reactionIcon = 'book-open'; reactionText = 'Нужно повторить материал';
+      reactionEmoji = '📖'; reactionText = 'Нужно повторить материал';
     }
 
     var repeatAction = quizMode === 'all'
@@ -640,7 +643,7 @@ const FormulasUI = {
       '<div style="max-width: 500px; margin: 0 auto;">',
         '<div class="game-area" style="text-align: center; padding: 32px 24px;">',
 
-          '<div style="margin-bottom: 12px;"><i data-lucide="' + reactionIcon + '" style="width:56px;height:56px;stroke:var(--accent);stroke-width:1.5"></i></div>',
+          '<div style="margin-bottom: 12px; font-size: 56px; line-height: 1;">' + reactionEmoji + '</div>',
 
           '<h2 style="color: var(--text); margin-bottom: 8px; font-size: 1.4rem;">Результат</h2>',
 
