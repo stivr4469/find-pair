@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/unified-styles.css?v=29">
-    <link rel="stylesheet" href="ser-estar.css?v=1">
+    <link rel="stylesheet" href="ser-estar.css?v=2">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         /* ── Naranjito над карточкой ── */
@@ -66,14 +66,16 @@
             opacity: 0.75;
         }
         .ctx-tile.correct {
-            border-color: #27ae60 !important;
-            background: #d4edda !important;
-            color: #155724 !important;
+            border-color: var(--success) !important;
+            background: var(--success) !important;
+            color: #fff !important;
+            opacity: 1;
         }
         .ctx-tile.incorrect {
-            border-color: #e74c3c !important;
-            background: #f8d7da !important;
-            color: #721c24 !important;
+            border-color: var(--danger) !important;
+            background: var(--danger) !important;
+            color: #fff !important;
+            opacity: 1;
         }
 
         /* ── Context mode question card ── */

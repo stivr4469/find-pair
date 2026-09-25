@@ -96,6 +96,7 @@ module/
 | `tren/mode6.js` | v=13 |
 | `mezcla/app.js` | v=9 |
 | `mezcla/ui.js` | v=11 ← view-enter on all 3 screens, stagger on list cards |
+| `ser-estar/ser-estar.css` | v=2 ← переписан под «Валенсию»: только классы модуля на токенах темы (449 строк вместо 1318) |
 | `ser-estar/ser-estar-app.js` | v=8 ← stagger replay in showMainMenu(), seSetProgress→scaleX |
 | `ser-estar/ser-estar-base-ui.js` | v=4 ← view-enter |
 | `ser-estar/ser-estar-base-mode.js` | v=3 ← anim-correct/wrong in checkBaseAnswer |
@@ -558,6 +559,11 @@ ser-estar/
 ├── classify-data.js            ← Данные classify режима
 ├── classify-ui.js?v=9          ← Рендеринг classify
 └── classify-mode.js?v=6        ← Логика classify
+```
+
+**Стили модуля (`ser-estar.css?v=2`):** только то, чего нет в `unified-styles.css` — `.verb-info` и режим «Классификация» (карточка, фидбек, крупные залитые зоны SER/ESTAR, результаты). Всё на токенах темы. Смысловые цвета: `--se-ser` (синий) / `--se-estar` (зелёный) — те же, что у `.ser-card` / `.estar-card`.
+⚠ Не добавлять сюда глобальные селекторы (`body`, `.game-area`, `.mode-button`, `.back-button`, `.option-btn`, `.feedback`…): файл грузится после `unified-styles.css` и перебивает общий дизайн — именно так модуль «застрял» в старом фиолетовом стиле до 2026-09-25.
+```
 ```
 Удалены: `ser-estar-mode3.js`, `ser-estar-mode4.js`, `ser-estar-mode2-data.js`, `ser-estar-mode2-logic.js`, `ser-estar-mode2-utils.js` — не подключались ни в одном `index.html`.
 
