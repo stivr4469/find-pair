@@ -75,6 +75,7 @@ var SubjuntivoUI = (function () {
     }).join('');
     return '<p class="sj-qnum">' + num + ' / ' + total + '</p>' +
       '<p class="sj-question">' + _esc(q.question) + '</p>' +
+      (q.questionRu ? '<p class="sj-sent-ru">' + _esc(q.questionRu) + '</p>' : '') +
       '<div class="sj-options stagger">' + opts + '</div>';
   }
 
@@ -84,7 +85,7 @@ var SubjuntivoUI = (function () {
       '<span id="sj-blank" class="sj-blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>' +
       _esc(parts[1] || '');
     var tiles = q.tiles.map(function (tile, i) {
-      return '<button class="option-btn sj-tile" onclick="subjuntivoSelectTile(' + i + ')">' + _esc(tile) + '</button>';
+      return '<button class="sj-tile" onclick="subjuntivoSelectTile(' + i + ')">' + _esc(tile) + '</button>';
     }).join('');
     return '<p class="sj-qnum">' + num + ' / ' + total + '</p>' +
       '<div class="sj-fill-box">' + sentHtml + '</div>' +
