@@ -114,6 +114,35 @@ window.ICON_RESULT = {
 };
 window.ICON_MIC = _svgIcon('<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>');
 
+// ─── Animation helpers ────────────────────────────────────────────────────────
+
+// true, если пользователь просит меньше движения
+function prefersReducedMotion() {
+    try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e) { return false; }
+}
+
+// Перезапуск CSS-анимации класса на элементе (для повторного .anim-correct/.anim-wrong)
+function replayAnimation(el, className) {
+    if (!el) return;
+    el.classList.remove(className);
+    void el.offsetWidth; // reflow — иначе анимация не перезапустится
+    el.classList.add(className);
+}
+
+// Анимированный счёт числа (экран результатов). При reduced-motion — сразу финальное значение.
+function animateCount(el, to, ms, suffix) {
+    if (!el) return;
+    var sfx = suffix || '';
+    if (prefersReducedMotion() || !ms) { el.textContent = to + sfx; return; }
+    var t0 = performance.now();
+    (function step(now) {
+        var p = Math.min(1, (now - t0) / ms);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(to * eased) + sfx;
+        if (p < 1) requestAnimationFrame(step);
+    })(t0);
+}
+
 // Экспорт для глобального доступа
 if (typeof window !== 'undefined') {
     window.shuffleArray = shuffleArray;
@@ -125,4 +154,7 @@ if (typeof window !== 'undefined') {
     window.resetTopbar = resetTopbar;
     window.normalizeSpanish = normalizeSpanish;
     window.isEquivalentAnswer = isEquivalentAnswer;
+    window.prefersReducedMotion = prefersReducedMotion;
+    window.replayAnimation = replayAnimation;
+    window.animateCount = animateCount;
 }
