@@ -205,7 +205,7 @@ body::before {
   line-height: 1.1;
   letter-spacing: -0.03em;
   text-wrap: balance;
-  color: color-mix(in srgb, var(--text) 72%, var(--bg));
+  color: color-mix(in srgb, var(--text) 52%, var(--bg));
 }
 
 /* ============================================
@@ -233,7 +233,7 @@ body::before {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--c);
+  background: color-mix(in srgb, var(--c) 65%, var(--surface));
   flex-shrink: 0;
 }
 .resume-play svg { width: 18px; height: 18px; fill: #fff; stroke: #fff; margin-left: 2px; }
