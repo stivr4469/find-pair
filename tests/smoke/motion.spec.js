@@ -201,3 +201,42 @@ test.describe('motion — CSS-токены и анимации', () => {
         }
     });
 });
+
+test.describe('motion — реакция на ответ реально проигрывается', () => {
+
+    // Регрессия: .stagger > * перекрывал .anim-correct/.anim-wrong (одинаковая специфичность)
+    async function answerFormula(page, pickCorrect) {
+        await page.goto('/formulas/');
+        await page.evaluate(() => formulaStartQuiz(0));
+        return page.evaluate((pickCorrect) => {
+            var s = FormulasApp.state;
+            var c = s.quizQuestions[s.currentQuestionIndex].correct;
+            var picked = pickCorrect ? c : (c === 0 ? 1 : 0);
+            formulaHandleAnswer(picked);
+            var btn = document.getElementById('formula-opt-' + picked);
+            if (!btn) return 'no-button';
+            var cs = getComputedStyle(btn);
+            return cs.animationName + '/' + cs.animationDelay;
+        }, pickCorrect);
+    }
+
+    test('formulas: неверный ответ трясёт выбранную кнопку (vm-shake)', async ({ page }) => {
+        expect(await answerFormula(page, false)).toBe('vm-shake/0s');
+    });
+
+    test('formulas: верный ответ «подпрыгивает» (vm-pop)', async ({ page }) => {
+        expect(await answerFormula(page, true)).toBe('vm-pop/0s');
+    });
+
+    test('tren mode1: анимация ответа без каскадной задержки stagger', async ({ page }) => {
+        await page.goto('/tren/');
+        await page.evaluate(() => App.switchMode('mode1'));
+        const btns = page.locator('.game-area:not(.hidden) .stagger > button');
+        await btns.nth((await btns.count()) - 1).click();
+        const delays = await page.evaluate(() =>
+            [...document.querySelectorAll('.game-area:not(.hidden) .stagger > button.correct, .game-area:not(.hidden) .stagger > button.incorrect')]
+                .map(b => getComputedStyle(b).animationDelay));
+        expect(delays.length).toBeGreaterThan(0);
+        delays.forEach(d => expect(d).toBe('0s'));
+    });
+});

@@ -40,7 +40,7 @@ spanish-trainer-app/
 ├── ARCHITECTURE.md         ← Этот файл
 ├── SUMMARY.MD              ← Журнал изменений
 ├── css/
-│   ├── unified-styles.css  ← Единые стили всех модулей (v=20)
+│   ├── unified-styles.css  ← Единые стили всех модулей (v=28)
 │   └── main.css            ← Стили только для root index.html
 ├── js/
 │   ├── utils.js            ← Общие утилиты: shuffleArray, speakSpanish, toggleTheme,
@@ -76,7 +76,7 @@ module/
 
 | Файл | Версия в HTML |
 |------|--------------|
-| `css/unified-styles.css` | v=27 ← токены motion, keyframes vm-*, .view-enter/.stagger/.anim-*, .se-progress-fill→scaleX |
+| `css/unified-styles.css` | v=28 ← `:where(.stagger)` — нулевая специфичность каскада (фикс перекрытия анимаций ответа);  токены motion, keyframes vm-*, .view-enter/.stagger/.anim-*, .se-progress-fill→scaleX |
 | `js/utils.js` | v=25 ← `replayAnimation()`, `animateCount()`, `prefersReducedMotion()`, `setTopbarProgress→scaleX` |
 | `js/main.js` | v=2 |
 | `js/naranjito.js` | v=3 |
@@ -202,7 +202,7 @@ setTopbarProgress(pct)          // устанавливает scaleX на #se-pr
 
 ---
 
-## CSS — unified-styles.css (v=20) — дизайн-система «Валенсия»
+## CSS — unified-styles.css (v=28) — дизайн-система «Валенсия»
 
 ### Токены (CSS-переменные)
 
@@ -504,7 +504,7 @@ window.currentItem = item;  // прочитается уже другой item
 
 ```
 find-pair/
-├── index.html   ← utils.js?v=23, unified-styles.css?v=25, styles.css?v=3, script.js?v=5
+├── index.html   ← utils.js?v=25, unified-styles.css?v=28, styles.css?v=4, script.js?v=5
 ├── script.js    ← основная логика (find-pair.js удалён)
 └── styles.css   ← модульные стили (find-pair.css удалён)
 ```

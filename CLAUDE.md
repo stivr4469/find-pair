@@ -94,19 +94,19 @@
 
 | Файл | Текущая версия в HTML |
 |---|---|
-| `css/unified-styles.css` | v=25 |
-| `js/utils.js` | v=23 |
+| `css/unified-styles.css` | v=28 |
+| `js/utils.js` | v=25 |
 | `js/main.js` | v=2 |
 | `formulas/app.js` | v=20 |
-| `formulas/ui.js` | v=27 |
+| `formulas/ui.js` | v=31 |
 | `pasado/app.js` | v=9 |
-| `pasado/ui.js` | v=19 |
-| `tren/app.js` | v=16 |
-| `tren/mode7-ui.js` | v=17 |
-| `ser-estar/ser-estar-app.js` | v=6 |
+| `pasado/ui.js` | v=22 |
+| `tren/app.js` | v=17 |
+| `tren/mode7-ui.js` | v=19 |
+| `ser-estar/ser-estar-app.js` | v=8 |
 | `ser-estar/classify-mode.js` | v=6 |
 | `mezcla/app.js` | v=9 |
-| `find-pair/script.js` | v=5 |
+| `find-pair/script.js` | v=6 |
 
 ### Паттерн двухуровневой навигации
 
@@ -152,7 +152,22 @@ window.currentItem = item;  // потом в onclick читается уже д�
 element.style.display = 'block';  // вместо этого — управлять классами
 
 // НЕЛЬЗЯ — TTS не работает, возвращает сразу
-speakSpanish(text);  // utils.js v=17 disabled — не рассчитывать на него
+speakSpanish(text);  // utils.js disabled — не рассчитывать на него
+```
+
+```css
+/* НЕЛЬЗЯ — анимирует всё подряд, включая раскладку */
+transition: all 0.2s;            /* перечислять свойства: background-color, transform, ... */
+
+/* НЕЛЬЗЯ — пересчёт раскладки на каждом кадре */
+transition: width 0.4s;          /* и height/top/left/margin/padding/max-height; прогресс — transform: scaleX() */
+
+/* НЕЛЬЗЯ — длительности/кривые числами; только токены --dur-*, --ease-*, --spring */
+animation: shake 0.3s ease;
+
+/* НЕЛЬЗЯ — обёрточные анимации-«контейнеры» с обычной специфичностью (.stagger > *):
+   они перекрывают анимации ответа на детях. Такие правила — только через :where(),
+   см. :where(.stagger) > * в unified-styles.css */
 ```
 
 ### Локальный сервер
