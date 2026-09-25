@@ -120,7 +120,7 @@
         btn.classList.add('correct');
         if (typeof replayAnimation === 'function') replayAnimation(btn, 'anim-correct');
       } else if (i === selected && !isCorrect) {
-        btn.classList.add('wrong');
+        btn.classList.add('incorrect');
         if (typeof replayAnimation === 'function') replayAnimation(btn, 'anim-wrong');
       }
     });
@@ -133,7 +133,7 @@
         tile.classList.add('correct');
         if (isCorrect && typeof replayAnimation === 'function') replayAnimation(tile, 'anim-correct');
       } else if (i === selected && !isCorrect) {
-        tile.classList.add('wrong');
+        tile.classList.add('incorrect');
         if (typeof replayAnimation === 'function') replayAnimation(tile, 'anim-wrong');
       }
     });

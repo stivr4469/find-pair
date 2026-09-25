@@ -65,13 +65,13 @@ var SubjuntivoUI = (function () {
     return '<div class="view-enter">' +
       body +
       '<div id="sj-hint" class="sj-hint" hidden></div>' +
-      '<button id="sj-next" class="quiz-next-fixed" hidden onclick="subjuntivoNext()">Дальше →</button>' +
+      '<button id="sj-next" class="next-button quiz-next-fixed" hidden onclick="subjuntivoNext()">Дальше →</button>' +
       '</div>';
   }
 
   function _renderMCQ(q, num, total) {
     var opts = q.options.map(function (o, i) {
-      return '<button class="sj-option" onclick="subjuntivoHandleAnswer(' + i + ')">' + _esc(o) + '</button>';
+      return '<button class="option-btn sj-option" onclick="subjuntivoHandleAnswer(' + i + ')">' + _esc(o) + '</button>';
     }).join('');
     return '<p class="sj-qnum">' + num + ' / ' + total + '</p>' +
       '<p class="sj-question">' + _esc(q.question) + '</p>' +
@@ -84,7 +84,7 @@ var SubjuntivoUI = (function () {
       '<span id="sj-blank" class="sj-blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>' +
       _esc(parts[1] || '');
     var tiles = q.tiles.map(function (tile, i) {
-      return '<button class="sj-tile" onclick="subjuntivoSelectTile(' + i + ')">' + _esc(tile) + '</button>';
+      return '<button class="option-btn sj-tile" onclick="subjuntivoSelectTile(' + i + ')">' + _esc(tile) + '</button>';
     }).join('');
     return '<p class="sj-qnum">' + num + ' / ' + total + '</p>' +
       '<div class="sj-fill-box">' + sentHtml + '</div>' +
