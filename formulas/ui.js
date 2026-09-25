@@ -332,6 +332,43 @@ const FormulasUI = {
     var root = this._root();
     if (!root) return;
 
+    // ─── Fill-blank variant ───────────────────────────────────────────────
+    if (question.before !== undefined) {
+      var fbOptBtns = question.options.map(function(opt, i) {
+        return '<button class="pasado-inline-btn" id="formula-opt-' + i + '" onclick="formulaHandleAnswer(' + i + ')">' + _escHtml(opt) + '</button>';
+      }).join('');
+      var fbBlank = '<span id="formula-blank" style="display:inline-block;min-width:72px;border-bottom:2px solid var(--accent);color:var(--muted);padding:0 4px;text-align:center;">___</span>';
+      var fbSentence = _escHtml(question.before) + ' ' + fbBlank + (question.after ? ' ' + _escHtml(question.after) : '');
+      root.innerHTML = [
+        '<div style="max-width:600px;margin:0 auto;padding-bottom:80px;">',
+          '<div class="game-area" style="padding:22px 20px;">',
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">',
+              '<span style="background:var(--accent);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;"><i data-lucide="' + formulaEmoji + '" style="width:14px;height:14px;stroke:#fff;stroke-width:2;vertical-align:middle;margin-right:5px;pointer-events:none"></i>' + _escHtml(formulaName) + '</span>',
+              '<button onclick="formulaBackToList()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:4px;" title="К списку">✕</button>',
+            '</div>',
+            '<div style="height:5px;background:var(--faint);border-radius:3px;margin-bottom:14px;overflow:hidden;">',
+              '<div style="height:100%;width:' + Math.round((qIndex / total) * 100) + '%;background:var(--accent);border-radius:3px;transition:width 0.3s;"></div>',
+            '</div>',
+            '<div style="margin-bottom:4px;font-size:0.85rem;color:var(--muted);">',
+              (marathonLeft != null ? '<span style="background:#fff3cd;color:#856404;padding:2px 10px;border-radius:20px;font-weight:700;">Осталось: ' + marathonLeft + '</span>' : 'Вопрос ' + (qIndex + 1) + ' из ' + total),
+            '</div>',
+            '<div style="background:var(--faint);border-radius:10px;padding:18px 16px;text-align:center;margin-bottom:16px;">',
+              '<div style="font-size:0.82rem;color:var(--accent);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">Выбери правильную форму</div>',
+              '<div style="font-size:1.1rem;font-weight:600;line-height:1.7;margin-bottom:18px;">' + fbSentence + '</div>',
+              '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">' + fbOptBtns + '</div>',
+            '</div>',
+            '<div id="formula-feedback" style="display:none;"></div>',
+            '<div id="formula-next-wrap" style="display:none;text-align:center;margin-top:14px;">',
+              '<button onclick="formulaNext()" class="next-button quiz-next-fixed">Дальше →</button>',
+            '</div>',
+          '</div>',
+        '</div>',
+      ].join('');
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+      return;
+    }
+    // ─── Standard MCQ ────────────────────────────────────────────────────
+
     var optionLabels = ['A', 'B', 'C', 'D'];
 
     var optionsHtml = question.options.map(function(option, i) {
@@ -508,11 +545,12 @@ const FormulasUI = {
       }
     }
 
-    // Get correct Spanish text for TTS (from button span[1])
+    // Get correct Spanish text for TTS (from button span[1] for MCQ, textContent for fill-blank)
     var correctText = '';
     if (correctBtn) {
       var spans = correctBtn.querySelectorAll('span');
       if (spans[1]) correctText = spans[1].textContent;
+      if (!correctText) correctText = correctBtn.textContent.trim();
     }
 
     // Show feedback box
@@ -556,6 +594,14 @@ const FormulasUI = {
           if (typeof speakSpanish === 'function') speakSpanish(ttsBtnEl.dataset.tts);
         });
       }
+    }
+
+    var blankEl = root.querySelector('#formula-blank');
+    if (blankEl && correctText) {
+      blankEl.textContent = correctText;
+      blankEl.style.borderBottomColor = '#27ae60';
+      blankEl.style.color = '#27ae60';
+      blankEl.style.fontWeight = '700';
     }
 
     // Show "Дальше" button

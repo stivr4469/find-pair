@@ -397,15 +397,15 @@ const FORMULAS_DATA = [
         hint: "me стоит ПЕРЕД спрягаемым глаголом: me levanto (levantarse, 1 л. ед.ч.)"
       },
       {
-        question: "Он бреется каждое утро",
-        options: ["Él afeita cada mañana", "Él se afeita cada mañana", "Él se afeitar cada mañana", "Se él afeita cada mañana"],
-        correct: 1,
+        before: "Él", after: "cada mañana antes de desayunar.",
+        options: ["se afeita", "afeita", "se afeitar", "afeita se"],
+        correct: 0,
         hint: "se перед спрягаемым глаголом: Él se afeita (afeitarse, 3 л. ед.ч.)"
       },
       {
-        question: "Меня зовут Карлос",
-        options: ["Soy llamado Carlos", "Me llama Carlos", "Me llamo Carlos", "Carlos me llamas"],
-        correct: 2,
+        before: "Hola, yo", after: "Carlos. ¿Y tú, cómo te llamas?",
+        options: ["me llamo", "me llama", "soy llamado", "llamo"],
+        correct: 0,
         hint: "llamarse (называться): me llamo = «я называюсь». Возвратное me перед глаголом"
       }
     ]
@@ -455,15 +455,17 @@ const FORMULAS_DATA = [
         hint: "saber + инфинитив напрямую: sé + cocinar (без «que»)"
       },
       {
-        question: "Она предпочитает читать",
-        options: ["Ella prefiere que leer", "Ella prefiere leyendo", "Ella prefiere leer", "Ella prefiere lee"],
-        correct: 2,
+        before: "Cuando tiene tiempo libre, ella",
+        after: "en vez de ver la televisión.",
+        options: ["prefiere leer", "prefiere que lea", "prefiere leyendo", "prefiere lee"],
+        correct: 0,
         hint: "preferir + инфинитив: prefiere + leer. После preferir инфинитив без «que»"
       },
       {
-        question: "Я не могу петь",
-        options: ["No soy poder cantar", "No puedo cantando", "No puedo que cante", "No puedo cantar"],
-        correct: 3,
+        before: "Me duele la garganta, así que",
+        after: "hoy.",
+        options: ["no puedo cantar", "no puedo cantando", "no soy cantar", "no puedo que cante"],
+        correct: 0,
         hint: "Отрицание ставится перед спрягаемым глаголом: no puedo + cantar (инфинитив)"
       }
     ]
@@ -629,15 +631,15 @@ const FORMULAS_DATA = [
         hint: "has (2 л. ед.ч. haber) + hecho (неправильное причастие от hacer). Не «hacido»"
       },
       {
-        question: "Она ещё не сказала правду",
-        options: ["Ella no ha decido la verdad todavía", "Ella no ha dicho la verdad todavía", "Ella no haber dicho la verdad", "Ella no ha decir la verdad todavía"],
-        correct: 1,
+        before: "Ella todavía no", after: "la verdad sobre lo que pasó.",
+        options: ["ha dicho", "ha decido", "haber dicho", "ha decir"],
+        correct: 0,
         hint: "ha + dicho (неправильное причастие от decir). Не «decido». Отрицание: no + ha + participio"
       },
       {
-        question: "Вы (мн.ч.) положили ключи на стол",
-        options: ["Habéis ponido las llaves en la mesa", "Habéis poner las llaves en la mesa", "Habéis puesto las llaves en la mesa", "Habéis puestos las llaves en la mesa"],
-        correct: 2,
+        before: "Vosotros", after: "las llaves en la mesa, ¿verdad?",
+        options: ["habéis puesto", "habéis ponido", "habéis poner", "habéis puestos"],
+        correct: 0,
         hint: "habéis + puesto (неправильное причастие от poner). Причастие не согласуется: puesto, не puestos"
       }
     ]
@@ -687,15 +689,15 @@ const FORMULAS_DATA = [
         hint: "estáis (2 л. мн.ч. estar) + hablando (герундий от hablar). Не ser"
       },
       {
-        question: "Они сейчас спят",
-        options: ["Están dormiendo", "Están durmiendo", "Están dormando", "Son durmiendo"],
-        correct: 1,
+        before: "Es tarde — todos", after: "porque están agotados.",
+        options: ["están durmiendo", "están dormiendo", "son durmiendo", "están dormando"],
+        correct: 0,
         hint: "dormir → durmiendo (неправильный герундий, чередование o→u). Не «dormiendo»"
       },
       {
-        question: "Куда ты идёшь? (прямо сейчас)",
-        options: ["¿A dónde estás ir?", "¿A dónde eres yendo?", "¿A dónde estás yendo?", "¿A dónde estás ido?"],
-        correct: 2,
+        before: "¿A dónde", after: "ahora mismo?",
+        options: ["estás yendo", "eres yendo", "estás ir", "estás ido"],
+        correct: 0,
         hint: "ir → yendo (неправильный герундий). estás + yendo. Не «ir» (инфинитив) и не «ido» (причастие)"
       }
     ]
@@ -745,16 +747,16 @@ const FORMULAS_DATA = [
         hint: "¿Cuánto tiempo llevas + герундий? — вопрос о длительности. Не «esperar» (инф.) и не «esperado» (причастие)"
       },
       {
-        question: "Мы бежим уже двадцать минут",
-        options: ["Estamos veinte minutos corriendo", "Llevamos veinte minutos correr", "Llevamos veinte minutos corriendo", "Llevamos corriendo desde veinte minutos"],
-        correct: 2,
-        hint: "llevamos (1 л. мн.ч.) + veinte minutos + corriendo. Время — между глаголом и герундием"
+        before: "Nosotros", after: "el partido ya — ¡estamos agotados!",
+        options: ["llevamos una hora viendo", "estamos una hora viendo", "llevamos una hora ver", "llevamos viendo una hora"],
+        correct: 0,
+        hint: "llevamos (1 л. мн.ч.) + una hora + viendo. Порядок: llevar + время + герундий"
       },
       {
-        question: "Они едят уже час",
-        options: ["Están una hora comiendo", "Llevan una hora comiendo", "Llevan una hora comer", "Llevan comiendo por una hora"],
-        correct: 1,
-        hint: "llevan (3 л. мн.ч.) + una hora + comiendo. Не estar, не por, порядок: llevar + время + герундий"
+        before: "Ellos", after: "sin parar — ¡qué hambre tenían!",
+        options: ["llevan tres días viajando", "están tres días viajando", "llevan tres días viajar", "llevan viajando tres días"],
+        correct: 0,
+        hint: "llevan (3 л. мн.ч.) + tres días + viajando. Порядок: llevar + время + герундий"
       }
     ]
   },
@@ -1212,14 +1214,14 @@ const FORMULAS_DATA = [
         hint: "Отрицание: no + va + a + infinitivo. «a» сохраняется: no va a venir"
       },
       {
-        question: "Вы (vosotros) собираетесь отдыхать?",
-        options: ["¿Van a descansar?", "¿Váis a descansar?", "¿Vosotros van a descansar?", "¿Vais a descansar?"],
-        correct: 3,
+        before: "¿Vosotros", after: "descansar este fin de semana?",
+        options: ["vais a", "van a", "váis a", "vais de"],
+        correct: 0,
         hint: "vosotros → vais (не «van» — это ellos). vais + a + infinitivo"
       },
       {
-        question: "Они собираются открыть ресторан?",
-        options: ["¿Van a abrir un restaurante?", "¿Vais a abrir un restaurante?", "¿Irán a abrir un restaurante?", "¿Van abrir un restaurante?"],
+        before: "¿Ellos", after: "un restaurante nuevo en el centro?",
+        options: ["van a abrir", "vais a abrir", "irán a abrir", "van abrir"],
         correct: 0,
         hint: "ellos → van + a + infinitivo. «a» обязательно. Вопрос: ¿Van a abrir...?"
       }
@@ -1271,15 +1273,15 @@ const FORMULAS_DATA = [
         hint: "hablar + -ía = hablaría (кондисьональ, 1л. ед.ч.). Суффикс -ía добавляется к инфинитиву"
       },
       {
-        question: "Он бы пришёл (venir — нерегулярный кондисьональ)",
-        options: ["Venería", "Veniría", "Vendría", "Viniera"],
-        correct: 2,
+        before: "Si pudiera,", after: "a la fiesta, pero tiene que trabajar.",
+        options: ["vendría", "venería", "veniría", "viniera"],
+        correct: 0,
         hint: "venir — нерегулярный: основа vendr- + -ía = vendría. Не veniría!"
       },
       {
-        question: "Мы бы положили это туда (poner — нерегулярный кондисьональ)",
-        options: ["Poneríamos", "Podríamos", "Pondríamos", "Pusimos"],
-        correct: 2,
+        before: "Si fuera necesario,", after: "los libros en la estantería.",
+        options: ["pondríamos", "poneríamos", "podríamos", "pusimos"],
+        correct: 0,
         hint: "poner — нерегулярный: основа pondr- + -íamos = pondríamos (1л. мн.ч.)"
       }
     ]
@@ -1448,16 +1450,16 @@ const FORMULAS_DATA = [
         hint: "3л.ед.ч.: acaba + de + infinitivo. Настоящее время! «de» обязательно. Не герундий"
       },
       {
-        question: "Вы (vosotros) только что закончили экзамен",
-        options: ["Acabéis de terminar el examen", "Acabasteis de terminar el examen", "Acabáis de terminar el examen", "Acabáis terminar el examen"],
-        correct: 2,
+        before: "Vosotros", after: "de terminar el examen — ¡bien hecho!",
+        options: ["acabáis", "acabéis", "acabasteis", "acabareis"],
+        correct: 0,
         hint: "vosotros → acabáis + de + infinitivo. Настоящее время (не прошедшее acabasteis)"
       },
       {
-        question: "Ты только что позвонил? (вопрос)",
-        options: ["¿Acabaste de llamar?", "¿Acabas llamar?", "¿Acabas de llamando?", "¿Acabas de llamar?"],
-        correct: 3,
-        hint: "Вопрос: ¿Acabas de + infinitivo? tú → acabas. «de» обязательно. Не герундий"
+        before: "¿", after: "de llamar? ¡El teléfono aún está caliente!",
+        options: ["acabas", "acabaste", "acababas", "acaban"],
+        correct: 0,
+        hint: "Вопрос: ¿Acabas de + infinitivo? tú → acabas. Настоящее время! «de» обязательно"
       }
     ]
   },
@@ -1566,15 +1568,15 @@ const FORMULAS_DATA = [
         hint: "seguir + ГЕРУНДИЙ: sigues + quejándote. Не инфинитив, не «de»!"
       },
       {
-        question: "Они перестали спорить (dejar de)",
-        options: ["Dejan discutir", "Dejan de discutiendo", "Dejan discutiendo", "Dejan de discutir"],
-        correct: 3,
-        hint: "dejar de + ИНФИНИТИВ: dejan de + discutir. «de» обязательно, не герундий"
+        before: "Al final,", after: "discutir y llegaron a un acuerdo.",
+        options: ["dejaron de", "dejaron a", "dejaron", "siguieron de"],
+        correct: 0,
+        hint: "dejar de + ИНФИНИТИВ: dejaron de + discutir. «de» обязательно!"
       },
       {
-        question: "Мы снова пробуем (volver a) — выбери правильную форму",
-        options: ["Volvemos intentarlo", "Seguimos a intentarlo", "Volvemos a intentarlo", "Volvemos de intentarlo"],
-        correct: 2,
+        before: "Después del fracaso,", after: "intentarlo con más cuidado.",
+        options: ["volvemos a", "volvemos de", "seguimos a", "dejamos de"],
+        correct: 0,
         hint: "volver a + инфинитив: volvemos + a + intentarlo. Предлог «а» обязателен, не «de»"
       }
     ]
