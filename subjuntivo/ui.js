@@ -65,7 +65,7 @@ var SubjuntivoUI = (function () {
     return '<div class="view-enter">' +
       body +
       '<div id="sj-hint" class="sj-hint" hidden></div>' +
-      '<button id="sj-next" class="next-button quiz-next-fixed" hidden onclick="subjuntivoNext()">Дальше →</button>' +
+      '<button id="sj-next" class="next-button quiz-next-fixed" style="display:none" onclick="subjuntivoNext()">Дальше →</button>' +
       '</div>';
   }
 

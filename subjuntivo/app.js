@@ -106,7 +106,7 @@
       hintEl.hidden = false;
     }
     var nextBtn = document.getElementById('sj-next');
-    if (nextBtn) nextBtn.hidden = false;
+    if (nextBtn) nextBtn.style.display = '';
 
     if (typeof VamoS !== 'undefined' && VamoS.save) {
       VamoS.save('subjuntivo', Math.round((state.score / state.quizQuestions.length) * 100));
