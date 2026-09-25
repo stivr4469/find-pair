@@ -53,7 +53,13 @@ const SerEstarApp = {
     showMainMenu: function() {
         if (typeof stopClassifyMode === 'function') stopClassifyMode();
         document.querySelectorAll('.game-area').forEach(el => el.classList.add('hidden'));
-        document.querySelector('.main-menu').classList.remove('hidden');
+        var menu = document.querySelector('.main-menu');
+        menu.classList.remove('hidden');
+        if (typeof replayAnimation === 'function') {
+            menu.querySelectorAll('.mode-button').forEach(function(b) { b.style.animation = 'none'; });
+            void menu.offsetWidth;
+            menu.querySelectorAll('.mode-button').forEach(function(b) { b.style.animation = ''; });
+        }
         var backBtn = document.getElementById('btn-back-to-modes');
         if (backBtn) backBtn.style.display = 'none';
         this.currentMode = null;

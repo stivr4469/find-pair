@@ -32,7 +32,7 @@
     '  70%{box-shadow:0 0 0 10px rgba(39,174,96,0)}',
     '  100%{box-shadow:0 0 0 0 rgba(39,174,96,0)}',
     '}',
-    '.pasado-anim-in{animation:pasadoFadeIn 0.35s ease both}',
+    '.pasado-anim-in{animation:vm-enter var(--dur-normal) var(--ease-out) both}',
     '.pasado-shake{animation:pasadoShake 0.35s ease}',
     '.pasado-bounce{animation:pasadoBounce 0.4s ease}',
     '.pasado-pulse{animation:pasadoPulse 0.5s ease}',
@@ -206,7 +206,7 @@ const PasadoUI = {
     }).join('');
 
     var html = [
-      '<div style="max-width:700px;margin:0 auto;padding:0 4px;" class="pasado-anim-in">',
+      '<div style="max-width:700px;margin:0 auto;padding:0 4px;" class="pasado-anim-in view-enter">',
 
 
         '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">',
@@ -302,7 +302,7 @@ const PasadoUI = {
     }).join('');
 
     var html = [
-      '<div style="max-width: 600px; margin: 0 auto;" class="pasado-anim-in">',
+      '<div style="max-width: 600px; margin: 0 auto;" class="pasado-anim-in view-enter">',
         '<div class="game-area" style="padding: 24px 20px;">',
 
           '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">',
@@ -396,7 +396,7 @@ const PasadoUI = {
         '<div style="background:var(--faint);border-radius:10px;padding:18px 16px;text-align:center;margin-bottom:16px;">',
           '<div style="font-size:0.82rem;color:var(--accent);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">Выбери правильную форму</div>',
           '<div class="inline-question-text" style="margin-bottom:18px;">' + sentenceHtml + '</div>',
-          '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;" id="pasado-inline-opts">' + optBtnsHtml + '</div>',
+          '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;" id="pasado-inline-opts" class="stagger">' + optBtnsHtml + '</div>',
         '</div>',
       ].join('');
     } else {
@@ -434,14 +434,14 @@ const PasadoUI = {
           '<span>' + _escHtmlP(question.question) + '</span>',
           (ttsSpanish ? '<button class="pasado-tts-btn" data-tts="' + _escHtmlP(ttsSpanish) + '" onclick="speakSpanish(this.dataset.tts)" title="Прослушать">' + (window.ICON_VOL||'') + '</button>' : ''),
         '</div>',
-        '<div id="pasado-options" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">',
+        '<div id="pasado-options" class="stagger" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">',
           optionsHtml,
         '</div>',
       ].join('');
     }
 
     var html = [
-      '<div style="max-width: 600px; margin: 0 auto; padding-bottom: 80px;" class="pasado-anim-in">',
+      '<div style="max-width: 600px; margin: 0 auto; padding-bottom: 80px;" class="pasado-anim-in view-enter">',
         '<div class="game-area" style="padding: 22px 20px;">',
 
           '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">',
@@ -582,7 +582,7 @@ const PasadoUI = {
       (item.after ? ' ' + _escHtmlP(item.after) : '');
 
     var html = [
-      '<div style="max-width: 620px; margin: 0 auto; padding-bottom: 80px;" class="pasado-anim-in">',
+      '<div style="max-width: 620px; margin: 0 auto; padding-bottom: 80px;" class="pasado-anim-in view-enter">',
         '<div class="game-area" style="padding: 22px 20px;">',
 
           '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">',
@@ -595,7 +595,7 @@ const PasadoUI = {
           '<div style="background:var(--faint);border-radius:10px;padding:18px 16px;text-align:center;margin-bottom:18px;">',
             '<div style="font-size:0.82rem;color:var(--accent);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">Выбери правильную форму</div>',
             '<div class="inline-question-text" style="margin-bottom:18px;">' + sentenceHtml + '</div>',
-            '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;" id="pasado-inline-opts">' + optBtnsHtml + '</div>',
+            '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;" id="pasado-inline-opts" class="stagger">' + optBtnsHtml + '</div>',
           '</div>',
 
           '<div id="pasado-inline-feedback" style="display:none;"></div>',
@@ -691,7 +691,7 @@ const PasadoUI = {
     }).join('');
 
     var html = [
-      '<div style="max-width: 600px; margin: 0 auto; padding-bottom: 80px;" class="pasado-anim-in">',
+      '<div style="max-width: 600px; margin: 0 auto; padding-bottom: 80px;" class="pasado-anim-in view-enter">',
         '<div class="game-area" style="padding: 22px 20px;">',
 
           '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">',
@@ -713,7 +713,7 @@ const PasadoUI = {
             '">' + _escHtmlP(item.text) + '</div>',
           '</div>',
 
-          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;" id="pasado-classify-zones">',
+          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;" id="pasado-classify-zones" class="stagger">',
             zonesHtml,
           '</div>',
 
@@ -810,7 +810,7 @@ const PasadoUI = {
     }
 
     var html = [
-      '<div style="max-width: 500px; margin: 0 auto;" class="pasado-anim-in">',
+      '<div style="max-width: 500px; margin: 0 auto;" class="pasado-anim-in view-enter">',
         '<div class="game-area" style="text-align: center; padding: 32px 24px;">',
 
           '<div style="margin-bottom: 12px; color: var(--accent); line-height: 1;">' + ((window.ICON_RESULT && window.ICON_RESULT[reactionIcon]) || '') + '</div>',
@@ -852,7 +852,7 @@ const PasadoUI = {
     var pair = data[i];
 
     var html = [
-      '<div style="max-width:700px;margin:0 auto;padding:0 4px;" class="pasado-anim-in">',
+      '<div style="max-width:700px;margin:0 auto;padding:0 4px;" class="pasado-anim-in view-enter">',
 
         // header
         '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">',

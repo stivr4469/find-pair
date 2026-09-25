@@ -48,7 +48,7 @@ function displayVerbSelectionMode0() {
   }
 
   contentArea.innerHTML = `
-    <div class="verb-selection-container"> <h3>Выберите глагол для спряжения:</h3> <div class="verb-buttons"> <button class="verb-btn" onclick="startMode0('ir')">ir</button> <button class="verb-btn" onclick="startMode0('venir')">venir</button> <button class="verb-btn" onclick="startMode0('llegar')">llegar</button> </div> </div> `;
+    <div class="verb-selection-container view-enter"> <h3>Выберите глагол для спряжения:</h3> <div class="verb-buttons"> <button class="verb-btn" onclick="startMode0('ir')">ir</button> <button class="verb-btn" onclick="startMode0('venir')">venir</button> <button class="verb-btn" onclick="startMode0('llegar')">llegar</button> </div> </div> `;
 }
 
 /**
@@ -67,7 +67,7 @@ function displayQuestionMode0(question) {
 
   // Обновляем текст вопроса
   contentArea.innerHTML = `
-    <div class="question-container" style="padding-bottom: 80px;"> <div class="question-number"> Вопрос ${mode0State.questionCount + 1} из ${mode0State.maxQuestions}
+    <div class="question-container view-enter" style="padding-bottom: 80px;"> <div class="question-number"> Вопрос ${mode0State.questionCount + 1} из ${mode0State.maxQuestions}
       </div> <div class="question-text" id="mode0-question-text"> ${question.questionText}
       </div> <div class="options-container" id="mode0-options"> <!-- Кнопки будут созданы через JS --> </div> <div id="mode0-feedback" class="feedback"></div> <button
         id="mode0-next-btn"

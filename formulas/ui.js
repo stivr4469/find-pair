@@ -91,7 +91,7 @@ const FormulasUI = {
     }).join('');
 
     var html = [
-      '<div style="max-width: 700px; margin: 0 auto; padding: 0 4px;">',
+      '<div class="view-enter" style="max-width: 700px; margin: 0 auto; padding: 0 4px;">',
 
 
         // "Quiz all" + "Marathon" buttons
@@ -120,7 +120,7 @@ const FormulasUI = {
         '</div>',
 
         // Grid
-        '<div style="',
+        '<div class="stagger" style="',
           'display: grid;',
           'grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));',
           'gap: 12px;',
@@ -196,7 +196,7 @@ const FormulasUI = {
     }).join('');
 
     var html = [
-      '<div style="max-width: 600px; margin: 0 auto;">',
+      '<div class="view-enter" style="max-width: 600px; margin: 0 auto;">',
 
         // ── Card container
         '<div class="game-area" style="padding: 24px 20px;">',
@@ -343,7 +343,7 @@ const FormulasUI = {
       var fbBlank = '<span id="formula-blank" style="display:inline-block;min-width:72px;border-bottom:2px solid var(--accent);color:var(--muted);padding:0 4px;text-align:center;">___</span>';
       var fbSentence = _escHtml(question.before) + ' ' + fbBlank + (question.after ? ' ' + _escHtml(question.after) : '');
       root.innerHTML = [
-        '<div style="max-width:600px;margin:0 auto;padding-bottom:80px;">',
+        '<div class="view-enter" style="max-width:600px;margin:0 auto;padding-bottom:80px;">',
           '<div class="game-area" style="padding:22px 20px;">',
             '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">',
               '<span style="background:var(--accent);color:white;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;">' + _escHtml(formulaName) + '</span>',
@@ -359,7 +359,7 @@ const FormulasUI = {
               '<div style="font-size:0.82rem;color:var(--accent);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">Выбери правильную форму</div>',
               '<div style="font-size:1.1rem;font-weight:600;line-height:1.7;margin-bottom:' + (question.ru ? '6px' : '18px') + ';">' + fbSentence + '</div>',
               (question.ru ? '<div style="font-size:0.82rem;color:var(--muted);margin-bottom:14px;font-style:italic;">' + _escHtml(question.ru) + '</div>' : ''),
-              '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">' + fbOptBtns + '</div>',
+              '<div class="stagger" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">' + fbOptBtns + '</div>',
             '</div>',
             '<div id="formula-feedback" style="display:none;"></div>',
             '<div id="formula-next-wrap" style="display:none;text-align:center;margin-top:14px;">',
@@ -416,7 +416,7 @@ const FormulasUI = {
     }).join('');
 
     var html = [
-      '<div style="max-width: 600px; margin: 0 auto; padding-bottom: 80px;">',
+      '<div class="view-enter" style="max-width: 600px; margin: 0 auto; padding-bottom: 80px;">',
         '<div class="game-area" style="padding: 22px 20px;">',
 
           // Top row: formula badge + back
@@ -480,7 +480,7 @@ const FormulasUI = {
           '</div>',
 
           // Options
-          '<div id="formula-options" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">',
+          '<div id="formula-options" class="stagger" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">',
             optionsHtml,
           '</div>',
 
@@ -641,7 +641,7 @@ const FormulasUI = {
         : 'formulaStartQuiz(' + FormulasApp.state.currentFormulaIndex + ')';
 
     var html = [
-      '<div style="max-width: 500px; margin: 0 auto;">',
+      '<div class="view-enter" style="max-width: 500px; margin: 0 auto;">',
         '<div class="game-area" style="text-align: center; padding: 32px 24px;">',
 
           '<div style="margin-bottom: 12px; color: var(--accent); line-height: 1;">' + ((window.ICON_RESULT && window.ICON_RESULT[reactionIcon]) || '') + '</div>',

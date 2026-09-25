@@ -80,7 +80,7 @@ function showContextResultsUI() {
     window.njResult && window.njResult(percentage);
     
     contentArea.innerHTML = `
-        <div class="results-container"> <h2>Сессия завершена!</h2> <div class="final-score">${contextModeState.score} / ${contextModeState.sessionLimit}</div> <p>Вы прошли 20 вопросов по Ser и Estar. Вопросы перемещены в конец очереди.</p> <div class="results-buttons"> <button class="restart-button" onclick="restartContextMode()"> Продолжить тренировку
+        <div class="results-container view-enter"> <h2>Сессия завершена!</h2> <div class="final-score">${contextModeState.score} / ${contextModeState.sessionLimit}</div> <p>Вы прошли 20 вопросов по Ser и Estar. Вопросы перемещены в конец очереди.</p> <div class="results-buttons"> <button class="restart-button" onclick="restartContextMode()"> Продолжить тренировку
                 </button> <button class="menu-button" onclick="showMainMenu()"> В меню
                 </button> </div> </div> `;
     lucide.createIcons();

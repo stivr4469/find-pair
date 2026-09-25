@@ -49,7 +49,7 @@ function displayAdvancedSettings() {
     };
 
     contentArea.innerHTML = `
-        <div class="settings-container"> <h3>Настройки тренировки (A2)</h3> <div class="setting-group"> <h4>Глаголы:</h4> <div id="verbs-settings"> ${verbs.map(verb => `
+        <div class="settings-container view-enter"> <h3>Настройки тренировки (A2)</h3> <div class="setting-group"> <h4>Глаголы:</h4> <div id="verbs-settings"> ${verbs.map(verb => `
                         <label> <input type="checkbox" name="verb" value="${verb}" checked> ${verb}
                         </label> `).join('')}
                 </div> </div> <div class="setting-group"> <h4>Времена:</h4> <div id="tenses-settings"> ${Object.keys(tenses).map(tense => `
@@ -186,7 +186,7 @@ function displayAdvancedQuestion(question, options) {
     };
 
     contentArea.innerHTML = `
-        <div class="question-container" style="padding-bottom: 80px;"> <div class="question-number"> Вопрос ${advancedModeState.questionCount + 1} из ${advancedModeState.maxQuestions}
+        <div class="question-container view-enter" style="padding-bottom: 80px;"> <div class="question-number"> Вопрос ${advancedModeState.questionCount + 1} из ${advancedModeState.maxQuestions}
             </div> <button class="back-to-settings-button" onclick="initAdvancedMode()">К настройкам</button> <div class="question-text"> Conjugación de '${question.verb}' en ${tenseNames[question.tense]} para '${personNames[question.person]}'
             </div> <div class="options-container"> ${options.map(option => `
                     <button class="option-btn" data-answer="${option}">${option}</button> `).join('')}
@@ -298,7 +298,7 @@ function showAdvancedResults() {
     }
 
     contentArea.innerHTML = `
-        <div class="results-container"> <h3>Результаты</h3> <div class="final-score">${advancedModeState.score} из ${advancedModeState.maxQuestions} (${percentage}%)</div> <div class="final-message">${message}</div> <div class="results-buttons"> <button class="restart-button" onclick="initAdvancedMode()"> Ещё раз
+        <div class="results-container view-enter"> <h3>Результаты</h3> <div class="final-score">${advancedModeState.score} из ${advancedModeState.maxQuestions} (${percentage}%)</div> <div class="final-message">${message}</div> <div class="results-buttons"> <button class="restart-button" onclick="initAdvancedMode()"> Ещё раз
                 </button> <button class="menu-button" onclick="SerEstarApp.showMainMenu()"> Меню
                 </button> </div> </div> `;
     lucide.createIcons();

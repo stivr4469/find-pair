@@ -98,11 +98,11 @@ function displayMode6QuestionUI(question) {
         .join('');
 
     contentArea.innerHTML = `
-        <div class="question-container" style="padding-bottom: 80px;">
+        <div class="question-container view-enter" style="padding-bottom: 80px;">
             <div class="progress-text">Вопрос ${mode6State.currentQuestionIndex + 1} из ${mode6State.totalQuestions}</div>
             <div class="translation-text">${_m6Esc(question.translation)}</div>
             <div class="question-text">${sentenceHtml}</div>
-            <div id="mode6-options" class="m6-tiles">${tilesHtml}</div>
+            <div id="mode6-options" class="m6-tiles stagger">${tilesHtml}</div>
             <div class="feedback" id="mode6-feedback"></div>
             <button class="next-button quiz-next-fixed" id="mode6-next-btn" style="display: none;">Дальше →</button>
         </div>`;
@@ -126,7 +126,7 @@ function showMode6ResultsUI() {
     let message = percentage === 100 ? '¡Excelente!' : percentage >= 80 ? '¡Muy bien!' : percentage >= 60 ? '¡Bien!' : 'Sigue practicando!';
 
     contentArea.innerHTML = `
-        <div class="results-container" style="text-align: center; padding: 20px;">
+        <div class="results-container view-enter" style="text-align: center; padding: 20px;">
             <h3>Результаты</h3>
             <div class="final-score">${mode6State.score} из ${mode6State.totalQuestions} (${percentage}%)</div>
             <div class="final-message">${message}</div>
