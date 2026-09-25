@@ -250,4 +250,5 @@ if (typeof window !== 'undefined') {
     window.selectMode7Word = selectMode7Word;
     window.placeMode7WordInColumn = placeMode7WordInColumn;
     window.escapeHtml = escapeHtml;
+    window.mode7State = mode7State;
 }

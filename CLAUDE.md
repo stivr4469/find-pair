@@ -70,9 +70,11 @@
      ↓
 [5. BUMP VERSION] Обновить ?v=N в index.html для изменённых скриптов
      ↓
-[6. DOCS]         Обновить ARCHITECTURE.md и SUMMARY.MD
+[6. SMOKE TEST]   bash run-smoke.sh — все маячки должны быть зелёными
      ↓
-[7. COMMIT]       Conventional commit с осмысленным сообщением
+[7. DOCS]         Обновить ARCHITECTURE.md и SUMMARY.MD
+     ↓
+[8. COMMIT]       Conventional commit с осмысленным сообщением
 ```
 
 ---
@@ -83,7 +85,7 @@
 
 - **Нет сборщика** — `import`/`require` не работают. Всё через `<script>` теги и глобальные переменные `window.*`
 - **Нет TypeScript** — только plain JS. Документировать сигнатуры через JSDoc если нужно
-- **Нет тестов** — покрытие обеспечивается ручной проверкой в браузере через Playwright или `http.server`
+- **Smoke-тесты** — `tests/smoke/*.spec.js` (Playwright). Запуск: `bash run-smoke.sh`. Запускать после каждого изменения кода перед коммитом.
 - **Cache-busting** — при изменении любого `.js` файла обязательно bump `?v=N` в `index.html` модуля
 
 ### Версии файлов (актуальные)
