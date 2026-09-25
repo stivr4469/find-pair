@@ -94,13 +94,13 @@
 
 | Файл | Текущая версия в HTML |
 |---|---|
-| `css/unified-styles.css` | v=28 |
+| `css/unified-styles.css` | v=29 |
 | `js/utils.js` | v=25 |
 | `js/main.js` | v=2 |
 | `formulas/app.js` | v=20 |
 | `formulas/ui.js` | v=31 |
 | `pasado/app.js` | v=9 |
-| `pasado/ui.js` | v=22 |
+| `pasado/ui.js` | v=23 |
 | `tren/app.js` | v=17 |
 | `tren/mode7-ui.js` | v=19 |
 | `ser-estar/ser-estar-app.js` | v=8 |
@@ -164,6 +164,10 @@ transition: width 0.4s;          /* и height/top/left/margin/padding/max-height
 
 /* НЕЛЬЗЯ — длительности/кривые числами; только токены --dur-*, --ease-*, --spring */
 animation: shake 0.3s ease;
+
+/* НЕЛЬЗЯ — fill-mode both/forwards у анимации transform на контейнере экрана:
+   он становится containing block для position:fixed, и кнопка «Дальше» уезжает за экран */
+.view-enter { animation: vm-enter 0.4s both; }   /* только backwards */
 
 /* НЕЛЬЗЯ — обёрточные анимации-«контейнеры» с обычной специфичностью (.stagger > *):
    они перекрывают анимации ответа на детях. Такие правила — только через :where(),

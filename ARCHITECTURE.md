@@ -40,7 +40,7 @@ spanish-trainer-app/
 ├── ARCHITECTURE.md         ← Этот файл
 ├── SUMMARY.MD              ← Журнал изменений
 ├── css/
-│   ├── unified-styles.css  ← Единые стили всех модулей (v=28)
+│   ├── unified-styles.css  ← Единые стили всех модулей (v=29)
 │   └── main.css            ← Стили только для root index.html
 ├── js/
 │   ├── utils.js            ← Общие утилиты: shuffleArray, speakSpanish, toggleTheme,
@@ -76,7 +76,7 @@ module/
 
 | Файл | Версия в HTML |
 |------|--------------|
-| `css/unified-styles.css` | v=28 ← `:where(.stagger)` — нулевая специфичность каскада (фикс перекрытия анимаций ответа);  токены motion, keyframes vm-*, .view-enter/.stagger/.anim-*, .se-progress-fill→scaleX |
+| `css/unified-styles.css` | v=29 ← view-enter/stagger с fill-mode `backwards` (фикс кнопки «Дальше»);  `:where(.stagger)` — нулевая специфичность каскада (фикс перекрытия анимаций ответа);  токены motion, keyframes vm-*, .view-enter/.stagger/.anim-*, .se-progress-fill→scaleX |
 | `js/utils.js` | v=25 ← `replayAnimation()`, `animateCount()`, `prefersReducedMotion()`, `setTopbarProgress→scaleX` |
 | `js/main.js` | v=2 |
 | `js/naranjito.js` | v=3 |
@@ -85,7 +85,7 @@ module/
 | `formulas/ui.js` | v=31 ← view-enter, stagger, anim-correct/wrong, scaleX progress, animateCount results |
 | `formulas/data.js` | v=16 |
 | `pasado/app.js` | v=9 |
-| `pasado/ui.js` | v=22 ← view-enter, stagger, .pasado-anim-in→vm-enter token, scaleX fills, animateCount results |
+| `pasado/ui.js` | v=23 ← .pasado-anim-in: backwards; view-enter, stagger, .pasado-anim-in→vm-enter token, scaleX fills, animateCount results |
 | `pasado/data.js` | v=7 |
 | `tren/app.js` | v=17 ← stagger replay in showMainMenu() |
 | `tren/mode0-ui.js` | v=16 ← view-enter, stagger |
@@ -160,6 +160,12 @@ contrasts: [
 
 ## Unified Motion System (TASK-motion-ui — завершён 2026-09-25)
 
+> ⚠ **Анимации входа — только `fill-mode: backwards`, никогда `both`/`forwards` на контейнерах.**
+> Пока анимация transform «действует» (а при `both` — вечно), элемент становится контейнером
+> для `position: fixed` потомков: `.quiz-next-fixed` («Дальше →») уезжает под карточку за экран.
+> Регрессионный тест: `motion.spec.js` → «кнопка «Дальше» видна после ответа».
+> Анимации «контейнеров» (`.stagger`) — через `:where()` с нулевой специфичностью.
+
 ### CSS-классы
 
 | Класс | Применение |
@@ -202,7 +208,7 @@ setTopbarProgress(pct)          // устанавливает scaleX на #se-pr
 
 ---
 
-## CSS — unified-styles.css (v=28) — дизайн-система «Валенсия»
+## CSS — unified-styles.css (v=29) — дизайн-система «Валенсия»
 
 ### Токены (CSS-переменные)
 
@@ -504,7 +510,7 @@ window.currentItem = item;  // прочитается уже другой item
 
 ```
 find-pair/
-├── index.html   ← utils.js?v=25, unified-styles.css?v=28, styles.css?v=4, script.js?v=5
+├── index.html   ← utils.js?v=25, unified-styles.css?v=29, styles.css?v=4, script.js?v=5
 ├── script.js    ← основная логика (find-pair.js удалён)
 └── styles.css   ← модульные стили (find-pair.css удалён)
 ```

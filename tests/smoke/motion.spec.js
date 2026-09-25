@@ -240,3 +240,44 @@ test.describe('motion — реакция на ответ реально прои
         delays.forEach(d => expect(d).toBe('0s'));
     });
 });
+
+test.describe('motion — кнопка «Дальше» (position:fixed) видна после ответа', () => {
+    // Регрессия: fill-mode:both у .view-enter оставлял transform на предке →
+    // position:fixed считался от карточки, кнопка уезжала за нижний край экрана.
+    async function nextBtnInViewport(page) {
+        await page.waitForTimeout(700); // дождаться конца анимаций появления
+        return page.evaluate(() => {
+            // offsetParent у position:fixed всегда null — видимость проверяем по размеру и display
+            var b = [...document.querySelectorAll('.quiz-next-fixed')]
+                .filter(x => getComputedStyle(x).display !== 'none' && x.getBoundingClientRect().width > 0)[0];
+            if (!b) return 'no-button';
+            var r = b.getBoundingClientRect();
+            return r.bottom <= innerHeight && r.top >= 0 ? 'ok' : 'off-screen top=' + Math.round(r.top) + ' vh=' + innerHeight;
+        });
+    }
+
+    test('formulas', async ({ page }) => {
+        await page.setViewportSize({ width: 1280, height: 720 });
+        await page.goto('/formulas/');
+        await page.evaluate(() => formulaStartQuiz(0));
+        await page.evaluate(() => { var s = FormulasApp.state; formulaHandleAnswer(s.quizQuestions[s.currentQuestionIndex].correct); });
+        expect(await nextBtnInViewport(page)).toBe('ok');
+    });
+
+    test('pasado', async ({ page }) => {
+        await page.setViewportSize({ width: 1280, height: 720 });
+        await page.goto('/pasado/');
+        await page.evaluate(() => pasadoStartQuiz(0));
+        await page.evaluate(() => { var s = PasadoApp.state; pasadoHandleAnswer(s.quizQuestions[s.currentQuestionIndex].correct); });
+        expect(await nextBtnInViewport(page)).toBe('ok');
+    });
+
+    test('tren mode1', async ({ page }) => {
+        await page.setViewportSize({ width: 390, height: 700 });
+        await page.goto('/tren/');
+        await page.evaluate(() => App.switchMode('mode1'));
+        await page.locator('.game-area:not(.hidden) .stagger > button').first().click();
+        expect(await nextBtnInViewport(page)).toBe('ok');
+    });
+});
+

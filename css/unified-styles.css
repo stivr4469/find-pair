@@ -1299,7 +1299,7 @@ select:focus {
 
 /* ── Keyframes ── */
 @keyframes vm-enter {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: none; }
 }
 @keyframes vm-pop {
@@ -1319,14 +1319,17 @@ select:focus {
 }
 
 /* ── Utility classes ── */
-.view-enter   { animation: vm-enter var(--dur-normal) var(--ease-out) both; }
+/* backwards, НЕ both: после окончания анимация должна перестать действовать.
+   Иначе предок с «застывшим» transform становится контейнером для position:fixed
+   и кнопка .quiz-next-fixed уезжает под карточку за пределы экрана. */
+.view-enter   { animation: vm-enter var(--dur-slow) var(--ease-out) backwards; }
 .anim-correct { animation: vm-pop var(--dur-slow) var(--spring); }
 .anim-wrong   { animation: vm-shake var(--dur-slow) var(--ease-out); }
 
 /* Каскадное появление дочерних элементов (карточки списка, варианты ответа) */
 /* :where() обнуляет специфичность: любой класс анимации (ответ, исчезновение)
    на ребёнке перекрывает каскадный вход и его задержку, независимо от порядка в CSS. */
-:where(.stagger) > * { animation: vm-enter var(--dur-normal) var(--ease-out) both; }
+:where(.stagger) > * { animation: vm-enter var(--dur-normal) var(--ease-out) backwards; }
 :where(.stagger > :nth-child(2))  { animation-delay: calc(var(--stagger-step) * 1); }
 :where(.stagger > :nth-child(3))  { animation-delay: calc(var(--stagger-step) * 2); }
 :where(.stagger > :nth-child(4))  { animation-delay: calc(var(--stagger-step) * 3); }
