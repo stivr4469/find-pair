@@ -58,7 +58,7 @@ const MODE1_SENTENCES = [
         explanation: "SER (O - Origin): Происхождение и родина."
     },
     {
-        text: "Rafael и Хуан ___ hermanos.",
+        text: "Rafael y Juan ___ hermanos.",
         correct: "son",
         options: ["son", "están"],
         translation: "Рафаэль и Хуан — братья.",
@@ -88,7 +88,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (C - Condition): Временное физическое состояние (температура)."
     },
     {
-        text: "Мои ключи ___ на столе.",
         text: "Mis llaves ___ sobre la mesa.",
         correct: "están",
         options: ["son", "están"],
@@ -96,7 +95,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (L - Location): Местоположение предметов в пространстве."
     },
     {
-        text: "Yo ___ очень устал сегодня.",
         text: "Yo ___ muy cansado hoy.",
         correct: "estoy",
         options: ["soy", "estoy"],
@@ -104,7 +102,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (C - Condition): Временное физическое или эмоциональное состояние."
     },
     {
-        text: "Madrid ___ в центре Испании.",
         text: "Madrid ___ en el centro de España.",
         correct: "está",
         options: ["es", "está"],
@@ -112,7 +109,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (L - Location): Местоположение географических объектов."
     },
     {
-        text: "Мы сейчас едим паэлью.",
         text: "Nosotros ___ comiendo una paella.",
         correct: "estamos",
         options: ["somos", "estamos"],
@@ -120,7 +116,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (A - Action): Используется с герундием для продолженного действия."
     },
     {
-        text: "Ты ___ очень грустный сегодня.",
         text: "Tú ___ muy triste hoy.",
         correct: "estás",
         options: ["eres", "estás"],
@@ -135,7 +130,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (C - Condition): Состояние объекта как результат действия."
     },
     {
-        text: "Мой брат ___ в Мексике сейчас.",
         text: "Mi hermano ___ en México ahora.",
         correct: "está",
         options: ["es", "está"],
@@ -203,7 +197,6 @@ const MODE1_SENTENCES = [
 
     // --- РАСШИРЕНИЕ ДО 80 (Примеры категорий) ---
     {
-        text: "Мои родители ___ из Севильи.",
         text: "Mis padres ___ de Sevilla.",
         correct: "son",
         options: ["son", "están"],
@@ -211,7 +204,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (O - Origin): Происхождение."
     },
     {
-        text: "Собор ___ очень старый.",
         text: "La catedral ___ muy antigua.",
         correct: "es",
         options: ["es", "está"],
@@ -219,7 +211,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (D - Description): Характеристика здания."
     },
     {
-        text: "Мы ___ в аэропорту Малаги.",
         text: "Nosotros ___ en el aeropuerto de Málaga.",
         correct: "estamos",
         options: ["somos", "estamos"],
@@ -227,7 +218,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (L - Location): Местоположение."
     },
     {
-        text: "Мой друг ___ инженер.",
         text: "Mi amigo ___ ingeniero.",
         correct: "es",
         options: ["es", "está"],
@@ -235,7 +225,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (O - Occupation): Профессия."
     },
     {
-        text: "Книга ___ интересная.",
         text: "El libro ___ interesante.",
         correct: "es",
         options: ["es", "está"],
@@ -243,7 +232,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (C - Characteristic): Свойство предмета."
     },
     {
-        text: "Кофе ___ холодный.",
         text: "El café ___ frío.",
         correct: "está",
         options: ["es", "está"],
@@ -251,7 +239,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (C - Condition): Температура напитка."
     },
     {
-        text: "Сын Марии ___ очень умный.",
         text: "El hijo de María ___ muy listo.",
         correct: "es",
         options: ["es", "está"],
@@ -259,7 +246,6 @@ const MODE1_SENTENCES = [
         explanation: "SER + listo = умный (характеристика)."
     },
     {
-        text: "Я ___ готов к экзамену.",
         text: "Yo ___ listo para el examen.",
         correct: "estoy",
         options: ["soy", "estoy"],
@@ -267,7 +253,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR + listo = быть готовым (состояние)."
     },
     {
-        text: "Эта машина ___ моего отца.",
         text: "Este coche ___ de mi padre.",
         correct: "es",
         options: ["es", "está"],
@@ -275,7 +260,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (Possession): Принадлежность."
     },
     {
-        text: "Барселона ___ на берегу моря.",
         text: "Barcelona ___ a la orilla del mar.",
         correct: "está",
         options: ["es", "está"],
@@ -283,7 +267,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (L - Location): География."
     },
     {
-        text: "Сегодня ___ 25 февраля.",
         text: "Hoy ___ 25 de febrero.",
         correct: "es",
         options: ["es", "está"],
@@ -291,7 +274,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (T - Time): Дата."
     },
     {
-        text: "Вы ___ испанцы?",
         text: "¿Vosotros ___ españoles?",
         correct: "sois",
         options: ["sois", "estáis"],
@@ -299,7 +281,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (Nationality): Национальность."
     },
     {
-        text: "Море ___ спокойное сегодня.",
         text: "El mar ___ tranquilo hoy.",
         correct: "está",
         options: ["es", "está"],
@@ -307,7 +288,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (C - Condition): Временное состояние природы."
     },
     {
-        text: "Эта сумка ___ из кожи.",
         text: "Este bolso ___ de cuero.",
         correct: "es",
         options: ["es", "está"],
@@ -315,7 +295,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (Material): Материал."
     },
     {
-        text: "Мы ___ очень счастливы вместе.",
         text: "Nosotros ___ muy felices juntos.",
         correct: "somos",
         options: ["somos", "estamos"],
@@ -323,15 +302,13 @@ const MODE1_SENTENCES = [
         explanation: "SER + feliz = быть счастливым человеком (характеристика)."
     },
     {
-        text: "Я ___ очень счастлив сейчас.",
-        text: "Estoy muy feliz ahora.",
+        text: "Yo ___ muy feliz ahora.",
         correct: "estoy",
         options: ["soy", "estoy"],
         translation: "Я очень счастлив сейчас.",
         explanation: "ESTAR + feliz = состояние радости в моменте."
     },
     {
-        text: "Где ___ туалет?",
         text: "¿Dónde ___ el baño?",
         correct: "está",
         options: ["es", "está"],
@@ -339,7 +316,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (L - Location): Местоположение."
     },
     {
-        text: "Концерт ___ в восемь вечера.",
         text: "El concierto ___ a las ocho.",
         correct: "es",
         options: ["es", "está"],
@@ -347,7 +323,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (T - Time): Время события."
     },
     {
-        text: "Моя сестра ___ замужем.",
         text: "Mi hermana ___ casada.",
         correct: "está",
         options: ["es", "está"],
@@ -355,7 +330,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (Status): Семейное положение в испанском обычно через estar."
     },
     {
-        text: "Билеты ___ у меня в кармане.",
         text: "Las entradas ___ en mi bolsillo.",
         correct: "están",
         options: ["son", "están"],
@@ -363,7 +337,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (L - Location): Местоположение."
     },
     {
-        text: "Этот фильм ___ очень скучный.",
         text: "Esta película ___ muy aburrida.",
         correct: "es",
         options: ["es", "está"],
@@ -371,15 +344,13 @@ const MODE1_SENTENCES = [
         explanation: "SER (C - Characteristic): Свойство фильма."
     },
     {
-        text: "Я ___ в восторге от этой идеи.",
-        text: "Я ___ encantado con esta idea.",
+        text: "Yo ___ encantado con esta idea.",
         correct: "estoy",
         options: ["soy", "estoy"],
         translation: "Я в восторге от этой идеи.",
         explanation: "ESTAR (E - Emotion): Эмоция."
     },
     {
-        text: "Карлос ___ мой лучший друг.",
         text: "Carlos ___ mi mejor amigo.",
         correct: "es",
         options: ["es", "está"],
@@ -387,7 +358,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (R - Relationship): Отношения."
     },
     {
-        text: "Это платье ___ слишком дорогое.",
         text: "Este vestido ___ demasiado caro.",
         correct: "es",
         options: ["es", "está"],
@@ -395,7 +365,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (Characteristic): Качество/цена товара."
     },
     {
-        text: "Магазины ___ закрыты по воскресеньям.",
         text: "Las tiendas ___ cerradas los domingos.",
         correct: "están",
         options: ["son", "están"],
@@ -403,23 +372,20 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (C - Condition): Состояние (закрыто/открыто)."
     },
     {
-        text: "Эта новость ___ очень важная.",
-        text: "Эта noticia ___ muy importante.",
+        text: "Esta noticia ___ muy importante.",
         correct: "es",
         options: ["es", "está"],
         translation: "Эта новость очень важная.",
         explanation: "SER (Characteristic): Качество новости."
     },
     {
-        text: "Мы ___ в центре Мадрида.",
-        text: "Мы ___ en el centro de Madrid.",
+        text: "Nosotros ___ en el centro de Madrid.",
         correct: "estamos",
         options: ["somos", "estamos"],
         translation: "Мы в центре Мадрида.",
         explanation: "ESTAR (L - Location): Местоположение."
     },
     {
-        text: "Его дедушка ___ уже очень старый.",
         text: "Su abuelo ___ ya muy viejo.",
         correct: "es",
         options: ["es", "está"],
@@ -427,7 +393,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (D - Description): Возраст/характеристика человека."
     },
     {
-        text: "Я ___ занят сейчас.",
         text: "Yo ___ ocupado ahora.",
         correct: "estoy",
         options: ["soy", "estoy"],
@@ -435,7 +400,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (C - Condition): Временное состояние."
     },
     {
-        text: "Этот стол ___ чистый.",
         text: "Esta mesa ___ limpia.",
         correct: "está",
         options: ["es", "está"],
@@ -443,7 +407,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (C - Condition): Результат уборки."
     },
     {
-        text: "Они ___ из Аргентины.",
         text: "Ellos ___ de Argentina.",
         correct: "son",
         options: ["son", "están"],
@@ -451,7 +414,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (Origin): Происхождение."
     },
     {
-        text: "Твоя обувь ___ под кроватью.",
         text: "Tus zapatos ___ debajo de la cama.",
         correct: "están",
         options: ["son", "están"],
@@ -459,7 +421,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (L - Location): Местоположение."
     },
     {
-        text: "Урок испанского ___ очень полезный.",
         text: "La clase de español ___ muy útil.",
         correct: "es",
         options: ["es", "está"],
@@ -467,7 +428,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (Characteristic): Качество урока."
     },
     {
-        text: "Мой папа ___ сейчас на работе.",
         text: "Mi padre ___ en el trabajo ahora.",
         correct: "está",
         options: ["es", "está"],
@@ -475,15 +435,13 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (L - Location): Местоположение."
     },
     {
-        text: "Этот суп ___ невкусный.",
-        text: "Эта sopa ___ sosa (пресная).",
+        text: "Esta sopa ___ sosa.",
         correct: "está",
         options: ["es", "está"],
         translation: "Этот суп пресный (невкусный).",
         explanation: "ESTAR (C - Condition): Вкус еды в данный момент."
     },
     {
-        text: "Вы ___ студенты университета?",
         text: "¿Ustedes ___ estudiantes de la universidad?",
         correct: "son",
         options: ["son", "están"],
@@ -491,7 +449,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (Occupation): Род занятий."
     },
     {
-        text: "Машина ___ в гараже.",
         text: "El coche ___ en el garaje.",
         correct: "está",
         options: ["es", "está"],
@@ -499,7 +456,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (L - Location): Местоположение."
     },
     {
-        text: "Луна ___ сегодня очень яркая.",
         text: "La luna ___ muy brillante hoy.",
         correct: "está",
         options: ["es", "está"],
@@ -507,15 +463,13 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (C - Condition): Временное состояние природы."
     },
     {
-        text: "Этот дом ___ очень большой.",
-        text: "Эта casa ___ muy grande.",
+        text: "Esta casa ___ muy grande.",
         correct: "es",
         options: ["es", "está"],
         translation: "Этот дом очень большой.",
         explanation: "SER (D - Description): Характеристика объекта."
     },
     {
-        text: "Я ___ влюблен в тебя.",
         text: "Yo ___ enamorado de ti.",
         correct: "estoy",
         options: ["soy", "estoy"],
@@ -523,7 +477,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (E - Emotion): Чувство/эмоция."
     },
     {
-        text: "Картина ___ на стене.",
         text: "El cuadro ___ en la pared.",
         correct: "está",
         options: ["es", "está"],
@@ -531,7 +484,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (L - Location): Местоположение."
     },
     {
-        text: "Завтра ___ праздник.",
         text: "Mañana ___ fiesta.",
         correct: "es",
         options: ["es", "está"],
@@ -539,7 +491,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (T - Time/Event): Событие."
     },
     {
-        text: "Они ___ католики.",
         text: "Ellos ___ católicos.",
         correct: "son",
         options: ["son", "están"],
@@ -547,7 +498,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (Religion): Религия/убеждения."
     },
     {
-        text: "Вино ___ из Чили.",
         text: "El vino ___ de Chile.",
         correct: "es",
         options: ["es", "está"],
@@ -555,7 +505,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (Origin): Происхождение."
     },
     {
-        text: "Мой дедушка ___ уже мертв.",
         text: "Mi abuelo ___ muerto.",
         correct: "está",
         options: ["es", "está"],
@@ -563,7 +512,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (C - Condition): Состояние жизни/смерти в испанском через estar."
     },
     {
-        text: "Обед ___ готов.",
         text: "La comida ___ lista.",
         correct: "está",
         options: ["es", "está"],
@@ -571,7 +519,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (C - Condition): Состояние готовности."
     },
     {
-        text: "Этот актер ___ очень знаменит.",
         text: "Ese actor ___ muy famoso.",
         correct: "es",
         options: ["es", "está"],
@@ -579,7 +526,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (Characteristic): Качество/статус."
     },
     {
-        text: "Я ___ в Валенсии на этой неделе.",
         text: "Yo ___ en Valencia esta semana.",
         correct: "estoy",
         options: ["soy", "estoy"],
@@ -587,7 +533,6 @@ const MODE1_SENTENCES = [
         explanation: "ESTAR (L - Location): Временное пребывание."
     },
     {
-        text: "Эта сумка ___ очень тяжелая.",
         text: "Esta maleta ___ muy pesada.",
         correct: "es",
         options: ["es", "está"],
@@ -595,8 +540,6 @@ const MODE1_SENTENCES = [
         explanation: "SER (D - Description): Свойство предмета."
     },
     {
-        text: "Ты ___ прав.",
-        text: "Tú ___ en lo cierto (или tienes razón).",
         text: "Tú ___ equivocado.",
         correct: "estás",
         options: ["eres", "estás"],

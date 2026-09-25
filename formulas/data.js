@@ -980,7 +980,7 @@ const FORMULAS_DATA = [
       },
       {
         question: "Фильм был очень хорошим (неправильная форма)",
-        options: ["La película fue buenísima", "La película fue muy buenísima", "La película fue buenísima", "La película fue lo mejor"],
+        options: ["La película fue buenísima", "La película fue muy buenísima", "La película fue buenísimo", "La película fue lo mejor"],
         correct: 0,
         hint: "bueno → buenísimo (суффикс -ísimo к основе). Не muy + -ísimo вместе"
       },

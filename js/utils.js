@@ -86,6 +86,19 @@ function normalizeSpanish(str) {
         .toLowerCase();
 }
 
+// Сравнение ответов с учётом опциональных подлежащих и точки в конце
+function isEquivalentAnswer(a, b) {
+    var norm = function(s) {
+        return (s || '')
+            .replace(/\.\s*$/, '')
+            .replace(/\s+(tú|tu|yo|él|el|ella|nosotros|vosotros|ellos|ellas|usted|ustedes)(\s*[?!])?\s*$/i, '$2')
+            .replace(/\s+/g, ' ')
+            .trim()
+            .toLowerCase();
+    };
+    return norm(a) !== '' && norm(a) === norm(b);
+}
+
 // Inline SVG icons for TTS buttons (no dependency on lucide.createIcons)
 function _svgIcon(paths, size) {
     var s = size || 17;
@@ -104,4 +117,5 @@ if (typeof window !== 'undefined') {
     window.setTopbarProgress = setTopbarProgress;
     window.resetTopbar = resetTopbar;
     window.normalizeSpanish = normalizeSpanish;
+    window.isEquivalentAnswer = isEquivalentAnswer;
 }

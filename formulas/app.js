@@ -211,10 +211,8 @@ const FormulasApp = {
     }
 
     var isCorrect = selectedIndex === question.correct;
-    if (!isCorrect && question.options && typeof normalizeSpanish === 'function') {
-      var selNorm = normalizeSpanish(question.options[selectedIndex]);
-      var crtNorm = normalizeSpanish(question.options[question.correct]);
-      if (selNorm && selNorm === crtNorm) isCorrect = true;
+    if (!isCorrect && question.options && typeof isEquivalentAnswer === 'function') {
+      if (isEquivalentAnswer(question.options[selectedIndex], question.options[question.correct])) isCorrect = true;
     }
 
     if (isCorrect) {
