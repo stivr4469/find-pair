@@ -205,6 +205,7 @@ body::before {
   line-height: 1.1;
   letter-spacing: -0.03em;
   text-wrap: balance;
+  color: color-mix(in srgb, var(--text) 72%, var(--bg));
 }
 
 /* ============================================
@@ -218,10 +219,11 @@ body::before {
   padding: 14px 16px;
   margin-bottom: 18px;
   border-radius: var(--radius);
-  background: var(--c);
-  color: #fff;
+  background: color-mix(in srgb, var(--c) 10%, var(--surface));
+  border: 1.5px solid color-mix(in srgb, var(--c) 28%, transparent);
+  color: var(--text);
   text-decoration: none;
-  box-shadow: 0 14px 30px -14px color-mix(in srgb, var(--c) 70%, transparent);
+  box-shadow: 0 6px 18px -10px color-mix(in srgb, var(--c) 35%, transparent);
   transition: transform 0.35s var(--spring), box-shadow 0.25s ease;
 }
 
@@ -231,13 +233,13 @@ body::before {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--c);
   flex-shrink: 0;
 }
 .resume-play svg { width: 18px; height: 18px; fill: #fff; stroke: #fff; margin-left: 2px; }
 
 .resume-text { flex: 1; min-width: 0; }
-.resume-label { display: block; font-size: 0.75rem; font-weight: 600; opacity: 0.85; }
+.resume-label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); }
 .resume-title {
   display: block;
   font-weight: 700;
@@ -245,10 +247,14 @@ body::before {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.resume > svg { width: 20px; height: 20px; opacity: 0.85; flex-shrink: 0; }
+.resume > svg { width: 20px; height: 20px; color: var(--muted); flex-shrink: 0; }
 
 @media (hover: hover) {
-  .resume:hover { transform: translateY(-2px); }
+  .resume:hover {
+    transform: translateY(-2px);
+    background: color-mix(in srgb, var(--c) 15%, var(--surface));
+    box-shadow: 0 10px 24px -10px color-mix(in srgb, var(--c) 45%, transparent);
+  }
 }
 .resume:active { transform: scale(0.98); transition-duration: 0.12s; }
 
