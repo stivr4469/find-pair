@@ -5,6 +5,51 @@
 
 ---
 
+## Сессия: 2026-09-25 — Smoke-тесты (84/84 зелёных маячков)
+
+### Что сделано
+
+#### Инфраструктура тестирования
+- Добавлен `tests/` — Playwright smoke suite для всех 6 модулей
+- `tests/playwright.config.js` — headless Chromium, baseURL localhost:3001, webServer python http.server
+- `tests/package.json` — `@playwright/test ^1.49.0`
+- `run-smoke.sh` — единая точка входа: `bash run-smoke.sh`
+- `tests/.gitignore` — исключает node_modules и test-results
+
+#### Smoke-спеки (84 теста, 2 skipped по данным)
+- `find-pair.spec.js` — 5 тестов (загрузка, клики, пары, категория, рестарт)
+- `formulas.spec.js` — 21 тест: список, карточка, квиз MCQ, fill-blank, марафон, навигация
+- `pasado.spec.js` — 20 тестов: список, квиз, навигация, inline-режим
+- `ser-estar.spec.js` — 6 тестов: меню, base-режим, advanced, classify
+- `mezcla.spec.js` — 6 тестов: список, чтение, токены, навигация
+- `tren.spec.js` — 26 тестов: меню, mode1, mode6 (fill-blank), mode7 (drag-to-column)
+
+#### Исправления spec-файлов (все root-cause задокументированы)
+1. `tren.spec.js` — `gotoTren()` ждал `window.App` (не экспортируется); заменено на `nav.main-menu`
+2. Все спеки — `#xxx-next-wrap` имеет 0 высоту (дочерняя кнопка `position:fixed` не участвует в flow); заменено на `.quiz-next-fixed`
+3. `formulas/pasado.spec.js` — `.or()` с многоэлементным локатором → strict mode violation; добавлен `.first()`
+4. `tren.spec.js` — `toHaveCount({ minimum: N })` — невалидный Playwright API; заменено на `count()` + `toBeGreaterThanOrEqual`
+5. `ser-estar.spec.js` — `.feedback` резолвится в 2 элемента; использован скоуп `#ser-estar-base-area .feedback`
+6. `ser-estar.spec.js` — клик на advanced mode заменяет innerHTML с настройками; проверка на `.start-button`
+7. `pasado.spec.js` — `#pasado-inline-next` — та же 0-высота проблема; заменено на `.quiz-next-fixed`
+
+#### tren/mode7.js v=14→v=15
+- Экспортирован `window.mode7State = mode7State` для доступа из тестов
+
+### Коммиты
+- `d9e9386` test: add smoke tests for all 6 modules (84/84 green)
+- `3018ea0` chore: add .gitignore for tests/node_modules
+
+### CLAUDE.md
+Добавлен шаг `[6. SMOKE TEST] bash run-smoke.sh` в цикл разработки.
+
+### Открытые задачи
+- [ ] Удалить Vercel-проект `find-pair-seven`
+- [ ] TTS — speakSpanish() отключён
+- [ ] Карточки повторения ошибок (localStorage)
+
+---
+
 ## Сессия: 2026-09-25 (продолжение 4) — tren mode6 blank-fill + pasado Контраст
 
 ### Что сделано
