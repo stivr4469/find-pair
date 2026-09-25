@@ -5,6 +5,22 @@
 
 ---
 
+## Сессия: 2026-09-26 — Убраны иконки Lucide с карточек главного экрана
+
+**Коммит:** `6016eb6`
+
+**От пользователя:** иконки в цветных боксах на карточках игр «не в тему», убрать совсем.
+
+**Сделано:**
+- `index.html`: SVG-спрайт сокращён с 9 до 3 символов (оставлены i-flame/i-play/i-chevron для стрика/«Продолжить»/стрелок; удалены i-layers, i-compass, i-branch, i-book, i-shuffle, i-clock).
+- `index.html`: из всех 6 `.game-card` удалены блоки `<span class="game-card-icon">…</span>`.
+- `css/main.css`: `.game-card` — grid упрощён `auto 1fr auto → 1fr auto`; удалён блок `.game-card-icon`; в `@media (max-width:360px)` удалено правило `.game-card-icon`.
+- `css/main.css`: восстановлена CSS-переменная `--ink` в `.game-card` (была в удалённом блоке; нужна для `.tag { color: var(--ink) }`).
+- `css/main.css` (wide, `@media min-width:640px`): `.game-card` grid `1fr` (без иконки).
+- Smoke 105/105 ✅, запушено в `main`.
+
+---
+
 ## Сессия: 2026-09-25 (продолжение 14) — Ser/Estar: спряжение в предложениях
 
 **От пользователя:** вместо «Conjugación de 'ser' en imperfecto para 'ellos/ellas'» давать предложение с выбором формы, как inline-режим; пройтись по модулю.
