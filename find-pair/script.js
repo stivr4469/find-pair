@@ -212,9 +212,40 @@ function checkGameEnd() {
     const remainingWords = document.querySelectorAll('.word:not([style*="visibility: hidden"])');
 
     if (remainingWords.length === 0) {
-        alert('Поздравляем! Вы нашли все пары!');
-        initGame();  // Перезапуск игры
+        showFindPairToast('¡Excelente! Все пары найдены!', function() { initGame(); });
     }
+}
+
+function showFindPairToast(message, callback) {
+    var existing = document.getElementById('fp-toast');
+    if (existing) existing.remove();
+
+    var toast = document.createElement('div');
+    toast.id = 'fp-toast';
+    toast.textContent = message;
+    toast.style.cssText = [
+        'position:fixed', 'top:50%', 'left:50%',
+        'transform:translate(-50%,-50%)',
+        'background:var(--accent,#F26B1D)', 'color:#fff',
+        'padding:18px 32px', 'border-radius:16px',
+        'font-size:1.15rem', 'font-weight:700',
+        'box-shadow:0 8px 32px rgba(0,0,0,0.35)',
+        'z-index:9999', 'text-align:center',
+        'animation:fp-toast-in 0.25s ease'
+    ].join(';');
+
+    if (!document.getElementById('fp-toast-style')) {
+        var s = document.createElement('style');
+        s.id = 'fp-toast-style';
+        s.textContent = '@keyframes fp-toast-in{from{opacity:0;transform:translate(-50%,-60%)}to{opacity:1;transform:translate(-50%,-50%)}}';
+        document.head.appendChild(s);
+    }
+
+    document.body.appendChild(toast);
+    setTimeout(function() {
+        toast.remove();
+        if (typeof callback === 'function') callback();
+    }, 1800);
 }
 
 // Запуск игры при загрузке страницы
