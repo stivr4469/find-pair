@@ -1,0 +1,409 @@
+/* Slova — learn page styles */
+
+/* ---- Page layout ---- */
+.learn-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---- Topic bar ---- */
+.learn-topic-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--accent-blue-dim);
+  border: 1px solid color-mix(in srgb, var(--accent-blue) 30%, transparent);
+  border-radius: var(--radius-lg);
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.learn-topic-clear {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 12px;
+  transition: background-color var(--dur-fast, 150ms), color var(--dur-fast, 150ms);
+}
+
+.learn-topic-clear:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-secondary);
+}
+
+/* ---- Progress header ---- */
+.learn-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.progress-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.progress-info {
+  margin-bottom: 6px;
+}
+
+.progress-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.progress-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink));
+  border-radius: 999px;
+  transform-origin: left;
+  transition: transform 400ms var(--ease-out, ease-out);
+}
+
+.timer {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* ---- Empty state ---- */
+.learn-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.learn-empty-icon {
+  font-size: 3rem;
+  color: var(--accent-green);
+}
+
+.learn-empty-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.learn-empty-text {
+  color: var(--text-secondary);
+  max-width: 380px;
+  line-height: 1.7;
+}
+
+/* ---- Training card ---- */
+.training-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: lp-card-in 280ms var(--ease-out, ease) backwards;
+}
+
+@keyframes lp-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-rank {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}
+
+.card-rep-count {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Word */
+.card-word {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.card-word--speakable {
+  cursor: pointer;
+  transition: color var(--dur-fast, 150ms);
+}
+
+.card-word--speakable:hover {
+  color: var(--accent-blue);
+}
+
+.card-word--speakable:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Part of speech + phonetic */
+.card-pos-phonetic {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.card-phonetic {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* Example block */
+.card-example {
+  background: color-mix(in srgb, var(--text-primary) 3%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 12px);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-example-text {
+  font-size: 1rem;
+  color: var(--text-primary);
+  line-height: 1.55;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.card-example-translation {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  animation: lp-reveal-in 200ms var(--ease-out, ease) backwards;
+}
+
+/* Audio button */
+.audio-btn {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity var(--dur-fast, 150ms), transform var(--dur-fast, 150ms);
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.audio-btn:hover {
+  opacity: 1;
+}
+
+.audio-btn--active {
+  opacity: 1;
+  animation: lp-pulse-audio 0.6s ease infinite alternate;
+}
+
+.audio-btn--standalone {
+  display: block;
+  margin: 8px 0;
+  font-size: 1.3rem;
+}
+
+@keyframes lp-pulse-audio {
+  from { transform: scale(1); }
+  to   { transform: scale(1.2); }
+}
+
+/* Revealed section */
+.card-revealed {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+  animation: lp-reveal-in 200ms var(--ease-out, ease) backwards;
+}
+
+@keyframes lp-reveal-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.card-translation {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.card-detail {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.card-detail-label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.card-first-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* Secondary action links */
+.card-actions-secondary {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.card-link-btn {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 0;
+  transition: color var(--dur-fast, 150ms);
+}
+
+.card-link-btn:hover {
+  color: var(--text-primary);
+}
+
+.card-link-btn--danger:hover {
+  color: var(--accent-pink);
+}
+
+.card-link-sep {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* Show translation button */
+.learn-show-btn {
+  padding: 16px 24px;
+  font-size: 1.05rem;
+  border-radius: var(--radius, 12px);
+  text-align: center;
+}
+
+/* Review buttons */
+.card-review-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn--forgot {
+  background: var(--accent-pink-dim);
+  border: 1.5px solid var(--accent-pink);
+  color: var(--accent-pink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: var(--radius, 12px);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background-color var(--dur-fast, 150ms), transform 60ms ease;
+}
+
+.btn--forgot:hover {
+  background: color-mix(in srgb, var(--accent-pink) 28%, transparent);
+}
+
+.btn--know {
+  background: var(--accent-green-dim);
+  border: 1.5px solid var(--accent-green);
+  color: var(--accent-green);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: var(--radius, 12px);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background-color var(--dur-fast, 150ms), transform 60ms ease;
+}
+
+.btn--know:hover {
+  background: color-mix(in srgb, var(--accent-green) 28%, transparent);
+}
+
+.btn--forgot:active,
+.btn--know:active {
+  transform: scale(0.97);
+}
+
+.btn-label {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.btn-interval {
+  font-size: 0.78rem;
+  opacity: 0.75;
+  font-weight: 400;
+}
+
+/* Keyboard hint */
+.card-keyboard-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: -4px;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 480px) {
+  .training-card {
+    padding: 20px 18px;
+  }
+
+  .card-word {
+    font-size: 2.2rem;
+  }
+
+  .card-review-btns {
+    grid-template-columns: 1fr 1fr;
+  }
+}
