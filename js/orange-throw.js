@@ -65,10 +65,9 @@
         var rect = buddy.getBoundingClientRect();
         var scrollY = window.pageYOffset || document.documentElement.scrollTop;
         var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
-        /* nj-char всегда при left:0 buddy → buddy.left + 160 = правый край персонажа;
-           корзина на 20px правее */
+        /* position:absolute → координаты документа (скроллятся вместе со страницей) */
         el.style.top  = Math.max(60, rect.top + scrollY + 8) + 'px';
-        el.style.left = (rect.left + scrollX + 180) + 'px';
+        el.style.left = (rect.right + scrollX - BASKET_W) + 'px';
         el.style.right = 'auto';
     }
 
