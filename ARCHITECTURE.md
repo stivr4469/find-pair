@@ -54,7 +54,8 @@ spanish-trainer-app/
 ├── formulas/               ← Модуль 4: 36 Формул испанского
 ├── mezcla/                 ← Модуль 5: Mezcla (смешанное чтение)
 ├── subjuntivo/             ← Модуль 6: Presente de Subjuntivo (12 тем)
-└── pasado/                 ← Модуль 7: Прошедшее время (4 времени)
+├── pasado/                 ← Модуль 7: Прошедшее время (4 времени)
+└── slova/                  ← Модуль 8: Слова — карточки с интервальным повторением (1935 ES + 1373 EN слов)
 ```
 
 ---
@@ -115,6 +116,25 @@ module/
 | `subjuntivo/data.js` | v=1 |
 | `subjuntivo/ui.js` | v=1 |
 | `subjuntivo/app.js` | v=1 |
+| `css/main.css` | v=8 ← slova card color (#0D9488 teal) |
+| `slova/data-es.js` | v=1 (1935 слов) |
+| `slova/data-en.js` | v=1 (1373 слов) |
+| `slova/data-topics.js` | v=1 (10 тем) |
+| `slova/srs.js` | v=1 |
+| `slova/storage.js` | v=1 |
+| `slova/ui-common.js` | v=1 |
+| `slova/page-learn.js` | v=1 |
+| `slova/page-words.js` | v=1 |
+| `slova/page-diary.js` | v=1 |
+| `slova/page-languages.js` | v=1 |
+| `slova/modal-word.js` | v=1 |
+| `slova/app.js` | v=1 |
+| `slova/styles/base.css` | v=1 |
+| `slova/styles/learn.css` | v=1 |
+| `slova/styles/words.css` | v=1 |
+| `slova/styles/diary.css` | v=1 |
+| `slova/styles/languages.css` | v=1 |
+| `slova/styles/modal.css` | v=1 |
 
 ---
 

@@ -5,6 +5,51 @@
 
 ---
 
+## Сессия: 2026-09-26 (продолжение 8) — Модуль «Слова» (slova/)
+
+**Задача:** `TASK-cards.md` — перенести React 18 + TS приложение `Cards/` на стек VamoS (Vanilla JS).
+
+**Также сделано в начале сессии:**
+- Пуш в прод: tren mode0 — формат с предложением и бланком вместо MCQ-кнопок (commit `0bc65ed`)
+- Пуш: orange-throw.js v=10 по всем модулям (commit `b3a2718`)
+- `.gitignore` — добавлен `Cards/` (локальный эталон, в репо не попадает)
+
+**Golden-тест SRS + Storage:** 102 проверки, совпадение 100% с TS-оригиналом.
+
+**Создано (`slova/`, 19 файлов):**
+- `data-es.js` (v=1) — 1935 слов ES (конвертирован из Cards/src/data/spanish.ts)
+- `data-en.js` (v=1) — 1373 слова EN
+- `data-topics.js` (v=1) — 10 тем
+- `srs.js` (v=1) — SlovaSRS: порт lib/srs.ts 1:1 (SM2-подобный алгоритм)
+- `storage.js` (v=1) — SlovaStore + SlovaBackend (localStorage-абстракция); defaultState().selectedLanguage = 'es'
+- `ui-common.js` (v=1) — SlovaUI: esc, plural*, getPosGroup/Short, getWordStatus
+- `app.js` (v=1) — SlovaApp: состояние, navbar, роутер, связь с VamoS (vamos:last, vamos:progress.slova)
+- `page-learn.js` (v=1) — «Учить»: очередь (due+new), карточка, TTS, Забыл/Знаю, skip/postpone/exclude, клавиши
+- `page-words.js` (v=1) — «Слова»: виртуальный список ROW_HEIGHT=64, поиск без потери фокуса, фильтры, сортировка
+- `page-diary.js` (v=1) — «Дневник»: 12-месячный календарь, активность 0–4, stat-cards, vocab bars (scaleX)
+- `page-languages.js` (v=1) — «Языки»: SVG coverageAtN, настройка maxNewPerDay
+- `modal-word.js` (v=1) — SlovaWordModal: добавить/редактировать слово, валидация, закрытие по оверлею
+- `styles/base.css` (v=1) — маппинг токенов Cards→VamoS, navbar, кнопки, badges
+- `styles/{learn,words,diary,languages,modal}.css` (v=1) — стили страниц
+
+**Обновлено:**
+- `css/main.css` (v=8): `.game-card[data-game="slova"] { --c: #0D9488; }` (teal)
+- `index.html` (root): карточка «Слова» с `--i:9`, Pasado сдвинут на `--i:10`
+
+**Замечено в оригинале (Cards/):**
+- Кнопки «+ чтение / + сериал / + урок / + разговор» в Дневнике ничего не делают — воспроизведено as-is
+- Стрелки ◀ ▶ года в Дневнике некликабельны — воспроизведено as-is
+
+**Smoke: 104/105 (1 flaky find-pair, pre-existing) ✅**
+
+**Открытые задачи slova/:**
+- [ ] SlovaBackend: задел для Telegram CloudStorage или другой синхронизации
+- [ ] Пополнение словаря по Cards/СТАТУС.md — отдельная задача
+- [ ] Naranjito в slova/ — по желанию пользователя
+- [ ] Cards/ папка: спросить пользователя, удалить ли из рабочей копии
+
+---
+
 ## Сессия: 2026-09-26 (продолжение 7) — Модуль «Presente de Subjuntivo»
 
 **Задача:** `TASK-subjuntivo.md` — создать полноценный интерактивный модуль.
