@@ -1,0 +1,224 @@
+/* Slova — base styles: token mapping + navbar + common elements */
+
+/* ---- Token mapping: Cards tokens → VamoS tokens ---- */
+:root {
+  --bg-primary:     var(--bg);
+  --bg-card:        var(--surface);
+  --bg-card-hover:  var(--faint);
+  --bg-input:       var(--faint);
+  --text-primary:   var(--text);
+  --text-secondary: var(--muted);
+  --text-muted:     var(--muted);
+  --accent-blue:    var(--accent);
+  --accent-pink:    var(--danger);
+  --accent-green:   var(--success);
+  --accent-blue-dim:  color-mix(in srgb, var(--accent) 15%, transparent);
+  --accent-pink-dim:  color-mix(in srgb, var(--danger) 15%, transparent);
+  --accent-green-dim: color-mix(in srgb, var(--success) 15%, transparent);
+  --border:         var(--border);
+  --border-light:   var(--border);
+  --shadow-card:    var(--shadow);
+  --radius-lg:      var(--radius);
+  --font-sans:      var(--font);
+}
+
+/* ---- Layout ---- */
+.slova-main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 16px 80px;
+}
+
+/* ---- Navbar ---- */
+.slova-navbar {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 52px;
+}
+
+.navbar-logo {
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--accent-blue);
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+
+.navbar-lang {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.lang-select {
+  appearance: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 8px);
+  padding: 5px 26px 5px 10px;
+  font: 600 0.8rem var(--font-sans);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.lang-select:focus {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 1px;
+}
+
+.lang-select-arrow {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm, 8px);
+  font: 600 0.82rem var(--font-sans);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color var(--dur-fast, 150ms), color var(--dur-fast, 150ms);
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+.nav-link--active {
+  color: var(--accent-blue);
+  background: var(--accent-blue-dim);
+}
+
+/* ---- Stub page ---- */
+.slova-stub {
+  padding: 40px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* ---- Common badges ---- */
+.badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 999px;
+  line-height: 1.4;
+}
+
+.badge--new    { background: var(--accent-blue-dim);  color: var(--accent-blue); }
+.badge--learn  { background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent-blue); }
+.badge--known  { background: var(--accent-green-dim); color: var(--accent-green); }
+.badge--due    { background: color-mix(in srgb, orange 15%, transparent); color: color-mix(in srgb, orange 80%, var(--text)); }
+.badge--custom { background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent-blue); }
+
+/* ---- Common button styles ---- */
+.slova-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  border-radius: var(--radius-sm, 8px);
+  padding: 10px 18px;
+  font: 700 0.9rem var(--font-sans);
+  cursor: pointer;
+  transition: background-color var(--dur-fast, 150ms), transform var(--dur-fast, 150ms), opacity var(--dur-fast, 150ms);
+}
+
+.slova-btn:active { transform: scale(0.97); }
+.slova-btn:disabled { opacity: 0.55; cursor: default; }
+
+.slova-btn--primary {
+  background: var(--accent-blue);
+  color: #fff;
+}
+.slova-btn--primary:hover { opacity: 0.88; }
+
+.slova-btn--success {
+  background: var(--accent-green);
+  color: #fff;
+}
+.slova-btn--success:hover { opacity: 0.88; }
+
+.slova-btn--danger {
+  background: var(--accent-pink);
+  color: #fff;
+}
+.slova-btn--danger:hover { opacity: 0.88; }
+
+.slova-btn--ghost {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+.slova-btn--ghost:hover { background: var(--bg-card-hover); }
+
+/* ---- Progress bar ---- */
+.slova-progress-wrap {
+  background: var(--faint, #f0ece8);
+  border-radius: 999px;
+  height: 5px;
+  overflow: hidden;
+}
+
+.slova-progress-fill {
+  height: 100%;
+  background: var(--accent-blue);
+  border-radius: 999px;
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out, ease-out);
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 480px) {
+  .navbar-inner {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 8px 16px;
+    gap: 8px;
+  }
+
+  .navbar-links {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .nav-link {
+    padding: 5px 10px;
+    font-size: 0.78rem;
+  }
+}

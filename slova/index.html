@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#FBF6EF" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#14110F" media="(prefers-color-scheme: dark)">
+    <title>Слова · VamoS</title>
+    <script>(function(){try{var t=localStorage.getItem('vamos:theme');if(t)document.documentElement.dataset.theme=t}catch(e){}}());</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/unified-styles.css?v=32">
+    <link rel="stylesheet" href="styles/base.css?v=1">
+    <link rel="stylesheet" href="styles/learn.css?v=1">
+    <link rel="stylesheet" href="styles/words.css?v=1">
+    <link rel="stylesheet" href="styles/diary.css?v=1">
+    <link rel="stylesheet" href="styles/languages.css?v=1">
+    <link rel="stylesheet" href="styles/modal.css?v=1">
+</head>
+<body>
+    <div class="back-button-container">
+        <a href="../" class="back-button">← Главная</a>
+        <button id="theme-toggle" onclick="toggleTheme()"></button>
+    </div>
+
+    <nav id="slova-navbar" class="slova-navbar"></nav>
+
+    <main id="slova-root" class="slova-main game-area"></main>
+
+    <div id="slova-modal-root"></div>
+
+    <script src="../js/utils.js?v=25"></script>
+    <script src="data-es.js?v=1"></script>
+    <script src="data-en.js?v=1"></script>
+    <script src="data-topics.js?v=1"></script>
+    <script src="srs.js?v=1"></script>
+    <script src="storage.js?v=1"></script>
+    <script src="ui-common.js?v=1"></script>
+    <script src="page-learn.js?v=1"></script>
+    <script src="page-words.js?v=1"></script>
+    <script src="page-diary.js?v=1"></script>
+    <script src="page-languages.js?v=1"></script>
+    <script src="modal-word.js?v=1"></script>
+    <script src="app.js?v=1"></script>
+    <script>document.addEventListener('DOMContentLoaded', function () { SlovaApp.init(); });</script>
+</body>
+</html>
