@@ -1,0 +1,311 @@
+/* Slova — diary page styles */
+/* Порт Cards/src/styles/index.css (diary section) */
+
+.diary-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 20px;
+}
+
+/* ── Year calendar header ────────────────────────────────────────────────── */
+
+.diary-year-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.diary-year-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.diary-year-nav {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm, 6px);
+  transition: color var(--dur-fast, 150ms);
+  cursor: default;
+  user-select: none;
+}
+
+.diary-year-sub {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+/* ── Calendar grid ───────────────────────────────────────────────────────── */
+
+.diary-calendar {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 12px);
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.diary-months {
+  display: flex;
+  gap: 12px;
+  min-width: max-content;
+}
+
+.diary-month {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.diary-month-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.diary-month-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.diary-week {
+  display: flex;
+  gap: 2px;
+}
+
+.diary-cell {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.diary-cell--empty {
+  background: transparent;
+}
+
+/* Activity levels — accent-based color-mix */
+.diary-cell--0 { background: var(--border); }
+.diary-cell--1 { background: color-mix(in srgb, var(--accent-green) 15%, transparent); }
+.diary-cell--2 { background: color-mix(in srgb, var(--accent-green) 35%, transparent); }
+.diary-cell--3 { background: color-mix(in srgb, var(--accent-green) 60%, transparent); }
+.diary-cell--4 { background: var(--accent-green); }
+
+/* ── Two-column layout ───────────────────────────────────────────────────── */
+
+.diary-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ── Today section ───────────────────────────────────────────────────────── */
+
+.diary-today {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 12px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.diary-today-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.diary-today-date {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.diary-today-stats {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.diary-today-stat-num {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.diary-today-stat-label {
+  color: var(--text-secondary);
+}
+
+.diary-today-sep {
+  color: var(--text-muted);
+}
+
+.diary-today-due {
+  color: var(--accent-pink);
+  font-weight: 600;
+}
+
+.diary-today-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.diary-activity-btns {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.activity-btn {
+  padding: 6px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--border-light, var(--border));
+  background: var(--bg-input, var(--bg-card));
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-family: var(--font-sans, var(--font));
+  cursor: pointer;
+  transition: border-color var(--dur-fast, 150ms), color var(--dur-fast, 150ms);
+}
+
+.activity-btn:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+/* ── Vocabulary section ──────────────────────────────────────────────────── */
+
+.diary-vocab {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 12px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.diary-vocab-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.diary-vocab-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.diary-vocab-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.diary-vocab-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.diary-vocab-lang {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.diary-vocab-count {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.diary-vocab-bar {
+  height: 4px;
+  background: var(--border-light, var(--border));
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.diary-vocab-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+  border-radius: 99px;
+  transform-origin: left;
+  transition: transform 600ms ease;
+}
+
+/* ── Stat cards ──────────────────────────────────────────────────────────── */
+
+.diary-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.diary-stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md, 10px);
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.diary-stat-card--accent {
+  border-color: var(--accent-blue);
+  background: color-mix(in srgb, var(--accent-blue) 7%, var(--bg-card));
+}
+
+.diary-stat-num {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.diary-stat-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 700px) {
+  .diary-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .diary-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .diary-months {
+    gap: 8px;
+  }
+
+  .diary-cell {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .diary-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

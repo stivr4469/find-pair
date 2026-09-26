@@ -1,0 +1,264 @@
+/* Slova — Modal styles */
+
+/* ── Backdrop ───────────────────────────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 20, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: slova-fadeIn 120ms ease backwards;
+}
+
+@keyframes slova-fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal container ────────────────────────────────────────────────────── */
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light, var(--border));
+  border-radius: var(--radius-lg, 14px);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-card, var(--shadow));
+  animation: slova-slideUp 180ms ease backwards;
+}
+
+@keyframes slova-slideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Modal header ───────────────────────────────────────────────────────── */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 0;
+}
+
+.modal-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm, 8px);
+  transition: color var(--dur-fast, 150ms);
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+}
+
+/* ── Form ───────────────────────────────────────────────────────────────── */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 24px 24px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-row--split {
+  flex-direction: row;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-label {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.required {
+  color: var(--accent-pink);
+}
+
+.form-input,
+.form-select {
+  background: var(--bg-input);
+  border: 1px solid var(--border-light, var(--border));
+  border-radius: var(--radius-sm, 8px);
+  padding: 9px 12px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-family: var(--font-sans, var(--font));
+  width: 100%;
+  transition: border-color var(--dur-fast, 150ms);
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+}
+
+.form-input--error {
+  border-color: var(--accent-pink);
+}
+
+.form-error {
+  font-size: 0.78rem;
+  color: var(--accent-pink);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 56px;
+  line-height: 1.5;
+}
+
+.form-select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238888a8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+/* ── Language toggle ────────────────────────────────────────────────────── */
+.lang-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.lang-btn {
+  flex: 1;
+  background: var(--bg-input);
+  border: 1px solid var(--border-light, var(--border));
+  border-radius: var(--radius-sm, 8px);
+  padding: 8px 12px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: border-color var(--dur-fast, 150ms), color var(--dur-fast, 150ms), background-color var(--dur-fast, 150ms);
+}
+
+.lang-btn--active {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  background: rgba(108, 142, 247, 0.12);
+}
+
+.lang-btn--disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ── Rank selector ──────────────────────────────────────────────────────── */
+.rank-selector {
+  display: flex;
+  gap: 8px;
+}
+
+.rank-pick {
+  width: 38px;
+  height: 38px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-light, var(--border));
+  border-radius: var(--radius-sm, 8px);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--dur-fast, 150ms), border-color var(--dur-fast, 150ms), color var(--dur-fast, 150ms);
+}
+
+.rank-pick--active {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  color: #fff;
+}
+
+/* ── Modal actions ──────────────────────────────────────────────────────── */
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn-cancel {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--border-light, var(--border));
+  border-radius: var(--radius-sm, 8px);
+  padding: 10px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color var(--dur-fast, 150ms), color var(--dur-fast, 150ms);
+}
+
+.btn-cancel:hover {
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+}
+
+.btn-add {
+  flex: 2;
+  background: var(--accent-blue);
+  border: none;
+  border-radius: var(--radius-sm, 8px);
+  padding: 10px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--dur-fast, 150ms);
+}
+
+.btn-add:hover {
+  opacity: 0.85;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .modal {
+    max-height: 95vh;
+  }
+
+  .modal-header {
+    padding: 16px 16px 0;
+  }
+
+  .modal-form {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .form-row--split {
+    flex-direction: column;
+  }
+}
