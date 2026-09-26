@@ -32,6 +32,34 @@ const TENSE_DISPLAY_MODE0 = {
   'presente': 'presente'
 };
 
+// Шаблоны предложений: verb → person → предложение с ___
+var SENTENCE_TEMPLATES_MODE0 = {
+  'ir': {
+    'yo':       'Yo ___ al supermercado.',
+    'tu':       'Tú ___ a la escuela.',
+    'el/ella':  'Ella ___ al trabajo.',
+    'nosotros': 'Nosotros ___ al parque.',
+    'vosotros': 'Vosotros ___ al cine.',
+    'ellos':    'Ellos ___ a la playa.'
+  },
+  'venir': {
+    'yo':       'Yo ___ a la fiesta.',
+    'tu':       'Tú ___ a casa.',
+    'el/ella':  'Él ___ del trabajo.',
+    'nosotros': 'Nosotros ___ juntos.',
+    'vosotros': 'Vosotros ___ mañana.',
+    'ellos':    'Ellos ___ tarde.'
+  },
+  'llegar': {
+    'yo':       'Yo ___ a tiempo.',
+    'tu':       'Tú ___ tarde.',
+    'el/ella':  'Ella ___ pronto.',
+    'nosotros': 'Nosotros ___ los primeros.',
+    'vosotros': 'Vosotros ___ juntos.',
+    'ellos':    'Ellos ___ mañana.'
+  }
+};
+
 /**
  * Генерирует случайный элемент из массива
  * @param {Array} array - массив для выбора
@@ -86,15 +114,16 @@ function generateQuestionMode0() {
   // Получаем правильный ответ из таблицы спряжений
   const correctAnswer = CONJUGATIONS[verb][tense][person];
 
-  // Формируем текст вопроса на испанском
-  const questionText = `Conjuga '${verb}' en ${TENSE_DISPLAY_MODE0[tense]} para '${PERSON_DISPLAY_MODE0[person]}'`;
+  // Берём шаблон предложения с ___
+  const templates = SENTENCE_TEMPLATES_MODE0[verb] || {};
+  const sentence = templates[person] || (PERSON_DISPLAY_MODE0[person] + ' ___ ...');
 
   // Создаём объект вопроса
   const question = {
     verb: verb,
     tense: tense,
     person: person,
-    questionText: questionText,
+    sentence: sentence,
     correctAnswer: correctAnswer
   };
 
